@@ -4,9 +4,13 @@ Team 7
 
 =========================================================
 
-Group members:
-  Mustafa Syed
-  Muhammad Shahid
-  Zhenxu Wang
-  Jinsong Xie
-  Brahmjot Grewal
+## Group members:<br>
+  Mustafa Syed<br>
+  Muhammad Shahid<br>
+  Zhenxu Wang<br>
+  Jinsong Xie<br>
+  Brahmjot Grewal<br>
+
+=========================================================
+
+## Header
