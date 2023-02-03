@@ -13,4 +13,9 @@ Team 7
 
 =========================================================
 
-## Header
+## Iteration 0:
+  Please see Planning_Document.pdf for details.
+  
+  [Customer interview video](https://drive.google.com/file/d/1tB2-PPHbQoVhg_04MTnWT-efHcVPlZ7P/view?usp=sharing/ "Named link title")
+  
+=========================================================
