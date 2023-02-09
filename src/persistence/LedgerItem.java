@@ -3,16 +3,19 @@ package persistence;
 import java.util.Date;
 
 public class LedgerItem {
-	Date date;
-	double amount;
-	String itemName;
-	String note;
+	private Date date;
+	private double amount;
+	private String itemName;
+	private String note;
+	private int ref;
+	private static int REFNUM = 0;
 	
 	private LedgerItem(Date date, double amount, String itemName, String note) {
 		this.date = date;
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
+		this.ref = REFNUM++;
 	}
 	
 	/**
@@ -25,7 +28,7 @@ public class LedgerItem {
 //			Tokenizer static method to check if the input is legit.
 //			Tokenizer.check(input);
 		} catch (Exception e) {
-			System.out.println("");
+			System.out.println(e.getMessage());
 		}
 		
 //		Date date = Tokenizer.getDate();
@@ -68,4 +71,7 @@ public class LedgerItem {
 		this.note = note;
 	}
 	
+	public int getRef() {
+		return this.ref;
+	}
 }
