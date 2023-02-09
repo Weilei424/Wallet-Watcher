@@ -19,3 +19,11 @@ Team 7
   [Customer interview video](https://drive.google.com/file/d/1tB2-PPHbQoVhg_04MTnWT-efHcVPlZ7P/view?usp=sharing/ "Named link title")
   
 =========================================================
+
+## Iteration 1:
+  [Jira Board](https://tahas02.atlassian.net/jira/software/projects/WALI/boards/1 "Named link title")
+  
+  
+  
+  
+=========================================================
