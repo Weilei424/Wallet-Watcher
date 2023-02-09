@@ -4,12 +4,12 @@ import java.util.Date;
 
 import exceptions.InvalidDateException;
 
-public final class MathUtil {
+public final class Util {
 	
 	/**
 	 * private constructor prevent from creation of object
 	 */
-	private MathUtil() {}
+	private Util() {}
 	
 	/**
 	 * This method calculates the number of month difference of input dates.
@@ -67,7 +67,7 @@ public final class MathUtil {
 		} catch (IllegalArgumentException e) {
 			System.out.println("invalid date");
 		}
-		int biweeks = (MathUtil.getWeek(endAt) -MathUtil.getWeek(endAt)) / 2;
+		int biweeks = (Util.getWeek(endAt) -Util.getWeek(endAt)) / 2;
 		
 		return biweeks;
 	}
