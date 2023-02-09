@@ -16,3 +16,12 @@ Feb 8th 20:35:39
 Feb 8th 21:11:50
     Implemented constructors, getters, setters,
     and static factory method for LedgerItem.
+===============================================
+Feb 8th 22:41:21
+	Implemented calcMonth(), calcYear(), 
+	calcBiweek() in MathUtil class.
+	
+	Added InvalidDateException with implementation
+	in Exception package.
+	
+	Added calcInterest() in CustomFormula interface.
