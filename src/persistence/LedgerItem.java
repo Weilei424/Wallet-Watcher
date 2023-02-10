@@ -26,7 +26,7 @@ public class LedgerItem {
 	public static LedgerItem getInstanceOf(String input) {
 		try {
 //			Tokenizer static method to check if the input is legit.
-//			Tokenizer.check(input);
+//			Tokenizer.checkLedger(input);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
