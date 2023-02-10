@@ -6,10 +6,15 @@ Team 7
 
 ## Group members:<br>
   Mustafa Syed<br>
+  GitHub id: MustafaSyed19<br><br>
   Muhammad Shahid<br>
+  GitHub id: tahas022<br><br>
   Zhenxu Wang<br>
+  GitHub id: Weilei424<br><br>
   Jinsong Xie<br>
+  GitHub id: Mansteinvon<br><br>
   Brahmjot Grewal<br>
+  GitHub id: bgre03<br><br>
 
 =========================================================
 
