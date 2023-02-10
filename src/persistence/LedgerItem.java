@@ -40,7 +40,7 @@ public class LedgerItem {
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date date) {
@@ -48,7 +48,7 @@ public class LedgerItem {
 	}
 
 	public double getAmount() {
-		return amount;
+		return this.amount;
 	}
 
 	public void setAmount(double amount) {
@@ -56,7 +56,7 @@ public class LedgerItem {
 	}
 
 	public String getItemName() {
-		return itemName;
+		return this.itemName;
 	}
 
 	public void setItemName(String itemName) {
@@ -64,7 +64,7 @@ public class LedgerItem {
 	}
 
 	public String getNote() {
-		return note;
+		return this.note;
 	}
 
 	public void setNote(String note) {

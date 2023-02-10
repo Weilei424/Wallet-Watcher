@@ -76,10 +76,6 @@ public class MainUi implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		new MainUi();
-	}
-
 	// Action Listener for the button to be able to navigate to another page when
 	// clicked if user name and password is correct
 	@Override

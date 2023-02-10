@@ -25,3 +25,14 @@ Feb 8th 22:41:21
 	in Exception package.
 	
 	Added calcInterest() in CustomFormula interface.
+===============================================
+Feb 9th 12:31:55
+	Added attribute ref, its static counter and getter for 
+	LedgerItem class.
+	
+	Renamed MathUtil class to Util class.
+===============================================
+Feb 9th 23:14:41
+	Removed public static main() from MainUi.java,
+	added UI initializer in Main.java.
+	
