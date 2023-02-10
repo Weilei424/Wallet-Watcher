@@ -35,4 +35,17 @@ Feb 9th 12:31:55
 Feb 9th 23:14:41
 	Removed public static main() from MainUi.java,
 	added UI initializer in Main.java.
+===============================================
+Feb 10th 14:23:48
+	Had a meeting with Mustafa, regarding LedgerItem class.
+	Discussed about the attributes, and how to make connections
+	with expenses/earnings related classes.
 	
+	Bug fixed in Util.calcBiweek().
+	
+	Tester file added for Util.java. 
+	Added test cases for Util.calcYear(), Util.calcMonth(),
+    Util.calcBiweek()
+    
+    Changed ref attribute to String in LedgerItem class.
+	Also added a formatting method to format the ref String
