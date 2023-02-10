@@ -1,7 +1,8 @@
 package businessLogic;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-
 import exceptions.InvalidDateException;
 
 public final class Util {
@@ -81,5 +82,31 @@ public final class Util {
 		final double CONVENTION = 6.048e+8;
 		int week = (int) (date.getTime() / CONVENTION);
 		return week;
+	}
+	
+	/**
+	 * This method does encryption by MD5 Hashing Technique.
+	 * @param	password is user's original input string
+	 * @return	the encrypted password in string.
+	 */
+	public static String encrypt(String password) {
+		String encryptedpassword = null;  
+		try {  
+	        /* MessageDigest instance for MD5. */  
+			MessageDigest m = MessageDigest.getInstance("MD5");  
+			m.update(password.getBytes());  
+			/* Convert the hash value into bytes */   
+			byte[] bytes = m.digest();  
+			  
+			/* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
+			StringBuilder s = new StringBuilder();  
+			for(int i = 0; i < bytes.length; i++) {  
+			    s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
+			}   
+			    encryptedpassword = s.toString();  
+		} catch (NoSuchAlgorithmException e) {  
+		    e.printStackTrace();  
+		}   
+		return encryptedpassword;
 	}
 }
