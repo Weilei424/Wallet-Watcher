@@ -67,7 +67,7 @@ public final class Util {
 		} catch (IllegalArgumentException e) {
 			System.out.println("invalid date");
 		}
-		int biweeks = (Util.getWeek(endAt) -Util.getWeek(endAt)) / 2;
+		int biweeks = (Util.getWeek(endAt) -Util.getWeek(beginAt)) / 2;
 		
 		return biweeks;
 	}
@@ -80,7 +80,6 @@ public final class Util {
 	private static int getWeek(Date date) {
 		final double CONVENTION = 6.048e+8;
 		int week = (int) (date.getTime() / CONVENTION);
-		
 		return week;
 	}
 }
