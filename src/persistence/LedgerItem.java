@@ -7,7 +7,7 @@ public class LedgerItem {
 	private double amount;
 	private String itemName;
 	private String note;
-	private int ref;
+	private String ref;
 	private static int REFNUM = 0;
 	
 	private LedgerItem(Date date, double amount, String itemName, String note) {
@@ -15,7 +15,7 @@ public class LedgerItem {
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
-		this.ref = REFNUM++;
+		this.formatRef(REFNUM++);
 	}
 	
 	/**
@@ -39,6 +39,10 @@ public class LedgerItem {
 		return obj;
 	}
 
+	private void formatRef(int ref) {
+		this.ref = String.format("%07d", ref);
+	}
+	
 	public Date getDate() {
 		return this.date;
 	}
@@ -71,7 +75,7 @@ public class LedgerItem {
 		this.note = note;
 	}
 	
-	public int getRef() {
+	public String getRef() {
 		return this.ref;
 	}
 }
