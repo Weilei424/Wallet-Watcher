@@ -1,6 +1,7 @@
 package main;
 
 import mainUI.MainUi;
+import persistence.UserStub;
 
 public class Main {
 
@@ -10,6 +11,10 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		new MainUi();
+		
+		/*  */
+		UserStub userDB = new UserStub();
+		userDB.demo();
 	}
 
 }
