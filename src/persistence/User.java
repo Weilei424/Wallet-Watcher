@@ -19,6 +19,11 @@ public class User {
 		this.list = list;
 	}
 	
+	/**
+	 * This is method is the static factory method.
+	 * @param 	input string received from UI.
+	 * @return	the instance of User object.
+	 */
 	public static User getInstanceOf(String input) {
 		try {
 //			Tokenizer static method to check if the input is legit.
@@ -61,5 +66,9 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = Util.encrypt(password);
+	}
+	
+	public String getPassword() {
+		return this.password;
 	}
 }
