@@ -49,3 +49,23 @@ Feb 10th 14:23:48
     
     Changed ref attribute to String in LedgerItem class.
 	Also added a formatting method to format the ref String
+===============================================
+Feb 10th 17:52:40
+	Created User class.
+	
+	Added encrypt() method in Util class.
+===============================================
+Feb 10th 20:20:13
+	Added UserStub class. It is a stub DB for storing
+	User objects.
+===============================================
+Feb 11th 01:19:26
+	Added javadoc for static factory method in User class.
+	
+	Added initialization for stub UserDB in Main.main().
+	
+	Made test cases for User and UserStub.
+	
+	Changed the accessibility for dbUser to public in 
+	UserStub class.
+===============================================
