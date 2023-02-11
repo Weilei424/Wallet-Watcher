@@ -3,22 +3,25 @@ package persistence;
 import java.util.ArrayList;
 
 /**
- * This class should be removed once DB is available
+ * This class should be removed once DB is ready
  * @author mason
  *
  */
 public class UserStub {
-	ArrayList<User> userDB = new ArrayList<>();
-	User demoUser = User.getInstanceOf("");
+	ArrayList<User> dbUser = new ArrayList<>();
 	
-	public void init() {
-		demoUser.setFirstName("Jeff");
-		demoUser.setLastName("Bezos");
-		demoUser.setPassword("amazonrulestheworld!");
-		demoUser.setUserName("CEOJeff!");
+	public void demo() {
+		User demo = User.getInstanceOf("");
+		
+		demo.setFirstName("Jeff");
+		demo.setLastName("Bezos");
+		demo.setUserName("ceojeff");
+		demo.setPassword("WhoDoesntUseAmazon?");
+		
+		this.dbUser.add(demo);
 	}
 	
-	public void addUser() {
-		
+	public void addUser(User user) {
+		dbUser.add(user);
 	}
 }
