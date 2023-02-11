@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class UserStub {
-	ArrayList<User> dbUser = new ArrayList<>();
+	public ArrayList<User> dbUser = new ArrayList<>();
 	
 	public void demo() {
 		User demo = User.getInstanceOf("");
