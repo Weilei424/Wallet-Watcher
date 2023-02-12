@@ -2,6 +2,8 @@ package persistence;
 
 import java.util.Date;
 
+import businessLogic.Recurrence;
+
 public class LedgerItem {
 	private Date date;
 	private double amount;
@@ -9,6 +11,7 @@ public class LedgerItem {
 	private String note;
 	private String ref;
 	private static int REFNUM = 0;
+	private Recurrence recurring;
 	
 	private LedgerItem(Date date, double amount, String itemName, String note) {
 		this.date = date;
@@ -77,5 +80,13 @@ public class LedgerItem {
 	
 	public String getRef() {
 		return this.ref;
+	}
+	
+	public Recurrence getRecurring() {
+		return this.recurring;
+	}
+
+	public void setRecurring(Recurrence recurring) {
+		this.recurring = recurring;
 	}
 }
