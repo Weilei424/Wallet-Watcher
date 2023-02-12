@@ -12,4 +12,8 @@ public class Income {
 		return this.info.getDate();
 	}
 
+	public double getAmount() {
+		return this.info.getAmount();
+	}
+	
 }
