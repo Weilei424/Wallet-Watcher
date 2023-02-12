@@ -3,19 +3,32 @@ package businessLogic;
 import java.util.ArrayList;
 import java.util.Date;
 
+import exceptions.InvalidDateException;
 import persistence.LedgerItem;
 
 public class Recurrence {
-	private Date date;
+	private Date startDate;
 	private String frequency;
+	private Date endDate;
 	
 	/**
+	 * /**
 	 * This constructor constructs Recurrence object. 
-	 * @param 	date is the entry billing/payment date.
+	 * @param 	startDate is the entry billing/payment date.
+	 * @param 	endDate	is the end date, could be NULL.
 	 * @param 	frequency must be one of: "weekly", "biweekly", "monthly" and "yearly".
 	 */
-	public Recurrence(Date date, String frequency) {
-		this.date = date;
+	public Recurrence(Date startDate, Date endDate, String frequency) {
+		try {
+			boolean flag = startDate.getTime() - endDate.getTime() >= 0;
+			if (flag)
+				throw new InvalidDateException();
+		} catch (IllegalArgumentException e) {
+			System.out.println("invalid date");
+		}
+		
+		this.startDate = startDate;
+		this.endDate = endDate;
 		switch (frequency) {
 			case "weekly":
 				this.frequency = frequency;
@@ -33,13 +46,21 @@ public class Recurrence {
 				this.frequency = null;
 		}
 	}
-
-	public Date getDate() {
-		return this.date;
+	
+	public Date getStartDate() {
+		return this.startDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return this.endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getFrequency() {
