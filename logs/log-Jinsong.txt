@@ -16,3 +16,15 @@ Feb 8th 20:35:39
 Feb 8th 21:11:50
     Implemented constructors, getters, setters,
     and static factory method for LedgerItem.
+    
+===============================================
+2023-02-12 08:06:46
+Create income class and its constructor
+2023-02-12 08:16:39
+"Add recurssiveincome class and its constructor"
+2023-02-12 08:42:02
+Add get sumincome and sumofmonth method
+2023-02-12 23:45:03
+Change the attribute set for Ledger item class
+2023-02-12 23:46:04
+Added computeIncome and toString method for income class
