@@ -4,16 +4,16 @@ import java.util.Date;
 
 public abstract class  Investment extends LedgerItem{
 
-	protected Investment(Date date, double amount, String itemName, String note) {
+	protected Investment(String date, double amount, String itemName, String note) {
 		super(date, amount, itemName, note);
 		
 		
 	}
 	
 
-	public void cashout(Date date) {
+	public void cashout(String date) {
 		String message ="Sell"+this.getItemName();
-		Immediate_Income income = (Immediate_Income) Immediate_Income.getInstanceOf(message);
+		Immediate_Income income = new Immediate_Income(date,amount,message,null);
 		//delete this investment from database
 		//add this item to user ldgerItem
 	}
