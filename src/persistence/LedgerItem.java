@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import businessLogic.Recurrence;
+import parsers.DateParser;
 
 public class LedgerItem {
 	protected Date date;
@@ -15,8 +16,13 @@ public class LedgerItem {
 	protected static int REFNUM = 0;
 	protected Recurrence recurring;
 	
-	public LedgerItem(LocalDate date, double amount, String itemName, String note) {
-		this.date = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	@SuppressWarnings("deprecation")
+	public LedgerItem(String date, double amount, String itemName, String note) {
+		this.date = Date.from(DateParser.getDateFromString(date).atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date temp = new Date();
+		this.date.setMinutes(temp.getMinutes());
+		this.date.setHours(temp.getHours());
+		this.date.setSeconds(temp.getSeconds());
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
