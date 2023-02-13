@@ -15,7 +15,7 @@ class UtilTester {
 	
 	@BeforeEach
 	void init() throws Exception {
-		obj = LedgerItem.getInstanceOf("xxxx");
+		obj = new LedgerItem("2020/01/01", 0.00, "", "");
 		obj.setAmount(10000.00);
 		Date d1 = new Date();
 		obj.setDate(d1);
