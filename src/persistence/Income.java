@@ -1,36 +1,19 @@
 package persistence;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Income {
-	LedgerItem info;
+public abstract class Income extends LedgerItem{
 	
-	public Income(LedgerItem info) {
-		this.info=info;
+	
+	public Income(Date date,double amount,String event,String note) {
+		super(date,amount,event,note);
 	}
 	
 	
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public Date getDate() {
-		return this.info.getDate();
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public double getAmount() {
-		return this.info.getAmount();
-	}
-	/**
-	 * 
-	 * @param list
-	 * @return
-	 */
+	
 	public static double getSumIncome(List<Income>list) {
 		double amount =0;
 		for(Income INCOME:list)
@@ -39,12 +22,22 @@ public class Income {
 			
 			
 	}
-	@SuppressWarnings("deprecation")
-	public static double getSumMOnth(int month,List<Income>list) {
+	@Override
+	public String toString() {
+		String returns="";
+		returns +=this.getAmount()+"earned on "+this.getDate().toString()+"by "+this.getItemName();
+		return returns;
+	}
+	public double computeIncome(Date startDate,Date endDate,List<LedgerItem>list) {
 		double amount =0;
-		for (Income income:list)
-			if(income.info.getDate().getMonth()==month)
-				amount+=income.info.getAmount();
+		for(LedgerItem item:list)
+		{
+			if(!(item instanceof Income))
+			continue;
+			if(item.getDate().compareTo(endDate)>0||item.getDate().compareTo(startDate)<0)
+				continue;
+			amount+=item.getAmount();
+		}
 		return amount;
 	}
 	
