@@ -69,3 +69,6 @@ Feb 11th 01:19:26
 	Changed the accessibility for dbUser to public in 
 	UserStub class.
 ===============================================
+Feb 12th 23:13:23
+	Changed constructor from private to protected in
+	LedgerItem class.
