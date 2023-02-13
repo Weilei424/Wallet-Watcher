@@ -16,6 +16,8 @@ class LedgerItemTester {
 	
 	@BeforeEach
 	void init() {
+		LedgerItem o1 = new LedgerItem("2023/02/13", 0, input, input);
+		LedgerItem o2 = new LedgerItem("2023/02/13", 0, input, input);
 		obj = new LedgerItem("2023/02/13", 0, input, input);
 		System.out.println(obj.getDate().toString());
 	}
@@ -47,5 +49,6 @@ class LedgerItemTester {
 		assertTrue(Math.abs(obj.getAmount() - amount) <= 0.0001);
 		assertEquals(s, obj.getItemName());
 		assertEquals(d, obj.getDate());
+		assertEquals("0000002", obj.getRef());
 	}
 }
