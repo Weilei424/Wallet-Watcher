@@ -2,23 +2,20 @@ package persistence;
 
 import java.util.Date;
 
-import businessLogic.Recurrence;
-
 public class LedgerItem {
 	private Date date;
 	private double amount;
 	private String itemName;
 	private String note;
-	private String ref;
+	private int ref;
 	private static int REFNUM = 0;
-	private Recurrence recurring;
 	
-	protected LedgerItem(Date date, double amount, String itemName, String note) {
+	protected LedgerItem(Date date,double amount,String itemName,String note) {
 		this.date = date;
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
-		this.formatRef(REFNUM++);
+		this.ref = REFNUM++;
 	}
 	
 	/**
@@ -29,7 +26,7 @@ public class LedgerItem {
 	public static LedgerItem getInstanceOf(String input) {
 		try {
 //			Tokenizer static method to check if the input is legit.
-//			Tokenizer.checkLedger(input);
+//			Tokenizer.check(input);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -42,10 +39,6 @@ public class LedgerItem {
 		return obj;
 	}
 
-	private void formatRef(int ref) {
-		this.ref = String.format("%07d", ref);
-	}
-	
 	public Date getDate() {
 		return this.date;
 	}
@@ -78,15 +71,7 @@ public class LedgerItem {
 		this.note = note;
 	}
 	
-	public String getRef() {
+	public int getRef() {
 		return this.ref;
-	}
-	
-	public Recurrence getRecurring() {
-		return this.recurring;
-	}
-
-	public void setRecurring(Recurrence recurring) {
-		this.recurring = recurring;
 	}
 }
