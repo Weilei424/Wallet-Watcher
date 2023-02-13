@@ -15,7 +15,7 @@ public class LedgerItem {
 	protected static int REFNUM = 0;
 	protected Recurrence recurring;
 	
-	protected LedgerItem(LocalDate date, double amount, String itemName, String note) {
+	public LedgerItem(LocalDate date, double amount, String itemName, String note) {
 		this.date = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		this.amount = amount;
 		this.itemName = itemName;
