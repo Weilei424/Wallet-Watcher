@@ -72,3 +72,20 @@ Feb 11th 01:19:26
 Feb 12th 23:13:23
 	Changed constructor from private to protected in
 	LedgerItem class.
+===============================================
+Feb 13th 11:37:29
+	Changed all private methods and attributes to
+	protected. Removed static factory method in
+	LedgerItem class.
+	
+	Changed parameter type of date to String in 
+	LedgerItem class, and its now calls 
+	DateParser.getDateFromString().
+	
+	Updated test cases to fit current working 
+	version of LedgerItem class.
+	
+	Removed static factory method, 
+	made constructor to public in User class.
+	
+	Updated test cases for all changes above.
