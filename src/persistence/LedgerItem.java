@@ -69,11 +69,15 @@ public class LedgerItem {
 		return this.ref;
 	}
 	
-	public Recurrence getRecurring() {
+	public Recurrence getRecurringInfo() {
 		return this.recurring;
 	}
 
 	public void setRecurring(Recurrence recurring) {
 		this.recurring = recurring;
+	}
+	
+	public boolean isRecurring() {
+		return this.recurring != null;
 	}
 }
