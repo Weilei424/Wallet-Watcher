@@ -7,6 +7,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import parsers.DateParser;
 import persistence.LedgerItem;
 
 class LedgerItemTester {
@@ -15,22 +16,17 @@ class LedgerItemTester {
 	
 	@BeforeEach
 	void init() {
-		obj = LedgerItem.getInstanceOf(input);
+		obj = new LedgerItem("2023/02/13", 0, input, input);
+		System.out.println(obj.getDate().toString());
 	}
 	
-	@Test
-	void testStaticFactory() {
-		
-		assertTrue(LedgerItem.getInstanceOf(input) instanceof LedgerItem, "static factory method failed");
-	}
 	
 	@SuppressWarnings("deprecation")
 	@Test 
 	void testSetterGetter() {
-		assertEquals("", obj.getNote());
+		assertEquals("xxxxxx", obj.getNote());
 		assertTrue(Math.abs(obj.getAmount() - 0.00) <= 0.0001);
-		assertEquals("", obj.getItemName());
-		assertEquals(null, obj.getDate());
+		assertEquals("xxxxxx", obj.getItemName());
 		
 		double amount = 15.63;
 		String s = "Wendy's";
