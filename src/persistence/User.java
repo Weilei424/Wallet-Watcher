@@ -10,36 +10,18 @@ public class User {
 	private String password;
 	private ArrayList<LedgerItem> list;
 	
-	private User(String firstName, String lastName, String userName, String password, ArrayList<LedgerItem> list) {
-		super();
+	public User() {
+		this("", "", "", "");
+	}
+	
+	public User(String firstName, String lastName, String userName, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
-		this.list = list;
+		this.list = new ArrayList<>();
 	}
 	
-	/**
-	 * This is method is the static factory method.
-	 * @param 	input string received from UI.
-	 * @return	the instance of User object.
-	 */
-	public static User getInstanceOf(String input) {
-		try {
-//			Tokenizer static method to check if the input is legit.
-//			Tokenizer.checkUser(input);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-//		String firstName = Tokenizer.getFirstName();
-//		String lastName = Tokenizer.getLastName();
-//		String userName = Tokenizer.getUserName();
-//		String password = Util.encrypt(Tokenizer.getPassword());
-		ArrayList<LedgerItem> list = new ArrayList<>();
-		User obj = new User("", "", "", "", list);
-		return obj;
-	}
-
 	public String getFirstName() {
 		return this.firstName;
 	}
