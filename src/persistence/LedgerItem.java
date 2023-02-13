@@ -13,7 +13,7 @@ public class LedgerItem {
 	private static int REFNUM = 0;
 	private Recurrence recurring;
 	
-	private LedgerItem(Date date, double amount, String itemName, String note) {
+	protected LedgerItem(Date date, double amount, String itemName, String note) {
 		this.date = date;
 		this.amount = amount;
 		this.itemName = itemName;
