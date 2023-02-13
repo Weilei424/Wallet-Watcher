@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Income extends LedgerItem{
 	
 	
-	public Income(Date date,double amount,String event,String note) {
+	public Income(String date,double amount,String event,String note) {
 		super(date,amount,event,note);
 	}
 	
