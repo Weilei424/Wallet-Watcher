@@ -5,6 +5,8 @@ import java.util.Date;
 public abstract class  Investment extends LedgerItem{
 
 	protected Investment(String date, double amount, String itemName, String note) {
+		
+		//Create a expense object of the same amount and store it in database
 		super(date, amount, itemName, note);
 		
 		
@@ -17,4 +19,5 @@ public abstract class  Investment extends LedgerItem{
 		//delete this investment from database
 		//add this item to user ldgerItem
 	}
+	
 }
