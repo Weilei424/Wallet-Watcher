@@ -2,21 +2,7 @@ Log of Development
 //name and id here
 
 ===============================================
-Feb 8th 20:35:39
-    Created businessLogic package.
-    Added CustomFormula interface, 
-    MathUtil class to businessLogic packge.
 
-    Created persistence package.
-    Added LedgerItem class to persistence package.
-
-    All classes/interfaces are bare bone,
-    no implementation.
-===============================================
-Feb 8th 21:11:50
-    Implemented constructors, getters, setters,
-    and static factory method for LedgerItem.
-    
 ===============================================
 2023-02-12 08:06:46
 Create income class and its constructor
@@ -28,3 +14,5 @@ Add get sumincome and sumofmonth method
 Change the attribute set for Ledger item class
 2023-02-12 23:46:04
 Added computeIncome and toString method for income class
+2023-02-13 13:34:42
+modify constructor for income
