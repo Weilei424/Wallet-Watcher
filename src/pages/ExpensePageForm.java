@@ -18,18 +18,18 @@ import javax.swing.SwingConstants;
 
 public class ExpensePageForm {
 
-	JFrame expensePageFrame;
-	JPanel expensePageForm;
-	JLabel expenseName;
-	JTextField expenseNameInput;
-	JLabel expenseCost;
-	JTextField expenseCostInput;
+	public JFrame expensePageFrame;
+	private JPanel expensePageForm;
+	private JLabel expenseName;
+	private JTextField expenseNameInput;
+	private JLabel expenseCost;
+	private JTextField expenseCostInput;
 	// JLabel expenseCategory; *No real code for this yet
-	JLabel expenseDescription;
-	JTextField expenseDescriptionInput;
-	JLabel expenseDate;
-	JTextField expenseDateInput;
-	JButton submit;
+	private JLabel expenseDescription;
+	private JTextField expenseDescriptionInput;
+	private JLabel expenseDate;
+	private JTextField expenseDateInput;
+	private JButton submit;
 
 	public ExpensePageForm() {
 

@@ -10,10 +10,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import pages.ExpensePageForm;
 
 public class MainUi implements ActionListener {
 
@@ -21,13 +23,13 @@ public class MainUi implements ActionListener {
 
 	JFrame mainFrame;
 	JPanel mainPanel;
-	JPanel test;
 	JButton userLogIn;
 	JLabel welcomeText;
 	JLabel userText;
 	JTextField userTextInput;
 	JLabel passwordText;
 	JPasswordField userPasswordInput;
+	ExpensePageForm expensePageForm;
 
 	// The constructor holds all the initialization of every global variable and
 	// where to use it
@@ -36,7 +38,8 @@ public class MainUi implements ActionListener {
 		// Initializing all variables
 		mainFrame = new JFrame();
 		mainPanel = new JPanel();
-		test = new JPanel();
+		expensePageForm = new ExpensePageForm();
+		expensePageForm.expensePageFrame.setVisible(false);
 		userLogIn = new JButton("Login!");
 		welcomeText = new JLabel("Welcome to Wallet Watcher!", SwingConstants.CENTER);
 		userText = new JLabel("Username");
@@ -71,7 +74,8 @@ public class MainUi implements ActionListener {
 		mainFrame.add(mainPanel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setTitle("Wallet Watcher");
-		mainFrame.pack();
+		mainFrame.setSize(450, 350);
+		// mainFrame.pack();
 		mainFrame.setVisible(true);
 
 	}
@@ -80,6 +84,16 @@ public class MainUi implements ActionListener {
 	// clicked if user name and password is correct
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		String uName = userTextInput.getText();
+		String uPass = userPasswordInput.getText();
+		
+		if(uName.equals("Jeff") && uPass.equals("Bezoz")) {
+			expensePageForm.expensePageFrame.setVisible(true);
+			mainFrame.setVisible(false);
+		} else {
+			JOptionPane.showMessageDialog(mainFrame, "Sorry, not a valid username or password");
+		}
 
 	}
 
