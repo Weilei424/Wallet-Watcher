@@ -1,4 +1,4 @@
-package main.java.exceptions;
+package src.main.java.exceptions;
 
 @SuppressWarnings("serial")
 public class InvalidDateException extends IllegalArgumentException {

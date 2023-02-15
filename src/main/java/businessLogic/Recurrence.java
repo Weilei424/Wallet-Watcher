@@ -1,10 +1,10 @@
-package main.java.businessLogic;
+package src.main.java.businessLogic;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import main.java.exceptions.InvalidDateException;
-import main.java.persistence.LedgerItem;
+import src.main.java.exceptions.InvalidDateException;
+import src.main.java.persistence.LedgerItem;
 
 public class Recurrence {
 	private Date startDate;

@@ -1,9 +1,9 @@
-package main.java.businessLogic;
+package src.main.java.businessLogic;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import main.java.exceptions.InvalidDateException;
+import src.main.java.exceptions.InvalidDateException;
 
 public final class Util {
 	

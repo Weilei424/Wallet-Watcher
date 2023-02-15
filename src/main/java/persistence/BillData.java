@@ -1,4 +1,4 @@
-package main.java.persistence;
+package src.main.java.persistence;
 
 public class BillData {
 	//meant to be where we do all the work with the bill data base however, no database to be used so stub database for now : 

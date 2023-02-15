@@ -1,4 +1,4 @@
-package main.java.businessLogic;
+package src.main.java.businessLogic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

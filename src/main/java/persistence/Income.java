@@ -1,4 +1,4 @@
-package main.java.persistence;
+package src.main.java.persistence;
 
 import java.util.Date;
 import java.util.List;
