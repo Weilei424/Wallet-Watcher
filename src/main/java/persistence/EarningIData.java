@@ -6,11 +6,11 @@ package main.java.persistence;
 	import java.util.ArrayList;
 	import java.util.List;
 
-	public class IncomeInputData {
+	public class EarningIData {
 		public List<LedgerItem> incomes;
 		public double income; 
 		
-		public IncomeInputData()
+		public EarningIData()
 		{ 
 			incomes=new ArrayList<>();
 			income=0; 
