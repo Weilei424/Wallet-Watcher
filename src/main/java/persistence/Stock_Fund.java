@@ -6,7 +6,7 @@ public class Stock_Fund extends Investment {
 	protected List<Investpoint>list;
 
 	protected Stock_Fund(String date, double amount, String itemName, String note) {
-		super(date, amount, itemName, note);
+		super(date, amount, itemName, note,0);
 		Investpoint first= new Investpoint(date,amount);
 		list.add(first);
 		// TODO Auto-generated constructor stub
