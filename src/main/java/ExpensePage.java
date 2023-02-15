@@ -47,7 +47,7 @@ public class ExpensePage {
 		
 		mainEpFrame.add(mainPanel, BorderLayout.NORTH);
 		mainEpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainEpFrame.setTitle("All Expenses");
+		mainEpFrame.setTitle("Expense Title");
 		mainEpFrame.setSize(800, 800);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainEpFrame.setVisible(true);
