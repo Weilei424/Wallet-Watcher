@@ -32,6 +32,8 @@ public class DateParser {
         dateFormats.add(new DateFormat(DD_MM_YYYY, false));
         Pattern DD_MMM_YYYY = Pattern.compile("^(?<day>\\d{1,2})[-\\/](?<month>" + monthRegex + ")[-\\/](?<year>\\d{4})$");
         dateFormats.add(new DateFormat(DD_MMM_YYYY, true));
+        Pattern MMM_DD_YYYY = Pattern.compile("(?<month>" + monthRegex + ") (?<day>\\d{1,2}),? (?<year>\\d{4})");
+        dateFormats.add(new DateFormat(MMM_DD_YYYY, true));
     }
 
     public static LocalDate getDateFromString(String input) throws IllegalArgumentException {
@@ -68,7 +70,7 @@ public class DateParser {
 
     private static int getMonthFromString(String month) {
         for (int i = 0; i < months.length; i++) {
-            if (month.equals(months[i]) || month.equals(months[i].substring(0, 3))) return i + 1;
+            if (month.equalsIgnoreCase(months[i]) || month.equalsIgnoreCase(months[i].substring(0, 3))) return i + 1;
         }
         throw new IllegalArgumentException("Not a valid month.");
     }
