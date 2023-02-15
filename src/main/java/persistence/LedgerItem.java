@@ -28,6 +28,7 @@ public class LedgerItem {
 		this.formatRef(REFNUM++);
 	}
 
+	
 	protected void formatRef(int ref) {
 		this.ref = String.format("%07d", ref);
 	}

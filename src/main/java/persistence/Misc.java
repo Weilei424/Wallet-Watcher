@@ -3,7 +3,11 @@ package main.java.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Misc {
+public class Misc extends LedgerItem {
+	public Misc(String date, double amount, String itemName, String note) {
+		super(date, amount, itemName, note);
+		// TODO Auto-generated constructor stub
+	}
 	private double TFSA_room;
 	private double RRSP_room;
 	
@@ -11,11 +15,5 @@ public class Misc {
 	private List<Investment>RRSP_list;
 	private List<Investment>RESP_list;
 	
-	public Misc(double room1,double room2) {
-		this.TFSA_room=room1;
-		this.RRSP_room=room2;
-		this.TFSA_list=new ArrayList<Investment>();
-		this.RRSP_list=new ArrayList<Investment>();
-		this.RESP_list=new ArrayList<Investment>();
-	}
+	
 }

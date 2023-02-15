@@ -3,7 +3,7 @@ package main.java.persistence;
 import java.util.Date;
 import java.util.List;
 
-public abstract class Income extends LedgerItem{
+public class Income extends LedgerItem{
 	
 	
 	public Income(String date,double amount,String event,String note) {
