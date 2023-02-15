@@ -1,5 +1,7 @@
 package main.java.exceptions;
 
-public class NotEnoughRoomException {
+public class NotEnoughRoomException extends IllegalArgumentException{
+	
+	
 
 }
