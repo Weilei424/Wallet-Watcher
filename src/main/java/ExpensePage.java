@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/main/java/ExpensePage.java
 package main.java;
-=======
-package main;
->>>>>>> Taha:src/main/ExpensePage.java
 
 import java.awt.BorderLayout;
 import java.awt.Color;
