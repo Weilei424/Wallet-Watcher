@@ -80,4 +80,8 @@ public class LedgerItem {
 	public boolean isRecurring() {
 		return this.recurring != null;
 	}
+	public String toString()
+	{ 
+		return String.format( "%s: %s %f \n \t %s \n",this.date, this.itemName, this.amount, this.note);
+	}
 }

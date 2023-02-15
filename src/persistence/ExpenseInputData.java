@@ -19,6 +19,11 @@ public class ExpenseInputData {
 		ledgerItems.add(new LedgerItem(date,amount, itemName, note));
 		cost+=amount; 
 	}
+	public void addExpense(LedgerItem input)
+	{
+		ledgerItems.add(input);
+		cost+=input.amount; 
+	}
 	public String generateReceipt()
 	{ 
 		String ret="";
