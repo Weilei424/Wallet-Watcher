@@ -6,8 +6,8 @@ public class BudgetData extends LedgerItem {
         super(date, amount, itemName, note);
     }
 
-    public double getMoneyLeft() {
-        return amount /* - ExpenseInputData#cost */;
+    public double getMoneyLeft(ExpenseInputData expenseInputData) {
+        return amount - expenseInputData.cost;
     }
 
 }
