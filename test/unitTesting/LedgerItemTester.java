@@ -7,7 +7,7 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import parsers.DateParser;
+import businessLogic.DateParser;
 import persistence.LedgerItem;
 
 class LedgerItemTester {
