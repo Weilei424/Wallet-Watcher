@@ -1,4 +1,4 @@
-package parsers;
+package businessLogic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package main;
 
-import mainUI.MainUi;
-import pages.ExpensePageForm;
 import persistence.UserStub;
 
 public class Main {
