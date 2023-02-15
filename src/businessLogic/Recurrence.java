@@ -82,7 +82,7 @@ public class Recurrence {
 	public static <T extends LedgerItem> ArrayList<T> findRecur(ArrayList<T> list) {
 		ArrayList<T> res = new ArrayList<>();
 		for (T ledger : list) {
-			if (ledger.getRecurring() != null) {
+			if (ledger.getRecurringInfo() != null) {
 				res.add(ledger);
 			}
 		}

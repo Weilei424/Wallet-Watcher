@@ -11,7 +11,7 @@ public class UserStub {
 	public ArrayList<User> dbUser = new ArrayList<>();
 	
 	public void demo() {
-		User demo = User.getInstanceOf("");
+		User demo = new User();
 		
 		demo.setFirstName("Jeff");
 		demo.setLastName("Bezos");

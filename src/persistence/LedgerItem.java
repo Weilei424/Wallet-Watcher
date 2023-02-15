@@ -1,48 +1,35 @@
 package persistence;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import businessLogic.Recurrence;
+import parsers.DateParser;
 
 public class LedgerItem {
-	private Date date;
-	private double amount;
-	private String itemName;
-	private String note;
-	private String ref;
-	private static int REFNUM = 0;
-	private Recurrence recurring;
+	protected Date date;
+	protected double amount;
+	protected String itemName;
+	protected String note;
+	protected String ref;
+	protected static int REFNUM = 0;
+	protected Recurrence recurring;
 	
-	private LedgerItem(Date date, double amount, String itemName, String note) {
-		this.date = date;
+	@SuppressWarnings("deprecation")
+	public LedgerItem(String date, double amount, String itemName, String note) {
+		this.date = Date.from(DateParser.getDateFromString(date).atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date temp = new Date();
+		this.date.setMinutes(temp.getMinutes());
+		this.date.setHours(temp.getHours());
+		this.date.setSeconds(temp.getSeconds());
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
 		this.formatRef(REFNUM++);
 	}
-	
-	/**
-	 * Static factory method to initialize LedgerItem object
-	 * @param	input string from user
-	 * @return	instance is an object with attributes processed by Tokenizer
-	 */
-	public static LedgerItem getInstanceOf(String input) {
-		try {
-//			Tokenizer static method to check if the input is legit.
-//			Tokenizer.checkLedger(input);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-//		Date date = Tokenizer.getDate();
-//		double amount = Tokenizer.getAmount();
-//		String itemName = Tokenizer.getItemName();
-//		String note = Tokenizer.getNote();
-		LedgerItem obj = new LedgerItem(null, 0.00, "", "");
-		return obj;
-	}
 
-	private void formatRef(int ref) {
+	protected void formatRef(int ref) {
 		this.ref = String.format("%07d", ref);
 	}
 	
@@ -82,11 +69,15 @@ public class LedgerItem {
 		return this.ref;
 	}
 	
-	public Recurrence getRecurring() {
+	public Recurrence getRecurringInfo() {
 		return this.recurring;
 	}
 
 	public void setRecurring(Recurrence recurring) {
 		this.recurring = recurring;
+	}
+	
+	public boolean isRecurring() {
+		return this.recurring != null;
 	}
 }
