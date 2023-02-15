@@ -1,6 +1,7 @@
 package main;
 
 import mainUI.MainUi;
+import pages.ExpensePageForm;
 import persistence.UserStub;
 
 public class Main {
@@ -10,7 +11,9 @@ public class Main {
 	 * 
 	 */
 	public static void main(String[] args) {
-		new MainUi();
+		
+		MainUi login = new MainUi();
+	//	new MainUi();
 		
 		/*  */
 		UserStub userDB = new UserStub();
