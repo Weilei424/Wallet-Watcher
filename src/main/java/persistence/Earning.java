@@ -27,14 +27,11 @@ public class Earning extends LedgerItem{
 		returns +=this.getAmount()+"earned on "+this.getDate().toString()+"by "+this.getItemName();
 		return returns;
 	}
-	public double computeIncome(Date startDate,Date endDate,List<LedgerItem>list) {
+	public double computeIncome(List<Earning>list) {
 		double amount =0;
 		for(LedgerItem item:list)
 		{
-			if(!(item instanceof Earning))
-			continue;
-			if(item.getDate().compareTo(endDate)>0||item.getDate().compareTo(startDate)<0)
-				continue;
+			
 			amount+=item.getAmount();
 		}
 		return amount;

@@ -1,10 +1,11 @@
-package src.main.java.persistence;
+package main.java.persistence;
 
 import java.util.Date;
 
-import main.java.persistence.Immediate_Income;
+import main.java.persistence.Earning;
+import main.java.persistence.EarningInputData;
 
-public abstract class  Investment extends LedgerItem{
+public class  Investment extends LedgerItem{
 	private double rate;
 
 	protected Investment(String date, double amount, String itemName, String note,double rate) {
@@ -19,7 +20,9 @@ public abstract class  Investment extends LedgerItem{
 
 	public void cashout(String date) {
 		String message ="Sell"+this.getItemName();
-		Immediate_Income income = new Immediate_Income(date,amount,message,null);
+		Earning earn = new Earning(date,amount,message,null);
+		EarningInputDat
+		
 		//delete this investment from database
 		//add this item to user ldgerItem
 	}

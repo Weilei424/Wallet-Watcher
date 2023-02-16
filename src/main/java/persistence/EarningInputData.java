@@ -16,15 +16,26 @@ package main.java.persistence;
 			income=0; 
 			
 		}
-		public void addExpense(String date, double amount, String itemName, String note)
+		public void addEarning(String date, double amount, String itemName, String note)
 		{
 			incomes.add(new LedgerItem(date,amount, itemName, note));
 			income+=amount; 
 		}
-		public void addExpense(LedgerItem input)
+		public void addEarning(LedgerItem input)
 		{
 			incomes.add(input);
 			income+=input.amount; 
+		}
+		
+		
+		public double getIncome() {
+			return income;
+		}
+		public void setIncome(double income) {
+			this.income = income;
+		}
+		public List<LedgerItem> getIncomes() {
+			return incomes;
 		}
 		public String generateEarningrecord()
 		{ 
@@ -35,5 +46,7 @@ package main.java.persistence;
 			}
 			return ret; 
 		}
+		
+		
 	}
 
