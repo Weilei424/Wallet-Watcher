@@ -1,3 +1,4 @@
+
 package main.java.persistence;
 
 import java.util.ArrayList;
@@ -5,28 +6,54 @@ import java.util.Date;
 import java.util.List;
 
 public class CardData {
-	private List <Card> Cards=new ArrayList<>();
+	public List <Card> Cards=new ArrayList<>();
 	private Double cash; //added for now
 	//default constructor
 	public CardData()
 	{
-	
+		cash=0.0; 
 	}
 	
-	public void addCard(Card addedCard)
+	public void addBankingCard(String name, double quantity, double spendingLimit, String note)
 	{ 
-		Cards.add(addedCard);
+		Cards.add(new bankingCard(name, quantity, spendingLimit, note));
+		cash+=quantity;
+	}
+	
+	public void addCreditCard(String name, double quantity, double interest, Date monthlyPayment, String note,double spendingLimit)
+	{ 
+		Cards.add(new CreditCard(name, quantity, interest, monthlyPayment, note, spendingLimit));
+		cash+=quantity;
+
+	}
+	
+	public void addPointsCard(String name, double quantity, double ratio, String note)
+	{ 
+		Cards.add(new PointsCard(name, quantity, ratio, note));
+		cash+=quantity;
+	}
+	
+	public Card getCard(String param)
+	{
+		for(Card card: Cards)
+		{
+			if(card.getName().equals(param))
+			{
+				return card;
+			}
+		}
+		return null;
 	}
 	
 	
 	
-	abstract class Card
+	public abstract class Card
 	{ 
 		protected String name; 
 		protected Double quantity; 
 		protected String note; 
 		
-		private Card(String name, Double quantity,String note)
+		protected Card(String name, Double quantity,String note)
 		{ 
 			this.name=name;
 			this.quantity=quantity;
@@ -79,7 +106,7 @@ public class CardData {
 	public class PointsCard extends Card
 	{
 		private double ratio; 
-		public PointsCard(String name, double quantity, double interest, Date monthlyPayment, String note)
+		public PointsCard(String name, double quantity, double ratio, String note)
 		{
 			super(name,quantity,note);
 			this.ratio=ratio;
