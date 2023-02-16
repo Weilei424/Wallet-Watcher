@@ -125,6 +125,7 @@ public class ExpensePageForm implements ActionListener {
 
 		if (this.framesCreated < 1) {
 			ep = new ExpensePage();
+			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
 		}
 
