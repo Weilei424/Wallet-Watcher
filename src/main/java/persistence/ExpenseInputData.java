@@ -1,6 +1,7 @@
 package main.java.persistence;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ExpenseInputData {
@@ -23,6 +24,9 @@ public class ExpenseInputData {
 		ledgerItems.add(input);
 		cost+=input.amount; 
 	}
+	
+	
+	
 	public String generateReceipt()
 	{ 
 		String ret="";
@@ -32,5 +36,5 @@ public class ExpenseInputData {
 		}
 		return ret; 
 	}
-}
 
+}
