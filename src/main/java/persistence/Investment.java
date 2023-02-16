@@ -9,7 +9,7 @@ public class  Investment extends LedgerItem{
 	private double rate;
 	private double interst;
 
-	protected Investment(String date, double amount, String itemName, String note,double rate,ExpenseInputData data) {
+	public Investment(String date, double amount, String itemName, String note,double rate,ExpenseInputData data) {
 		
 		//Create a expense object of the same amount and store it in database
 		super(date, amount, itemName, note);
