@@ -1,4 +1,4 @@
-package src.main.java.persistence;
+package main.java.persistence;
 
 
 
@@ -6,11 +6,11 @@ package src.main.java.persistence;
 	import java.util.ArrayList;
 	import java.util.List;
 
-	public class EarningIData {
+	public class EarningInputData {
 		public List<LedgerItem> incomes;
 		public double income; 
 		
-		public EarningIData()
+		public EarningInputData()
 		{ 
 			incomes=new ArrayList<>();
 			income=0; 
