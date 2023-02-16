@@ -87,7 +87,7 @@ public class MainUi implements ActionListener {
 		String uName = userTextInput.getText();
 		String uPass = userPasswordInput.getText();
 
-		if (uName.equals("Jeff") && uPass.equals("Bezoz")) {
+		if (uName.equals("Jeff") && uPass.equals("Bezos")) {
 			mainExpensePage.mainEpFrame.setVisible(true);
 			mainFrame.setVisible(false);
 		} else {
