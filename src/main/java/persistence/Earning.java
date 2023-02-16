@@ -21,20 +21,14 @@ public class Earning extends LedgerItem{
 			
 			
 	}
+	public void deduction(double deduct) {
+		this.amount-=deduct;
+	}
 	@Override
 	public String toString() {
 		String returns="";
-		returns +=this.getAmount()+"earned on "+this.getDate().toString()+"by "+this.getItemName();
+		returns +=this.getAmount()+"earned on "+this.getDate()+"by "+this.getItemName();
 		return returns;
-	}
-	public double computeIncome(List<Earning>list) {
-		double amount =0;
-		for(LedgerItem item:list)
-		{
-			
-			amount+=item.getAmount();
-		}
-		return amount;
 	}
 	
 	

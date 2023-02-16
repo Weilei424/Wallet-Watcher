@@ -1,13 +1,15 @@
 package main.java.persistence;
 
 import java.util.List;
-
+import main.java.persistence.*;
 public class Stock_Fund extends Investment {
 	
+	
+	
 	private double current_amount;
-	protected Stock_Fund(String date, double amount, String itemName, String note) {
-		super(date, amount, itemName, note,0);
-		this.current_amount=amount
+	protected Stock_Fund(String date, double amount, String itemName, String note,ExpenseInputData data) {
+		super(date, amount, itemName, note,0,data);
+		this.current_amount=amount;
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -24,11 +26,27 @@ public class Stock_Fund extends Investment {
 	}
 
 
-
+	public double getCurrent() {
+		return this.current_amount;
+	}
+	public double getDifference() {
+		return current_amount-amount;
+	}
+	@Override
+	public String cashout(String date,EarningInputData list) {
+		String message ="Sell"+this.getItemName()+"and earn "+this.current_amount+"the different is"+getDifference();
+		Earning earn = new Earning(date,current_amount,message,null);
+		list.addEarning(earn);
+		
+		//delete this investment from database
+		//add this item to user ldgerItem
+		return message;
+	}
+	
 
 	@Override
 	public String toString() {
-		return "Stock_Fund bought" + date + ", amount=" + amount + ", itemName=" + itemName + "]";
+		return "Stock_Fund"+this.itemName+" bought on  " + date + ", amount=" + amount ;
 	}
 	
 	
