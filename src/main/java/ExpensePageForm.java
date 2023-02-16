@@ -122,10 +122,10 @@ public class ExpensePageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(this.framesCreated < 1) {
+
+		if (this.framesCreated < 1) {
 			ep = new ExpensePage();
-			ep.addExpense.setVisible(false);
+			ep.getAddExpense().setVisible(false);
 		}
 
 		String expName = expenseNameInput.getText();
@@ -135,12 +135,23 @@ public class ExpensePageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expCost, expName, expNote);
 		ep.setTempLedgerItem(this.ledgerItem);
+		String previousText = ep.getLedgerInfo().getText();
+		System.out.println(previousText);
 		ep.getLedgerInfo().append("\n");
 		ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
 		ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
 		ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
-		//System.out.println(ep.getTempLedgerItem().getItemName());
-		
+		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
+
+//		if (ep.isRemoved() == true) {
+//			ep.getLedgerInfo().setText(null);
+//			ep.getLedgerInfo().append("Name of Expense" + "\t");
+//			ep.getLedgerInfo().append("Cost of Expense" + "\t");
+//			ep.getLedgerInfo().append("Date Due" + "\t");
+//			ep.getLedgerInfo().append("Special Notes");
+//			ep.setRemoved(false);
+//		}
+
 		this.framesCreated++;
 
 //		System.out.println(this.ledgerItem.getItemName());
