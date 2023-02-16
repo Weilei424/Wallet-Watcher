@@ -17,24 +17,35 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class ExpensePage implements ActionListener{
+import main.java.persistence.LedgerItem;
+
+public class ExpensePage implements ActionListener {
 
 	// Initializing global variables
 	public JFrame mainEpFrame;
 	private JPanel mainEpPanel;
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
-	private JButton addExpense;
+	public JButton addExpense;
 	private JButton removeExpense;
 	private JLabel title;
 	private JTextArea ledgerInfo;
 	private ExpensePageForm epForm;
+	private LedgerItem tempLedgerItem;
+	private JTextField expenseName; // Not used
+	private JTextField expensePrice; // Not used
+	private JTextField expenseNotes; // Not used can delete ^
 
 	public ExpensePage() {
 		mainEpFrame = new JFrame();
 		mainEpPanel = new JPanel();
 		epForm = new ExpensePageForm();
 		epForm.expensePageFrame.setVisible(false);
+		this.tempLedgerItem = tempLedgerItem;
+
+		expenseName = new JTextField();
+		expensePrice = new JTextField();
+		expenseNotes = new JTextField();
 
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Expenses");
@@ -87,6 +98,18 @@ public class ExpensePage implements ActionListener{
 
 	}
 
+	public LedgerItem getTempLedgerItem() {
+		return tempLedgerItem;
+	}
+
+	public void setTempLedgerItem(LedgerItem tempLedgerItem) {
+		this.tempLedgerItem = tempLedgerItem;
+	}
+
+	public JTextArea getLedgerInfo() {
+		return ledgerInfo;
+	}
+
 	public static void main(String[] args) {
 		new ExpensePage();
 	}
@@ -95,6 +118,8 @@ public class ExpensePage implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		epForm.expensePageFrame.setVisible(true);
 		mainEpFrame.setVisible(false);
+		// setTempLedgerItem(epForm.getLedgerItem());
+
 	}
 
 }

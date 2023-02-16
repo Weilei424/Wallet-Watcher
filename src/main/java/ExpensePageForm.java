@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import main.java.persistence.ExpenseInputData;
 import main.java.persistence.LedgerItem;
 
 public class ExpensePageForm implements ActionListener {
@@ -20,20 +21,25 @@ public class ExpensePageForm implements ActionListener {
 	public JFrame expensePageFrame;
 	private JPanel expensePageForm;
 	private JLabel expenseName;
-	private JTextField expenseNameInput;
+	public JTextField expenseNameInput;
 	private JLabel expenseCost;
-	private JTextField expenseCostInput;
+	public JTextField expenseCostInput;
 	// JLabel expenseCategory; *No real code for this yet
 	private JLabel expenseDescription;
-	private JTextField expenseDescriptionInput;
+	public JTextField expenseDescriptionInput;
 	private JLabel expenseDate;
-	private JTextField expenseDateInput;
+	public JTextField expenseDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
+	private ExpenseInputData expData;
+	private ExpensePage ep;
+	private int framesCreated;
 
 	public ExpensePageForm() {
 
 		this.ledgerItem = ledgerItem;
+		this.expData = expData;
+		this.framesCreated = 0;
 
 		expensePageFrame = new JFrame();
 		expensePageForm = new JPanel();
@@ -92,7 +98,7 @@ public class ExpensePageForm implements ActionListener {
 		expensePageFrame.add(expensePageForm, BorderLayout.CENTER);
 		expensePageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		expensePageFrame.setTitle("Add Expense");
-		expensePageFrame.setSize(600, 900);
+		expensePageFrame.setSize(400, 300);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		expensePageFrame.setVisible(true);
 
@@ -116,16 +122,30 @@ public class ExpensePageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if(this.framesCreated < 1) {
+			ep = new ExpensePage();
+			ep.addExpense.setVisible(false);
+		}
+
 		String expName = expenseNameInput.getText();
 		String expNote = expenseDescriptionInput.getText();
 		String expDate = expenseDateInput.getText();
 		double expCost = Double.parseDouble(expenseCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expCost, expName, expNote);
+		ep.setTempLedgerItem(this.ledgerItem);
+		ep.getLedgerInfo().append("\n");
+		ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
+		ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
+		ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
+		//System.out.println(ep.getTempLedgerItem().getItemName());
+		
+		this.framesCreated++;
 
-		System.out.println(this.ledgerItem.getItemName());
-		System.out.println(this.ledgerItem.getAmount());
-		System.out.println(this.ledgerItem.getNote());
+//		System.out.println(this.ledgerItem.getItemName());
+//		System.out.println(this.ledgerItem.getAmount());
+//		System.out.println(this.ledgerItem.getNote());
 		// System.out.println(this.ledgerItem.getDate());
 
 	}
