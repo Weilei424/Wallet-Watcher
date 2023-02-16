@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import main.java.persistence.Stock_Fund;
 import main.java.persistence.ExpenseInputData;
+import main.java.persistence.LedgerItem;
 
 class Stock_FundTester {
 	
@@ -25,8 +26,22 @@ class Stock_FundTester {
 	}
 	
 	@Test
-	void constructortest() {
-		;
+	void constructortest1() {
+		
+		assertEquals(data.ledgerItems.size(),1);
+		LedgerItem item= data.ledgerItems.get(0);
+		
+		
+	}
+	@Test
+	void constructortest2() {
+		assertEquals(Apple.getCurrent(), 1700);
+	}
+	@Test
+	void setcurrentTest(){
+		Apple.priceChange(600);
+		assertEquals(Apple.getAmount(),1700);
+		
 	}
 
 }
