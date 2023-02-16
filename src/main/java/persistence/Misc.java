@@ -8,6 +8,10 @@ public class Misc extends LedgerItem {
 		super(null, amount, name, null);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Misc(String date, double amount,String item) {
+		super(date,amount,item,null);
+	}
 	@Override
 	public String toString() {
 		String message="Your "+this.itemName+"have amount of "+this.amount;
