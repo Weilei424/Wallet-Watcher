@@ -130,6 +130,10 @@ public class ExpensePageForm implements ActionListener {
 
 	}
 
+	public LedgerItem getLedgerItem() {
+		return ledgerItem;
+	}
+
 	public static void main(String[] args) {
 		new ExpensePageForm();
 	}
