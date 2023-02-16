@@ -20,15 +20,15 @@ public class MainUi implements ActionListener {
 
 	// Global Variables used for main UI
 
-	JFrame mainFrame;
-	JPanel mainPanel;
-	JButton userLogIn;
-	JLabel welcomeText;
-	JLabel userText;
-	JTextField userTextInput;
-	JLabel passwordText;
-	JPasswordField userPasswordInput;
-	ExpensePageForm expensePageForm;
+	private JFrame mainFrame;
+	private JPanel mainPanel;
+	private JButton userLogIn;
+	private JLabel welcomeText;
+	private JLabel userText;
+	private JTextField userTextInput;
+	private JLabel passwordText;
+	private JPasswordField userPasswordInput;
+	private ExpensePage mainExpensePage;
 
 	// The constructor holds all the initialization of every global variable and
 	// where to use it
@@ -37,8 +37,8 @@ public class MainUi implements ActionListener {
 		// Initializing all variables
 		mainFrame = new JFrame();
 		mainPanel = new JPanel();
-		expensePageForm = new ExpensePageForm();
-		expensePageForm.expensePageFrame.setVisible(false);
+		mainExpensePage = new ExpensePage();
+		mainExpensePage.mainEpFrame.setVisible(false);
 		userLogIn = new JButton("Login!");
 		welcomeText = new JLabel("Welcome to Wallet Watcher!", SwingConstants.CENTER);
 		userText = new JLabel("Username");
@@ -83,12 +83,12 @@ public class MainUi implements ActionListener {
 	// clicked if user name and password is correct
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		String uName = userTextInput.getText();
 		String uPass = userPasswordInput.getText();
-		
-		if(uName.equals("Jeff") && uPass.equals("Bezoz")) {
-			expensePageForm.expensePageFrame.setVisible(true);
+
+		if (uName.equals("Jeff") && uPass.equals("Bezoz")) {
+			mainExpensePage.mainEpFrame.setVisible(true);
 			mainFrame.setVisible(false);
 		} else {
 			JOptionPane.showMessageDialog(mainFrame, "Sorry, not a valid username or password");

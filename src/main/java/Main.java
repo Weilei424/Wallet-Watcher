@@ -14,8 +14,8 @@ public class Main {
 	//	new MainUi();
 		
 		/*  */
-		UserStub userDB = new UserStub();
-		userDB.demo();
+//		UserStub userDB = new UserStub();
+//		userDB.demo();
 	}
 
 }
