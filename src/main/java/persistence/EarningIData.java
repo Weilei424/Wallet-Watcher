@@ -26,7 +26,7 @@ package src.main.java.persistence;
 			incomes.add(input);
 			income+=input.amount; 
 		}
-		public String generateReceipt()
+		public String generateEarningrecord()
 		{ 
 			String ret="";
 			for(LedgerItem item: this.incomes)

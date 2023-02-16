@@ -11,9 +11,7 @@ public class Misc extends LedgerItem {
 	private double TFSA_room;
 	private double RRSP_room;
 	
-	private List<Investment>TFSA_list;
-	private List<Investment>RRSP_list;
-	private List<Investment>RESP_list;
+	
 	
 	
 }
