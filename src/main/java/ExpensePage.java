@@ -91,7 +91,7 @@ public class ExpensePage implements ActionListener {
 		mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
 		mainEpFrame.add(removeExpense, BorderLayout.SOUTH);
 		mainEpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainEpFrame.setTitle("Expense Title");
+		mainEpFrame.setTitle("Expenses");
 		mainEpFrame.setSize(800, 800);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainEpFrame.setVisible(true);
