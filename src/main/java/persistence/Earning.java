@@ -1,21 +1,21 @@
-package src.main.java.persistence;
+package main.java.persistence;
 
 import java.util.Date;
 import java.util.List;
 
-public class Income extends LedgerItem{
+public class Earning extends LedgerItem{
 	
 	
-	public Income(String date,double amount,String event,String note) {
+	public Earning(String date,double amount,String event,String note) {
 		super(date,amount,event,note);
 	}
 	
 	
 	
 	
-	public static double getSumIncome(List<Income>list) {
+	public static double getSumIncome(List<Earning>list) {
 		double amount =0;
-		for(Income INCOME:list)
+		for(Earning INCOME:list)
 			amount+=INCOME.getAmount();
 		return amount;
 			
@@ -31,7 +31,7 @@ public class Income extends LedgerItem{
 		double amount =0;
 		for(LedgerItem item:list)
 		{
-			if(!(item instanceof Income))
+			if(!(item instanceof Earning))
 			continue;
 			if(item.getDate().compareTo(endDate)>0||item.getDate().compareTo(startDate)<0)
 				continue;
