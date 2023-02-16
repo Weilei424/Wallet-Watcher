@@ -7,7 +7,7 @@ public class Stock_Fund extends Investment {
 	
 	
 	private double current_amount;
-	protected Stock_Fund(String date, double amount, String itemName, String note,ExpenseInputData data) {
+	public Stock_Fund(String date, double amount, String itemName, String note,ExpenseInputData data) {
 		super(date, amount, itemName, note,0,data);
 		this.current_amount=amount;
 		
