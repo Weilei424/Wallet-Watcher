@@ -20,11 +20,11 @@ class InvestmentTester {
 		String itemname ="TD saving";
 		String note;
 		
-		saving = new Investment(date,amount,itemname,null,rate,data);
+		saving = new Investment(date, amount, itemname, null, rate, data);
 	}
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void constructortest() {
+		assertEquals(saving.get)
 	}
 
 }
