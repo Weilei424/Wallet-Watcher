@@ -14,5 +14,9 @@ public class Misc extends LedgerItem {
 		return message;
 	}
 	
+	public void setUp(String Name,double amount) {
+		this.itemName=Name;
+		this.amount=amount;
+	}
 	
 }
