@@ -1,4 +1,4 @@
-package src.main.java.businessLogic;
+package main.java.businessLogic;
 
 public interface CustomFormula {
 	

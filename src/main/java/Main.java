@@ -1,6 +1,6 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.persistence.UserStub;
+import main.java.persistence.UserStub;
 
 public class Main {
 

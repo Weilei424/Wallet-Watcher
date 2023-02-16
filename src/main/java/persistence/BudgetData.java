@@ -1,4 +1,4 @@
-package src.main.java.persistence;
+package main.java.persistence;
 
 public class BudgetData extends LedgerItem {
 
