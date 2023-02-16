@@ -7,10 +7,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -26,15 +28,14 @@ public class ExpensePage implements ActionListener {
 	private JPanel mainEpPanel;
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
-	public JButton addExpense;
+	private JButton addExpense;
 	private JButton removeExpense;
 	private JLabel title;
 	private JTextArea ledgerInfo;
 	private ExpensePageForm epForm;
 	private LedgerItem tempLedgerItem;
-	private JTextField expenseName; // Not used
-	private JTextField expensePrice; // Not used
-	private JTextField expenseNotes; // Not used can delete ^
+	private boolean isRemoved;
+	public static volatile int numberOfExpenses = 0;
 
 	public ExpensePage() {
 		mainEpFrame = new JFrame();
@@ -42,10 +43,7 @@ public class ExpensePage implements ActionListener {
 		epForm = new ExpensePageForm();
 		epForm.expensePageFrame.setVisible(false);
 		this.tempLedgerItem = tempLedgerItem;
-
-		expenseName = new JTextField();
-		expensePrice = new JTextField();
-		expenseNotes = new JTextField();
+		this.isRemoved = false;
 
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Expenses");
@@ -55,9 +53,6 @@ public class ExpensePage implements ActionListener {
 		addExpense = new JButton("Add New Expense");
 		addExpense.setSize(40, 40);
 		addExpense.addActionListener(this);
-
-		removeExpense = new JButton("Remove Expense");
-		removeExpense.setBackground(Color.green);
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
@@ -77,6 +72,24 @@ public class ExpensePage implements ActionListener {
 		// Disables user from being able to add any text into area as it is only for
 		// displaying the ledger
 		ledgerInfo.setEditable(false);
+
+		removeExpense = new JButton(new AbstractAction("Remove All Expenses") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (numberOfExpenses > 0) {
+					ledgerInfo.setText(null);
+					ledgerInfo.append("Name of Expense" + "\t");
+					ledgerInfo.append("Cost of Expense" + "\t");
+					ledgerInfo.append("Date Due" + "\t");
+					ledgerInfo.append("Special Notes");
+				} else {
+					JOptionPane.showMessageDialog(mainEpFrame, "You need to input expenses first!");
+				}
+			}
+
+		});
+		removeExpense.setForeground(Color.green);
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
@@ -108,6 +121,26 @@ public class ExpensePage implements ActionListener {
 
 	public JTextArea getLedgerInfo() {
 		return ledgerInfo;
+	}
+
+	public JButton getAddExpense() {
+		return addExpense;
+	}
+
+	public int getNumberOfExpenses() {
+		return numberOfExpenses;
+	}
+
+	public void setNumberOfExpenses(int numberOfExpenses) {
+		this.numberOfExpenses = numberOfExpenses;
+	}
+
+	public boolean isRemoved() {
+		return isRemoved;
+	}
+
+	public void setRemoved(boolean isRemoved) {
+		this.isRemoved = isRemoved;
 	}
 
 	public static void main(String[] args) {
