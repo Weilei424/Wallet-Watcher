@@ -17,7 +17,7 @@ public class Stock_Fund extends Investment {
 	
 	
 	
-	public String priceChange(String date,double amount) {
+	public String priceChange(double amount) {
 		String message="";
 		this.current_amount=amount;
 		message+="THe price change for the fund /stock is"+this.amount;
