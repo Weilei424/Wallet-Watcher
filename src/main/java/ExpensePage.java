@@ -66,7 +66,7 @@ public class ExpensePage implements ActionListener {
 		ledgerInfo = new JTextArea();
 		ledgerInfo.append("Name of Expense" + "\t");
 		ledgerInfo.append("Cost of Expense" + "\t");
-		ledgerInfo.append("Date Due" + "\t");
+		ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
 		ledgerInfo.append("Special Notes");
 		ledgerInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		// Disables user from being able to add any text into area as it is only for
@@ -81,7 +81,7 @@ public class ExpensePage implements ActionListener {
 					ledgerInfo.setText(null);
 					ledgerInfo.append("Name of Expense" + "\t");
 					ledgerInfo.append("Cost of Expense" + "\t");
-					ledgerInfo.append("Date Due" + "\t");
+					ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
 					ledgerInfo.append("Special Notes");
 				} else {
 					JOptionPane.showMessageDialog(mainEpFrame, "You need to input expenses first!");
@@ -105,7 +105,7 @@ public class ExpensePage implements ActionListener {
 		mainEpFrame.add(removeExpense, BorderLayout.SOUTH);
 		mainEpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainEpFrame.setTitle("Expenses");
-		mainEpFrame.setSize(800, 800);
+		mainEpFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainEpFrame.setVisible(true);
 
