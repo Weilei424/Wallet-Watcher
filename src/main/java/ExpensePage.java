@@ -17,21 +17,24 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class ExpensePage {
+public class ExpensePage implements ActionListener{
 
 	// Initializing global variables
-	JFrame mainEpFrame;
-	JPanel mainEpPanel;
-	JPanel mainPanel; // main panel to hold all other panels in the expense page form
+	public JFrame mainEpFrame;
+	private JPanel mainEpPanel;
+	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
-	JButton addExpense;
-	JButton removeExpense;
-	JLabel title;
-	JTextArea ledgerInfo;
+	private JButton addExpense;
+	private JButton removeExpense;
+	private JLabel title;
+	private JTextArea ledgerInfo;
+	private ExpensePageForm epForm;
 
 	public ExpensePage() {
 		mainEpFrame = new JFrame();
 		mainEpPanel = new JPanel();
+		epForm = new ExpensePageForm();
+		epForm.expensePageFrame.setVisible(false);
 
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Expenses");
@@ -40,6 +43,7 @@ public class ExpensePage {
 
 		addExpense = new JButton("Add New Expense");
 		addExpense.setSize(40, 40);
+		addExpense.addActionListener(this);
 
 		removeExpense = new JButton("Remove Expense");
 		removeExpense.setBackground(Color.green);
@@ -54,12 +58,14 @@ public class ExpensePage {
 		// This is the text area which shows all of the "ledger" information
 
 		ledgerInfo = new JTextArea();
+		ledgerInfo.append("Name of Expense" + "\t");
+		ledgerInfo.append("Cost of Expense" + "\t");
+		ledgerInfo.append("Date Due" + "\t");
+		ledgerInfo.append("Special Notes");
 		ledgerInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		// Disables user from being able to add any text into area as it is only for
 		// displaying the ledger
 		ledgerInfo.setEditable(false);
-
-		
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
@@ -83,6 +89,12 @@ public class ExpensePage {
 
 	public static void main(String[] args) {
 		new ExpensePage();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		epForm.expensePageFrame.setVisible(true);
+		mainEpFrame.setVisible(false);
 	}
 
 }
