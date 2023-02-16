@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import main.java.persistence.Earning;
 
-class EarningtTester {
+class EarningTester {
 
 	Earning earn;
 	@BeforeEach
