@@ -13,7 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ExpensePageForm {
+import main.java.persistence.LedgerItem;
+
+public class ExpensePageForm implements ActionListener {
 
 	public JFrame expensePageFrame;
 	private JPanel expensePageForm;
@@ -27,8 +29,11 @@ public class ExpensePageForm {
 	private JLabel expenseDate;
 	private JTextField expenseDateInput;
 	private JButton submit;
+	private LedgerItem ledgerItem;
 
 	public ExpensePageForm() {
+
+		this.ledgerItem = ledgerItem;
 
 		expensePageFrame = new JFrame();
 		expensePageForm = new JPanel();
@@ -80,25 +85,8 @@ public class ExpensePageForm {
 
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
+		submit.addActionListener(this);
 		expensePageForm.add(submit);
-
-//		expenseName.setBounds(10, 20, 80, 25);
-//		expenseNameInput.setBounds(30, 20, 80, 25);
-//		expenseNameInput.setLocation(300, 300);
-//		expenseCost.setBounds(10, 50, 80, 25);
-//		expenseCostInput.setBounds(30, 50, 80, 25);
-
-		// submit button bounds
-
-		// Created main panel for the expense form
-//		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-//		expensePageForm.setLayout(new GridLayout(1, 1));
-//		expensePageForm.setBackground(Color.cyan);
-//		 expensePageForm.add(expenseName);
-//		 expensePageForm.add(expenseNameInput);
-		// expensePageForm.add(expenseCost);
-		// expensePageForm.add(expenseCostInput);
-		// expensePageForm.add(submit);
 
 		// Adding the expense form panel into the main frame
 		expensePageFrame.add(expensePageForm, BorderLayout.CENTER);
@@ -124,6 +112,22 @@ public class ExpensePageForm {
 
 	public JTextField getExpenseDateInput() {
 		return expenseDateInput;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String expName = expenseNameInput.getText();
+		String expNote = expenseDescriptionInput.getText();
+		String expDate = expenseDateInput.getText();
+		double expCost = Double.parseDouble(expenseCostInput.getText());
+
+		this.ledgerItem = new LedgerItem(expCost, expName, expNote);
+
+		System.out.println(this.ledgerItem.getItemName());
+		System.out.println(this.ledgerItem.getAmount());
+		System.out.println(this.ledgerItem.getNote());
+		// System.out.println(this.ledgerItem.getDate());
+
 	}
 
 	public static void main(String[] args) {
