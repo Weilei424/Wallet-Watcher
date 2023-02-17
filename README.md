@@ -19,14 +19,24 @@ Team 7
 =========================================================
 
 ## Iteration 0:
-  Please see Planning_Document.pdf for details.
+  Please see [Planning_Document_itr0.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr0.pdf) for details.
   
   [Customer interview video](https://drive.google.com/file/d/1tB2-PPHbQoVhg_04MTnWT-efHcVPlZ7P/view?usp=sharing/ "Named link title")
   
 =========================================================
 
 ## Iteration 1:
-  [Jira Board](https://tahas02.atlassian.net/jira/software/projects/WALI/boards/1 "Named link title")
+  Please see [Planning_Document_itr1.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr1.pdf) and [Our GitHub Wiki](https://github.com/Weilei424/Wallet-Watcher/wiki) for detals.
+  
+  [Jira Board](https://tahas02.atlassian.net/jira/software/projects/WALI/boards/1 "Named link title") for planning and workload splitting.
+  
+  **To login to the app, please use:**
+Username  | Password
+------------- | -------------
+Jeff  | Bezos
+ 
+  For more details, please check out our [User Manual](https://github.com/Weilei424/Wallet-Watcher/blob/main/Wallet%20Watcher%20User%20Manual.pdf)
+
   
   
   
