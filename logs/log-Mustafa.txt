@@ -23,4 +23,9 @@ Noticed oversights still need junit completion. Need to add to String method for
 Feb 16th 3:42:00 
 Tried to fix merge conflict ended up just fetching and adding files to new folder
 
+===============================================
+Feb 16th 3:42:00 
+Finished Wiki, Modified BudgetData Test, Completed my CRC Cards. 
+
+
 
