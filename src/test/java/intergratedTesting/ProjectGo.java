@@ -8,7 +8,7 @@ class ProjectGo {
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+		/* No implementation for itr1 */
 	}
 
 }
