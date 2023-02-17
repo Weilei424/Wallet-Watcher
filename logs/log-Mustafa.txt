@@ -1,0 +1,26 @@
+Log of Development
+Mustafa Syed 218942714 
+
+===============================================
+Feb 12th 15:42:37
+Incomplete implementation of Cards done. Needs 
+more specification 
+
+===============================================
+Feb 12th 16:51:00
+Card class pretty much completed. Missing a bit of functionality to deal with monthly interest. 
+Should function fine otherwise. ExpenseInputData class works pretty much fine. 
+
+===============================================
+Feb 15th 1:34:00
+Completed UserStub and Junit Testing, Had some merge issues. 
+
+===============================================
+Feb 15th 2:00:00
+Noticed oversights still need junit completion. Need to add to String method for all Cards and need to add taxation for credit cards each month to account for paying them off 
+
+===============================================
+Feb 16th 3:42:00 
+Tried to fix merge conflict ended up just fetching and adding files to new folder
+
+

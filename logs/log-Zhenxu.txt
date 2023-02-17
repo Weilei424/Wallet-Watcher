@@ -1,0 +1,91 @@
+Log of Development
+Zhenxu Wang 218587295
+
+===============================================
+Feb 8th 20:35:39
+    Created businessLogic package.
+    Added CustomFormula interface, 
+    MathUtil class to businessLogic packge.
+
+    Created persistence package.
+    Added LedgerItem class to persistence package.
+
+    All classes/interfaces are bare bone,
+    no implementation.
+===============================================
+Feb 8th 21:11:50
+    Implemented constructors, getters, setters,
+    and static factory method for LedgerItem.
+===============================================
+Feb 8th 22:41:21
+	Implemented calcMonth(), calcYear(), 
+	calcBiweek() in MathUtil class.
+	
+	Added InvalidDateException with implementation
+	in Exception package.
+	
+	Added calcInterest() in CustomFormula interface.
+===============================================
+Feb 9th 12:31:55
+	Added attribute ref, its static counter and getter for 
+	LedgerItem class.
+	
+	Renamed MathUtil class to Util class.
+===============================================
+Feb 9th 23:14:41
+	Removed public static main() from MainUi.java,
+	added UI initializer in Main.java.
+===============================================
+Feb 10th 14:23:48
+	Had a meeting with Mustafa, regarding LedgerItem class.
+	Discussed about the attributes, and how to make connections
+	with expenses/earnings related classes.
+	
+	Bug fixed in Util.calcBiweek().
+	
+	Tester file added for Util.java. 
+	Added test cases for Util.calcYear(), Util.calcMonth(),
+    Util.calcBiweek()
+    
+    Changed ref attribute to String in LedgerItem class.
+	Also added a formatting method to format the ref String
+===============================================
+Feb 10th 17:52:40
+	Created User class.
+	
+	Added encrypt() method in Util class.
+===============================================
+Feb 10th 20:20:13
+	Added UserStub class. It is a stub DB for storing
+	User objects.
+===============================================
+Feb 11th 01:19:26
+	Added javadoc for static factory method in User class.
+	
+	Added initialization for stub UserDB in Main.main().
+	
+	Made test cases for User and UserStub.
+	
+	Changed the accessibility for dbUser to public in 
+	UserStub class.
+===============================================
+Feb 12th 23:13:23
+	Changed constructor from private to protected in
+	LedgerItem class.
+===============================================
+Feb 13th 11:37:29
+	Changed all private methods and attributes to
+	protected. Removed static factory method in
+	LedgerItem class.
+	
+	Changed parameter type of date to String in 
+	LedgerItem class, and its now calls 
+	DateParser.getDateFromString().
+	
+	Updated test cases to fit current working 
+	version of LedgerItem class.
+	
+	Removed static factory method, 
+	made constructor to public in User class.
+	
+	Updated test cases for all changes above.

@@ -1,0 +1,29 @@
+Log of Development
+Muhammad Taha Shahid #218149484
+
+02/09/2023:
+* created a demo login UI for the project 
+
+02/13/2023:
+* created the expense form 
+
+02/13/2023 - 8:08pm:
+* Created new class for Expense Pages
+* Created the expense form demo for project
+
+02/13/2023 - 9:26pm:
+* Fixed the expense form
+* Added a userName and password authenticator for login
+* Added navigation to go from login page to Expense Form for demo user when username and password entered correctly
+
+02/15/2023:
+* Created a main expense page
+* Made the expense form more refined
+* Worked on creating navigation routes between pages
+* Managed GUI for ledger items in main expense page
+
+02/16/2023:
+* Created temporary data storage in expense page form to send to main expense page
+* Outputted the data onto the main expense page for user to see
+* Added a remove expense button for user to be able to get rid of the expenses
+* Used ledger items class to help with storage of data in the backend to pass to the main expense page class
