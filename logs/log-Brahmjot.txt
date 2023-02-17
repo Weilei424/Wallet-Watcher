@@ -1,18 +1,21 @@
 Log of Development
-//name and id here
+Brahmjot Grewal 218961540
 
 ===============================================
-Feb 8th 20:35:39
-    Created businessLogic package.
-    Added CustomFormula interface, 
-    MathUtil class to businessLogic packge.
-
-    Created persistence package.
-    Added LedgerItem class to persistence package.
-
-    All classes/interfaces are bare bone,
-    no implementation.
+Feb 12th 02:38
+	Created DateParser class
+	Created test file for DateParser
 ===============================================
-Feb 8th 21:11:50
-    Implemented constructors, getters, setters,
-    and static factory method for LedgerItem.
+Feb 13th 00:12
+	Updated .gitignore to include useless files
+===============================================
+Feb 15th 11:39
+	Added MM DD, YYYY support to DateParser
+	Organized classes into standard Java packages
+	Created BudgetData class
+	Linked BudgetData with ExpenseInputData
+===============================================
+Feb 17th 02:05
+	Created processing document
+	Created CRC cards for DateParser and BudgetData
+===============================================
