@@ -89,3 +89,8 @@ Feb 13th 11:37:29
 	made constructor to public in User class.
 	
 	Updated test cases for all changes above.
+===============================================
+Feb 17th 03:04:42
+	Made user manual, edited planning document.
+	
+	Updated README.md
