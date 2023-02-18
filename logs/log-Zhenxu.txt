@@ -94,3 +94,9 @@ Feb 17th 03:04:42
 	Made user manual, edited planning document.
 	
 	Updated README.md
+===============================================
+Feb 17th 12:30:58
+	Checkout new branch itr1.
+===============================================
+Feb 17th 221:11:40
+	Added mysql connector library.
