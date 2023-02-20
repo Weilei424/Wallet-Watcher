@@ -2,6 +2,7 @@ package test.java.unitTesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,6 @@ class LedgerItemTester {
 	}
 	
 	
-	@SuppressWarnings("deprecation")
 	@Test 
 	void testSetterGetter() {
 		assertEquals("xxxxxx", obj.getNote());
@@ -31,17 +31,12 @@ class LedgerItemTester {
 		double amount = 15.63;
 		String s = "Wendy's";
 		String n = "double combo, with fries and coke";
-		Date d = new Date();
-		d.setYear(2023);
-		d.setMonth(0);
-		d.setDate(10);
-		d.setHours(11);
-		d.setMinutes(30);
-		d.setSeconds(0);
-		obj.setDate(d);
+		LocalDate d = LocalDate.now();
+		obj.setNote(n);
 		obj.setAmount(amount);
 		obj.setItemName(s);
-		obj.setNote(n);
+		obj.setDate(d);
+		
 		
 		assertEquals(n, obj.getNote());
 		assertTrue(Math.abs(obj.getAmount() - amount) <= 0.0001);
