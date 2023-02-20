@@ -23,19 +23,6 @@ public class LedgerItem {
 		this.formatRef(REFNUM++);
 	}
 	
-	public LedgerItem(double amount, String itemName, String note) {
-	//	this.date = Date.from(DateParser.getDateFromString(date).atStartOfDay(ZoneId.systemDefault()).toInstant());
-	//	Date temp = new Date();
-	//	this.date.setMinutes(temp.getMinutes());
-	//	this.date.setHours(temp.getHours());
-	//	this.date.setSeconds(temp.getSeconds());
-		this.amount = amount;
-		this.itemName = itemName;
-		this.note = note;
-		this.formatRef(REFNUM++);
-	}
-
-	
 	protected void formatRef(int ref) {
 		this.ref = String.format("%07d", ref);
 	}

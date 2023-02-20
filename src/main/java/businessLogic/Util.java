@@ -2,7 +2,8 @@ package main.java.businessLogic;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import main.java.exceptions.InvalidDateException;
 
 public final class Util {
@@ -18,32 +19,28 @@ public final class Util {
 	 * @param endAt		is a Date object that is the ending date.
 	 * @return			integer number of month difference.
 	 */
-	@SuppressWarnings("deprecation")
-	public static int calcMonth(Date beginAt, Date endAt) {
+	public static int calcMonth(LocalDate beginAt, LocalDate endAt) {
 		try {
-			boolean flag = beginAt.getTime() - endAt.getTime() >= 0;
-			if (flag)
+			if (ChronoUnit.DAYS.between(beginAt, endAt) < 0)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
 			System.out.println("invalid date");
 		}
 		int year = endAt.getYear() - beginAt.getYear();
-		int month = endAt.getMonth() - beginAt.getMonth();
+		int month = endAt.getMonthValue() - beginAt.getMonthValue();
 		
 		return 12 * year + month;
 	}
 	
 	/**
 	 * This method calculates the number of years difference of input dates.
-	 * @param beginAt	is a Date object that is the beginning date.
-	 * @param endAt		is a Date object that is the ending date.
+	 * @param beginAt	is a LocalDate object that is the beginning date.
+	 * @param endAt		is a LocalDate object that is the ending date.
 	 * @return			integer number of years difference.
 	 */
-	@SuppressWarnings("deprecation")
-	public static int calcYear(Date beginAt, Date endAt) {
+	public static int calcYear(LocalDate beginAt, LocalDate endAt) {
 		try {
-			boolean flag = beginAt.getYear() - endAt.getYear() >= 0;
-			if (flag)
+			if (ChronoUnit.DAYS.between(beginAt, endAt) < 0)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
 			System.out.println("invalid date");
@@ -55,20 +52,18 @@ public final class Util {
 	
 	/**
 	 * This method calculates the number of biweeks difference of input dates.
-	 * @param beginAt	is a Date object that is the beginning date.
-	 * @param endAt		is a Date object that is the ending date.
+	 * @param beginAt	is a LocalDate object that is the beginning date.
+	 * @param endAt		is a LocalDate object that is the ending date.
 	 * @return			integer number of years difference.
 	 */
-	@SuppressWarnings("deprecation")
-	public static int calcBiweek(Date beginAt, Date endAt) {
+	public static int calcBiweek(LocalDate beginAt, LocalDate endAt) {
 		try {
-			boolean flag = beginAt.getYear() - endAt.getYear() >= 0;
-			if (flag)
+			if (ChronoUnit.DAYS.between(beginAt, endAt) < 0)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
 			System.out.println("invalid date");
 		}
-		int biweeks = (Util.getWeek(endAt) -Util.getWeek(beginAt)) / 2;
+		int biweeks = (Util.getWeek(endAt) - Util.getWeek(beginAt) + calcYear(beginAt, endAt) * 52) / 2;
 		
 		return biweeks;
 	}
@@ -78,9 +73,9 @@ public final class Util {
 	 * @param date	is the current date.
 	 * @return the number of weeks.
 	 */
-	private static int getWeek(Date date) {
-		final double CONVENTION = 6.048e+8;
-		int week = (int) (date.getTime() / CONVENTION);
+	private static int getWeek(LocalDate date) {
+		final int CONVENTION = 7;
+		int week = date.getDayOfYear() / CONVENTION;
 		return week;
 	}
 	
