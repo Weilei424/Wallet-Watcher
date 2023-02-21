@@ -105,3 +105,10 @@ Feb 20th 15:20:24
 	Changed Date to LocalDate in LedgerItem class.
 	
 	Changed Date to LocalDate in Util class.
+===============================================
+Feb 21st 14:30:38
+	Created MS Azure account, Mysql server and database.
+	
+	Create MysqlConnection class.
+	
+	Added JFreeChart API.
