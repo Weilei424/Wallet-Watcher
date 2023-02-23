@@ -43,5 +43,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="Libraries/mysql-connector-j-8.0.32.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mason/git/Wallet-Watcher/Libraries/jfreechart-1.5.2.zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
