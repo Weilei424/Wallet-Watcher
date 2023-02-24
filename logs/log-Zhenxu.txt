@@ -94,3 +94,21 @@ Feb 17th 03:04:42
 	Made user manual, edited planning document.
 	
 	Updated README.md
+===============================================
+Feb 17th 12:30:58
+	Checkout new branch itr1.
+===============================================
+Feb 17th 21:11:40
+	Added mysql connector library.
+===============================================
+Feb 20th 15:20:24
+	Changed Date to LocalDate in LedgerItem class.
+	
+	Changed Date to LocalDate in Util class.
+===============================================
+Feb 21st 14:30:38
+	Created MS Azure account, Mysql server and database.
+	
+	Create MysqlConnection class.
+	
+	Added JFreeChart API.

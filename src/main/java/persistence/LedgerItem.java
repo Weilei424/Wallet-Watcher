@@ -1,13 +1,13 @@
 package main.java.persistence;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 
 import main.java.businessLogic.DateParser;
 import main.java.businessLogic.Recurrence;
 
 public class LedgerItem {
-	protected Date date;
+	protected LocalDate date;
 	protected double amount;
 	protected String itemName;
 	protected String note;
@@ -15,41 +15,23 @@ public class LedgerItem {
 	protected static int REFNUM = 0;
 	protected Recurrence recurring;
 	
-	@SuppressWarnings("deprecation")
 	public LedgerItem(String date, double amount, String itemName, String note) {
-		this.date = Date.from(DateParser.getDateFromString(date).atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Date temp = new Date();
-		this.date.setMinutes(temp.getMinutes());
-		this.date.setHours(temp.getHours());
-		this.date.setSeconds(temp.getSeconds());
+		this.date = DateParser.getDateFromString(date);
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
 		this.formatRef(REFNUM++);
 	}
-	
-	public LedgerItem(double amount, String itemName, String note) {
-	//	this.date = Date.from(DateParser.getDateFromString(date).atStartOfDay(ZoneId.systemDefault()).toInstant());
-	//	Date temp = new Date();
-	//	this.date.setMinutes(temp.getMinutes());
-	//	this.date.setHours(temp.getHours());
-	//	this.date.setSeconds(temp.getSeconds());
-		this.amount = amount;
-		this.itemName = itemName;
-		this.note = note;
-		this.formatRef(REFNUM++);
-	}
-
 	
 	protected void formatRef(int ref) {
 		this.ref = String.format("%07d", ref);
 	}
 	
-	public Date getDate() {
+	public LocalDate getDate() {
 		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
