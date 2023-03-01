@@ -32,7 +32,7 @@ public class DateParser {
         dateFormats.add(new DateFormat(DD_MM_YYYY, false));
         Pattern DD_MMM_YYYY = Pattern.compile("^(?<day>\\d{1,2})[-\\/](?<month>" + monthRegex + ")[-\\/](?<year>\\d{4})$");
         dateFormats.add(new DateFormat(DD_MMM_YYYY, true));
-        Pattern MMM_DD_YYYY = Pattern.compile("(?<month>" + monthRegex + ") (?<day>\\d{1,2}),? (?<year>\\d{4})");
+        Pattern MMM_DD_YYYY = Pattern.compile("(?<month>" + monthRegex + ") (?<day>\\d{1,2}),? ?(?<year>\\d{4})");
         dateFormats.add(new DateFormat(MMM_DD_YYYY, true));
     }
 

@@ -12,5 +12,9 @@ sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 
 dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
-    implementation files("Libraries/mysql-connector-j-8.0.32.jar")
+    implementation 'mysql:mysql-connector-java:8.0.32'
+}
+
+test {
+    useJUnitPlatform()
 }
