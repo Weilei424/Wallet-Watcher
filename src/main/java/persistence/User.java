@@ -1,61 +1,81 @@
-package persistence;
+package main.persistence;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Random;
 
-import businessLogic.Util;
+import main.businessLogic.Util;
 
-public class User {
+public final class User {
 	private String firstName;
 	private String lastName;
 	private String userName;
 	private String password;
-	private ArrayList<LedgerItem> list;
+	private String type;
+	private String salt;
+	private int ref;
 	
-	public User() {
-		this("", "", "", "");
-	}
-	
-	public User(String firstName, String lastName, String userName, String password) {
+	private User(String firstName, String lastName, String userName, String password, String type) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.password = password;
-		this.list = new ArrayList<>();
+		this.type = type;
+		this.salt = generateSalt();
+	}
+	
+	/**
+	 * This is a static factory method that generate a new instance of User. 
+	 * And insert a new row to the database
+	 * All info are required.
+	 * @param 	firstName
+	 * @param 	lastName
+	 * @param 	userName
+	 * @param 	password
+	 * @param 	type
+	 * @return  a new User object.
+	 */
+	public static User createUser(String firstName, String lastName, String userName, String password, String type) {
+		return new User(firstName, lastName, userName, password, type);
 	}
 	
 	public String getFirstName() {
 		return this.firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
 	public String getLastName() {
 		return this.lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public String getUserName() {
 		return this.userName;
 	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public void setPassword(String password) {
-		this.password = Util.encrypt(password);
-	}
 	
 	public String getPassword() {
 		return this.password;
 	}
-	
-	public void addItem(LedgerItem item) {
-		this.list.add(item);
+
+	public String getType() {
+		return this.type;
+	}
+
+	public String getSalt() {
+		return this.salt;
+	}
+
+	public int getRef() {
+		return this.ref;
+	}
+
+	public void setRef(int ref) {
+		this.ref = ref;
+	}
+
+	private String generateSalt() {
+		byte[] array = new byte[7]; 
+	   	new Random().nextBytes(array);
+	    	String salt = new String(array, Charset.forName("UTF-8"));
+
+		return salt;
 	}
 }
