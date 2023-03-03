@@ -112,3 +112,18 @@ Feb 21st 14:30:38
 	Create MysqlConnection class.
 	
 	Added JFreeChart API.
+===============================================
+Mar 1st 11:30:00
+	Meeting with Jinsong and Brahmjot, discussed about: 
+	what classes we need to add for itr2;
+	how GUIs work with each other;
+	DB details.
+===============================================
+Mar 3rd 16:31:42 
+	Create DBUtil class under persistence package.
+	Added getConection() and createUser().
+	
+	Updated User class with more attributes.
+	
+	Updated UserTester class.
+===============================================

@@ -41,7 +41,7 @@ public final class DBUtil {
 			e.printStackTrace();
 		} finally {
 			if (rs != null) {
-				u.setRef(rs.getInt("ref"));
+				u.setRef(rs.getInt(getRef));
 				rs.close();
 			}
 		}
