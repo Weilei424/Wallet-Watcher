@@ -1,7 +1,4 @@
-package UI;
-
-import persistence.UserStub;
-
+package main.UI;
 
 public class Main {
 
