@@ -1,4 +1,4 @@
-package main.businessLogic;
+package businessLogic;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import main.persistence.User;
+import persistence.User;
 
 public final class DBUtil {
 	private static final String USERNAME = "root";

@@ -1,10 +1,10 @@
-package main.persistence;
+package persistence;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 
-import main.businessLogic.Util;
+import businessLogic.Util;
 
 public final class User {
 	private String firstName;
