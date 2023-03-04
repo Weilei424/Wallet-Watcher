@@ -127,3 +127,6 @@ Mar 3rd 16:31:42
 	
 	Updated UserTester class.
 ===============================================
+Mar 3rd 22:02:43
+	Added changePW() in DBUtil class.
+	Updated UserDBTester.
