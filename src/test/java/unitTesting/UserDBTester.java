@@ -2,11 +2,14 @@ package unitTesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import businessLogic.DBUtil;
+import persistence.DBUtil;
 import persistence.User;
 
 class UserDBTester {
@@ -26,9 +29,20 @@ class UserDBTester {
 		assertTrue("UseAmazon!".equals(u.getPassword()));
 	}
 	
+	@Order(2)
 	@Test
 	void testDuplicateUser() {
-		assertThrows(Exception.class, ()-> DBUtil.createUser(u));	
+		assertThrows(IllegalArgumentException.class, ()-> DBUtil.createUser(u));	
 	}
 	
+	@Order(3)
+	@Test
+	void testChangePW() {
+		byte[] array = new byte[7]; 
+	   	new Random().nextBytes(array);
+	    String newPW = new String(array, Charset.forName("UTF-8"));
+	    String oldPW = "pwpwpw";
+	    assertTrue(DBUtil.changePW("changepw", oldPW, newPW));
+	    assertTrue(DBUtil.changePW("changepw", newPW, oldPW));
+	}
 }

@@ -1,4 +1,4 @@
-package businessLogic;
+package persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import persistence.User;
 
 public final class DBUtil {
 	private static final String USERNAME = "root";
@@ -18,8 +16,8 @@ public final class DBUtil {
 		return DriverManager.getConnection(CONN_STRING + tableName, USERNAME, PASSWORD);
 	}
 	
-	public static void createUser(User u) throws Exception {
-		String query = "INSERT INTO users (username, pd, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
+	public static void createUser(User u) throws SQLException {
+		String query = "INSERT INTO users (username, pw, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
 		String getRef = "SELECT * FROM users WHERE username=?";
 		ResultSet rs = null;
 		
@@ -28,8 +26,9 @@ public final class DBUtil {
 				PreparedStatement p = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				PreparedStatement ref = conn.prepareStatement(getRef, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				) {
-			if (!DBUtil.checkUser(u))
-				throw new IllegalArgumentException("username is not available");
+			if (!DBUtil.checkUser(u)) {
+				throw new IllegalArgumentException("username not available");
+			}
 			p.setString(1, u.getUserName());
 			p.setString(2, u.getPassword());
 			p.setString(3, u.getSalt());
@@ -52,21 +51,49 @@ public final class DBUtil {
 	@SuppressWarnings("finally")
 	public static boolean checkUser(User u) {
 		String query = "SELECT * FROM users";
-		boolean result = false;
+		boolean flag = true;
 		try (
 				Connection conn = DBUtil.getConnection("/test");
 				Statement unique = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = unique.executeQuery(query);
 				) {
 			while (rs.next()) {
-				if (rs.getString("username").equals(u.getUserName())) 
-					throw new IllegalArgumentException("username is not available");
+				if (rs.getString("username").equals(u.getUserName())) {
+					flag = false;
+					throw new IllegalArgumentException();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			return result;
+			return flag;
 		}
-		
+	}
+	
+	@SuppressWarnings("finally")
+	public static boolean changePW(String username, String oldpw, String newpw) {
+		String query = "SELECT * FROM users";
+		String change = "UPDATE users SET pw = ? WHERE ref = ?";
+		boolean flag = false;
+		try (
+				Connection conn = DBUtil.getConnection("/test");
+				Statement acc = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				PreparedStatement update = conn.prepareStatement(change, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				ResultSet rs = acc.executeQuery(query);
+				) {
+			while (rs.next()) {
+				if (rs.getString("username").equals(username) && rs.getString("pw").equals(oldpw)) {
+					update.setString(1, newpw);
+					update.setInt(2, rs.getInt("ref"));
+					update.executeUpdate();
+					flag = true;
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return flag;
+		}
 	}
 }

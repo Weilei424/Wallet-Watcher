@@ -74,7 +74,7 @@ public final class User {
 	private String generateSalt() {
 		byte[] array = new byte[7]; 
 	   	new Random().nextBytes(array);
-	    	String salt = new String(array, Charset.forName("UTF-8"));
+	    String salt = new String(array, Charset.forName("UTF-8"));
 
 		return salt;
 	}
