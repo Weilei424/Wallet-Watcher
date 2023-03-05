@@ -3,6 +3,7 @@ package persistence;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+import businessLogic.Category;
 import businessLogic.DateParser;
 import businessLogic.Recurrence;
 
@@ -11,20 +12,14 @@ public class LedgerItem {
 	protected double amount;
 	protected String itemName;
 	protected String note;
-	protected String ref;
-	protected static int REFNUM = 0;
 	protected Recurrence recurring;
+	protected Category category;
 	
 	public LedgerItem(String date, double amount, String itemName, String note) {
 		this.date = DateParser.getDateFromString(date);
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
-		this.formatRef(REFNUM++);
-	}
-	
-	protected void formatRef(int ref) {
-		this.ref = String.format("%07d", ref);
 	}
 	
 	public LocalDate getDate() {
@@ -59,10 +54,6 @@ public class LedgerItem {
 		this.note = note;
 	}
 	
-	public String getRef() {
-		return this.ref;
-	}
-	
 	public Recurrence getRecurringInfo() {
 		return this.recurring;
 	}
@@ -74,8 +65,16 @@ public class LedgerItem {
 	public boolean isRecurring() {
 		return this.recurring != null;
 	}
-	public String toString()
-	{ 
+	
+	public String getCategory() {
+		return this.category.getName();
+	}
+
+	public void setCategory(String category) {
+		this.category.setName(category);;
+	}
+
+	public String toString() { 
 		return String.format( "%s: %s %f \n \t %s \n",this.date, this.itemName, this.amount, this.note);
 	}
 }
