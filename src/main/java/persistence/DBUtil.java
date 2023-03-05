@@ -14,8 +14,17 @@ public final class DBUtil {
 	private static final String PASSWORD = "qwerty";
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3306";
 	
-	private static Connection getConnection(String tableName) throws SQLException {
-		return DriverManager.getConnection(CONN_STRING + tableName, USERNAME, PASSWORD);
+	private static final String CLOUDUSERNAME = "team7";
+	private static final String CLOUDPASSWORD = "eecs2311!";
+	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher.mysql.database.azure.com:3306/mysql?useSSL=true";
+	
+	private final static int LOCAL = 0;
+	private final static int CLOUD = 1;
+	
+	private static Connection getConnection(int connectionType, String tableName) throws SQLException {
+		if (connectionType == 0)
+			return DriverManager.getConnection(CONN_STRING + tableName, USERNAME, PASSWORD);
+		return DriverManager.getConnection(CLOUDCONN_STRING + tableName, CLOUDUSERNAME, CLOUDPASSWORD);
 	}
 	
 	public static void createUser(User u) throws SQLException {
@@ -24,7 +33,7 @@ public final class DBUtil {
 		ResultSet rs = null;
 		
 		try (
-				Connection conn = DBUtil.getConnection("/test");
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
 				PreparedStatement p = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				PreparedStatement ref = conn.prepareStatement(getRef, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				) {
@@ -55,7 +64,7 @@ public final class DBUtil {
 		String query = "SELECT * FROM users";
 		boolean flag = true;
 		try (
-				Connection conn = DBUtil.getConnection("/test");
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
 				Statement unique = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = unique.executeQuery(query);
 				) {
@@ -78,7 +87,7 @@ public final class DBUtil {
 		String change = "UPDATE users SET hashcode = ? WHERE ref = ?";
 		boolean flag = false;
 		try (
-				Connection conn = DBUtil.getConnection("/test");
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
 				Statement acc = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				PreparedStatement update = conn.prepareStatement(change, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				ResultSet rs = acc.executeQuery(query);
