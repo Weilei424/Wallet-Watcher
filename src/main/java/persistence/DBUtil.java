@@ -75,7 +75,7 @@ public final class DBUtil {
 	@SuppressWarnings("finally")
 	public static boolean changePW(String username, String oldpw, String newpw) {
 		String query = "SELECT * FROM users";
-		String change = "UPDATE users SET pw = ? WHERE ref = ?";
+		String change = "UPDATE users SET hashcode = ? WHERE ref = ?";
 		boolean flag = false;
 		try (
 				Connection conn = DBUtil.getConnection("/test");
@@ -84,7 +84,7 @@ public final class DBUtil {
 				ResultSet rs = acc.executeQuery(query);
 				) {
 			while (rs.next()) {
-				if (rs.getString("username").equals(username) && Util.encrypt(rs.getString("pw"), rs.getString("salt")).equals(oldpw)) {
+				if (rs.getString("username").equals(username) && Util.encrypt(oldpw, rs.getString("salt")).equals(rs.getString("hashcode"))) {
 					update.setString(1, Util.encrypt(newpw, rs.getString("salt")));
 					update.setInt(2, rs.getInt("ref"));
 					update.executeUpdate();
