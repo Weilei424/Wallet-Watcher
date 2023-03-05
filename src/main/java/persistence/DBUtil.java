@@ -48,7 +48,7 @@ public final class DBUtil {
 				PreparedStatement ref = conn.prepareStatement(getRef, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				Statement newTable = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
-			if (!DBUtil.checkUser(u)) {
+			if (!DBUtil.checkUser(u.getUserName())) {
 				throw new IllegalArgumentException("username not available");
 			}
 			p.setString(1, u.getUserName());
@@ -71,17 +71,23 @@ public final class DBUtil {
 		}
 	}
 	
+	/**
+	 * This method check if the input username exists in the DB.
+	 * @param 	u is an username in String.
+	 * @return	false is exist, true otherwise.
+	 */
 	@SuppressWarnings("finally")
-	public static boolean checkUser(User u) {
+	public static boolean checkUser(String username) {
 		String query = "SELECT * FROM users";
 		boolean flag = true;
+		
 		try (
 				Connection conn = DBUtil.getConnection(LOCAL, "/test");
 				Statement unique = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = unique.executeQuery(query);
 				) {
 			while (rs.next()) {
-				if (rs.getString("username").equals(u.getUserName())) {
+				if (rs.getString("username").equals(username)) {
 					flag = false;
 					throw new IllegalArgumentException();
 				}
@@ -90,6 +96,34 @@ public final class DBUtil {
 			e.printStackTrace();
 		} finally {
 			return flag;
+		}
+	}
+	
+	/**
+	 * This method check if username and password matches.
+	 * @param 	username
+	 * @param 	pw
+	 * @return	true if username and password matches, false otherwise.
+	 */
+	@SuppressWarnings("finally")
+	public static boolean validateUser(String username, String pw) {
+		boolean result = false;
+		String query = "SELECT * FROM users";
+		
+		try (
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Statement unique = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				ResultSet rs = unique.executeQuery(query);
+				) {
+			while (rs.next()) {
+				if (rs.getString("username").equals(username) && Util.encrypt(pw, rs.getString("salt")).equals(rs.getString("hashcode"))) {
+					result = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return result;
 		}
 	}
 	
@@ -118,6 +152,41 @@ public final class DBUtil {
 		} finally {
 			return flag;
 		}
+	}
+	
+	/**
+	 * This method removes the user account from DB (in both users table and its own ledger table).
+	 * @param 	username
+	 * @param	pw
+	 * @return	true is the deletion is success, false otherwise.
+	 */
+	public static boolean delectUser(String username, String pw) {
+		boolean flag = false;
+		
+		if (checkUser(username)) {
+			return flag;
+		}
+		String query = "SELECT * FROM users WHERE username = ?";
+		String deleteUser = "DELETE FROM users WHERE username = ?";
+		String deleteTable = "DROP TABLE " + username;
+		
+		try (
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				PreparedStatement p = conn.prepareStatement(deleteUser, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				PreparedStatement q = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				ResultSet rs = null;
+				) {
+			if (validateUser(username, pw)) {
+				p.setString(1, username);
+				p.executeUpdate();
+				stmt.execute(deleteTable);
+				flag = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 	
 	public static boolean insert() {

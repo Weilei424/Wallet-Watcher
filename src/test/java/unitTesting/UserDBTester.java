@@ -8,50 +8,82 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
 
 import persistence.DBUtil;
 import persistence.User;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserDBTester {
-	User u;
-	User utest;
+	User demo = User.createUser("Jeff", "Bezos", "ceojeff", "UseAmazon!", "personal");
+	User pwTest = User.createUser("test", "changepw", "testpw", "pwpwpw", "personal");
+	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
 	
-	@BeforeEach
+	@Order(0)
 	@Test
 	void setUp() throws Exception {
-		u = User.createUser("Jeff", "Bezos", "ceojeff", "UseAmazon!", "personal");
-		utest = User.createUser("test", "changepw", "testpw", "pwpwpw", "personal");
 		try {
-			DBUtil.createUser(u);
-			DBUtil.createUser(utest);
+			DBUtil.createUser(demo);
+			DBUtil.createUser(pwTest);
+			DBUtil.createUser(deleteTest);
 		} catch (IllegalArgumentException e) {
 			
 		}
 	}
 
+	@Order(1)
+	@Test
+	void testValidate() {
+		try {
+			assertTrue(DBUtil.validateUser("ceojeff", "UseAmazon!"));
+			assertTrue(DBUtil.validateUser("testpw", "pwpwpw"));
+			assertTrue(DBUtil.validateUser("testDele", "789uij"));
+			assertFalse(DBUtil.validateUser("no one", "no pw"));
+		} catch (IllegalArgumentException e) {
+			
+		}
+	}
+	
 	@Order(2)
 	@Test
 	void testDemoInfo() {
-		assertEquals("Jeff", u.getFirstName());
-		assertEquals("Bezos", u.getLastName());
-		assertEquals("ceojeff", u.getUserName());
-		assertTrue("UseAmazon!".equals(u.getPassword()));
+		assertEquals("Jeff", demo.getFirstName());
+		assertEquals("Bezos", demo.getLastName());
+		assertEquals("ceojeff", demo.getUserName());
+		assertTrue("UseAmazon!".equals(demo.getPassword()));
 	}
 	
 	@Order(3)
 	@Test
 	void testDuplicateUser() {
-		assertThrows(IllegalArgumentException.class, ()-> DBUtil.createUser(u));	
+		assertThrows(IllegalArgumentException.class, ()-> DBUtil.createUser(demo));	
 	}
 	
 	@Order(4)
 	@Test
 	void testChangePW() {
-		byte[] array = new byte[7]; 
-	   	new Random().nextBytes(array);
-	    String newPW = new String(array, Charset.forName("UTF-8"));
-	    String oldPW = "pwpwpw";
-	    assertTrue(DBUtil.changePW("testpw", oldPW, newPW));
-	    assertTrue(DBUtil.changePW("testpw", newPW, oldPW));
+		try {
+			byte[] array = new byte[7]; 
+		   	new Random().nextBytes(array);
+		    String newPW = new String(array, Charset.forName("UTF-8"));
+		    String oldPW = "pwpwpw";
+		    assertTrue(DBUtil.changePW("testpw", oldPW, newPW));
+		    assertTrue(DBUtil.changePW("testpw", newPW, oldPW));
+		} catch (IllegalArgumentException e) {
+			
+		}
+	}
+	
+	@Order(5)
+	@Test
+	void testDeleteUser() {
+		try {
+			assertTrue(DBUtil.delectUser("testpw", "pwpwpw"));
+			assertTrue(DBUtil.delectUser("testDele", "789uij"));
+			assertFalse(DBUtil.delectUser("yorku", "lol"));
+		} catch (IllegalArgumentException e) {
+			
+		} 
 	}
 }

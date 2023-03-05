@@ -146,3 +146,8 @@ Mar 5th 01:59:49
 	
 	Added feature to create a new table when 
 	an user account is created.
+===============================================
+Mar 5th 03:17:31
+	Added delectUser() and validateUser() in
+	DBUtil class.
+	And updated tester.
