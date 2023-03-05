@@ -130,3 +130,12 @@ Mar 3rd 16:31:42
 Mar 3rd 22:02:43
 	Added changePW() in DBUtil class.
 	Updated UserDBTester.
+===============================================
+Mar 4th 21:17:38
+	Changed encrypt() in Util class to salt+hash method.
+	Updated all related references.
+	And testers.
+	
+	Also tested the cloud DB.
+	
+	Added cloud DB connection in DBUtil class.
