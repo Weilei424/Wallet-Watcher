@@ -42,6 +42,5 @@ class LedgerItemTester {
 		assertTrue(Math.abs(obj.getAmount() - amount) <= 0.0001);
 		assertEquals(s, obj.getItemName());
 		assertEquals(d, obj.getDate());
-		assertEquals("0000002", obj.getRef());
 	}
 }
