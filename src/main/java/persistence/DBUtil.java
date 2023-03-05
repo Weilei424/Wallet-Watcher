@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import businessLogic.Util;
+
 public final class DBUtil {
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "qwerty";
@@ -17,7 +19,7 @@ public final class DBUtil {
 	}
 	
 	public static void createUser(User u) throws SQLException {
-		String query = "INSERT INTO users (username, pw, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO users (username, hashcode, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
 		String getRef = "SELECT * FROM users WHERE username=?";
 		ResultSet rs = null;
 		
@@ -30,7 +32,7 @@ public final class DBUtil {
 				throw new IllegalArgumentException("username not available");
 			}
 			p.setString(1, u.getUserName());
-			p.setString(2, u.getPassword());
+			p.setString(2, Util.encrypt(u.getPassword(), u.getSalt()));
 			p.setString(3, u.getSalt());
 			p.setString(4, u.getFirstName());
 			p.setString(5, u.getLastName());
@@ -82,8 +84,8 @@ public final class DBUtil {
 				ResultSet rs = acc.executeQuery(query);
 				) {
 			while (rs.next()) {
-				if (rs.getString("username").equals(username) && rs.getString("pw").equals(oldpw)) {
-					update.setString(1, newpw);
+				if (rs.getString("username").equals(username) && Util.encrypt(rs.getString("pw"), rs.getString("salt")).equals(oldpw)) {
+					update.setString(1, Util.encrypt(newpw, rs.getString("salt")));
 					update.setInt(2, rs.getInt("ref"));
 					update.executeUpdate();
 					flag = true;
