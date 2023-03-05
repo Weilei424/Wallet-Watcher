@@ -16,7 +16,7 @@ public final class DBUtil {
 	
 	private static final String CLOUDUSERNAME = "team7";
 	private static final String CLOUDPASSWORD = "eecs2311!";
-	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher.mysql.database.azure.com:3306/mysql?useSSL=true";
+	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher.mysql.database.azure.com:3306%s?useSSL=true";
 	
 	private final static int LOCAL = 0;
 	private final static int CLOUD = 1;
@@ -24,7 +24,7 @@ public final class DBUtil {
 	private static Connection getConnection(int connectionType, String tableName) throws SQLException {
 		if (connectionType == 0)
 			return DriverManager.getConnection(CONN_STRING + tableName, USERNAME, PASSWORD);
-		return DriverManager.getConnection(CLOUDCONN_STRING + tableName, CLOUDUSERNAME, CLOUDPASSWORD);
+		return DriverManager.getConnection(String.format(CLOUDCONN_STRING, tableName), CLOUDUSERNAME, CLOUDPASSWORD);
 	}
 	
 	public static void createUser(User u) throws SQLException {
