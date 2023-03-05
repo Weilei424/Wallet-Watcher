@@ -30,12 +30,23 @@ public final class DBUtil {
 	public static void createUser(User u) throws SQLException {
 		String query = "INSERT INTO users (username, hashcode, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
 		String getRef = "SELECT * FROM users WHERE username=?";
+		String createTable = "(    ref INT NOT NULL AUTO_INCREMENT,\r\n"
+				+ "    username VARCHAR(100),\r\n"
+				+ "    item VARCHAR(20),\r\n"
+				+ "    note VARCHAR(50),\r\n"
+				+ "    amount FLOAT,\r\n"
+				+ "    recur BOOL,\r\n"
+				+ "    category VARCHAR(20),\r\n"
+				+ "    date_ DATE,\r\n"
+				+ "    PRIMARY KEY(ref)\r\n"
+				+ "    )";
 		ResultSet rs = null;
 		
 		try (
 				Connection conn = DBUtil.getConnection(LOCAL, "/test");
 				PreparedStatement p = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				PreparedStatement ref = conn.prepareStatement(getRef, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				Statement newTable = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
 			if (!DBUtil.checkUser(u)) {
 				throw new IllegalArgumentException("username not available");
@@ -51,6 +62,7 @@ public final class DBUtil {
 			rs = ref.executeQuery();
 			while (rs.next()) 
 				u.setRef(rs.getInt("ref"));
+			newTable.execute("CREATE TABLE " + u.getUserName() + createTable);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -106,5 +118,17 @@ public final class DBUtil {
 		} finally {
 			return flag;
 		}
+	}
+	
+	public static boolean insert() {
+		return false;
+	}
+	
+	public static boolean query() {
+		return false;
+	}
+	
+	public static boolean update() {
+		return false;
 	}
 }

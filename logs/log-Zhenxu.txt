@@ -139,3 +139,10 @@ Mar 4th 21:17:38
 	Also tested the cloud DB.
 	
 	Added cloud DB connection in DBUtil class.
+===============================================
+Mar 5th 01:59:49
+	Added Category class and tester.
+	Updated Category related classes.
+	
+	Added feature to create a new table when 
+	an user account is created.
