@@ -15,11 +15,19 @@ public class LedgerItem {
 	protected Recurrence recurring;
 	protected Category category;
 	
+	/**
+	 * 
+	 * @param 	date
+	 * @param 	amount
+	 * @param 	itemName
+	 * @param 	note
+	 */
 	public LedgerItem(String date, double amount, String itemName, String note) {
 		this.date = DateParser.getDateFromString(date);
 		this.amount = amount;
 		this.itemName = itemName;
 		this.note = note;
+		this.category = new Category();
 	}
 	
 	public LocalDate getDate() {
