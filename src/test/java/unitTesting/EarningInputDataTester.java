@@ -20,7 +20,7 @@ EarningInputData data = new EarningInputData();
 	}
 	@Test
 	void Addearningtest() {
-		String date="Feb 11,2022";
+		String date="2022-01-01";
 		double amount =2000;
 		String item ="salary";
 		
@@ -33,7 +33,7 @@ EarningInputData data = new EarningInputData();
 
 	@Test
 	void getIncomesTest() {
-		String date="Feb 11,2022";
+		String date="2022-01-01";
 		double amount =2000;
 		String item ="salary";
 		
