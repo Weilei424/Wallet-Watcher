@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JTable;
+
 import businessLogic.Util;
 
 public final class DBUtil {
@@ -222,6 +224,7 @@ public final class DBUtil {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " from deleteUser()");
 		}
+		
 		return flag;
 	}
 	
@@ -282,6 +285,12 @@ public final class DBUtil {
 		return flag;
 	}
 	
+	public static boolean delete(String username, int ref) {
+		boolean flag = false;
+		
+		return flag;
+	}
+	
 	/**
 	 * 
 	 * @param 	username
@@ -289,14 +298,14 @@ public final class DBUtil {
 	 * @param 	value
 	 * @return
 	 */
-	public static boolean query(String username,  String column, String value) {
+	public static JTable query(String username,  String column, String value) {
 		String col = "";
 		if (column.equals("all")) {
 			col = "";
 		} else if (!(column.equals(ITEM) || column.equals(NOTE)))
 			col = getColumn(column);
 		String query = "WHERE " + col + " = " + value;
-		return false;
+		return null;
 	}
 	
 	/**
@@ -408,6 +417,7 @@ public final class DBUtil {
 			default:
 				throw new IllegalArgumentException("Invalid column to update!");
 		}
+		
 		return col;
 	}
 	
@@ -431,6 +441,7 @@ public final class DBUtil {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " from getMaxRow()");
 		}
+		
 		return max;
 	}
 	
@@ -456,6 +467,7 @@ public final class DBUtil {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " from getMaxRow()");
 		}
+		
 		return flag != 0 ? true : false;
 	}
 }
