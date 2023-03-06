@@ -106,4 +106,22 @@ class UserDBTester {
 			
 		}
 	}
+	
+	@Order(7)
+	@Test
+	void testDelete() {
+		
+	}
+	
+	@Order(8)
+	@Test
+	void testQuery() {
+		
+	}
+	
+	@Order(9)
+	@Test
+	void testUpdate() {
+		
+	}
 }
