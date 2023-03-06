@@ -28,6 +28,16 @@ public final class DBUtil {
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
 	
+	public static final String ITEM = "item";
+	public static final String NOTE = "note";
+	public static final String TAG = "tag";
+	public static final String AMOUNT = "amount";
+	public static final String INTEREST_RATE = "interest_rate";
+	public static final String INTEREST = "interest";
+	public static final String RECUR = "recur";
+	public static final String CATEGORY = "category";
+	public static final String DATE_START = "date_start";
+	
 	private static Connection getConnection(int connectionType, String tableName) throws SQLException {
 		if (connectionType == 0)
 			return DriverManager.getConnection(CONN_STRING + tableName, USERNAME, PASSWORD);
@@ -201,10 +211,13 @@ public final class DBUtil {
 	}
 	
 	/**
+	 * THIS METHOD ASSUMES username EXISTS!
 	 * This method is for insert a new row to the user's ledger table.
 	 * @param 	username
 	 * @param 	ledger
-	 * @param 	type MUST BE ONE OF THE STATIC STRINGS expense or earning or investment or stock or misc or card.
+	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
+	 * expense or earning or investment or stock or misc or card.
+	 * 
 	 * @return	true if insert operation is success, false otherwise.
 	 */
 	public static boolean insert(String username, LedgerItem ledger, String type) {
@@ -214,29 +227,8 @@ public final class DBUtil {
 		boolean flag = false;
 		String item = ledger.getItemName();
 		String note = ledger.getNote();
-		String tag = null;
-		switch (type) {
-			case "expense":
-				tag = type;
-				break;
-			case "earning":
-				tag = type;
-				break;
-			case "investment":
-				tag = type;
-				break;
-			case "stock":
-				tag = type;
-				break;
-			case "misc":
-				tag = type;
-				break;
-			case "card":
-				tag = type;
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid ledger item type!");
-		}
+		String tag = getTag(type);
+		
 		double amount = ledger.getAmount();
 		double interestRate = 0.00;
 		double interest = 0.00;
@@ -280,9 +272,136 @@ public final class DBUtil {
 		return false;
 	}
 	
-	public static boolean update(String username, String s) {
+	/**
+	 * THIS METHOD ASSUMES username EXISTS!
+	 * 
+	 * @param 	username is current logged in username.
+	 * @param 	ref is the ref# of the row.
+	 * @param 	column is the column to be updated.
+	 * @param 	value is the value to be updated.
+	 * @return	true if update operation is success, false otherwise.
+	 */
+	public static boolean update(String username, int ref, String column, String value) {
 		boolean flag = false;
+		if (ref > getMaxRow(username))
+			throw new IllegalArgumentException("row not found!");
+		String col = getColumn(column);
+		double num = 0.00;
+		String update = "UPDATE " + username + " SET " + col + " = " + value + "WHERE ref = " + ref;
+		if (column.equals("amount") || column.equals("interest_rate") || column.equals("interest") || column.equals("recur")) 
+			num = Double.parseDouble(value);
 		
-		return false;
+		try (
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				) {
+			st.execute(update);
+			flag = true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from insert()");
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * This method check if input string type is a valid ledger item type.
+	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
+	 * expense or earning or investment or stock or misc or card.
+	 * 
+	 * @return	tag name in String
+	 */
+	private static String getTag(String type) {
+		String tag = null;
+		switch (type) {
+			case EXPENSE:
+				tag = type;
+				break;
+			case EARNING:
+				tag = type;
+				break;
+			case INVESTMENT:
+				tag = type;
+				break;
+			case STOCK:
+				tag = type;
+				break;
+			case MISC:
+				tag = type;
+				break;
+			case CARD:
+				tag = type;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid ledger item type!");
+		}
+		
+		return tag;
+	}
+	
+	/**
+	 *  This method check if input string column is a valid ledger table column name.
+	 * @param 	column MUST BE ONE OF THE STATIC STRINGS: 
+	 * item, note, tag, amount, interest_rate, interest, recur, category, date_start.
+	 * 
+	 * @return	column name in String
+	 */
+	private static String getColumn(String column) {
+		String col = "";
+		switch (column) {
+			case ITEM:
+				col = column;
+				break;
+			case NOTE:
+				col = column;
+				break;
+			case TAG:
+				col = column;
+				break;
+			case AMOUNT:
+				col = column;
+				break;
+			case INTEREST_RATE:
+				col = column;
+				break;
+			case INTEREST:
+				col = column;
+				break;
+			case RECUR:
+				col = column;
+				break;
+			case CATEGORY:
+				col = column;
+				break;
+			case DATE_START:
+				col = column;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid column to update!");
+		}
+		return col;
+	}
+	
+	/**
+	 * THIS METHOD ASSUMES username EXISTS!
+	 * This method returns the number of rows in selected table
+	 * @param 	username is the table name
+	 * @return	the number of rows in the selected table.
+	 */
+	private static int getMaxRow(String username) {
+		int max = 0;
+		String query = "SELECT COUNT(*) FROM " + username;
+		
+		try (
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				ResultSet rs = st.executeQuery(query);
+				) {
+			while (rs.next()) 
+				max = rs.getInt("COUNT(*)");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from getMaxRow()");
+		}
+		return max;
 	}
 }
