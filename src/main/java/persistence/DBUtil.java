@@ -30,14 +30,18 @@ public final class DBUtil {
 	public static void createUser(User u) throws SQLException {
 		String query = "INSERT INTO users (username, hashcode, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
 		String getRef = "SELECT * FROM users WHERE username=?";
-		String createTable = "(    ref INT NOT NULL AUTO_INCREMENT,\r\n"
+		String createTable = "(\r\n"
+				+ "    ref INT NOT NULL AUTO_INCREMENT,\r\n"
 				+ "    username VARCHAR(100),\r\n"
 				+ "    item VARCHAR(20),\r\n"
 				+ "    note VARCHAR(50),\r\n"
+				+ "    tag ENUM('expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
 				+ "    amount FLOAT,\r\n"
+				+ "    interest_rate FLOAT,\r\n"
+				+ "    interest FLOAT,\r\n"
 				+ "    recur BOOL,\r\n"
 				+ "    category VARCHAR(20),\r\n"
-				+ "    date_ DATE,\r\n"
+				+ "    date_start DATE,\r\n"
 				+ "    PRIMARY KEY(ref)\r\n"
 				+ "    )";
 		ResultSet rs = null;
@@ -64,7 +68,7 @@ public final class DBUtil {
 				u.setRef(rs.getInt("ref"));
 			newTable.execute("CREATE TABLE " + u.getUserName() + createTable);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " from createUser()");
 		} finally {
 			if (rs != null) 
 				rs.close();
@@ -93,7 +97,7 @@ public final class DBUtil {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " from checkUser()");
 		} finally {
 			return flag;
 		}
@@ -121,7 +125,7 @@ public final class DBUtil {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " from validateUser()");
 		} finally {
 			return result;
 		}
@@ -148,7 +152,7 @@ public final class DBUtil {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " from changePW()");
 		} finally {
 			return flag;
 		}
@@ -184,12 +188,73 @@ public final class DBUtil {
 				flag = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " from deleteUser()");
 		}
 		return flag;
 	}
 	
-	public static boolean insert() {
+	public static boolean insert(String username, LedgerItem ledger, String type) {
+		if (ledger == null) 
+			throw new IllegalArgumentException("Invalid input!");
+		
+		String item = ledger.getItemName();
+		String note = ledger.getNote();
+		String tag = null;
+		switch (type) {
+			case "expense":
+				tag = type;
+				break;
+			case "earning":
+				tag = type;
+				break;
+			case "investment":
+				tag = type;
+				break;
+			case "stock":
+				tag = type;
+				break;
+			case "misc":
+				tag = type;
+				break;
+			case "card":
+				tag = type;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid input!");
+		}
+		double amount = ledger.getAmount();
+		double interestRate = 0.00;
+		double interest = 0.00;
+		int recur = ledger.isRecurring() == true ? 1 : 0;
+		String category = ledger.getCategory();
+		String dateStart = ledger.getDate().toString();
+		if (ledger instanceof Stock_Fund)
+			amount = ((Stock_Fund) ledger).getCurrent();
+		if (ledger instanceof Investment) {
+			Investment obj = (Investment) ledger;
+			interestRate = obj.getRate();
+			interest = obj.getInterest();
+		}
+		
+		String insert = "INSERT INTO" + username + "(username, item, note, tag, amount, interest_rate, interest, recur, category, date_start) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		try (
+				Connection conn = DBUtil.getConnection(LOCAL, "/" + username);
+				PreparedStatement p = conn.prepareStatement(insert, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				) {
+			p.setString(1, username);
+			p.setString(2, item);
+			p.setString(3, note);
+			p.setString(4, tag);
+			p.setDouble(5, amount);
+			p.setDouble(6, interestRate);
+			p.setDouble(7, interest);
+			p.setInt(8, recur);
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from insert()");
+		}
+			
 		return false;
 	}
 	

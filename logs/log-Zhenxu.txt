@@ -151,3 +151,6 @@ Mar 5th 03:17:31
 	Added delectUser() and validateUser() in
 	DBUtil class.
 	And updated tester.
+===============================================
+Mar 5th 14:31:29
+	Added insert() in DBUtil class.
