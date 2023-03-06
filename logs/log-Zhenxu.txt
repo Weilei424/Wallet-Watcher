@@ -154,3 +154,8 @@ Mar 5th 03:17:31
 ===============================================
 Mar 5th 14:31:29
 	Added insert() in DBUtil class.
+===============================================
+Mar 5th 22:13:12
+	Meeting with Jinsong, talked about DBUtil methods.
+	
+	Finished insert() and test cases.

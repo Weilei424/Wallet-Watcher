@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer;
 
 import persistence.DBUtil;
+import persistence.LedgerItem;
 import persistence.User;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -24,8 +25,8 @@ class UserDBTester {
 	@Test
 	void setUp() throws Exception {
 		try {
-			DBUtil.createUser(demo);
-			DBUtil.createUser(pwTest);
+			//DBUtil.createUser(demo);
+			//DBUtil.createUser(pwTest);
 			DBUtil.createUser(deleteTest);
 		} catch (IllegalArgumentException e) {
 			
@@ -79,11 +80,28 @@ class UserDBTester {
 	@Test
 	void testDeleteUser() {
 		try {
-			assertTrue(DBUtil.delectUser("testpw", "pwpwpw"));
-			assertTrue(DBUtil.delectUser("testDele", "789uij"));
-			assertFalse(DBUtil.delectUser("yorku", "lol"));
+			assertTrue(DBUtil.deleteUser("testDele", "789uij"));
+			assertFalse(DBUtil.deleteUser("yorku", "lol"));
 		} catch (IllegalArgumentException e) {
 			
 		} 
+	}
+	
+	@Order(6)
+	@Test
+	void testInsert() {
+		byte[] array = new byte[7]; 
+	   	new Random().nextBytes(array);
+	    String random1 = new String(array, Charset.forName("UTF-8"));
+		new Random().nextBytes(array);
+		String random2 = new String(array, Charset.forName("UTF-8"));
+		Random r = new Random();
+		double randomValue = 0.00 + 100.00 * r.nextDouble();
+		LedgerItem item = new LedgerItem("2023-03-04", randomValue, random1, random2);
+		try {
+			assertTrue(DBUtil.insert("ceojeff", item, DBUtil.EXPENSE));
+		} catch (IllegalArgumentException e) {
+			
+		}
 	}
 }

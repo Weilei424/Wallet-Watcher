@@ -18,8 +18,15 @@ public final class DBUtil {
 	private static final String CLOUDPASSWORD = "eecs2311!";
 	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher.mysql.database.azure.com:3306%s?useSSL=true";
 	
-	private final static int LOCAL = 0;
-	private final static int CLOUD = 1;
+	private static final int LOCAL = 0;
+	private static final int CLOUD = 1;
+	
+	public static final String EXPENSE = "expense";
+	public static final String EARNING = "earning";
+	public static final String INVESTMENT = "investment";
+	public static final String STOCK = "stock";
+	public static final String MISC = "misc";
+	public static final String CARD = "card";
 	
 	private static Connection getConnection(int connectionType, String tableName) throws SQLException {
 		if (connectionType == 0)
@@ -93,7 +100,7 @@ public final class DBUtil {
 			while (rs.next()) {
 				if (rs.getString("username").equals(username)) {
 					flag = false;
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("username exists!");
 				}
 			}
 		} catch (Exception e) {
@@ -164,7 +171,7 @@ public final class DBUtil {
 	 * @param	pw
 	 * @return	true is the deletion is success, false otherwise.
 	 */
-	public static boolean delectUser(String username, String pw) {
+	public static boolean deleteUser(String username, String pw) {
 		boolean flag = false;
 		
 		if (checkUser(username)) {
@@ -197,6 +204,7 @@ public final class DBUtil {
 		if (ledger == null) 
 			throw new IllegalArgumentException("Invalid input!");
 		
+		boolean flag = false;
 		String item = ledger.getItemName();
 		String note = ledger.getNote();
 		String tag = null;
@@ -220,7 +228,7 @@ public final class DBUtil {
 				tag = type;
 				break;
 			default:
-				throw new IllegalArgumentException("Invalid input!");
+				throw new IllegalArgumentException("Invalid ledger item type!");
 		}
 		double amount = ledger.getAmount();
 		double interestRate = 0.00;
@@ -236,10 +244,10 @@ public final class DBUtil {
 			interest = obj.getInterest();
 		}
 		
-		String insert = "INSERT INTO" + username + "(username, item, note, tag, amount, interest_rate, interest, recur, category, date_start) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + username + " (username, item, note, tag, amount, interest_rate, interest, recur, category, date_start) VALUES (?, ?, ?, ?, TRUNCATE(?, 2), ?, ?, ?, ?, ?)";
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/" + username);
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
 				PreparedStatement p = conn.prepareStatement(insert, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
 			p.setString(1, username);
@@ -250,12 +258,15 @@ public final class DBUtil {
 			p.setDouble(6, interestRate);
 			p.setDouble(7, interest);
 			p.setInt(8, recur);
-			
+			p.setString(9, category);
+			p.setString(10, dateStart);
+			p.executeUpdate();
+			flag = true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " from insert()");
 		}
 			
-		return false;
+		return flag;
 	}
 	
 	public static boolean query() {
