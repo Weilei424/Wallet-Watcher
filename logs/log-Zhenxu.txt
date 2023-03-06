@@ -159,3 +159,9 @@ Mar 5th 22:13:12
 	Meeting with Jinsong, talked about DBUtil methods.
 	
 	Finished insert() and test cases.
+===============================================
+Mar 6th 01:15:44
+	Added update(), getTag(), getMaxRow() and
+	Added refExist() method, updated javadoc in
+	DBUtil class.
+	

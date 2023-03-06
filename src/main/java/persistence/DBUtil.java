@@ -38,12 +38,27 @@ public final class DBUtil {
 	public static final String CATEGORY = "category";
 	public static final String DATE_START = "date_start";
 	
+	/**
+	 * This method returns a Connection object to selected DB.
+	 * @param 	connectionType CAN ONLY BE STATIC INT LOCAL OR CLOUD: 
+	 * LOCAL(0) will return your local MYSQL connection; 
+	 * CLOUD(1) will return Azure cloud MYSQL connection;
+	 * @param 	tableName is a String of the table name that goes after the address.
+	 * @return	a Connection object to selected DB.
+	 * @throws 	SQLException.
+	 */
 	private static Connection getConnection(int connectionType, String tableName) throws SQLException {
 		if (connectionType == 0)
 			return DriverManager.getConnection(CONN_STRING + tableName, USERNAME, PASSWORD);
 		return DriverManager.getConnection(String.format(CLOUDCONN_STRING, tableName), CLOUDUSERNAME, CLOUDPASSWORD);
 	}
 	
+	/**
+	 * This method insert a new user row in users table. Also create an user's ledger item table name by username.
+	 * This method will NOT create duplicate user account under the same username.
+	 * @param 	u is the User object to be added.
+	 * @throws 	SQLException.
+	 */
 	public static void createUser(User u) throws SQLException {
 		String query = "INSERT INTO users (username, hashcode, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
 		String getRef = "SELECT * FROM users WHERE username=?";
@@ -122,8 +137,8 @@ public final class DBUtil {
 	
 	/**
 	 * This method check if username and password matches.
-	 * @param 	username
-	 * @param 	pw
+	 * @param 	username is the row to be removed from users table.
+	 * @param	pw is the user's password.
 	 * @return	true if username and password matches, false otherwise.
 	 */
 	@SuppressWarnings("finally")
@@ -177,16 +192,16 @@ public final class DBUtil {
 	
 	/**
 	 * This method removes the user account from DB (in both users table and its own ledger table).
-	 * @param 	username
-	 * @param	pw
+	 * @param 	username is the row to be removed from users table.
+	 * @param	pw is the user's password.
 	 * @return	true is the deletion is success, false otherwise.
 	 */
 	public static boolean deleteUser(String username, String pw) {
 		boolean flag = false;
 		
-		if (checkUser(username)) {
+		if (checkUser(username))
 			return flag;
-		}
+
 		String query = "SELECT * FROM users WHERE username = ?";
 		String deleteUser = "DELETE FROM users WHERE username = ?";
 		String deleteTable = "DROP TABLE " + username;
@@ -213,11 +228,10 @@ public final class DBUtil {
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
 	 * This method is for insert a new row to the user's ledger table.
-	 * @param 	username
-	 * @param 	ledger
+	 * @param 	username is the table name to be inserted.
+	 * @param 	ledger is the LedgerItem object to be inserted.
 	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
 	 * expense or earning or investment or stock or misc or card.
-	 * 
 	 * @return	true if insert operation is success, false otherwise.
 	 */
 	public static boolean insert(String username, LedgerItem ledger, String type) {
@@ -274,6 +288,7 @@ public final class DBUtil {
 	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
+	 * This method update one cell of selected ledger item table.
 	 * 
 	 * @param 	username is current logged in username.
 	 * @param 	ref is the ref# of the row.
@@ -283,11 +298,14 @@ public final class DBUtil {
 	 */
 	public static boolean update(String username, int ref, String column, String value) {
 		boolean flag = false;
-		if (ref > getMaxRow(username))
+		
+		if (!refExist(username, ref))
 			throw new IllegalArgumentException("row not found!");
+		
 		String col = getColumn(column);
 		double num = 0.00;
 		String update = "UPDATE " + username + " SET " + col + " = " + value + "WHERE ref = " + ref;
+		
 		if (column.equals("amount") || column.equals("interest_rate") || column.equals("interest") || column.equals("recur")) 
 			num = Double.parseDouble(value);
 		
@@ -308,8 +326,7 @@ public final class DBUtil {
 	 * This method check if input string type is a valid ledger item type.
 	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
 	 * expense or earning or investment or stock or misc or card.
-	 * 
-	 * @return	tag name in String
+	 * @return	tag name in String.
 	 */
 	private static String getTag(String type) {
 		String tag = null;
@@ -343,8 +360,7 @@ public final class DBUtil {
 	 *  This method check if input string column is a valid ledger table column name.
 	 * @param 	column MUST BE ONE OF THE STATIC STRINGS: 
 	 * item, note, tag, amount, interest_rate, interest, recur, category, date_start.
-	 * 
-	 * @return	column name in String
+	 * @return	column name in String.
 	 */
 	private static String getColumn(String column) {
 		String col = "";
@@ -384,8 +400,8 @@ public final class DBUtil {
 	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
-	 * This method returns the number of rows in selected table
-	 * @param 	username is the table name
+	 * This method returns the number of rows in selected table.
+	 * @param 	username is the table name.
 	 * @return	the number of rows in the selected table.
 	 */
 	private static int getMaxRow(String username) {
@@ -403,5 +419,30 @@ public final class DBUtil {
 			System.out.println(e.getMessage() + " from getMaxRow()");
 		}
 		return max;
+	}
+	
+	/**
+	 * THIS METHOD ASSUMES username EXISTS!
+	 * This method checks if the ref exist in selected table.
+	 * @param 	username is the table name.
+	 * @param	ref is the ref number.
+	 * @return	true if ref exists, false otherwise.
+	 */
+	private static boolean refExist(String username, int ref) {
+		int flag = 0;
+		String query = "SELECT EXISTS(SELECT * FROM " + username + " WHERE ref = " + ref +")";
+		String getResult = "EXISTS(SELECT * FROM \" + username + \" WHERE ref = \" + ref +\")";
+		
+		try (
+				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				ResultSet rs = st.executeQuery(query);
+				) {
+			while (rs.next()) 
+				flag = rs.getInt(getResult);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from getMaxRow()");
+		}
+		return flag != 0 ? true : false;
 	}
 }
