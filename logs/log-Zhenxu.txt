@@ -164,4 +164,7 @@ Mar 6th 01:15:44
 	Added update(), getTag(), getMaxRow() and
 	Added refExist() method, updated javadoc in
 	DBUtil class.
-	
+===============================================
+Mar 6th 16:38:33
+	Modified testInsert(), added javadoc for setUp()
+	in UserDBTester.

@@ -3,6 +3,7 @@ package unitTesting;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +26,12 @@ class UserDBTester {
 	@Test
 	void setUp() throws Exception {
 		try {
-			//DBUtil.createUser(demo);
-			//DBUtil.createUser(pwTest);
+			/* These 2 lines should be commented unless running on a fresh database,
+			 * If so, uncomment the first 2 lines and comment out the 3rd line and run.
+			 * Then comment out these 2 lines and uncomment the 3rd line, 
+			 * the test should run normal. */
+//			DBUtil.createUser(demo);
+//			DBUtil.createUser(pwTest);
 			DBUtil.createUser(deleteTest);
 		} catch (IllegalArgumentException e) {
 			
@@ -90,14 +95,11 @@ class UserDBTester {
 	@Order(6)
 	@Test
 	void testInsert() {
-		byte[] array = new byte[7]; 
-	   	new Random().nextBytes(array);
-	    String random1 = new String(array, Charset.forName("UTF-8"));
-		new Random().nextBytes(array);
-		String random2 = new String(array, Charset.forName("UTF-8"));
+		String s1 = "test item ";
+		String s2 = "test note ";
 		Random r = new Random();
 		double randomValue = 0.00 + 100.00 * r.nextDouble();
-		LedgerItem item = new LedgerItem("2023-03-04", randomValue, random1, random2);
+		LedgerItem item = new LedgerItem(LocalDate.now().toString(), randomValue, s1 + (int) randomValue,  s2 + (int) randomValue);
 		try {
 			assertTrue(DBUtil.insert("ceojeff", item, DBUtil.EXPENSE));
 		} catch (IllegalArgumentException e) {
