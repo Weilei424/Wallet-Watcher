@@ -200,6 +200,13 @@ public final class DBUtil {
 		return flag;
 	}
 	
+	/**
+	 * This method is for insert a new row to the user's ledger table.
+	 * @param 	username
+	 * @param 	ledger
+	 * @param 	type MUST BE ONE OF THE STATIC STRINGS expense or earning or investment or stock or misc or card.
+	 * @return	true if insert operation is success, false otherwise.
+	 */
 	public static boolean insert(String username, LedgerItem ledger, String type) {
 		if (ledger == null) 
 			throw new IllegalArgumentException("Invalid input!");
@@ -273,7 +280,9 @@ public final class DBUtil {
 		return false;
 	}
 	
-	public static boolean update() {
+	public static boolean update(String username, String s) {
+		boolean flag = false;
+		
 		return false;
 	}
 }
