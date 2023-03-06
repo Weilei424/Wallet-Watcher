@@ -282,7 +282,20 @@ public final class DBUtil {
 		return flag;
 	}
 	
-	public static boolean query() {
+	/**
+	 * 
+	 * @param 	username
+	 * @param 	column
+	 * @param 	value
+	 * @return
+	 */
+	public static boolean query(String username,  String column, String value) {
+		String col = "";
+		if (column.equals("all")) {
+			col = "";
+		} else if (!(column.equals(ITEM) || column.equals(NOTE)))
+			col = getColumn(column);
+		String query = "WHERE " + col + " = " + value;
 		return false;
 	}
 	
