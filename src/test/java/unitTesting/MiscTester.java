@@ -16,9 +16,9 @@ Misc tfsa;
 	}
 	@Test
 	void test() {
-		String date ="Feb 11,2021";
+		String date ="2021-02-11";
 		double amount =1000;
-		tfsa = new Misc(date,amount);
+		tfsa = new Misc(date,amount,"misc test");
 		assertEquals(tfsa.getAmount(),1000);
 	}
 

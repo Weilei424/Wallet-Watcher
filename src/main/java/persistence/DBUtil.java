@@ -24,6 +24,8 @@ public final class DBUtil {
 	private static final int LOCAL = 0;
 	private static final int CLOUD = 1;
 	
+	private static final String CLOUDDB = "/ww";
+	
 	public static final String EXPENSE = "expense";
 	public static final String EARNING = "earning";
 	public static final String INVESTMENT = "investment";
@@ -68,8 +70,8 @@ public final class DBUtil {
 		String createTable = "(\r\n"
 				+ "    ref INT NOT NULL AUTO_INCREMENT,\r\n"
 				+ "    username VARCHAR(100),\r\n"
-				+ "    item VARCHAR(20),\r\n"
-				+ "    note VARCHAR(50),\r\n"
+				+ "    item VARCHAR(100),\r\n"
+				+ "    note VARCHAR(200),\r\n"
 				+ "    tag ENUM('expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
 				+ "    amount FLOAT,\r\n"
 				+ "    interest_rate FLOAT,\r\n"
@@ -82,7 +84,7 @@ public final class DBUtil {
 		ResultSet rs = null;
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				PreparedStatement p = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				PreparedStatement ref = conn.prepareStatement(getRef, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				Statement newTable = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -121,7 +123,7 @@ public final class DBUtil {
 		boolean flag = true;
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement unique = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = unique.executeQuery(query);
 				) {
@@ -150,7 +152,7 @@ public final class DBUtil {
 		String query = "SELECT * FROM users";
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement unique = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = unique.executeQuery(query);
 				) {
@@ -172,7 +174,7 @@ public final class DBUtil {
 		String change = "UPDATE users SET hashcode = ? WHERE ref = ?";
 		boolean flag = false;
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement acc = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				PreparedStatement update = conn.prepareStatement(change, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				ResultSet rs = acc.executeQuery(query);
@@ -210,7 +212,7 @@ public final class DBUtil {
 		String deleteTable = "DROP TABLE " + username;
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				PreparedStatement p = conn.prepareStatement(deleteUser, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				PreparedStatement q = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -264,7 +266,7 @@ public final class DBUtil {
 		String insert = "INSERT INTO " + username + " (username, item, note, tag, amount, interest_rate, interest, recur, category, date_start) VALUES (?, ?, ?, ?, TRUNCATE(?, 2), ?, ?, ?, ?, ?)";
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				PreparedStatement p = conn.prepareStatement(insert, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
 			p.setString(1, username);
@@ -389,7 +391,7 @@ public final class DBUtil {
 			num = Double.parseDouble(value);
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
 			st.execute(update);
@@ -489,7 +491,7 @@ public final class DBUtil {
 		String query = "SELECT COUNT(*) FROM " + username;
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = st.executeQuery(query);
 				) {
@@ -515,7 +517,7 @@ public final class DBUtil {
 		String getResult = "EXISTS(SELECT * FROM \" + username + \" WHERE ref = \" + ref +\")";
 		
 		try (
-				Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = st.executeQuery(query);
 				) {

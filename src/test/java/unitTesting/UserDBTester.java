@@ -21,6 +21,7 @@ class UserDBTester {
 	User demo = User.createUser("Jeff", "Bezos", "ceojeff", "UseAmazon!", "personal");
 	User pwTest = User.createUser("test", "changepw", "testpw", "pwpwpw", "personal");
 	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
+	String[] tagArr = {"expense", "earning", "investment", "stock", "misc", "card"};
 	
 	@Order(0)
 	@Test
@@ -95,13 +96,20 @@ class UserDBTester {
 	@Order(6)
 	@Test
 	void testInsert() {
-		String s1 = "test item ";
-		String s2 = "test note ";
+		String s1 = "testitem ";
+		String s2 = "testnote ";
 		Random r = new Random();
-		double randomValue = 0.00 + 100.00 * r.nextDouble();
-		LedgerItem item = new LedgerItem(LocalDate.now().toString(), randomValue, s1 + (int) randomValue,  s2 + (int) randomValue);
+		
 		try {
-			assertTrue(DBUtil.insert("ceojeff", item, DBUtil.EXPENSE));
+			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) (Math.random() * 6)]));
+			/**
+			 * DO NOT UNCOMMENT THESE LINES BELOW!
+			 * These lines are just for initializing only!
+			 */
+			
+//			for (int i = 0; i < 20; i++) {
+//				assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) (Math.random() * 6)]));
+//			}
 		} catch (IllegalArgumentException e) {
 			
 		}
