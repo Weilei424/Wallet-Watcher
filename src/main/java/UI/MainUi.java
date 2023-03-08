@@ -20,7 +20,7 @@ public class MainUi implements ActionListener {
 
 	// Global Variables used for main UI
 
-	private JFrame mainFrame;
+	public JFrame mainFrame;
 	private JPanel mainPanel;
 	private JButton userLogIn;
 	private JLabel welcomeText;
