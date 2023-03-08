@@ -168,3 +168,7 @@ Mar 6th 01:15:44
 Mar 6th 16:38:33
 	Modified testInsert(), added javadoc for setUp()
 	in UserDBTester.
+===============================================
+Mar	7th 23:20:31
+	Fixed EarningTester, InvestmentTester, MiscTester,
+	Stock_FundTester
