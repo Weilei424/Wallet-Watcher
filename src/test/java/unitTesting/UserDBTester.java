@@ -6,6 +6,9 @@ import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.Random;
 
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -124,6 +127,19 @@ class UserDBTester {
 	@Order(8)
 	@Test
 	void testQuery() {
+		
+		try {
+			
+			
+			JTable table = DBUtil.query(demo.getUserName(), "item", "testitem 63");
+			TableModel model=table.getModel();
+			Object value =model.getValueAt(0, 5);
+			assertFalse(value.equals(null));
+			
+		}
+		catch(Exception e) {
+			fail();
+		}
 		
 	}
 	
