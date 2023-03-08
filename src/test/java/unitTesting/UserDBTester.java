@@ -30,8 +30,8 @@ class UserDBTester {
 			 * If so, uncomment the first 2 lines and comment out the 3rd line and run.
 			 * Then comment out these 2 lines and uncomment the 3rd line, 
 			 * the test should run normal. */
-//			DBUtil.createUser(demo);
-//			DBUtil.createUser(pwTest);
+			//DBUtil.createUser(demo);
+			//DBUtil.createUser(pwTest);
 			DBUtil.createUser(deleteTest);
 		} catch (IllegalArgumentException e) {
 			
