@@ -1,5 +1,10 @@
 package persistence;
 
+import java.util.Date;
+
+import persistence.Earning;
+import persistence.EarningInputData;
+
 public class  Investment extends LedgerItem{
 	private double rate;
 	private double interst;
