@@ -6,6 +6,8 @@ import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.Random;
 
+import javax.swing.JTable;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -124,6 +126,16 @@ class UserDBTester {
 	@Order(8)
 	@Test
 	void testQuery() {
+		
+		try {
+			
+			DBUtil.createUser(demo);
+			JTable table = DBUtil.query(demo.getUserName(), "all", null);
+			
+		}
+		catch(Exception e) {
+			fail();
+		}
 		
 	}
 	
