@@ -23,6 +23,10 @@ public class  Investment extends LedgerItem{
 		return this.rate;
 	}
 	
+	public double getInterest() {
+		return this.interst;
+	}
+	
 
 	public String cashout(String date,EarningInputData list) {
 		String message ="withdraw"+this.getItemName()+"get"+this.getAmount();

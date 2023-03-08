@@ -1,7 +1,5 @@
 package businessLogic;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -81,28 +79,12 @@ public final class Util {
 	}
 	
 	/**
-	 * This method does encryption by MD5 Hashing Technique.
-	 * @param	password is user's original input string
+	 * This method is used for salt + hash encrypt Technique.
+	 * @param	password is user's password.
+	 * @param	salt is a string generated randomly.
 	 * @return	the encrypted password in string.
 	 */
-	public static String encrypt(String password) {
-		String encryptedpassword = null;  
-		try {  
-	        /* MessageDigest instance for MD5. */  
-			MessageDigest m = MessageDigest.getInstance("MD5");  
-			m.update(password.getBytes());  
-			/* Convert the hash value into bytes */   
-			byte[] bytes = m.digest();  
-			  
-			/* The bytes array has bytes in decimal form. Converting it into hexadecimal format. */  
-			StringBuilder s = new StringBuilder();  
-			for(int i = 0; i < bytes.length; i++) {  
-			    s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));  
-			}   
-			    encryptedpassword = s.toString();  
-		} catch (NoSuchAlgorithmException e) {  
-		    e.printStackTrace();  
-		}   
-		return encryptedpassword;
+	public static String encrypt(String password, String salt) { 
+		return "" + (password + salt).hashCode();
 	}
 }

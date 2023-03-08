@@ -1,8 +1,5 @@
 package UI;
 
-import persistence.UserStub;
-
-
 public class Main {
 
 	public static void main(String[] args) {

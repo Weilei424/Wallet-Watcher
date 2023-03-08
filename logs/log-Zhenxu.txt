@@ -112,3 +112,66 @@ Feb 21st 14:30:38
 	Create MysqlConnection class.
 	
 	Added JFreeChart API.
+===============================================
+Mar 1st 11:30:00
+	Meeting with Jinsong and Brahmjot, discussed about: 
+	what classes we need to add for itr2;
+	how GUIs work with each other;
+	DB details.
+===============================================
+Mar 3rd 16:31:42 
+	Create DBUtil class under persistence package.
+	Added getConection() and createUser().
+	
+	Updated User class with more attributes.
+	
+	Updated UserTester class.
+===============================================
+Mar 3rd 22:02:43
+	Added changePW() in DBUtil class.
+	Updated UserDBTester.
+===============================================
+Mar 4th 21:17:38
+	Changed encrypt() in Util class to salt+hash method.
+	Updated all related references.
+	And testers.
+	
+	Also tested the cloud DB.
+	
+	Added cloud DB connection in DBUtil class.
+===============================================
+Mar 5th 01:59:49
+	Added Category class and tester.
+	Updated Category related classes.
+	
+	Added feature to create a new table when 
+	an user account is created.
+===============================================
+Mar 5th 03:17:31
+	Added delectUser() and validateUser() in
+	DBUtil class.
+	And updated tester.
+===============================================
+Mar 5th 14:31:29
+	Added insert() in DBUtil class.
+===============================================
+Mar 5th 22:13:12
+	Meeting with Jinsong, talked about DBUtil methods.
+	
+	Finished insert() and test cases.
+===============================================
+Mar 6th 01:15:44
+	Added update(), getTag(), getMaxRow() and
+	Added refExist() method, updated javadoc in
+	DBUtil class.
+===============================================
+Mar 6th 16:38:33
+	Modified testInsert(), added javadoc for setUp()
+	in UserDBTester.
+===============================================
+Mar	7th 23:20:31
+	Fixed EarningTester, InvestmentTester, MiscTester,
+	Stock_FundTester
+===============================================
+Mar 8th 01:21:53
+	Update DB for demo user table rows.

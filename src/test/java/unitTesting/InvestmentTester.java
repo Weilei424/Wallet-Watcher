@@ -18,7 +18,7 @@ class InvestmentTester {
 	void init() {
 		
 		double rate = 0.01;
-		String date="Feb 17,2021";
+		String date="2021-02-17";
 		double amount =300;
 		String itemname ="TD saving";
 		String note;
@@ -33,7 +33,7 @@ class InvestmentTester {
 	}
 	@Test
 	void CashoutTest() {
-		saving.cashout("March 21,2023", data2);
+		saving.cashout("2023-03-21", data2);
 		assertEquals(data2.income,300);
 	}
 

@@ -17,7 +17,7 @@ class Stock_FundTester {
 	
 	
 	void init() {
-	String date="Feb 15,2023";
+	String date="2023-02-15";
 	String itemname="Apple Inc";
 	double amount = 1700;
 	String note="Purchase stock";

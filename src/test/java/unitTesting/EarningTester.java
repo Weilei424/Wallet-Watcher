@@ -12,7 +12,7 @@ class EarningTester {
 	Earning earn;
 	@BeforeEach
 	void initt() {
-	String data="Feb 1,2021";
+	String data="2021-02-21";
 	double amount=1000;
 	String itemname="Tips";
 	earn = new Earning(data,amount,itemname,null);
@@ -29,7 +29,7 @@ class EarningTester {
 	// @Test
 	void deductTest() {
 		earn.deduction(200);
-		assertEquals(earn,800);
+		assertEquals(earn.getAmount(),800);
 	}
 
 }
