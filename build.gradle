@@ -4,3 +4,39 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/8.0.1/samples
  */
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building an application
+    id 'application'
+}
+
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+} 
+
+dependencies {
+    // Use JUnit test framework
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.4.0'
+}
+
+// Tasks
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'UI.Main'
+	}
+}
+
+// Define the main class for the application
+mainClassName = 'UI.Main'
+ 
