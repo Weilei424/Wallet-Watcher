@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import businessLogic.Util;
 
@@ -300,12 +301,68 @@ public final class DBUtil {
 	 */
 	public static JTable query(String username,  String column, String value) {
 		String col = "";
-		if (column.equals("all")) {
-			col = "";
-		} else if (!(column.equals(ITEM) || column.equals(NOTE)))
-			col = getColumn(column);
-		String query = "WHERE " + col + " = " + value;
-		return null;
+		String querry="slect * from"+username;
+		String[] columnNames = {ITEM, NOTE,TAG,AMOUNT,INTEREST_RATE,INTEREST,RECUR,CATEGORY,DATE_START};
+		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+		if (!(column.equals("all"))) 
+			if(!(column.equals(ITEM) || column.equals(NOTE))) {
+					col = getColumn(column);
+					querry+="where "+col +"="+value;
+			}
+		
+		ResultSet rs = null;
+		try(Connection conn = DBUtil.getConnection(LOCAL, "/test");
+				
+				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				){
+		rs=stmt.executeQuery(querry);
+				
+		while(rs.next()) {
+			String Item=rs.getString(ITEM);
+			String Note=rs.getString(NOTE);
+			String Amount=rs.getString(AMOUNT);
+			String Tag=rs.getString(TAG);
+			String IR=rs.getString(INTEREST_RATE);
+			String In=rs.getString(INTEREST);
+			String Re=rs.getString(RECUR);
+			String cate = rs.getString(CATEGORY);
+			String date= rs.getString(DATE_START);
+			
+			String[]data= {Item,Note,Tag,Amount,IR,In,Re,cate,date};
+			tableModel.addRow(data);
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+		rs.close();
+		
+		
+		}
+		catch(SQLException e) {
+			System.out.println(e.getMessage() + " from insert()");
+			
+		}
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		JTable table = new JTable(tableModel);
+		return table;
 	}
 	
 	/**
