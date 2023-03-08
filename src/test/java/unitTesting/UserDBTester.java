@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -25,7 +26,7 @@ class UserDBTester {
 	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
 	String[] tagArr = {"expense", "earning", "investment", "stock", "misc", "card"};
 	
-	@Order(0)
+	@Order(9)
 	@Test
 	void setUp() throws Exception {
 		try {
@@ -123,14 +124,17 @@ class UserDBTester {
 		
 	}
 	
-	@Order(8)
+	@Order(0)
 	@Test
 	void testQuery() {
 		
 		try {
 			
-			DBUtil.createUser(demo);
-			JTable table = DBUtil.query(demo.getUserName(), "all", null);
+			
+			JTable table = DBUtil.query(demo.getUserName(), "item", "testitem 63");
+			TableModel model=table.getModel();
+			Object value =model.getValueAt(0, 5);
+			assertFalse(value.equals(null));
 			
 		}
 		catch(Exception e) {

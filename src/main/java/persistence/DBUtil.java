@@ -14,7 +14,7 @@ import businessLogic.Util;
 
 public final class DBUtil {
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "qwerty";
+	private static final String PASSWORD = "qwery";
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3306";
 	
 	private static final String CLOUDUSERNAME = "team7";
@@ -303,7 +303,7 @@ public final class DBUtil {
 	 */
 	public static JTable query(String username,  String column, String value) {
 		String col = "";
-		String querry="slect * from"+username;
+		String querry="select * from "+username;
 		String[] columnNames = {ITEM, NOTE,TAG,AMOUNT,INTEREST_RATE,INTEREST,RECUR,CATEGORY,DATE_START};
 		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 		if (!(column.equals("all"))) 
@@ -313,7 +313,7 @@ public final class DBUtil {
 			}
 		
 		ResultSet rs = null;
-		try(Connection conn = DBUtil.getConnection(LOCAL, "/test");
+		try(Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				
 				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				){
