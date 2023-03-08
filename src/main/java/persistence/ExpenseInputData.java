@@ -1,7 +1,6 @@
 package persistence;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ExpenseInputData {

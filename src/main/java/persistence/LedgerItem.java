@@ -1,7 +1,6 @@
 package persistence;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 import businessLogic.Category;
 import businessLogic.DateParser;
