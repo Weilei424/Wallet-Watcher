@@ -172,3 +172,6 @@ Mar 6th 16:38:33
 Mar	7th 23:20:31
 	Fixed EarningTester, InvestmentTester, MiscTester,
 	Stock_FundTester
+===============================================
+Mar 8th 01:21:53
+	Update DB for demo user table rows.
