@@ -33,6 +33,7 @@ public final class DBUtil {
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
 	
+	public static final String REF = "ref";
 	public static final String ITEM = "item";
 	public static final String NOTE = "note";
 	public static final String TAG = "tag";
@@ -300,71 +301,49 @@ public final class DBUtil {
 	 * @param 	column
 	 * @param 	value
 	 * @return
+	 * @throws SQLException 
 	 */
-	public static JTable query(String username,  String column, String value) {
+	public static JTable query(String username,  String column, String value) throws SQLException {
 		String col = "";
-		String querry="select * from "+username;
-		String[] columnNames = {ITEM, NOTE,TAG,AMOUNT,INTEREST_RATE,INTEREST,RECUR,CATEGORY,DATE_START};
+		String query = "SELECT * FROM " + username;
+		String[] columnNames = {REF, ITEM, NOTE, TAG, AMOUNT, INTEREST_RATE, INTEREST, RECUR,CATEGORY, DATE_START};
 		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+		
 		if (!(column.equals("all"))) 
 			if(!(column.equals(ITEM) || column.equals(NOTE))) {
 					col = getColumn(column);
-					querry+="where "+col +"="+value;
+					query += "WHERE "+ col + " = " + value;
 			}
 		
 		ResultSet rs = null;
-		try(Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
-				
+		try(
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				){
-		rs=stmt.executeQuery(querry);
-				
-		while(rs.next()) {
-			String Item=rs.getString(ITEM);
-			String Note=rs.getString(NOTE);
-			String Amount=rs.getString(AMOUNT);
-			String Tag=rs.getString(TAG);
-			String IR=rs.getString(INTEREST_RATE);
-			String In=rs.getString(INTEREST);
-			String Re=rs.getString(RECUR);
-			String cate = rs.getString(CATEGORY);
-			String date= rs.getString(DATE_START);
-			
-			String[]data= {Item,Note,Tag,Amount,IR,In,Re,cate,date};
-			tableModel.addRow(data);
-			
-			
-			
-			
-			
-			
-		}
+			rs=stmt.executeQuery(query);
+					
+			while(rs.next()) {
+				String ref = rs.getInt(REF) + "";
+				String Item = rs.getString(ITEM);
+				String Note = rs.getString(NOTE);
+				String Amount = rs.getString(AMOUNT);
+				String Tag = rs.getString(TAG);
+				String IR = rs.getString(INTEREST_RATE);
+				String In = rs.getString(INTEREST);
+				String Re = rs.getString(RECUR);
+				String cate = rs.getString(CATEGORY);
+				String date = rs.getString(DATE_START);
+				String[]data = {ref, Item, Note, Tag, Amount, IR, In, Re, cate, date};
+				tableModel.addRow(data);
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage() + " from query()");
+		} finally {
+			if (rs != null)
+				rs.close();
+		}	
 		
-		
-		rs.close();
-		
-		
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage() + " from insert()");
-			
-		}
-			
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		JTable table = new JTable(tableModel);
-		return table;
+		return new JTable(tableModel);
 	}
 	
 	/**
