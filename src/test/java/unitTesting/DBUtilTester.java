@@ -146,6 +146,7 @@ class DBUtilTester {
 		
 			assertTrue(DBUtil.update("ceojeff", 30, "item", "testupdate"));
 			assertEquals("testupdate", (String)DBUtil.query("ceojeff", "ref", "30").getValueAt(0, 1));
+			assertTrue(DBUtil.update("ceojeff", 30, "item", "reset for testing"));
 		
 	}
 }
