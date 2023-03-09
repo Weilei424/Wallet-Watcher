@@ -197,3 +197,7 @@ Mar 8th 22:57:25
 	the test case.
 	
 	Fixed bugs in insert() in DBUtil.
+===============================================
+Mar 9th 00:20:48
+	Connected validation of user account to DB.
+	In MainUI class.
