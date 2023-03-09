@@ -19,7 +19,7 @@ public final class DBUtil {
 	
 	private static final String CLOUDUSERNAME = "team7";
 	private static final String CLOUDPASSWORD = "eecs2311!";
-	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher.mysql.database.azure.com:3306%s?useSSL=true";
+	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher2.mysql.database.azure.com:3306%s?useSSL=true";
 	
 	private static final int LOCAL = 0;
 	private static final int CLOUD = 1;
@@ -32,7 +32,7 @@ public final class DBUtil {
 	public static final String STOCK = "stock";
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
-	public static final String Bill = "bill";
+	public static final String BILL = "bill";
 	
 	public static final String ALL = "all";
 	public static final String REF = "ref";
@@ -75,7 +75,7 @@ public final class DBUtil {
 				+ "    username VARCHAR(100),\r\n"
 				+ "    item VARCHAR(100),\r\n"
 				+ "    note VARCHAR(200),\r\n"
-				+ "    tag ENUM('expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
+				+ "    tag ENUM('bill', 'expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
 				+ "    amount FLOAT,\r\n"
 				+ "    interest_rate FLOAT,\r\n"
 				+ "    interest FLOAT,\r\n"
@@ -418,6 +418,9 @@ public final class DBUtil {
 	private static String getTag(String type) {
 		String tag = null;
 		switch (type) {
+			case BILL:
+				tag = type;
+				break;
 			case EXPENSE:
 				tag = type;
 				break;
