@@ -59,9 +59,8 @@ public class Signup{
 	ButtonGroup accountType;
 	JPanel centerRadio; 
 		
-	MainUi redirect=new MainUi();
-	ExpensePage complete=new ExpensePage();
-	navigatorPage nav=new navigatorPage();
+	MainUi redirect;
+	navigatorPage nav;
 
 	//action listeners for the menu
 	//action listener for going back to menu
@@ -69,9 +68,8 @@ public class Signup{
 
 		public void actionPerformed(ActionEvent e)
 		{
+			redirect=new MainUi();
 			redirect.mainFrame.setVisible(true);
-			page.setVisible(false);
-			complete.mainEpFrame.dispose();
 			page.dispose();	
 		}
 	};
@@ -101,10 +99,8 @@ public class Signup{
 				
 				//change the redirect to the nav page
 				DBUtil.createUser(assumedUser);
+				nav=new navigatorPage();
 				nav.navigator.setVisible(true);
-				redirect.mainFrame.dispose();
-				page.setVisible(false);
-				complete.mainEpFrame.dispose();
 				page.dispose();	
 			}
 			catch(IllegalArgumentException exception)
@@ -121,9 +117,7 @@ public class Signup{
 	
 	public Signup()
 	{ 
-		nav.navigator.setVisible(false);
-		redirect.mainFrame.setVisible(false);
-		complete.mainEpFrame.setVisible(false);
+
 		page=new JFrame("Signup Page"); 
 		page.setSize(500,500);
 		panel=new JPanel(new GridLayout(8,8));

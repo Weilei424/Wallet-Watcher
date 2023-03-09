@@ -34,8 +34,6 @@ public class CardPursePage implements ActionListener {
 	public CardPursePage() {
 		mainCpPage = new JFrame();
 		mainCpPanel = new JPanel();
-		epForm = new ExpensePageForm();
-		epForm.expensePageFrame.setVisible(false);
 		this.tempLedgerItem = tempLedgerItem;
 
 		// Initialize main title on page, along with initializing button and layouts
