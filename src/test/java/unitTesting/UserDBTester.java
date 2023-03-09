@@ -26,7 +26,7 @@ class UserDBTester {
 	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
 	String[] tagArr = {"expense", "earning", "investment", "stock", "misc", "card"};
 	
-	@Order(9)
+	@Order(0)
 	@Test
 	void setUp() throws Exception {
 		try {
@@ -124,7 +124,7 @@ class UserDBTester {
 		
 	}
 	
-	@Order(0)
+	@Order(8)
 	@Test
 	void testQuery() {
 		
