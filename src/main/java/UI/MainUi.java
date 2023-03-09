@@ -110,6 +110,7 @@ public class MainUi implements ActionListener {
 		String uPass = userPasswordInput.getText();
 
 		if (DBUtil.validateUser(uName, uPass)) {
+      signupMade
 			mainExpensePage = new ExpensePage();
 			mainFrame.dispose();
 		} else {

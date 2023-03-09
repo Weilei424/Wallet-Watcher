@@ -19,7 +19,7 @@ public final class DBUtil {
 	
 	private static final String CLOUDUSERNAME = "team7";
 	private static final String CLOUDPASSWORD = "eecs2311!";
-	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher.mysql.database.azure.com:3306%s?useSSL=true";
+	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher2.mysql.database.azure.com:3306%s?useSSL=true";
 	
 	private static final int LOCAL = 0;
 	private static final int CLOUD = 1;
@@ -32,7 +32,10 @@ public final class DBUtil {
 	public static final String STOCK = "stock";
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
+	public static final String BILL = "bill";
 	
+	public static final String ALL = "all";
+	public static final String REF = "ref";
 	public static final String ITEM = "item";
 	public static final String NOTE = "note";
 	public static final String TAG = "tag";
@@ -72,7 +75,7 @@ public final class DBUtil {
 				+ "    username VARCHAR(100),\r\n"
 				+ "    item VARCHAR(100),\r\n"
 				+ "    note VARCHAR(200),\r\n"
-				+ "    tag ENUM('expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
+				+ "    tag ENUM('bill', 'expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
 				+ "    amount FLOAT,\r\n"
 				+ "    interest_rate FLOAT,\r\n"
 				+ "    interest FLOAT,\r\n"
@@ -237,7 +240,7 @@ public final class DBUtil {
 	 * @param 	username is the table name to be inserted.
 	 * @param 	ledger is the LedgerItem object to be inserted.
 	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
-	 * expense or earning or investment or stock or misc or card.
+	 * expense or earning or investment or stock or misc or card or bill.
 	 * @return	true if insert operation is success, false otherwise.
 	 */
 	public static boolean insert(String username, LedgerItem ledger, String type) {
@@ -288,6 +291,12 @@ public final class DBUtil {
 		return flag;
 	}
 	
+	/**
+	 * 
+	 * @param 	username as the table name.
+	 * @param 	ref is the ref# of the row will be deleted.
+	 * @return	true if insert operation is success, false otherwise.
+	 */
 	public static boolean delete(String username, int ref) {
 		boolean flag = false;
 		
@@ -295,77 +304,72 @@ public final class DBUtil {
 	}
 	
 	/**
-	 * 
-	 * @param 	username
+	 * THIS METHOD ASSUMES username EXISTS!
+	 * This method takes the username as the ledger item table name, 
+	 * @param 	username as the ledger item table name
+	 * @param 	column as the column name
+	 * @param 	value is the value of column MUST BE ONE OF THE STATIC STRINGS:
+	 * expense or earning or investment or stock or misc or card or bill.
+	 * @return	a JTable instance that stores all queried data.
+	 * @throws SQLException 
+	 */
+	public static JTable query(String username, String column, String value) throws SQLException {
+	    String query = "SELECT * FROM " + username;
+	    String[] columnNames = {REF, ITEM, NOTE, TAG, AMOUNT, INTEREST_RATE, INTEREST, RECUR, CATEGORY, DATE_START};
+	    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+
+	    ResultSet rs = null;
+	    try (
+	    		Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+	    		PreparedStatement stmt = pstmtHelper(conn, column, value, query)
+	    		) {
+        	rs = stmt.executeQuery();
+        	while (rs.next()) {
+	            int ref = rs.getInt(REF);
+	            String item = rs.getString(ITEM);
+	            String note = rs.getString(NOTE);
+	            double amount = rs.getDouble(AMOUNT);
+	            String tag = rs.getString(TAG);
+	            String interestRate = rs.getString(INTEREST_RATE);
+	            String interest = rs.getString(INTEREST);
+	            String recur = rs.getString(RECUR);
+	            String category = rs.getString(CATEGORY);
+	            String date = rs.getString(DATE_START);
+	            tableModel.addRow(new Object[]{ref, item, note, tag, amount, interestRate, interest, recur, category, date});
+	        }
+	    } catch (SQLException e) {
+	        throw new SQLException("Error executing query: " + e.getMessage(), e);
+	    } finally {
+	        if (rs != null) {
+	            rs.close();
+	        }
+	    }
+
+	    JTable table = new JTable(tableModel);
+	    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	    return table;
+	}
+	
+	/**
+	 * This is a private helper method for query() only.
+	 * @param 	conn
 	 * @param 	column
 	 * @param 	value
-	 * @return
+	 * @param 	q is the original query string.
+	 * @return	a PreparedStatement.
+	 * @throws 	SQLException
 	 */
-	public static JTable query(String username,  String column, String value) {
-		String col = "";
-		String querry="select * from "+username;
-		String[] columnNames = {ITEM, NOTE,TAG,AMOUNT,INTEREST_RATE,INTEREST,RECUR,CATEGORY,DATE_START};
-		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-		if (!(column.equals("all"))) 
-			if(!(column.equals(ITEM) || column.equals(NOTE))) {
-					col = getColumn(column);
-					querry+="where "+col +"="+value;
-			}
-		
-		ResultSet rs = null;
-		try(Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
-				
-				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-				){
-		rs=stmt.executeQuery(querry);
-				
-		while(rs.next()) {
-			String Item=rs.getString(ITEM);
-			String Note=rs.getString(NOTE);
-			String Amount=rs.getString(AMOUNT);
-			String Tag=rs.getString(TAG);
-			String IR=rs.getString(INTEREST_RATE);
-			String In=rs.getString(INTEREST);
-			String Re=rs.getString(RECUR);
-			String cate = rs.getString(CATEGORY);
-			String date= rs.getString(DATE_START);
-			
-			String[]data= {Item,Note,Tag,Amount,IR,In,Re,cate,date};
-			tableModel.addRow(data);
-			
-			
-			
-			
-			
-			
-		}
-		
-		
-		rs.close();
-		
-		
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage() + " from insert()");
-			
-		}
-			
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		JTable table = new JTable(tableModel);
-		return table;
+	private static PreparedStatement pstmtHelper(Connection conn, String column, String value, String q) throws SQLException {
+	    if (column != null && !column.equals(ALL)) {
+	        String query = q + " WHERE " + column + " = ?";
+	        PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	        st.setString(1, value);
+	        return st;
+	    } else {
+	        return conn.prepareStatement(q, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	    }
 	}
+
 	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
@@ -385,16 +389,18 @@ public final class DBUtil {
 		
 		String col = getColumn(column);
 		double num = 0.00;
-		String update = "UPDATE " + username + " SET " + col + " = " + value + "WHERE ref = " + ref;
+		String update = "UPDATE " + username + " SET " + col + " = ? WHERE ref = ?";
 		
 		if (column.equals("amount") || column.equals("interest_rate") || column.equals("interest") || column.equals("recur")) 
 			num = Double.parseDouble(value);
 		
 		try (
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
-				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				PreparedStatement st = conn.prepareStatement(update, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
-			st.execute(update);
+			st.setString(1, value);
+			st.setInt(2, ref);
+			st.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " from insert()");
@@ -406,12 +412,15 @@ public final class DBUtil {
 	/**
 	 * This method check if input string type is a valid ledger item type.
 	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
-	 * expense or earning or investment or stock or misc or card.
+	 * expense or earning or investment or stock or misc or card or bill.
 	 * @return	tag name in String.
 	 */
 	private static String getTag(String type) {
 		String tag = null;
 		switch (type) {
+			case BILL:
+				tag = type;
+				break;
 			case EXPENSE:
 				tag = type;
 				break;
@@ -440,12 +449,17 @@ public final class DBUtil {
 	/**
 	 *  This method check if input string column is a valid ledger table column name.
 	 * @param 	column MUST BE ONE OF THE STATIC STRINGS: 
-	 * item, note, tag, amount, interest_rate, interest, recur, category, date_start.
+	 * all, ref, item, note, tag, amount, interest_rate, interest, recur, category, date_start.
 	 * @return	column name in String.
 	 */
 	private static String getColumn(String column) {
 		String col = "";
 		switch (column) {
+			case ALL:
+				col = "";
+			case REF:
+				col = column;
+				break;
 			case ITEM:
 				col = column;
 				break;
@@ -474,7 +488,7 @@ public final class DBUtil {
 				col = column;
 				break;
 			default:
-				throw new IllegalArgumentException("Invalid column to update!");
+				throw new IllegalArgumentException("Invalid column to update/query!");
 		}
 		
 		return col;
@@ -514,7 +528,7 @@ public final class DBUtil {
 	private static boolean refExist(String username, int ref) {
 		int flag = 0;
 		String query = "SELECT EXISTS(SELECT * FROM " + username + " WHERE ref = " + ref +")";
-		String getResult = "EXISTS(SELECT * FROM \" + username + \" WHERE ref = \" + ref +\")";
+		String getResult = "EXISTS(SELECT * FROM " + username + " WHERE ref = " + ref +")";
 		
 		try (
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
@@ -524,7 +538,7 @@ public final class DBUtil {
 			while (rs.next()) 
 				flag = rs.getInt(getResult);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage() + " from getMaxRow()");
+			System.out.println(e.getMessage() + " from refExist()");
 		}
 		
 		return flag != 0 ? true : false;
