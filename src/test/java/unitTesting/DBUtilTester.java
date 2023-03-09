@@ -20,7 +20,7 @@ import persistence.LedgerItem;
 import persistence.User;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserDBTester {
+class DBUtilTester {
 	User demo = User.createUser("Jeff", "Bezos", "ceojeff", "UseAmazon!", "personal");
 	User pwTest = User.createUser("test", "changepw", "testpw", "pwpwpw", "personal");
 	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
@@ -129,18 +129,17 @@ class UserDBTester {
 	void testQuery() {
 		
 		try {
-			
-			
-			JTable table = DBUtil.query(demo.getUserName(), "item", "testitem 63");
-			TableModel model=table.getModel();
-			Object value =model.getValueAt(0, 5);
+			JTable table = DBUtil.query(demo.getUserName(), "tag", "misc");
+			Object value = table.getValueAt(0, 9);
+			System.out.println("" + value);
 			assertFalse(value.equals(null));
-			
+			String result = DBUtil.query("ceojeff", "ref", "22").getValueAt(0, 4) + "";
+			System.out.println(result);
+			assertEquals(251.98 + "", result);
 		}
 		catch(Exception e) {
-			fail();
+			e.printStackTrace();
 		}
-		
 	}
 	
 	@Order(9)
