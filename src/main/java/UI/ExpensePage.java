@@ -37,8 +37,6 @@ public class ExpensePage implements ActionListener {
 	public ExpensePage() {
 		mainEpFrame = new JFrame();
 		mainEpPanel = new JPanel();
-		epForm = new ExpensePageForm();
-		epForm.expensePageFrame.setVisible(false);
 		this.tempLedgerItem = tempLedgerItem;
 		this.isRemoved = false;
 
@@ -146,8 +144,9 @@ public class ExpensePage implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		epForm = new ExpensePageForm();
 		epForm.expensePageFrame.setVisible(true);
-		mainEpFrame.setVisible(false);
+		mainEpFrame.dispose();
 		// setTempLedgerItem(epForm.getLedgerItem());
 
 	}

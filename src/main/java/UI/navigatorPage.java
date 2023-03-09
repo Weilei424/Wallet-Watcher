@@ -28,19 +28,18 @@ public class navigatorPage {
 
 	JLabel navPage;
 	
-	ExpensePage expense=new ExpensePage();
+	ExpensePage expense;
 	//switch this with budget
-	BillPlannerPage budget=new BillPlannerPage();
+	//BillPlannerPage budget;
 	//add in the earnings Page and modify action listener
-	CardPursePage cardPurse=new CardPursePage();
+	CardPursePage cardPurse;
 	
 	ActionListener expenseDirect=new ActionListener(){
 		public void actionPerformed(ActionEvent e)
 		{
+			expense=new ExpensePage();
+			expense.mainEpFrame.setVisible(true);			
 			navigator.dispose();
-			budget.mainBpPage.dispose();
-			cardPurse.mainCpPage.dispose();
-			expense.mainEpFrame.setVisible(true);
 		}
 	};
 	
@@ -48,10 +47,9 @@ public class navigatorPage {
 	ActionListener earningDirect=new ActionListener(){
 		public void actionPerformed(ActionEvent e)
 		{
+			//add earning page instance in when time is good 
 			navigator.dispose();
-			budget.mainBpPage.dispose();
-			cardPurse.mainCpPage.dispose();
-			expense.mainEpFrame.dispose();
+
 
 		}
 	};
@@ -59,28 +57,24 @@ public class navigatorPage {
 	ActionListener budgetDirect=new ActionListener(){
 		public void actionPerformed(ActionEvent e)
 		{
+			//add budget instance when budget page is implemented 
 			navigator.dispose();
-			cardPurse.mainCpPage.dispose();
-			expense.mainEpFrame.dispose();
-			budget.mainBpPage.setVisible(true);
+
 		}
 	};
 	
 	ActionListener cardPurseDirect=new ActionListener(){
 		public void actionPerformed(ActionEvent e)
 		{
-			navigator.dispose();
-			budget.mainBpPage.dispose();
-			expense.mainEpFrame.dispose();
+			cardPurse=new CardPursePage();
 			cardPurse.mainCpPage.setVisible(true);
+			navigator.dispose();
 
 		}
 	};
 	public navigatorPage()
 	{ 
-		expense.mainEpFrame.setVisible(false);
-		budget.mainBpPage.setVisible(false);
-		cardPurse.mainCpPage.setVisible(false);
+
 		
 		navigator=new JFrame("Navigation Page");
 
@@ -122,9 +116,9 @@ public class navigatorPage {
 		buttons.add(earningsPage);		
 
         navigator.getContentPane().setLayout(new BorderLayout());
-
-        // Add the JPanel to the center of the content pane
         navigator.getContentPane().add(buttons, BorderLayout.CENTER);
+        
+        
         navigator.add(buttons);
 		navigator.setVisible(true);
 	}	

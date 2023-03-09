@@ -2,9 +2,12 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import persistence.DBUtil;
 
 public class MainUi implements ActionListener {
 
@@ -29,7 +34,10 @@ public class MainUi implements ActionListener {
 	private JLabel passwordText;
 	private JPasswordField userPasswordInput;
 	private ExpensePage mainExpensePage;
-
+	private Signup signupPage;
+	
+	private JLabel signup;
+	
 	// The constructor holds all the initialization of every global variable and
 	// where to use it
 	public MainUi() {
@@ -37,26 +45,39 @@ public class MainUi implements ActionListener {
 		// Initializing all variables
 		mainFrame = new JFrame();
 		mainPanel = new JPanel();
-		mainExpensePage = new ExpensePage();
-		mainExpensePage.mainEpFrame.setVisible(false);
 		userLogIn = new JButton("Login!");
 		welcomeText = new JLabel("Welcome to Wallet Watcher!", SwingConstants.CENTER);
 		userText = new JLabel("Username");
 		userTextInput = new JTextField();
 		passwordText = new JLabel("Password");
 		userPasswordInput = new JPasswordField();
-
+		signup=new JLabel("<html><u>Don't have an account? click here</u></html>");
+		
+		signup.setForeground(Color.blue);
+        signup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		signup.addMouseListener(new MouseAdapter()
+		{
+			@Override
+		    public void mouseClicked(MouseEvent e) {
+				signupPage=new Signup();
+				signupPage.page.setVisible(true);
+				mainFrame.dispose();
+				
+			}
+		});
+                
 		// Setting the bounds and the action listener (unused as of right now) for the
 		// login button
 		userLogIn.setBounds(0, 80, 80, 25);
 		userLogIn.addActionListener(this);
 
+		
 		// Setting the bounds for the texts and user inputs
 		userText.setBounds(10, 20, 80, 25);
 		userTextInput.setBounds(30, 20, 80, 25);
 		passwordText.setBounds(10, 50, 80, 25);
 		userPasswordInput.setBounds(30, 50, 80, 25);
-
+		
 		// Creating the main panel holding all the information for the login page and
 		// setting background colour
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
@@ -68,7 +89,8 @@ public class MainUi implements ActionListener {
 		mainPanel.add(userPasswordInput);
 		mainPanel.add(userLogIn);
 		mainPanel.setBackground(Color.GREEN);
-
+		mainPanel.add(signup);
+		
 		// Adding it all to the main frame to be visible in UI
 		mainFrame.add(mainPanel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,13 +109,12 @@ public class MainUi implements ActionListener {
 		String uName = userTextInput.getText();
 		String uPass = userPasswordInput.getText();
 
-		if (uName.equals("Jeff") && uPass.equals("Bezos")) {
-			mainExpensePage.mainEpFrame.setVisible(true);
-			mainFrame.setVisible(false);
+		if (DBUtil.validateUser(uName, uPass)) {
+			mainExpensePage = new ExpensePage();
+			mainFrame.dispose();
 		} else {
 			JOptionPane.showMessageDialog(mainFrame, "Sorry, not a valid username or password");
 		}
 
 	}
-
 }
