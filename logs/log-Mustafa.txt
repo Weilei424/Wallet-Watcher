@@ -27,5 +27,12 @@ Tried to fix merge conflict ended up just fetching and adding files to new folde
 Feb 16th 3:42:00 
 Finished Wiki, Modified BudgetData Test, Completed my CRC Cards. 
 
+===============================================
+March 7rd 10:46:00 PM 
+Mostly completed the signup page need to complete verification with the username so its not a repeat. Started nav page. 
+Thinking about how to implement db variables. 
 
-
+===============================================
+March 8th 10:56:00 PM 
+Finished most of nav page and signup page waiting on implementation of earnings page and budget page. Need to implement a static class to simplify having 
+the information in one place. Going to work on database after modifying classes and completing static class. 
