@@ -3,6 +3,7 @@ package unitTesting;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -20,11 +21,11 @@ import persistence.LedgerItem;
 import persistence.User;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserDBTester {
+class DBUtilTester {
 	User demo = User.createUser("Jeff", "Bezos", "ceojeff", "UseAmazon!", "personal");
 	User pwTest = User.createUser("test", "changepw", "testpw", "pwpwpw", "personal");
 	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
-	String[] tagArr = {"expense", "earning", "investment", "stock", "misc", "card"};
+	String[] tagArr = {"bill", "expense", "earning", "investment", "stock", "misc", "card"};
 	
 	@Order(0)
 	@Test
@@ -104,17 +105,16 @@ class UserDBTester {
 		Random r = new Random();
 		
 		try {
-			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) (Math.random() * 6)]));
+			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 7)]));
 			/**
 			 * DO NOT UNCOMMENT THESE LINES BELOW!
 			 * These lines are just for initializing only!
 			 */
-			
 //			for (int i = 0; i < 20; i++) {
-//				assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) (Math.random() * 6)]));
+//				assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 7)]));
 //			}
 		} catch (IllegalArgumentException e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -129,23 +129,23 @@ class UserDBTester {
 	void testQuery() {
 		
 		try {
-			
-			
-			JTable table = DBUtil.query(demo.getUserName(), "item", "testitem 63");
-			TableModel model=table.getModel();
-			Object value =model.getValueAt(0, 5);
+			JTable table = DBUtil.query(demo.getUserName(), "tag", "misc");
+			Object value = table.getValueAt(0, 9);
 			assertFalse(value.equals(null));
-			
+			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 4) + "";
+			assertEquals(178.85 + "", result);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		catch(Exception e) {
-			fail();
-		}
-		
 	}
 	
 	@Order(9)
 	@Test
-	void testUpdate() {
+	void testUpdate() throws SQLException {
+		
+			assertTrue(DBUtil.update("ceojeff", 10, "item", "testupdate"));
+			assertEquals("testupdate", (String)DBUtil.query("ceojeff", "ref", "10").getValueAt(0, 1));
+			assertTrue(DBUtil.update("ceojeff", 10, "item", "reset for testing"));
 		
 	}
 }

@@ -4,6 +4,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import java.io.*;
+import java.sql.SQLException;
 
 
 public class Outputform {
@@ -30,12 +31,12 @@ public class Outputform {
 	
 	
 	
-	public Outputform(String user) {
+	public Outputform(String user) throws SQLException {
 		this.form=DBUtil.query(user, "all", null);
 		this.user=user;
 	}
 	
-	public Outputform(String user,String column, String value) {
+	public Outputform(String user,String column, String value) throws SQLException {
 		this.form=DBUtil.query(user, column, value);
 		this.user=user;
 		
