@@ -32,6 +32,7 @@ public final class DBUtil {
 	public static final String STOCK = "stock";
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
+	public static final String Bill = "bill";
 	
 	public static final String ALL = "all";
 	public static final String REF = "ref";
@@ -239,7 +240,7 @@ public final class DBUtil {
 	 * @param 	username is the table name to be inserted.
 	 * @param 	ledger is the LedgerItem object to be inserted.
 	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
-	 * expense or earning or investment or stock or misc or card.
+	 * expense or earning or investment or stock or misc or card or bill.
 	 * @return	true if insert operation is success, false otherwise.
 	 */
 	public static boolean insert(String username, LedgerItem ledger, String type) {
@@ -290,6 +291,12 @@ public final class DBUtil {
 		return flag;
 	}
 	
+	/**
+	 * 
+	 * @param 	username as the table name.
+	 * @param 	ref is the ref# of the row will be deleted.
+	 * @return	true if insert operation is success, false otherwise.
+	 */
 	public static boolean delete(String username, int ref) {
 		boolean flag = false;
 		
@@ -297,11 +304,13 @@ public final class DBUtil {
 	}
 	
 	/**
-	 * 
-	 * @param 	username
-	 * @param 	column
-	 * @param 	value
-	 * @return
+	 * THIS METHOD ASSUMES username EXISTS!
+	 * This method takes the username as the ledger item table name, 
+	 * @param 	username as the ledger item table name
+	 * @param 	column as the column name
+	 * @param 	value is the value of column MUST BE ONE OF THE STATIC STRINGS:
+	 * expense or earning or investment or stock or misc or card or bill.
+	 * @return	a JTable instance that stores all queried data.
 	 * @throws SQLException 
 	 */
 	public static JTable query(String username, String column, String value) throws SQLException {
@@ -340,7 +349,16 @@ public final class DBUtil {
 	    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	    return table;
 	}
-
+	
+	/**
+	 * This is a private helper method for query() only.
+	 * @param 	conn
+	 * @param 	column
+	 * @param 	value
+	 * @param 	q is the original query string.
+	 * @return	a PreparedStatement.
+	 * @throws 	SQLException
+	 */
 	private static PreparedStatement pstmtHelper(Connection conn, String column, String value, String q) throws SQLException {
 	    if (column != null && !column.equals(ALL)) {
 	        String query = q + " WHERE " + column + " = ?";
@@ -392,7 +410,7 @@ public final class DBUtil {
 	/**
 	 * This method check if input string type is a valid ledger item type.
 	 * @param 	type MUST BE ONE OF THE STATIC STRINGS: 
-	 * expense or earning or investment or stock or misc or card.
+	 * expense or earning or investment or stock or misc or card or bill.
 	 * @return	tag name in String.
 	 */
 	private static String getTag(String type) {
@@ -426,7 +444,7 @@ public final class DBUtil {
 	/**
 	 *  This method check if input string column is a valid ledger table column name.
 	 * @param 	column MUST BE ONE OF THE STATIC STRINGS: 
-	 * item, note, tag, amount, interest_rate, interest, recur, category, date_start.
+	 * all, ref, item, note, tag, amount, interest_rate, interest, recur, category, date_start.
 	 * @return	column name in String.
 	 */
 	private static String getColumn(String column) {
