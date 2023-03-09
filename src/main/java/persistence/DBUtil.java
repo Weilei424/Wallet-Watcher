@@ -389,16 +389,18 @@ public final class DBUtil {
 		
 		String col = getColumn(column);
 		double num = 0.00;
-		String update = "UPDATE " + username + " SET " + col + " = " + value + "WHERE ref = " + ref;
+		String update = "UPDATE " + username + " SET " + col + " = ? WHERE ref = ?";
 		
 		if (column.equals("amount") || column.equals("interest_rate") || column.equals("interest") || column.equals("recur")) 
 			num = Double.parseDouble(value);
 		
 		try (
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
-				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				PreparedStatement st = conn.prepareStatement(update, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
-			st.execute(update);
+			st.setString(1, value);
+			st.setInt(2, ref);
+			st.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage() + " from insert()");
@@ -523,7 +525,7 @@ public final class DBUtil {
 	private static boolean refExist(String username, int ref) {
 		int flag = 0;
 		String query = "SELECT EXISTS(SELECT * FROM " + username + " WHERE ref = " + ref +")";
-		String getResult = "EXISTS(SELECT * FROM \" + username + \" WHERE ref = \" + ref +\")";
+		String getResult = "EXISTS(SELECT * FROM " + username + " WHERE ref = " + ref +")";
 		
 		try (
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
@@ -533,7 +535,7 @@ public final class DBUtil {
 			while (rs.next()) 
 				flag = rs.getInt(getResult);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage() + " from getMaxRow()");
+			System.out.println(e.getMessage() + " from refExist()");
 		}
 		
 		return flag != 0 ? true : false;

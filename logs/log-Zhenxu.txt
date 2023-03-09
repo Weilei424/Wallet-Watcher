@@ -195,3 +195,5 @@ Mar 8th 20:42:14
 Mar 8th 22:57:25
 	Fixed query() in DBUtil class and finished 
 	the test case.
+	
+	Fixed bugs in insert() in DBUtil.
