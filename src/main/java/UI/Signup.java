@@ -39,7 +39,8 @@ public class Signup{
 	
 	//password input
 	JPanel passwordPanel;
-	JTextField passwordInput; 
+	
+	JPasswordField passwordInput;
 	JLabel password;
 	
 	//type input
@@ -167,9 +168,8 @@ public class Signup{
 		namePanel.add(nameInput);
 		
 		
-		passwordInput=new JTextField(20);
+		passwordInput = new JPasswordField(20);		
 		password=new JLabel("Please enter your password: ");
-
 		passwordPanel=new JPanel();
 		passwordPanel.setLayout(new BoxLayout(passwordPanel,BoxLayout.X_AXIS));
 		passwordPanel.add(password);
