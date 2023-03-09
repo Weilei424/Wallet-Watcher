@@ -33,6 +33,7 @@ public final class DBUtil {
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
 	
+	public static final String ALL = "all";
 	public static final String REF = "ref";
 	public static final String ITEM = "item";
 	public static final String NOTE = "note";
@@ -303,48 +304,54 @@ public final class DBUtil {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public static JTable query(String username,  String column, String value) throws SQLException {
-		String col = "";
-		String query = "SELECT * FROM " + username;
-		String[] columnNames = {REF, ITEM, NOTE, TAG, AMOUNT, INTEREST_RATE, INTEREST, RECUR,CATEGORY, DATE_START};
-		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-		
-		if (!(column.equals("all"))) 
-			if(!(column.equals(ITEM) || column.equals(NOTE))) {
-					col = getColumn(column);
-					query += "WHERE "+ col + " = " + value;
-			}
-		
-		ResultSet rs = null;
-		try(
-				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
-				Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-				){
-			rs=stmt.executeQuery(query);
-					
-			while(rs.next()) {
-				String ref = rs.getInt(REF) + "";
-				String Item = rs.getString(ITEM);
-				String Note = rs.getString(NOTE);
-				String Amount = rs.getString(AMOUNT);
-				String Tag = rs.getString(TAG);
-				String IR = rs.getString(INTEREST_RATE);
-				String In = rs.getString(INTEREST);
-				String Re = rs.getString(RECUR);
-				String cate = rs.getString(CATEGORY);
-				String date = rs.getString(DATE_START);
-				String[]data = {ref, Item, Note, Tag, Amount, IR, In, Re, cate, date};
-				tableModel.addRow(data);
-			}
-		} catch(SQLException e) {
-			System.out.println(e.getMessage() + " from query()");
-		} finally {
-			if (rs != null)
-				rs.close();
-		}	
-		
-		return new JTable(tableModel);
+	public static JTable query(String username, String column, String value) throws SQLException {
+	    String query = "SELECT * FROM " + username;
+	    String[] columnNames = {REF, ITEM, NOTE, TAG, AMOUNT, INTEREST_RATE, INTEREST, RECUR, CATEGORY, DATE_START};
+	    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+
+	    ResultSet rs = null;
+	    try (
+	    		Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+	    		PreparedStatement stmt = pstmtHelper(conn, column, value, query)
+	    		) {
+        	rs = stmt.executeQuery();
+        	while (rs.next()) {
+	            int ref = rs.getInt(REF);
+	            String item = rs.getString(ITEM);
+	            String note = rs.getString(NOTE);
+	            double amount = rs.getDouble(AMOUNT);
+	            String tag = rs.getString(TAG);
+	            String interestRate = rs.getString(INTEREST_RATE);
+	            String interest = rs.getString(INTEREST);
+	            String recur = rs.getString(RECUR);
+	            String category = rs.getString(CATEGORY);
+	            String date = rs.getString(DATE_START);
+	            tableModel.addRow(new Object[]{ref, item, note, tag, amount, interestRate, interest, recur, category, date});
+	        }
+	    } catch (SQLException e) {
+	        throw new SQLException("Error executing query: " + e.getMessage(), e);
+	    } finally {
+	        if (rs != null) {
+	            rs.close();
+	        }
+	    }
+
+	    JTable table = new JTable(tableModel);
+	    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	    return table;
 	}
+
+	private static PreparedStatement pstmtHelper(Connection conn, String column, String value, String q) throws SQLException {
+	    if (column != null && !column.equals(ALL)) {
+	        String query = q + " WHERE " + column + " = ?";
+	        PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	        st.setString(1, value);
+	        return st;
+	    } else {
+	        return conn.prepareStatement(q, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	    }
+	}
+
 	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
@@ -425,6 +432,11 @@ public final class DBUtil {
 	private static String getColumn(String column) {
 		String col = "";
 		switch (column) {
+			case ALL:
+				col = "";
+			case REF:
+				col = column;
+				break;
 			case ITEM:
 				col = column;
 				break;
@@ -453,7 +465,7 @@ public final class DBUtil {
 				col = column;
 				break;
 			default:
-				throw new IllegalArgumentException("Invalid column to update!");
+				throw new IllegalArgumentException("Invalid column to update/query!");
 		}
 		
 		return col;

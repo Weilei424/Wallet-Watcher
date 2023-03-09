@@ -129,15 +129,16 @@ class DBUtilTester {
 	void testQuery() {
 		
 		try {
-			JTable table = DBUtil.query(demo.getUserName(), "item", "testitem 63");
-			TableModel model=table.getModel();
-			Object value =model.getValueAt(0, 5);
-			System.out.println((String)value);
+			JTable table = DBUtil.query(demo.getUserName(), "tag", "misc");
+			Object value = table.getValueAt(0, 9);
+			System.out.println("" + value);
 			assertFalse(value.equals(null));
-			
+			String result = DBUtil.query("ceojeff", "ref", "22").getValueAt(0, 4) + "";
+			System.out.println(result);
+			assertEquals(251.98 + "", result);
 		}
 		catch(Exception e) {
-			fail();
+			e.printStackTrace();
 		}
 	}
 	
