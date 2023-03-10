@@ -360,7 +360,7 @@ public final class DBUtil {
 	 * @throws 	SQLException
 	 */
 	private static PreparedStatement pstmtHelper(Connection conn, String column, String value, String q) throws SQLException {
-	    if (column != null && !column.equals(ALL)) {
+	    if (column != null && !(value.equals(ALL) && column.equals(TAG))) {
 	        String query = q + " WHERE " + column + " = ?";
 	        PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 	        st.setString(1, value);

@@ -134,6 +134,9 @@ class DBUtilTester {
 			assertFalse(value.equals(null));
 			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 4) + "";
 			assertEquals(178.85 + "", result);
+			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 4) + "";
+			assertEquals(20.75 + "", result);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
