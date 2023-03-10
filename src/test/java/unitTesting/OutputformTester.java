@@ -48,6 +48,7 @@ class OutputformTester {
 		Outputform form = new Outputform(demo.getUserName());
 		Object value = form.form.getValueAt(23, 8);
 		assertFalse(value.equals(null));
+		
 	}
 		catch(SQLException e) {
 			fail();
