@@ -49,7 +49,7 @@ public class navigatorPage {
 		public void actionPerformed(ActionEvent e)
 		{
 			//add earning page instance in when time is good 
-			navigator.dispose();
+			//navigator.dispose();
 
 
 		}
@@ -59,7 +59,7 @@ public class navigatorPage {
 		public void actionPerformed(ActionEvent e)
 		{
 			//add budget instance when budget page is implemented 
-			navigator.dispose();
+			//navigator.dispose();
 
 		}
 	};

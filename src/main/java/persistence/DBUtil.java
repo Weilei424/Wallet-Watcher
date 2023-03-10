@@ -544,12 +544,13 @@ public final class DBUtil {
 		return flag != 0 ? true : false;
 	}
 	
-	public static boolean joinUserAccs(String name1,String name2,String newName)
+	public static boolean joinUserAccs(String name1,String name2,String firstName, String lastName, String userName, String password, String type)
 	{ 
 		if(DBUtil.checkUser(name1) && DBUtil.checkUser(name2))
 		{ 
-			
-			DBUtil.changeLedgerItems(name1,name2,newName);
+			User newUser=User.createUser(firstName,lastName,userName,password,type);
+			DBUtil.combineUserTables(name1, name2, userName);
+			DBUtil.combineUsers(name1,name2,newUser);
 			return true;
 		}
 		else
@@ -560,28 +561,37 @@ public final class DBUtil {
 	
 	private static void combineUserTables(String name1,String name2,String newName)
 	{ 
-		String query=String.format("SELECT *"
-								+ "FROM (\n"
-								+ "	 SELECT `ref`, `username`, column3\n"
-								+ "	 FROM table1\n"
-								+ "  UNION\n"
-								+ "  SELECT column1, column2, column3\n"
-								+ "  FROM table2\n"
-								+ ") AS new_table_name;", null)
+		String query=String.format("CREATE TABLE %s AS"
+				+ "SELECT ref, username, item, note, tag, amount, interest_rate, interest, recur, category, date_start"
+				+ "FROM %s"
+				+ "UNION ALL"
+				+ "SELECT ref, username, item, note, tag, amount, interest_rate, interest, recur, category, date_start"
+				+ "FROM %s",newName,name1,name2);
+			try
+			{ 
+				Connection con=DBUtil.getConnection(LOCAL,CLOUDDB);
+				Statement statement = con.createStatement () ;
+				ResultSet result = statement.executeQuery(query);
+			}
+			catch(SQLException e)
+			{ 
+				e.printStackTrace();
+			}
 	}
 	
-	private static void combineUsers(String name1,String name2,String newName)
+	private static void combineUsers(String name1,String name2, User user)
 	{ 
-		
-		String query=String.format("UPDATE ceojeff\nSET username=%s \nWHERE username IN(%s,%s);",newName,name1,name2);
+		String query = String.format("DELETE FROM users WHERE username='%s' OR username='%s'", name1, name2);		
 		try
 		{ 
-			Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
+			Connection con=DBUtil.getConnection(LOCAL,CLOUDDB);
 			Statement statement = con.createStatement () ;
 			ResultSet result = statement.executeQuery(query);
+			DBUtil.createUser(user);
 		}
 		catch(SQLException e)
 		{ 
+			e.printStackTrace();
 		}
 	}
 }
