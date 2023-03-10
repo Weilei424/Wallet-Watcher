@@ -123,7 +123,8 @@ class DBUtilTester {
 	@Test
 	void testDelete() {
 		try {
-			assertTrue(DBUtil.delete(demo.getUserName(), 2));
+			assertTrue(DBUtil.delete(demo.getUserName(), 22));
+			DBUtil.insert(demo.getUserName(), null, null);
 			
 		}
 		catch(Exception e) {
