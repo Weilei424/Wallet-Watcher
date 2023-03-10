@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -14,8 +15,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
+import persistence.DBUtil;
 import persistence.LedgerItem;
 
 public class ExpensePage implements ActionListener {
@@ -28,13 +32,26 @@ public class ExpensePage implements ActionListener {
 	private JButton addExpense;
 	private JButton removeExpense;
 	private JLabel title;
-	private JTextArea ledgerInfo;
+	//private JTextArea ledgerInfo;
 	private ExpensePageForm epForm;
 	private LedgerItem tempLedgerItem;
+	private JTable expenseTable;
+	private JScrollPane expenseScroller;
 	private boolean isRemoved;
 	public static volatile int numberOfExpenses = 0;
 
 	public ExpensePage() {
+		
+		try
+		{ 
+	       	expenseTable = DBUtil.query("ceojeff","tag","card");
+		}
+		catch(SQLException er)
+		{ 
+		}
+		expenseScroller = new JScrollPane(expenseTable);
+		
+		
 		mainEpFrame = new JFrame();
 		mainEpPanel = new JPanel();
 		this.tempLedgerItem = tempLedgerItem;
@@ -58,26 +75,26 @@ public class ExpensePage implements ActionListener {
 
 		// This is the text area which shows all of the "ledger" information
 
-		ledgerInfo = new JTextArea();
-		ledgerInfo.append("Name of Expense" + "\t");
-		ledgerInfo.append("Cost of Expense" + "\t");
-		ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
-		ledgerInfo.append("Special Notes");
-		ledgerInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		// Disables user from being able to add any text into area as it is only for
-		// displaying the ledger
-		ledgerInfo.setEditable(false);
+//		ledgerInfo = new JTextArea();
+//		ledgerInfo.append("Name of Expense" + "\t");
+//		ledgerInfo.append("Cost of Expense" + "\t");
+//		ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
+//		ledgerInfo.append("Special Notes");
+//		ledgerInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//		// Disables user from being able to add any text into area as it is only for
+//		// displaying the ledger
+//		ledgerInfo.setEditable(false);
 
 		removeExpense = new JButton(new AbstractAction("Remove All Expenses") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (numberOfExpenses > 0) {
-					ledgerInfo.setText(null);
-					ledgerInfo.append("Name of Expense" + "\t");
-					ledgerInfo.append("Cost of Expense" + "\t");
-					ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
-					ledgerInfo.append("Special Notes");
+//					ledgerInfo.setText(null);
+//					ledgerInfo.append("Name of Expense" + "\t");
+//					ledgerInfo.append("Cost of Expense" + "\t");
+//					ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
+//					ledgerInfo.append("Special Notes");
 				} else {
 					JOptionPane.showMessageDialog(mainEpFrame, "You need to input expenses first!");
 				}
@@ -96,8 +113,9 @@ public class ExpensePage implements ActionListener {
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it
 		mainEpFrame.add(mainPanel, BorderLayout.NORTH);
-		mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
+		//mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
 		mainEpFrame.add(removeExpense, BorderLayout.SOUTH);
+		mainEpFrame.add(expenseScroller, BorderLayout.CENTER);
 		mainEpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainEpFrame.setTitle("Expenses");
 		mainEpFrame.setSize(1000, 1000);
@@ -114,9 +132,9 @@ public class ExpensePage implements ActionListener {
 		this.tempLedgerItem = tempLedgerItem;
 	}
 
-	public JTextArea getLedgerInfo() {
-		return ledgerInfo;
-	}
+//	public JTextArea getLedgerInfo() {
+//		return ledgerInfo;
+//	}
 
 	public JButton getAddExpense() {
 		return addExpense;
