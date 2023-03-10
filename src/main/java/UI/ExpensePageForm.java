@@ -136,12 +136,12 @@ public class ExpensePageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		ep.setTempLedgerItem(this.ledgerItem);
-		String previousText = ep.getLedgerInfo().getText();
-		ep.getLedgerInfo().append("\n");
-		ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
-		ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
-		ep.getLedgerInfo().append(this.getLedgerItem().getDate() + "\t" + "\t");
-		ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
+		//String previousText = ep.getLedgerInfo().getText();
+		//ep.getLedgerInfo().append("\n");
+		//ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
+		//ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
+		//ep.getLedgerInfo().append(this.getLedgerItem().getDate() + "\t" + "\t");
+		//ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
 //		if (ep.isRemoved() == true) {
