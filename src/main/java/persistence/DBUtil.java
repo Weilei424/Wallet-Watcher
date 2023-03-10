@@ -298,7 +298,23 @@ public final class DBUtil {
 	 * @return	true if insert operation is success, false otherwise.
 	 */
 	public static boolean delete(String username, int ref) {
+		if(!(refExist(username,ref)))
+			return false;
 		boolean flag = false;
+		String querry ="Delete from " +username+" where ref = ?";
+		
+		try (
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+				PreparedStatement st = conn.prepareStatement(querry, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				) {
+			
+			st.setInt(1, ref);
+			st.executeUpdate();
+			flag = true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from delete()");
+		}
+		
 		
 		return flag;
 	}
@@ -584,4 +600,5 @@ public final class DBUtil {
 		}
 	}
 	*/
+
 }

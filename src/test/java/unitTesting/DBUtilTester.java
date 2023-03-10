@@ -121,7 +121,15 @@ class DBUtilTester {
 	@Order(7)
 	@Test
 	void testDelete() {
-		
+		try {
+			assertTrue(DBUtil.delete(demo.getUserName(), 22));
+			DBUtil.insert(demo.getUserName(), null, null);
+			
+		}
+		catch(Exception e) {
+			fail();
+			
+		}
 	}
 	
 	@Order(8)
@@ -151,4 +159,8 @@ class DBUtilTester {
 			assertTrue(DBUtil.update("ceojeff", 10, "item", "reset for testing"));
 		
 	}
+	
+	
+	
+	
 }
