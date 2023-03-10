@@ -543,7 +543,7 @@ public final class DBUtil {
 		
 		return flag != 0 ? true : false;
 	}
-	
+	/*
 	public static boolean joinUserAccs(String name1,String name2,String newName)
 	{ 
 		if(DBUtil.checkUser(name1) && DBUtil.checkUser(name2))
@@ -584,4 +584,5 @@ public final class DBUtil {
 		{ 
 		}
 	}
+	*/
 }
