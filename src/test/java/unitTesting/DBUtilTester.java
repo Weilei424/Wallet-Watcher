@@ -118,13 +118,8 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(7)
-	@Test
-	void testDelete() {
-		
-	}
 	
-	@Order(8)
+	@Order(7)
 	@Test
 	void testQuery() {
 		
@@ -142,7 +137,7 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(9)
+	@Order(8)
 	@Test
 	void testUpdate() throws SQLException {
 		
