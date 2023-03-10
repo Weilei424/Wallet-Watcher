@@ -31,9 +31,9 @@ public class Outputform {
 	
 	
 	
-	public Outputform(String user) throws SQLException {
-		this.form=DBUtil.query(user, "all", null);
-		this.user=user;
+	public Outputform(String username) throws SQLException {
+		this.form=DBUtil.query(username, null, null);
+		this.user=username;
 	}
 	
 	public Outputform(String user,String column, String value) throws SQLException {

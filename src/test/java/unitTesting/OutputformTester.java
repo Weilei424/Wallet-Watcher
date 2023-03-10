@@ -46,10 +46,10 @@ class OutputformTester {
 	void Constructortest() {
 		try {
 		Outputform form = new Outputform(demo.getUserName());
-		Object value = form.form.getValueAt(0, 9);
+		Object value = form.form.getValueAt(23, 8);
 		assertFalse(value.equals(null));
 	}
-		catch(Exception e) {
+		catch(SQLException e) {
 			fail();
 		}
 
