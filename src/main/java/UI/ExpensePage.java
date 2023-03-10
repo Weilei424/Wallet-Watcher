@@ -44,7 +44,7 @@ public class ExpensePage implements ActionListener {
 		
 		try
 		{ 
-	       	expenseTable = DBUtil.query("ceojeff","tag","card");
+	       	expenseTable = DBUtil.query("ceojeff","tag","expense");
 		}
 		catch(SQLException er)
 		{ 
