@@ -27,3 +27,25 @@ Muhammad Taha Shahid #218149484
 * Outputted the data onto the main expense page for user to see
 * Added a remove expense button for user to be able to get rid of the expenses
 * Used ledger items class to help with storage of data in the backend to pass to the main expense page class
+
+Itr2:
+
+03/06/2023:
+* Fixed bugs from iteration 1
+* Minor updates to login form
+
+03/07/2023:
+* Worked on minor bug fixes in UI
+* Utilized DBUtil methods for inserting into database using java
+
+03/08/2023:
+* Created card purse and bill planner pages
+* Worked on integrating jTable into the pages instead of a jTextArea for cleaner display
+* Accessed the DB to be able to process user information
+
+03/09/2023:
+* Fixed menu navigations between pages
+* Added JTable to all main pages
+* Integrated expense page form with the DB
+* Added dynamic table on expense page form to refresh every time user added another expense
+* Added forms for card purse page, and made the JTable dynamic with the DB
