@@ -30,11 +30,13 @@ public class BillPlannerPage implements ActionListener {
 	private JButton addNewBill;
 	private JButton removeBill;
 	private JLabel title;
+	private JButton toMenu;
 //	private JTextArea billInfo;
 	private ExpensePageForm epForm;
 	private LedgerItem tempLedgerItem;
 	private JTable billTable;
 	private JScrollPane billScroller;
+	private navigatorPage nav;
 
 	public BillPlannerPage() {
 
@@ -51,7 +53,7 @@ public class BillPlannerPage implements ActionListener {
 		this.tempLedgerItem = tempLedgerItem;
 
 		// Initialize main title on page, along with initializing button and layouts
-		title = new JLabel("Upcoming Bills");
+		title = new JLabel("Bills Due");
 		title.setSize(30, 30);
 		title.setFont(new Font("Tahoma", Font.BOLD, 60));
 
@@ -59,11 +61,21 @@ public class BillPlannerPage implements ActionListener {
 		addNewBill.setSize(40, 40);
 		addNewBill.addActionListener(this);
 
+		toMenu = new JButton(new AbstractAction("Main Menu") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nav = new navigatorPage();
+				mainBpPage.dispose();
+			}
+		});
+
 		// This panel holds the top elements including the title and the ability to add
 		// another button
-		mainBpPanel.setLayout(new GridLayout(1, 2));
+		mainBpPanel.setLayout(new GridLayout(1, 3));
 		mainBpPanel.add(title);
 		mainBpPanel.add(addNewBill);
+		mainBpPanel.add(toMenu);
 		mainBpPanel.setBackground(Color.green);
 
 		// This is the text area which shows all of the "ledger" information
@@ -77,7 +89,7 @@ public class BillPlannerPage implements ActionListener {
 //		// displaying the ledger
 //		billInfo.setEditable(false);
 
-		removeBill = new JButton(new AbstractAction("Remove All Expenses") {
+		removeBill = new JButton(new AbstractAction("Remove All Bills") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -106,7 +118,7 @@ public class BillPlannerPage implements ActionListener {
 		mainBpPage.add(removeBill, BorderLayout.SOUTH);
 		mainBpPage.add(billScroller, BorderLayout.CENTER);
 		mainBpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainBpPage.setTitle("Expenses");
+		mainBpPage.setTitle("Upcoming Bills");
 		mainBpPage.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainBpPage.setVisible(true);

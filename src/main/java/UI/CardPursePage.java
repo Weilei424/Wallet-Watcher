@@ -120,7 +120,7 @@ public class CardPursePage implements ActionListener {
 		mainCpPage.add(cardScroller, BorderLayout.CENTER);
 		mainCpPage.add(removeCard, BorderLayout.SOUTH);
 		mainCpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainCpPage.setTitle("Expenses");
+		mainCpPage.setTitle("Card Purse");
 		mainCpPage.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainCpPage.setVisible(true);
