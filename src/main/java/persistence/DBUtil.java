@@ -315,7 +315,7 @@ public final class DBUtil {
 	 */
 	public static JTable query(String username, String column, String value) throws SQLException {
 	    String query = "SELECT * FROM " + username;
-	    String[] columnNames = {REF, ITEM, NOTE, TAG, AMOUNT, INTEREST_RATE, INTEREST, RECUR, CATEGORY, DATE_START};
+	    String[] columnNames = {REF, ITEM, NOTE, AMOUNT, INTEREST_RATE, INTEREST, RECUR, CATEGORY, DATE_START};
 	    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
 	    ResultSet rs = null;
@@ -329,13 +329,12 @@ public final class DBUtil {
 	            String item = rs.getString(ITEM);
 	            String note = rs.getString(NOTE);
 	            double amount = rs.getDouble(AMOUNT);
-	            String tag = rs.getString(TAG);
 	            String interestRate = rs.getString(INTEREST_RATE);
 	            String interest = rs.getString(INTEREST);
 	            String recur = rs.getString(RECUR);
 	            String category = rs.getString(CATEGORY);
 	            String date = rs.getString(DATE_START);
-	            tableModel.addRow(new Object[]{ref, item, note, tag, amount, interestRate, interest, recur, category, date});
+	            tableModel.addRow(new Object[]{ref, item, note, amount, interestRate, interest, recur, category, date});
 	        }
 	    } catch (SQLException e) {
 	        throw new SQLException("Error executing query: " + e.getMessage(), e);
