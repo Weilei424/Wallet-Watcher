@@ -31,6 +31,7 @@ public class ExpensePage implements ActionListener {
 	// JPanel ledgerPanel;
 	private JButton addExpense;
 	private JButton removeExpense;
+	private JButton toMenu;
 	private JLabel title;
 	//private JTextArea ledgerInfo;
 	private ExpensePageForm epForm;
@@ -38,6 +39,7 @@ public class ExpensePage implements ActionListener {
 	private JTable expenseTable;
 	private JScrollPane expenseScroller;
 	private boolean isRemoved;
+	private navigatorPage navigation;
 	public static volatile int numberOfExpenses = 0;
 
 	public ExpensePage() {
@@ -65,12 +67,22 @@ public class ExpensePage implements ActionListener {
 		addExpense = new JButton("Add New Expense");
 		addExpense.setSize(40, 40);
 		addExpense.addActionListener(this);
+		
+		toMenu = new JButton(new AbstractAction("Main Menu") {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				navigation = new navigatorPage();
+				mainEpFrame.dispose();
+			}
+		});
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
-		mainEpPanel.setLayout(new GridLayout(1, 2));
+		mainEpPanel.setLayout(new GridLayout(1, 3));
 		mainEpPanel.add(title);
 		mainEpPanel.add(addExpense);
+		mainEpPanel.add(toMenu);
 		mainEpPanel.setBackground(Color.green);
 
 		// This is the text area which shows all of the "ledger" information
