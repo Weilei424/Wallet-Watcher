@@ -32,7 +32,7 @@ public class Outputform {
 	
 	
 	public Outputform(String username) throws SQLException {
-		this.form=DBUtil.query(username, null, null);
+		this.form=DBUtil.query(username, "tag", "all");
 		this.user=username;
 	}
 	

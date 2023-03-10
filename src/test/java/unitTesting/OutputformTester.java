@@ -50,7 +50,7 @@ class OutputformTester {
 		assertFalse(value.equals(null));
 		
 	}
-		catch(SQLException e) {
+		catch(Exception e) {
 			fail();
 		}
 
@@ -66,7 +66,7 @@ class OutputformTester {
 	
 	try {
 		Outputform form = new Outputform(demo.getUserName());
-		form.outputFile("./cat.csv");
+		form.outputFile("./csvfile/fatcat.csv");
 		File file = new File("./cat.csv");
 		assertTrue(file.exists());
 	}
