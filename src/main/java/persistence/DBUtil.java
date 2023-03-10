@@ -515,9 +515,34 @@ public final class DBUtil {
 		return max;
 	}
 	
+	
+	
+	private static boolean deleterow(String user, int ref) {
+		
+		if(!(refExist(user,ref)))
+			return false;
+		boolean flag = false;
+		String querry ="Delete from " +user+" where ref = ?";
+		
+		try (
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+				PreparedStatement st = conn.prepareStatement(querry, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				) {
+			
+			st.setInt(1, ref);
+			st.executeUpdate();
+			flag = true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from delete()");
+		}
+		
+		
+		return flag;
+	}
+	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
-	 * This method checks if the ref exist in selected table.
+	 * This method checks ife ref exist in selected table.
 	 * @param 	username is the table name.
 	 * @param	ref is the ref number.
 	 * @return	true if ref exists, false otherwise.
@@ -540,4 +565,10 @@ public final class DBUtil {
 		
 		return flag != 0 ? true : false;
 	}
+	
+	
+	
+	
+	
+	
 }
