@@ -36,7 +36,7 @@ public class ExpensePage implements ActionListener {
 	//private JTextArea ledgerInfo;
 	private ExpensePageForm epForm;
 	private LedgerItem tempLedgerItem;
-	private JTable expenseTable;
+	public JTable expenseTable;
 	private JScrollPane expenseScroller;
 	private boolean isRemoved;
 	private navigatorPage navigation;

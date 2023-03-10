@@ -35,7 +35,7 @@ public class BillPlannerPage implements ActionListener {
 	private ExpensePageForm epForm;
 	private LedgerItem tempLedgerItem;
 	private JTable billTable;
-	private JScrollPane billScroller;
+	public JScrollPane billScroller;
 	private navigatorPage nav;
 
 	public BillPlannerPage() {
