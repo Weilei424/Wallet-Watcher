@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import persistence.User;
+
 public class navigatorPage {
 	JFrame navigator;
 
@@ -80,6 +82,7 @@ public class navigatorPage {
 			logIn = new MainUi();
 			logIn.mainFrame.setVisible(true);
 			navigator.dispose();
+			User.setLoginAs(null);
 			JOptionPane.showMessageDialog(logIn.mainFrame, "Logged Out Successfully!");
 		}
 	};

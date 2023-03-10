@@ -21,6 +21,7 @@ import javax.swing.JTable;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
+import persistence.User;
 
 public class displayAllUsers implements ActionListener {
 
@@ -36,7 +37,7 @@ public class displayAllUsers implements ActionListener {
 	public displayAllUsers() {
 
 		try {
-			expenseTable = DBUtil.query("ceojeff", "tag", "all");
+			expenseTable = DBUtil.query(User.getLoginAs(), "tag", "all");
 		} catch (SQLException er) {
 		}
 		displayScroller = new JScrollPane(expenseTable);

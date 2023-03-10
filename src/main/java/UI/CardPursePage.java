@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
+import persistence.User;
 
 public class CardPursePage implements ActionListener {
 
@@ -43,7 +44,7 @@ public class CardPursePage implements ActionListener {
 	public CardPursePage() {
 
 		try {
-			cardPurseTable = DBUtil.query("ceojeff", "tag", "card");
+			cardPurseTable = DBUtil.query(User.getLoginAs(), "tag", "card");
 		} catch (SQLException er) {
 		}
 		cardScroller = new JScrollPane(cardPurseTable);

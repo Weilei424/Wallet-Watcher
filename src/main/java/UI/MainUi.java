@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import DB.DBUtil;
+import persistence.User;
 
 public class MainUi implements ActionListener {
 
@@ -110,6 +111,7 @@ public class MainUi implements ActionListener {
 		String uPass = userPasswordInput.getText();
 
 		if (DBUtil.validateUser(uName, uPass)) {
+			User.setLoginAs(uName);
 			page = new navigatorPage();
 			mainFrame.dispose();
 		} else {

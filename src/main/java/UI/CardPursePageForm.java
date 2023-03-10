@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import DB.DBUtil;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
+import persistence.User;
 
 public class CardPursePageForm implements ActionListener{	
 
@@ -137,7 +138,7 @@ public class CardPursePageForm implements ActionListener{
 
 			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 
-			DBUtil.insert("ceojeff", this.ledgerItem, "card");
+			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
 
 			
 			// String previousText = cpp.getLedgerInfo().getText();
@@ -149,7 +150,7 @@ public class CardPursePageForm implements ActionListener{
 		//	cpp.setNumberOfExpenses(cpp.getNumberOfExpenses() + 1);
 
 			try {
-				cpp.cardPurseTable = DBUtil.query("ceojeff","tag","expense");
+				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","expense");
 				cpp.mainCpPage.dispose();
 				cpp = new CardPursePage();
 				cpp.mainCpPage.setVisible(true);

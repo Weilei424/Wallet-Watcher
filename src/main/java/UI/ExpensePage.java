@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
+import persistence.User;
 
 public class ExpensePage implements ActionListener {
 
@@ -46,7 +47,7 @@ public class ExpensePage implements ActionListener {
 		
 		try
 		{ 
-	       	expenseTable = DBUtil.query("ceojeff","tag","expense");
+	       	expenseTable = DBUtil.query(User.getLoginAs(),"tag","expense");
 		}
 		catch(SQLException er)
 		{ 
