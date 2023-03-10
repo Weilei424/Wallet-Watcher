@@ -20,8 +20,10 @@ import javax.swing.border.EmptyBorder;
 
 public class navigatorPage {
 	JFrame navigator;
-	JPanel buttons;
 
+	JPanel buttons; 
+	
+	//buttons to redirect to different pages 
 	JButton expensePage;
 	JButton earningsPage;
 	JButton budgetPage;

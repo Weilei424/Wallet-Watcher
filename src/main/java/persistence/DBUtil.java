@@ -543,4 +543,46 @@ public final class DBUtil {
 		
 		return flag != 0 ? true : false;
 	}
+	/*
+	public static boolean joinUserAccs(String name1,String name2,String newName)
+	{ 
+		if(DBUtil.checkUser(name1) && DBUtil.checkUser(name2))
+		{ 
+			
+			DBUtil.changeLedgerItems(name1,name2,newName);
+			return true;
+		}
+		else
+		{ 
+			return false;
+		}
+	}
+	
+	private static void combineUserTables(String name1,String name2,String newName)
+	{ 
+		String query=String.format("SELECT *"
+								+ "FROM (\n"
+								+ "	 SELECT `ref`, `username`, column3\n"
+								+ "	 FROM table1\n"
+								+ "  UNION\n"
+								+ "  SELECT column1, column2, column3\n"
+								+ "  FROM table2\n"
+								+ ") AS new_table_name;", null)
+	}
+	
+	private static void combineUsers(String name1,String name2,String newName)
+	{ 
+		
+		String query=String.format("UPDATE ceojeff\nSET username=%s \nWHERE username IN(%s,%s);",newName,name1,name2);
+		try
+		{ 
+			Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
+			Statement statement = con.createStatement () ;
+			ResultSet result = statement.executeQuery(query);
+		}
+		catch(SQLException e)
+		{ 
+		}
+	}
+	*/
 }
