@@ -1,4 +1,4 @@
-package persistence;
+package DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +11,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import businessLogic.Util;
+import persistence.Investment;
+import persistence.LedgerItem;
+import persistence.Stock_Fund;
+import persistence.User;
 
 public final class DBUtil {
 	private static final String USERNAME = "root";

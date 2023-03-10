@@ -16,9 +16,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import DB.DBUtil;
+
 import org.junit.jupiter.api.MethodOrderer;
 
-import persistence.DBUtil;
 import persistence.LedgerItem;
 import persistence.User;
 

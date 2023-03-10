@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import persistence.DBUtil;
+import DB.DBUtil;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 

@@ -19,7 +19,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import persistence.DBUtil;
+import DB.DBUtil;
 import persistence.LedgerItem;
 
 public class displayAllUsers implements ActionListener {

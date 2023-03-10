@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
+import DB.DBUtil;
 import persistence.User;
-import persistence.DBUtil;
 
 public class Signup{
 	

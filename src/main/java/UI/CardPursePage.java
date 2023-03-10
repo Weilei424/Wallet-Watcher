@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import persistence.DBUtil;
+import DB.DBUtil;
 import persistence.LedgerItem;
 
 public class CardPursePage implements ActionListener {
