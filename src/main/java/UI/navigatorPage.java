@@ -21,6 +21,7 @@ public class navigatorPage {
 	JFrame navigator;
 	JPanel buttons; 
 	
+	//buttons to redirect to different pages 
 	JButton expensePage;
 	JButton earningsPage;
 	JButton budgetPage;

@@ -24,9 +24,9 @@ JScrollPane scrollPane;
 		catch(SQLException er)
 		{ 
 		}
+		//invokes query method grabs JTabel and puts it on  the frame along with a scrollpane
 		 		scrollPane = new JScrollPane(table); // create the JScrollPane object and pass the JTable object to it
 		 		panel=new JPanel();
-		        // Create a new JScrollPane and add the JTable to it
 			     page=new JFrame();
 			     panel.add(scrollPane);
 			     page.add(panel);

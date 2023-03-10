@@ -15,56 +15,57 @@ import persistence.DBUtil;
 
 public class Signup{
 	
+	//the actual page and the panel containing all elements on the page
 	JFrame page;
 	JPanel panel;
 	
 	//title on the page
 	JLabel title;
 	JPanel titlePanel; 
-	//name input
 	
-	
-	
+	//stuff for the firstname fetch 
 	JTextField firstNameInput; 
 	JLabel firstName;
 	JPanel firstNamePanel;
 	
+	//stuff for the last name fetch 
 	JTextField lastNameInput; 
 	JLabel lastName;
 	JPanel lastNamePanel;
 	
+	//stuff for username fetch
 	JPanel namePanel;
 	JTextField nameInput; 
 	JLabel name;
 	
-	//password input
+	//stuff for password fetch
 	JPanel passwordPanel;
-	
 	JPasswordField passwordInput;
 	JLabel password;
 	
-	//type input
-	JTextField typeInput; 
-	JLabel type;
 	
 	
 	//submit button 
-	JButton submit; 
+	JButton submit;
+	//button to go to menu
 	JButton back;
+	//grouping the buttons so theyre next to one another 
 	JPanel buttons;
 	
 	//Personal or business account options 
 	JLabel account;
 	JRadioButton personal;
 	JRadioButton business;
+	//groups buttons 
 	ButtonGroup accountType;
+	//panel just to make it easier to lay everything out 
 	JPanel centerRadio; 
-		
+	
+	//UI's that are initialized onclick
 	MainUi redirect;
 	navigatorPage nav;
 
-	//action listeners for the menu
-	//action listener for going back to menu
+	//action listeners for going to the menu
 	ActionListener backToMenu=new ActionListener(){
 
 		public void actionPerformed(ActionEvent e)
@@ -75,6 +76,7 @@ public class Signup{
 		}
 	};
 	
+	//action listener for submitting the username
 	ActionListener submitItems=new ActionListener(){
 		public void actionPerformed(ActionEvent e)
 		{
@@ -92,13 +94,12 @@ public class Signup{
 			{
 				acc="personal";
 			}
-			
+			//create the user with this static factory method
 			User assumedUser=User.createUser(firstName,lastName,userName,userPassword,acc);
 		
 			try
 			{
-				
-				//change the redirect to the nav page
+				//change the redirect to the nav page and adds the user to the database
 				DBUtil.createUser(assumedUser);
 				nav=new navigatorPage();
 				nav.navigator.setVisible(true);
@@ -106,6 +107,7 @@ public class Signup{
 			}
 			catch(IllegalArgumentException exception)
 			{
+				//popupmessage for the user to know the name is taken 
 				JOptionPane.showMessageDialog(page, "Username already exists!");
 			}
 			catch(SQLException exception)
@@ -122,33 +124,40 @@ public class Signup{
 		page=new JFrame("Signup Page"); 
 		page.setSize(500,500);
 		panel=new JPanel(new GridLayout(8,8));
-		//panel.setBackground(new Color());
 		page.add(panel);
 		
-		
+		//makes title
 		JLabel title=new JLabel("Account registration");
 		title.setFont(new Font("Garamond",Font.BOLD,30));
 		
+		
+		//centers title and separates it from the rest
 		titlePanel=new JPanel();
 		titlePanel.setLayout(new BoxLayout(titlePanel,BoxLayout.X_AXIS));
 		title.setBorder(BorderFactory.createEmptyBorder(0,500,0,0));
 		titlePanel.add(title);
 		
+		//Input username
 		namePanel=new JPanel();
 		namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
 		nameInput=new JTextField(20);
 		
+		//first name and lastname
 		firstNameInput=new JTextField(20);
 		lastNameInput=new JTextField(20);
 		firstName=new JLabel("Please enter your first name: ");
 		lastName=new JLabel("Please enter your last name: ");
 
+		//box layout that lays everything out horizontally
 		firstNamePanel=new JPanel();
 		firstNamePanel.setLayout(new BoxLayout(firstNamePanel,BoxLayout.X_AXIS));
 		
+		//box layout that lays everything out horizontally
 		lastNamePanel=new JPanel();
 		lastNamePanel.setLayout(new BoxLayout(lastNamePanel,BoxLayout.X_AXIS));
 		
+		
+		//creates padding
 		firstNamePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		lastNamePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
@@ -157,17 +166,17 @@ public class Signup{
 		name=new JLabel("Please a username: ");
 		name.setBorder(BorderFactory.createEmptyBorder(0,0,0,69));
 
+		//add stuff to the panels 
 		firstNamePanel.add(firstName);
 		firstNamePanel.add(firstNameInput);
 
 		lastNamePanel.add(lastName);
 		lastNamePanel.add(lastNameInput);
 
-
 		namePanel.add(name);
 		namePanel.add(nameInput);
 		
-		
+		//Password
 		passwordInput = new JPasswordField(20);		
 		password=new JLabel("Please enter your password: ");
 		passwordPanel=new JPanel();
@@ -186,6 +195,7 @@ public class Signup{
 		buttons.add(back);
 		buttons.add(submit);
 		
+		//create radio buttons and add them to a button group so only one can be selected
 		personal=new JRadioButton();
 		business=new JRadioButton();
 
@@ -197,7 +207,7 @@ public class Signup{
 		accountType.add(personal);
 		accountType.add(business);
 		
-		
+		//change fonts to make all more clear 
 		firstName.setFont(new Font(account.getFont().getFontName(),Font.PLAIN,16));
 		lastName.setFont(new Font(account.getFont().getFontName(),Font.PLAIN,16));
 		name.setFont(new Font(account.getFont().getFontName(),Font.PLAIN,16));
@@ -206,8 +216,10 @@ public class Signup{
 		personal.setFont(new Font(account.getFont().getFontName(),Font.PLAIN,16));
 		business.setFont(new Font(account.getFont().getFontName(),Font.PLAIN,16));
 
-		personal.setSelected( true);
+		//make it so personal acc is default
+		personal.setSelected(true);
 		
+		//centers radio buttons 
 		JPanel centerRadio = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		centerRadio.add(account);
 		centerRadio.add(personal);
@@ -215,7 +227,7 @@ public class Signup{
 		
 		centerRadio.setBorder(BorderFactory.createEmptyBorder(20,0,0,0) );
 
-		
+		//adds all to panels 
 		panel.add(title);
 		panel.add(firstNamePanel);
 		panel.add(lastNamePanel);
@@ -224,6 +236,7 @@ public class Signup{
 		panel.add(centerRadio);
 		panel.add(buttons);
 		
+		//makes page visible and maximizes page
 		page.setVisible(true);
 		page.setExtendedState (java.awt.Frame.MAXIMIZED_BOTH);
 
