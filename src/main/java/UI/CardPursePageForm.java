@@ -97,7 +97,7 @@ public class CardPursePageForm implements ActionListener{
 			// Adding the expense form panel into the main frame
 			cardPurseFrame.add(cardPurseForm, BorderLayout.CENTER);
 			cardPurseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			cardPurseFrame.setTitle("Add Expense");
+			cardPurseFrame.setTitle("Add Cards");
 			cardPurseFrame.setSize(400, 300);
 			// expensePageFrame.pack(); // when setSize on, then remove pack
 			cardPurseFrame.setVisible(true);
