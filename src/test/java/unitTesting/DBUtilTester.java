@@ -127,23 +127,19 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(7)
-	@Test
-	void testDelete() {
-		
-	}
 	
-	@Order(8)
+	@Order(7)
 	@Test
 	void testQuery() {
 		
 		try {
 			JTable table = DBUtil.query(demo.getUserName(), "tag", "misc");
-			Object value = table.getValueAt(0, 9);
+			Object value = table.getValueAt(0, 8);
 			assertFalse(value.equals(null));
-			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 4) + "";
+			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 3) + "";
 			assertEquals(178.85 + "", result);
-			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 4) + "";
+
+			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 3) + "";
 			assertEquals(20.75 + "", result);
 			
 		} catch(Exception e) {
@@ -151,7 +147,7 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(9)
+	@Order(8)
 	@Test
 	void testUpdate() throws SQLException {	
 			assertTrue(DBUtil.update("ceojeff", 10, "item", "testupdate"));
