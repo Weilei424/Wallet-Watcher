@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import persistence.DBUtil;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 
@@ -127,6 +129,7 @@ public class ExpensePageForm implements ActionListener {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
+			
 		}
 
 		String expName = expenseNameInput.getText();
@@ -135,15 +138,28 @@ public class ExpensePageForm implements ActionListener {
 		double expCost = Double.parseDouble(expenseCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+
+		DBUtil.insert("ceojeff", this.ledgerItem, "expense");
+
 		ep.setTempLedgerItem(this.ledgerItem);
-		String previousText = ep.getLedgerInfo().getText();
-		ep.getLedgerInfo().append("\n");
-		ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
-		ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
-		ep.getLedgerInfo().append(this.getLedgerItem().getDate() + "\t" + "\t");
-		ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
+		// String previousText = ep.getLedgerInfo().getText();
+		// ep.getLedgerInfo().append("\n");
+		// ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
+		// ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
+		// ep.getLedgerInfo().append(this.getLedgerItem().getDate() + "\t" + "\t");
+		// ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
+		try {
+			ep.expenseTable = DBUtil.query("ceojeff","tag","expense");
+			ep.mainEpFrame.dispose();
+			ep = new ExpensePage();
+			ep.mainEpFrame.setVisible(true);
+			ep.getAddExpense().setVisible(false);
+			} catch(SQLException er) {
+				
+			}
+		
 //		if (ep.isRemoved() == true) {
 //			ep.getLedgerInfo().setText(null);
 //			ep.getLedgerInfo().append("Name of Expense" + "\t");
