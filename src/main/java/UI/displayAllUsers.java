@@ -19,7 +19,7 @@ JScrollPane scrollPane;
 	{ 
 		try
 		{ 
-	       	table = DBUtil.query("ceojeff","category","default");
+	       	table = DBUtil.query("ceojeff","tag","all");
 		}
 		catch(SQLException er)
 		{ 
