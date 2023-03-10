@@ -43,7 +43,7 @@ Username  | Password
 ========================================================================
 
 ## Iteration 2:
-  Please see [Planning_Document_itr2.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr2.pdf)(itr2 details start at page#13) and [Our GitHub Wiki](https://github.com/Weilei424/Wallet-Watcher/wiki) for details.
+  Please see [Planning_Document_itr2.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr2.pdf) (itr2 details start at page#13) and [Our GitHub Wiki](https://github.com/Weilei424/Wallet-Watcher/wiki) for details.
   
   [Jira Board](https://tahas02.atlassian.net/jira/software/projects/WALI/boards/1) for planning and workload splitting.
   
