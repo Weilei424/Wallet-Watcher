@@ -93,6 +93,7 @@ public final class DBUtil {
 				Statement newTable = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
 			if (!DBUtil.checkUser(u.getUserName())) {
+				throw new IllegalArgumentException();
 			}
 			p.setString(1, u.getUserName());
 			p.setString(2, Util.encrypt(u.getPassword(), u.getSalt()));

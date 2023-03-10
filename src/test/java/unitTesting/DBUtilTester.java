@@ -74,11 +74,11 @@ class DBUtilTester {
 		assertTrue("UseAmazon!".equals(demo.getPassword()));
 	}
 	
-//	@Order(3)
-//	@Test
-//	void testDuplicateUser() {
-//		assertThrows(IllegalArgumentException.class, ()-> DBUtil.createUser(demo));	
-//	}
+	@Order(3)
+	@Test
+	void testDuplicateUser() {
+		assertThrows(IllegalArgumentException.class, ()-> DBUtil.createUser(demo));	
+	}
 	
 	@Order(4)
 	@Test
