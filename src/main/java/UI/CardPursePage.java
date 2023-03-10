@@ -114,7 +114,7 @@ public class CardPursePage implements ActionListener {
 		mainCpPage.add(removeCard, BorderLayout.SOUTH);
 		mainCpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainCpPage.setTitle("Expenses");
-		mainCpPage.setSize(1000, 1000);
+		mainCpPage.setSize(755, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainCpPage.setVisible(true);
 
