@@ -48,7 +48,7 @@ public class Outputform {
 	
 	
 	
-	public void outputFile(String fileName,String path)throws IOException {
+	public void outputFile(String path)throws IOException {
 		
 		TableModel model = this.form.getModel();
 		File file = new File(path);
