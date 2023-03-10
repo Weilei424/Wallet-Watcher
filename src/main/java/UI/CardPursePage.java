@@ -35,9 +35,10 @@ public class CardPursePage implements ActionListener {
 	// private JTextArea cardInfo;
 	private ExpensePageForm epForm;
 	private LedgerItem tempLedgerItem;
-	private JTable cardPurseTable;
-	private JScrollPane cardScroller;
+	public JTable cardPurseTable;
+	public JScrollPane cardScroller;
 	private navigatorPage nav;
+	private CardPursePageForm cppf;
 
 	public CardPursePage() {
 
@@ -129,12 +130,17 @@ public class CardPursePage implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		cppf = new CardPursePageForm();
+		mainCpPage.dispose();
 
 	}
 
 	public static void main(String[] args) {
 		new CardPursePage();
+	}
+
+	public JButton getAddNewCard() {
+		return addNewCard;
 	}
 
 }
