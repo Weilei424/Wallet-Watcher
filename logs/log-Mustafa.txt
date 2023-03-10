@@ -42,3 +42,6 @@ March 8th 9:57:00 PM
 Made everything responsive to each other, other than some things taha added as well. Working on the dbutil class rn 
 commented over my code. Did not end up completing static class leaving it for next iteration. Finishing this up then 
 doing wiki
+===============================================
+March 9th 1:59:00 PM 
+Made the merge user account method, made minor changes to UI. Pretty much done other than wiki. 

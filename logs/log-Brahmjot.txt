@@ -19,3 +19,11 @@ Feb 17th 02:05
 	Created processing document
 	Created CRC cards for DateParser and BudgetData
 ===============================================
+Mar 1st 11:39
+	Made dependencies load from Maven Central
+	Added GitHub build workflow
+===============================================
+Mar 8 11:31
+	Implemented FlatLaf UI design
+	Fixed bug with lowercase months in DateParser
+===============================================
