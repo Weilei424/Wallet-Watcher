@@ -156,6 +156,7 @@ public class ExpensePageForm implements ActionListener {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
+			expensePageFrame.dispose();
 			} catch(SQLException er) {
 				
 			}

@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,8 +31,8 @@ public class navigatorPage {
 	JButton cardPage;
 	JButton logOut;
 
+	JPanel label;
 	JLabel navPage;
-
 	ExpensePage expense;
 	// switch this with budget
 	// BillPlannerPage budget;
@@ -51,7 +52,7 @@ public class navigatorPage {
 	ActionListener earningDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			// add earning page instance in when time is good
-			navigator.dispose();
+			//navigator.dispose();
 
 		}
 	};
@@ -59,7 +60,7 @@ public class navigatorPage {
 	ActionListener budgetDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			// add budget instance when budget page is implemented
-			navigator.dispose();
+			//navigator.dispose();
 
 		}
 	};
@@ -83,11 +84,12 @@ public class navigatorPage {
 	};
 
 	public navigatorPage() {
-
 		navigator = new JFrame("Navigation Page");
-
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
+		label=new JPanel();
+		label.setBorder(BorderFactory.createEmptyBorder(0,0,0,550));
+		
 		buttons = new JPanel();
 		buttons.setLayout(new GridLayout(5, 1, 10, 10));
 
@@ -104,6 +106,8 @@ public class navigatorPage {
 
 		navPage = new JLabel("Navigation Page");
 		navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
+		
+	    label.add(navPage, BorderLayout.CENTER); // add the label to the CENTER of the BorderLayout
 
 		cardPage = new JButton("Card Purse");
 		cardPage.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -119,18 +123,17 @@ public class navigatorPage {
 		expensePage.addActionListener(expenseDirect);
 		logOut.addActionListener(logOutDirect);
 
-		buttons.add(navPage);
 		buttons.add(budgetPage);
 		buttons.add(cardPage);
 		buttons.add(expensePage);
+		buttons.add(earningsPage);
 		buttons.add(logOut);
 
-		buttons.add(earningsPage);
-
+		buttons.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
+	   
 		navigator.getContentPane().setLayout(new BorderLayout());
-		navigator.getContentPane().add(buttons, BorderLayout.CENTER);
-
-		navigator.add(buttons);
+	    navigator.getContentPane().add(label, BorderLayout.NORTH);
+	    navigator.getContentPane().add(buttons, BorderLayout.CENTER);
 		navigator.setVisible(true);
 	}
 
