@@ -1,4 +1,4 @@
-package persistence;
+package DB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +11,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import businessLogic.Util;
+import persistence.Investment;
+import persistence.LedgerItem;
+import persistence.Stock_Fund;
+import persistence.User;
 
 public final class DBUtil {
 	private static final String USERNAME = "root";
@@ -93,7 +97,7 @@ public final class DBUtil {
 				Statement newTable = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				) {
 			if (!DBUtil.checkUser(u.getUserName())) {
-				throw new IllegalArgumentException("username not available");
+				throw new IllegalArgumentException();
 			}
 			p.setString(1, u.getUserName());
 			p.setString(2, Util.encrypt(u.getPassword(), u.getSalt()));
@@ -315,7 +319,7 @@ public final class DBUtil {
 	 */
 	public static JTable query(String username, String column, String value) throws SQLException {
 	    String query = "SELECT * FROM " + username;
-	    String[] columnNames = {REF, ITEM, NOTE, TAG, AMOUNT, INTEREST_RATE, INTEREST, RECUR, CATEGORY, DATE_START};
+	    String[] columnNames = {REF, ITEM, NOTE, AMOUNT, INTEREST_RATE, INTEREST, "Recuring", CATEGORY, DATE_START};
 	    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
 	    ResultSet rs = null;
@@ -329,13 +333,12 @@ public final class DBUtil {
 	            String item = rs.getString(ITEM);
 	            String note = rs.getString(NOTE);
 	            double amount = rs.getDouble(AMOUNT);
-	            String tag = rs.getString(TAG);
 	            String interestRate = rs.getString(INTEREST_RATE);
 	            String interest = rs.getString(INTEREST);
-	            String recur = rs.getString(RECUR);
+	            String recur = Integer.parseInt(rs.getString(RECUR)) == 1 ? "YES" : "NO";
 	            String category = rs.getString(CATEGORY);
 	            String date = rs.getString(DATE_START);
-	            tableModel.addRow(new Object[]{ref, item, note, tag, amount, interestRate, interest, recur, category, date});
+	            tableModel.addRow(new Object[]{ref, item, note, amount, interestRate, interest, recur, category, date});
 	        }
 	    } catch (SQLException e) {
 	        throw new SQLException("Error executing query: " + e.getMessage(), e);
@@ -543,13 +546,15 @@ public final class DBUtil {
 		
 		return flag != 0 ? true : false;
 	}
-	/*
-	public static boolean joinUserAccs(String name1,String name2,String newName)
+
+	public static boolean joinUserAccs(String name1,String name2,String firstName,String lastName,String userName,String password,String type)
+
 	{ 
-		if(DBUtil.checkUser(name1) && DBUtil.checkUser(name2))
+		if(!DBUtil.checkUser(name1) && !DBUtil.checkUser(name2))
 		{ 
-			
-			DBUtil.changeLedgerItems(name1,name2,newName);
+			User newUser=User.createUser(firstName,lastName,userName,password,type);
+			DBUtil.combineUserTables(name1, name2, userName);
+			DBUtil.combineUsers(name1,name2,newUser);
 			return true;
 		}
 		else
@@ -558,31 +563,46 @@ public final class DBUtil {
 		}
 	}
 	
+	
+	//this combines the ledgeritems tables into 1 using the two separate ids 
 	private static void combineUserTables(String name1,String name2,String newName)
 	{ 
-		String query=String.format("SELECT *"
-								+ "FROM (\n"
-								+ "	 SELECT `ref`, `username`, column3\n"
-								+ "	 FROM table1\n"
-								+ "  UNION\n"
-								+ "  SELECT column1, column2, column3\n"
-								+ "  FROM table2\n"
-								+ ") AS new_table_name;", null)
+		String query=String.format("CREATE TABLE %s AS "
+				+ "SELECT ref, username, item, note, tag, amount, interest_rate, interest, recur, category, date_start "
+				+ "FROM %s "
+				+ "UNION ALL "
+				+ "SELECT ref, username, item, note, tag, amount, interest_rate, interest, recur, category, date_start "
+				+ "FROM %s;",newName,name1,name2);
+		
+		String query2=String.format("DROP TABLE %s,%s","name1","name2");
+
+			try
+			{ 
+				Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
+				Statement statement = con.createStatement () ;
+				statement.execute(query2);
+				statement.execute(query);
+			}
+			catch(SQLException e)
+			{ 
+				System.out.println(e.getMessage() + " from combineUserTables()");
+			}
 	}
 	
-	private static void combineUsers(String name1,String name2,String newName)
+	//this deletes the users in the users table and recreates a new username
+	private static void combineUsers(String name1,String name2, User user)
 	{ 
-		
-		String query=String.format("UPDATE ceojeff\nSET username=%s \nWHERE username IN(%s,%s);",newName,name1,name2);
+		String query = String.format("DELETE FROM users WHERE username='%s' OR username='%s';", name1, name2);		
 		try
 		{ 
 			Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
 			Statement statement = con.createStatement () ;
-			ResultSet result = statement.executeQuery(query);
+			statement.execute(query);
+			DBUtil.createUser(user);
 		}
 		catch(SQLException e)
 		{ 
+			System.out.println(e.getMessage() + " from combineUsers()");
 		}
 	}
-	*/
 }

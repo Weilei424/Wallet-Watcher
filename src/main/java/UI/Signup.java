@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
+import DB.DBUtil;
 import persistence.User;
-import persistence.DBUtil;
 
 public class Signup{
 	
@@ -101,6 +101,7 @@ public class Signup{
 			{
 				//change the redirect to the nav page and adds the user to the database
 				DBUtil.createUser(assumedUser);
+				User.setLoginAs(userName);
 				nav=new navigatorPage();
 				nav.navigator.setVisible(true);
 				page.dispose();	

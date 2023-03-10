@@ -14,9 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import persistence.DBUtil;
+import DB.DBUtil;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
+import persistence.User;
 
 public class ExpensePageForm implements ActionListener {
 
@@ -139,7 +140,7 @@ public class ExpensePageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 
-		DBUtil.insert("ceojeff", this.ledgerItem, "expense");
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		// String previousText = ep.getLedgerInfo().getText();
@@ -151,7 +152,7 @@ public class ExpensePageForm implements ActionListener {
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
 		try {
-			ep.expenseTable = DBUtil.query("ceojeff","tag","expense");
+			ep.expenseTable = DBUtil.query(User.getLoginAs(),"tag","expense");
 			ep.mainEpFrame.dispose();
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);

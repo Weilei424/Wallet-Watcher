@@ -3,6 +3,8 @@ package persistence;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import DB.DBUtil;
+
 import java.io.*;
 import java.sql.SQLException;
 

@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import persistence.User;
+
 public class navigatorPage {
 	JFrame navigator;
 
@@ -61,24 +63,27 @@ public class navigatorPage {
 		public void actionPerformed(ActionEvent e) {
 			// add budget instance when budget page is implemented
 			//navigator.dispose();
-
 		}
 	};
+
 
 	ActionListener cardPurseDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			cardPurse = new CardPursePage();
 			cardPurse.mainCpPage.setVisible(true);
-			navigator.dispose();
-
-		}
+      }
 	};
+
+
+
+	
 	
 	ActionListener logOutDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			logIn = new MainUi();
 			logIn.mainFrame.setVisible(true);
 			navigator.dispose();
+			User.setLoginAs(null);
 			JOptionPane.showMessageDialog(logIn.mainFrame, "Logged Out Successfully!");
 		}
 	};
@@ -101,9 +106,9 @@ public class navigatorPage {
 		earningsPage = new JButton("Earnings");
 		earningsPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+
 		budgetPage = new JButton("Budget");
 		budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
-
 		navPage = new JLabel("Navigation Page");
 		navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
 		

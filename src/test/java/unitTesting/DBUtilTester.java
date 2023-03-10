@@ -3,7 +3,9 @@ package unitTesting;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.charset.Charset;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -14,9 +16,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import DB.DBUtil;
+
 import org.junit.jupiter.api.MethodOrderer;
 
-import persistence.DBUtil;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -25,6 +29,13 @@ class DBUtilTester {
 	User demo = User.createUser("Jeff", "Bezos", "ceojeff", "UseAmazon!", "personal");
 	User pwTest = User.createUser("test", "changepw", "testpw", "pwpwpw", "personal");
 	User deleteTest = User.createUser("deee", "DDDD", "testDele", "789uij", "personal");
+	
+	User merge1 = User.createUser("merge1", "merge1", "merge1", "merge1", "personal");
+	User merge2 = User.createUser("merge2", "merge2", "merge2", "merge2", "personal");
+	User merged = User.createUser("merged", "merged", "merged", "merged", "personal");
+
+	
+	
 	String[] tagArr = {"bill", "expense", "earning", "investment", "stock", "misc", "card"};
 	
 	@Order(0)
@@ -118,37 +129,72 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(7)
-	@Test
-	void testDelete() {
-		
-	}
 	
-	@Order(8)
+	@Order(7)
 	@Test
 	void testQuery() {
 		
 		try {
 			JTable table = DBUtil.query(demo.getUserName(), "tag", "misc");
-			Object value = table.getValueAt(0, 9);
+			Object value = table.getValueAt(0, 8);
 			assertFalse(value.equals(null));
-			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 4) + "";
-			assertEquals(178.85 + "", result);
-			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 4) + "";
-			assertEquals(20.75 + "", result);
+			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 3) + "";
+			assertEquals(224.87 + "", result);
+
+			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 3) + "";
+			assertEquals(269.93 + "", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	@Order(9)
+	@Order(8)
 	@Test
-	void testUpdate() throws SQLException {
-		
+	void testUpdate() throws SQLException {	
 			assertTrue(DBUtil.update("ceojeff", 10, "item", "testupdate"));
 			assertEquals("testupdate", (String)DBUtil.query("ceojeff", "ref", "10").getValueAt(0, 1));
 			assertTrue(DBUtil.update("ceojeff", 10, "item", "reset for testing"));
-		
 	}
+	
+	@Order(9)
+	@Test
+	void joinUserAccsPass()
+	{ 
+		try
+		{
+			DBUtil.createUser(merge1);
+			DBUtil.createUser(merge2);
+			DBUtil.createUser(merged);
+			if(DBUtil.joinUserAccs("merge1", "merge2", merged.getFirstName(), merged.getLastName()
+					, merged.getUserName(), merged.getPassword(), merged.getType()))
+			{ 
+				assertTrue(DBUtil.checkUser("merge1")); 
+				assertTrue(DBUtil.checkUser("merge2"));
+				assertFalse(DBUtil.checkUser("merged"));
+				
+			}
+			else
+			{ 
+				fail();
+			}
+		}
+		catch(Exception e)
+		{ 
+			
+		}
+		DBUtil.deleteUser("merge1", "merge1");
+		DBUtil.deleteUser("merge2", "merge2");
+		DBUtil.deleteUser("merged", "merged");
+	}
+	
+	@Order(10)
+	@Test
+	void joinUserAccsFail()
+	{ 
+		assertFalse(DBUtil.joinUserAccs("merge1", "merge2", merged.getFirstName(), merged.getLastName()
+				, merged.getUserName(), merged.getPassword(), merged.getType()));
+	}
+	
+	
 }

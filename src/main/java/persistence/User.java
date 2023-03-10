@@ -7,6 +7,8 @@ import java.util.Random;
 import businessLogic.Util;
 
 public final class User {
+	private static String loginAs;
+	
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -39,6 +41,14 @@ public final class User {
 		return new User(firstName, lastName, userName, password, type);
 	}
 	
+	public static String getLoginAs() {
+		return User.loginAs;
+	}
+
+	public static void setLoginAs(String loginAs) {
+		User.loginAs = loginAs;
+	}
+
 	public String getFirstName() {
 		return this.firstName;
 	}

@@ -18,8 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-import persistence.DBUtil;
+import DB.DBUtil;
 import persistence.LedgerItem;
+import persistence.User;
 
 public class BillPlannerPage implements ActionListener {
 
@@ -41,7 +42,7 @@ public class BillPlannerPage implements ActionListener {
 	public BillPlannerPage() {
 
 		try {
-			billTable = DBUtil.query("ceojeff", "tag", "bill");
+			billTable = DBUtil.query(User.getLoginAs(), "tag", "bill");
 		} catch (SQLException er) {
 		}
 		billScroller = new JScrollPane(billTable);
