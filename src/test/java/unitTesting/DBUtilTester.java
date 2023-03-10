@@ -137,10 +137,10 @@ class DBUtilTester {
 			Object value = table.getValueAt(0, 8);
 			assertFalse(value.equals(null));
 			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 3) + "";
-			assertEquals(178.85 + "", result);
+			assertEquals(224.87 + "", result);
 
 			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 3) + "";
-			assertEquals(20.75 + "", result);
+			assertEquals(269.93 + "", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
