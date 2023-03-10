@@ -540,6 +540,7 @@ public final class DBUtil {
 		}
 		
 		return flag != 0 ? true : false;
+	}
 
 	public static boolean joinUserAccs(String name1,String name2,String firstName,String lastName,String userName,String password,String type)
 
@@ -579,7 +580,7 @@ public final class DBUtil {
 			}
 			catch(SQLException e)
 			{ 
-				e.printStackTrace();
+				System.out.println(e.getMessage() + " from combineUserTables()");
 			}
 	}
 	
@@ -596,7 +597,7 @@ public final class DBUtil {
 		}
 		catch(SQLException e)
 		{ 
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " from combineUsers()");
 		}
 	}
 }
