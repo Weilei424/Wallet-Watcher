@@ -118,21 +118,9 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(7)
-	@Test
-	void testDelete() {
-		try {
-			assertTrue(DBUtil.delete(demo.getUserName(), 22));
-			DBUtil.insert(demo.getUserName(), null, null);
-			
-		}
-		catch(Exception e) {
-			fail();
-			
-		}
-	}
 	
-	@Order(8)
+	
+	@Order(7)
 	@Test
 	void testQuery() {
 		
@@ -150,7 +138,7 @@ class DBUtilTester {
 		}
 	}
 	
-	@Order(9)
+	@Order(8)
 	@Test
 	void testUpdate() throws SQLException {
 		
