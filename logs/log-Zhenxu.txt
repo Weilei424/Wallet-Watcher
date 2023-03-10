@@ -175,3 +175,29 @@ Mar	7th 23:20:31
 ===============================================
 Mar 8th 01:21:53
 	Update DB for demo user table rows.
+===============================================
+Mar 8th 11:30:00
+	Meeting during lecture time. Confirmed DB methods,
+	and UI designs.
+===============================================
+Mar 8th 20:42:14
+	Rename UserDBTester to DBUtilTester.
+	
+	Added throws declaration to handle SQLException
+	in Outputform class.
+	
+	Fixed the problems in query(), DBUtil class.
+	ResultSet is now closed properly.
+	Added "ref" to output JTable.
+	Added the feature so that this method 
+	can query for ref column.
+===============================================
+Mar 8th 22:57:25
+	Fixed query() in DBUtil class and finished 
+	the test case.
+	
+	Fixed bugs in insert() in DBUtil.
+===============================================
+Mar 9th 00:20:48
+	Connected validation of user account to DB.
+	In MainUI class.

@@ -33,14 +33,14 @@ class UtilTester {
 	void testCalcMonth2() {
 		LocalDate d2 = LocalDate.of(2003, 5, 1);
 		assertEquals(-200, Util.calcMonth(obj.getDate(), d2));
-		//should assertThrows when main.java.exceptions can be correctly handled
+		//should assertThrows when exceptions can be correctly handled
 	}
 	
 	@Test
 	void testCalcYear1() {
 		LocalDate d2 = LocalDate.of(1999, 5, 1);
 		assertEquals(-21, Util.calcYear(obj.getDate(), d2));
-		//should assertThrows when main.java.exceptions can be correctly handled
+		//should assertThrows when exceptions can be correctly handled
 	}
 	
 	@Test
@@ -71,6 +71,6 @@ class UtilTester {
 	void testCalcBiweek4() {
 		LocalDate d2 = LocalDate.of(1903, 7, 26);
 		assertEquals(-3027, Util.calcBiweek(obj.getDate(), d2));
-		//should assertThrows when main.java.exceptions can be correctly handled
+		//should assertThrows when exceptions can be correctly handled
 	}
 }

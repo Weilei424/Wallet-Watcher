@@ -2,12 +2,13 @@ package businessLogic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DateParser {
 
-    private final static String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    private final static String[] months = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
 
     private final static ArrayList<DateFormat> dateFormats = new ArrayList<>();
 
@@ -32,14 +33,14 @@ public class DateParser {
         dateFormats.add(new DateFormat(DD_MM_YYYY, false));
         Pattern DD_MMM_YYYY = Pattern.compile("^(?<day>\\d{1,2})[-\\/](?<month>" + monthRegex + ")[-\\/](?<year>\\d{4})$");
         dateFormats.add(new DateFormat(DD_MMM_YYYY, true));
-        Pattern MMM_DD_YYYY = Pattern.compile("(?<month>" + monthRegex + ") (?<day>\\d{1,2}),? (?<year>\\d{4})");
+        Pattern MMM_DD_YYYY = Pattern.compile("(?<month>" + monthRegex + ") (?<day>\\d{1,2}),? ?(?<year>\\d{4})");
         dateFormats.add(new DateFormat(MMM_DD_YYYY, true));
     }
 
     public static LocalDate getDateFromString(String input) throws IllegalArgumentException {
         try {
             for (DateFormat dateFormat : dateFormats) {
-                Matcher matcher = dateFormat.getPattern().matcher(input);
+                Matcher matcher = dateFormat.getPattern().matcher(input.toUpperCase(Locale.US));
                 if (matcher.matches()) {
                     int year = Integer.parseInt(matcher.group("year"));
 
@@ -70,7 +71,7 @@ public class DateParser {
 
     private static int getMonthFromString(String month) {
         for (int i = 0; i < months.length; i++) {
-            if (month.equalsIgnoreCase(months[i]) || month.equalsIgnoreCase(months[i].substring(0, 3))) return i + 1;
+            if (month.equals(months[i]) || month.equals(months[i].substring(0, 3))) return i + 1;
         }
         throw new IllegalArgumentException("Not a valid month.");
     }

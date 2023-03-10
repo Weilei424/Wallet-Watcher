@@ -37,7 +37,7 @@ class RecurrenceTester {
 		assertTrue(r5.getStartDate().equals(d1) && r5.getEndDate().equals(d2) && r5.getFrequency() == null);
 	}
 
-	/* uncomment this when UI can handle main.java.exceptions */
+	/* uncomment this when UI can handle exceptions */
 //	@SuppressWarnings("deprecation")
 //	@Test
 //	void testException() {

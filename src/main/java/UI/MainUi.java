@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import persistence.DBUtil;
+
 public class MainUi implements ActionListener {
 
 	// Global Variables used for main UI
@@ -87,7 +89,7 @@ public class MainUi implements ActionListener {
 		String uName = userTextInput.getText();
 		String uPass = userPasswordInput.getText();
 
-		if (uName.equals("Jeff") && uPass.equals("Bezos")) {
+		if (DBUtil.validateUser(uName, uPass)) {
 			mainExpensePage.mainEpFrame.setVisible(true);
 			mainFrame.setVisible(false);
 		} else {
