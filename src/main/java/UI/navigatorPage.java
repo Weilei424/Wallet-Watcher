@@ -45,33 +45,35 @@ public class navigatorPage {
 			expense.mainEpFrame.setVisible(true);
 			navigator.dispose();
 		}
+	};	
+	//TODO 
+	ActionListener earningDirect=new ActionListener(){
+		public void actionPerformed(ActionEvent e)
+		{
+			//add earning page instance in when time is good 
+			//navigator.dispose();
+		}
 	};
-
-	// TODO
-	ActionListener earningDirect = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			// add earning page instance in when time is good
-			navigator.dispose();
-
+	
+	ActionListener budgetDirect=new ActionListener(){
+		public void actionPerformed(ActionEvent e)
+		{
+			//add budget instance when budget page is implemented 
+			//navigator.dispose();
 		}
 	};
 
-	ActionListener budgetDirect = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			// add budget instance when budget page is implemented
-			navigator.dispose();
-
-		}
-	};
 
 	ActionListener cardPurseDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			cardPurse = new CardPursePage();
 			cardPurse.mainCpPage.setVisible(true);
-			navigator.dispose();
-
-		}
+      }
 	};
+
+
+
+	
 	
 	ActionListener logOutDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -99,9 +101,9 @@ public class navigatorPage {
 		earningsPage = new JButton("Earnings");
 		earningsPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+
 		budgetPage = new JButton("Budget");
 		budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
-
 		navPage = new JLabel("Navigation Page");
 		navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
 
@@ -124,6 +126,7 @@ public class navigatorPage {
 		buttons.add(cardPage);
 		buttons.add(expensePage);
 		buttons.add(logOut);
+
 
 		buttons.add(earningsPage);
 
