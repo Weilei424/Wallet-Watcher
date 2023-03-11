@@ -197,4 +197,28 @@ class DBUtilTester {
 	}
 	
 	
+	
+	@Order(11)
+	@Test
+	
+	
+	
+	void testdelete() throws SQLException {
+		String s1 = "testitem ";
+		String s2 = "testnote ";
+		Random r = new Random();
+		try {
+			DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 7)]);
+			
+			assertTrue(DBUtil.delete(demo.getUserName(), DBUtil.getRefofLast(demo.getUserName())));
+			
+		}
+		catch(Exception e) {
+			fail();
+		}
+			
+		
+	}
+	
+	
 }
