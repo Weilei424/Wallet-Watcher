@@ -302,9 +302,54 @@ public final class DBUtil {
 	 * @return	true if insert operation is success, false otherwise.
 	 */
 	public static boolean delete(String username, int ref) {
+		if(!(refExist(username,ref)))
+			return false;
 		boolean flag = false;
+		String querry ="Delete from " +username+" where ref = ?";
+		
+		try (
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+				PreparedStatement st = conn.prepareStatement(querry, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				) {
+			
+			st.setInt(1, ref);
+			st.executeUpdate();
+			flag = true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage() + " from delete()");
+		}
+		
 		
 		return flag;
+	}
+	
+	
+	
+	public static int getRefofLast(String username) throws SQLException {
+		String querry="select ref from "+username+" order by ref desc limit 1";
+		ResultSet rs = null;
+		int ref=0;
+		try {
+	    		Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+				Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	    		
+			rs=stmt.executeQuery(querry);
+			while(rs.next()) 
+				ref = rs.getInt(REF);
+			
+		}
+		
+		catch (SQLException e) {
+	        throw new SQLException("Error executing query: " + e.getMessage(), e);
+	    } finally {
+	        if (rs != null) 
+	            rs.close();
+	    }
+		
+		
+		return ref;
+	        
+		
 	}
 	
 	/**
