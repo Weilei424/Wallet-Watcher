@@ -323,6 +323,35 @@ public final class DBUtil {
 		return flag;
 	}
 	
+	
+	
+	public static int getRefofLast(String username) throws SQLException {
+		String querry="select ref from "+username+" order by ref desc limit 1";
+		ResultSet rs = null;
+		int ref=0;
+		try {
+	    		Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+				Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	    		
+			rs=stmt.executeQuery(querry);
+			while(rs.next()) 
+				ref = rs.getInt(REF);
+			
+		}
+		
+		catch (SQLException e) {
+	        throw new SQLException("Error executing query: " + e.getMessage(), e);
+	    } finally {
+	        if (rs != null) 
+	            rs.close();
+	    }
+		
+		
+		return ref;
+	        
+		
+	}
+	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
 	 * This method takes the username as the ledger item table name, 
