@@ -66,7 +66,7 @@ class OutputformTester {
 	
 	try {
 		Outputform form = new Outputform(demo.getUserName());
-		form.outputFile("./csvfile/fatcat.csv");
+		form.outputFile("fatcatt2.csv");
 		File file = new File("./cat.csv");
 		assertTrue(file.exists());
 	}
