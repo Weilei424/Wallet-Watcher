@@ -35,7 +35,7 @@ public class BudgetPage implements ActionListener {
 	private JButton toMenu;
 	private JLabel title;
 	//private JTextArea ledgerInfo;
-	private ExpensePageForm epForm;
+	private BudgetPageForm bpForm;
 	private LedgerItem tempLedgerItem;
 	public JTable budgetTable;
 	private JScrollPane budgetScroller;
@@ -159,8 +159,8 @@ public class BudgetPage implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		epForm = new ExpensePageForm();
-		epForm.expensePageFrame.setVisible(true);
+		bpForm = new BudgetPageForm();
+		bpForm.budgetPageFrame.setVisible(true);
 		mainEpFrame.dispose();
 	}
 	
