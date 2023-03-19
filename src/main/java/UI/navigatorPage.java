@@ -31,8 +31,15 @@ public class navigatorPage {
 	JButton earningsPage;
 	JButton budgetPage;
 	JButton cardPage;
+	JButton settings; 
 	JButton logOut;
-
+	
+	
+	//buttons for account management page
+	JButton changePassword; 
+	JButton mergeAcc; 
+	JButton deleteAcc; 
+	
 	JPanel label;
 	JLabel navPage;
 	ExpensePage expense;
@@ -40,6 +47,7 @@ public class navigatorPage {
 	// BillPlannerPage budget;
 	// add in the earnings Page and modify action listener
 	CardPursePage cardPurse;
+	Settings settingsPage;
 	MainUi logIn;
 
 	ActionListener expenseDirect = new ActionListener() {
@@ -87,6 +95,16 @@ public class navigatorPage {
 			JOptionPane.showMessageDialog(logIn.mainFrame, "Logged Out Successfully!");
 		}
 	};
+	ActionListener settingsDirect=new ActionListener()
+	{ 
+		public void actionPerformed(ActionEvent e)
+		{ 
+			settingsPage=new Settings();
+			settingsPage.settingsFrame.setVisible(true);
+			navigator.dispose();
+		}
+		
+	};
 
 	public navigatorPage() {
 		navigator = new JFrame("Navigation Page");
@@ -96,7 +114,7 @@ public class navigatorPage {
 		label.setBorder(BorderFactory.createEmptyBorder(0,0,0,550));
 		
 		buttons = new JPanel();
-		buttons.setLayout(new GridLayout(5, 1, 10, 10));
+		buttons.setLayout(new GridLayout(6, 1, 10, 10));
 
 		// padding for buttons
 
@@ -117,6 +135,10 @@ public class navigatorPage {
 		cardPage = new JButton("Card Purse");
 		cardPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
+		
+		settings=new JButton("Settings");
+		settings.setBorder(new EmptyBorder(10,10,10,10));
+		
 		logOut = new JButton("Log Out");
 		logOut.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -126,12 +148,14 @@ public class navigatorPage {
 		cardPage.addActionListener(cardPurseDirect);
 		earningsPage.addActionListener(earningDirect);
 		expensePage.addActionListener(expenseDirect);
+		settings.addActionListener(settingsDirect);
 		logOut.addActionListener(logOutDirect);
 
 		buttons.add(budgetPage);
 		buttons.add(cardPage);
 		buttons.add(expensePage);
 		buttons.add(earningsPage);
+		buttons.add(settings);
 		buttons.add(logOut);
 
 		buttons.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
