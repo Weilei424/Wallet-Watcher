@@ -27,6 +27,7 @@ hs_err_pid*
 bin
 *.launch
 .metadata
+.settings
 
 # idea
 out
