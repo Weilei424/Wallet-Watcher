@@ -20,36 +20,36 @@ import DB.DBUtil;
 import persistence.LedgerItem;
 import persistence.User;
 
-public class BudgetPage implements ActionListener {
+public class EarningPage implements ActionListener {
 
 	// Initializing global variables
 	public JFrame mainEpFrame;
 	private JPanel mainEpPanel;
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
-	private JButton addBudget;
-	private JButton removeExpense;
+	private JButton addEarning;
+	private JButton removeEarning;
 	private JButton toMenu;
 	private JLabel title;
 	//private JTextArea ledgerInfo;
-	private BudgetPageForm bpForm;
+	private EarningPageForm epForm;
 	private LedgerItem tempLedgerItem;
-	public JTable budgetTable;
-	private JScrollPane budgetScroller;
+	public JTable earningTable;
+	private JScrollPane earningScroller;
 	private boolean isRemoved;
 	private navigatorPage navigation;
-	public static volatile int numberOfBudgets = 0;
+	public static volatile int numberOfEarnings = 0;
 
-	public BudgetPage() {
+	public EarningPage() {
 		
 		try
 		{ 
-	       	budgetTable = DBUtil.query(User.getLoginAs(),"tag","budget");
+	       	earningTable = DBUtil.query(User.getLoginAs(),"tag","earning");
 		}
 		catch(SQLException er)
 		{ 
 		}
-		budgetScroller = new JScrollPane(budgetTable);
+		earningScroller = new JScrollPane(earningTable);
 		
 		
 		mainEpFrame = new JFrame();
@@ -57,13 +57,13 @@ public class BudgetPage implements ActionListener {
 		this.isRemoved = false;
 
 		// Initialize main title on page, along with initializing button and layouts
-		title = new JLabel("Budget");
+		title = new JLabel("Budget Plan");
 		title.setSize(30, 30);
 		title.setFont(new Font("Tahoma", Font.BOLD, 60));
 
-		addBudget = new JButton("Add New Budgets");
-		addBudget.setSize(40, 40);
-		addBudget.addActionListener(this);
+		addEarning = new JButton("Add New Earnings");
+		addEarning.setSize(40, 40);
+		addEarning.addActionListener(this);
 		
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 			
@@ -78,27 +78,23 @@ public class BudgetPage implements ActionListener {
 		// another button
 		mainEpPanel.setLayout(new GridLayout(1, 3));
 		mainEpPanel.add(title);
-		mainEpPanel.add(addBudget);
+		mainEpPanel.add(addEarning);
 		mainEpPanel.add(toMenu);
 		mainEpPanel.setBackground(Color.green);
 
-		removeExpense = new JButton(new AbstractAction("Remove All Expenses") {
+		removeEarning = new JButton(new AbstractAction("Remove All Expenses") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (numberOfBudgets > 0) {
-//					ledgerInfo.setText(null);
-//					ledgerInfo.append("Name of Expense" + "\t");
-//					ledgerInfo.append("Cost of Expense" + "\t");
-//					ledgerInfo.append("Date Due" + "\t" + "\t" + "\t");
-//					ledgerInfo.append("Special Notes");
+				if (numberOfEarnings > 0) {
+					
 				} else {
 					JOptionPane.showMessageDialog(mainEpFrame, "You need to input expenses first!");
 				}
 			}
 
 		});
-		removeExpense.setForeground(Color.green);
+		removeEarning.setForeground(Color.green);
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
@@ -111,10 +107,10 @@ public class BudgetPage implements ActionListener {
 		// enclosed in it
 		mainEpFrame.add(mainPanel, BorderLayout.NORTH);
 		//mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
-		mainEpFrame.add(removeExpense, BorderLayout.SOUTH);
-		mainEpFrame.add(budgetScroller, BorderLayout.CENTER);
+		mainEpFrame.add(removeEarning, BorderLayout.SOUTH);
+		mainEpFrame.add(earningScroller, BorderLayout.CENTER);
 		mainEpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainEpFrame.setTitle("Budget Plans");
+		mainEpFrame.setTitle("Earnings");
 		mainEpFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		mainEpFrame.setVisible(true);
@@ -129,16 +125,16 @@ public class BudgetPage implements ActionListener {
 		this.tempLedgerItem = tempLedgerItem;
 	}
 
-	public JButton getAddBudget() {
-		return addBudget;
+	public JButton getAddEarning() {
+		return addEarning;
 	}
 
-	public int getNumberOfExpenses() {
-		return numberOfBudgets;
+	public int getNumberOfEarning() {
+		return numberOfEarnings;
 	}
 
-	public void setNumberOfBudgets(int numberOfBudgets) {
-		this.numberOfBudgets = numberOfBudgets;
+	public void setNumberOfEarning(int numberOfEarnings) {
+		this.numberOfEarnings = numberOfEarnings;
 	}
 
 	public boolean isRemoved() {
@@ -150,16 +146,14 @@ public class BudgetPage implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new BudgetPage();
+		new ExpensePage();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		bpForm = new BudgetPageForm();
-		bpForm.budgetPageFrame.setVisible(true);
+		epForm = new EarningPageForm();
+		epForm.earningPageFrame.setVisible(true);
 		mainEpFrame.dispose();
 	}
-	
-	
 
 }

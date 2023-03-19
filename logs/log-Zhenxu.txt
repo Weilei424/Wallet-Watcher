@@ -201,3 +201,13 @@ Mar 8th 22:57:25
 Mar 9th 00:20:48
 	Connected validation of user account to DB.
 	In MainUI class.
+===============================================
+Mar 19th 01:07:10
+	Added BudgetPage in UI package.
+	Bug fix in BudgetPage.
+	
+	Added EarningPage in UI package.
+	
+	Added BudgetPageForm in UI package.
+	
+	Added EarningPage in UI package.
