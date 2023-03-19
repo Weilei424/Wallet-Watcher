@@ -137,7 +137,7 @@ public class BudgetPageForm implements ActionListener {
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
 
 		bp.setTempLedgerItem(this.ledgerItem);
-		bp.setNumberOfExpenses(bp.getNumberOfExpenses() + 1);
+		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
 
 		try {
 			bp.budgetTable = DBUtil.query(User.getLoginAs(),"tag","expense");
