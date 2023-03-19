@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,8 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-
 import DB.DBUtil;
 import persistence.LedgerItem;
 import persistence.User;
@@ -57,7 +54,6 @@ public class BudgetPage implements ActionListener {
 		
 		mainEpFrame = new JFrame();
 		mainEpPanel = new JPanel();
-		this.tempLedgerItem = tempLedgerItem;
 		this.isRemoved = false;
 
 		// Initialize main title on page, along with initializing button and layouts
