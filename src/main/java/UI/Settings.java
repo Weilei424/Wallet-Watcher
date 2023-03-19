@@ -75,6 +75,8 @@ public class Settings {
 	JTextField newUserInput; 
 	JTextField newPasswordInput;
 	
+	//change passwordPage
+	JTextField oldPasswordInput;
 	
 	//adding action listeners to do the redirects 
 	ActionListener AccDirect=new ActionListener() {
@@ -277,15 +279,74 @@ public class Settings {
 			topMost.removeAll();
 			topMost.revalidate();
 			topMost.repaint();
-			mergePage=new JPanel();
-			JLabel mergeLabel=new JLabel("Change Password");
-			mergeLabel.setFont(new Font("Arial",Font.BOLD,32));
+			
+			JPanel deletePage=new JPanel(new GridLayout(6,1));
+			
+			JPanel header=new JPanel();
+			
+			JButton goBack=new JButton("Go back");
+			goBack.addActionListener(AccDirect);
+			goBack.setPreferredSize(new Dimension(200,40));
+			
+			JLabel changePassword=new JLabel("Change Password");
+			changePassword.setFont(new Font("Arial",Font.BOLD,32));
+			changePassword.setBorder(BorderFactory.createEmptyBorder(0,250,0,350));
+			
+			header.add(goBack);
+			header.add(changePassword);
+			
+			JPanel currAcc=new JPanel();
+			JLabel currUser=new JLabel("Current Account: "+User.getLoginAs());
+			currUser.setFont(new Font("Arial",Font.PLAIN,18));
+			currAcc.add(currUser);
+			
+			JPanel oldPasswordPanel=new JPanel();
+			JLabel oldPassword=new JLabel("What is the current password: "); 
+			oldPassword.setFont(new Font("Arial",Font.PLAIN,18));
+			oldPasswordInput=new JTextField();
+			oldPasswordInput.setPreferredSize(new Dimension(400,40));
+			oldPasswordPanel.add(oldPassword);
+			oldPasswordPanel.add(oldPasswordInput);
+			
+			JPanel newPasswordPanel=new JPanel();
+			JLabel newPassword=new JLabel("What is the new password: "); 
+			newPassword.setFont(new Font("Arial",Font.PLAIN,18));
+			newPasswordInput=new JTextField();
+			newPasswordInput.setPreferredSize(new Dimension(400,40));
+			newPasswordPanel.add(newPassword);
+			newPasswordPanel.add(newPasswordInput);
+			
+			JButton changePasswordSubmission=new JButton("Change Password");
+			changePasswordSubmission.setPreferredSize(new Dimension(400,100));
+			changePasswordSubmission.addActionListener(changePasswordDirect);
+			JPanel changePasswordPanel=new JPanel();
+			changePasswordPanel.add(changePasswordSubmission); 
 			
 
-			
-			
-			mergePage.add(mergeLabel);
-			topMost.add(mergePage);
+			deletePage.add(header);
+			deletePage.add(currAcc);
+			deletePage.add(oldPasswordPanel);
+			deletePage.add(newPasswordPanel);
+			deletePage.add(changePasswordPanel);
+
+			topMost.add(deletePage);
+		}
+	};
+	
+	//creates a page to delete an account 
+	ActionListener changePasswordDirect=new ActionListener()
+	{ 
+		public void actionPerformed(ActionEvent e) {
+			boolean checker;
+			checker=DBUtil.changePW(User.getLoginAs(), oldPasswordInput.getText(), newPasswordInput.getText());
+			if(checker)
+			{
+				JOptionPane.showMessageDialog(settingsFrame, "Password Successfully Changed");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(settingsFrame, "You've entered your old password wrong");
+			}
 		}
 	};
 	
@@ -342,7 +403,8 @@ public class Settings {
 			topMost.add(deleteAccount);
 		}
 	};
-	//creates a page to delete an account 
+
+	
 	ActionListener backToLogin=new ActionListener()
 	{ 
 		public void actionPerformed(ActionEvent e) {
