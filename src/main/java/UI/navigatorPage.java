@@ -43,9 +43,8 @@ public class navigatorPage {
 	JPanel label;
 	JLabel navPage;
 	ExpensePage expense;
-	// switch this with budget
-	// BillPlannerPage budget;
-	// add in the earnings Page and modify action listener
+	BudgetPage budget;
+	EarningPage earnings;
 	CardPursePage cardPurse;
 	Settings settingsPage;
 	MainUi logIn;
@@ -61,16 +60,16 @@ public class navigatorPage {
 	// TODO
 	ActionListener earningDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			// add earning page instance in when time is good
-			//navigator.dispose();
+			earnings=new EarningPage();
+			navigator.dispose();
 
 		}
 	};
 
 	ActionListener budgetDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			// add budget instance when budget page is implemented
-			//navigator.dispose();
+			budget=new BudgetPage();
+			navigator.dispose();
 		}
 	};
 
