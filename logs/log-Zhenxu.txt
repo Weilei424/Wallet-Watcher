@@ -211,3 +211,10 @@ Mar 19th 01:07:10
 	Added BudgetPageForm in UI package.
 	
 	Added EarningPage in UI package.
+===============================================
+Mar 22nd 22:35:05
+	Added @test annotations back for
+	LedgerItemTester and MiscTester.
+===============================================
+Mar 23rd 01:02:32
+	Added queryMonth() in DBUtil class.

@@ -370,7 +370,7 @@ public final class DBUtil {
 	    ResultSet rs = null;
 	    try (
 	    		Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
-	    		PreparedStatement stmt = pstmtHelper(conn, column, value, query)
+	    		PreparedStatement stmt = pstmtHelper(conn, column, value, query);
 	    		) {
         	rs = stmt.executeQuery();
         	while (rs.next()) {
@@ -418,6 +418,43 @@ public final class DBUtil {
 	    }
 	}
 
+	
+	public static JTable queryMonth(String username, String value, String month) throws SQLException {
+		String query = "SELECT * FROM " + username + " WHERE MONTH(date_start) = ? AND tag = ?";
+		ResultSet rs = null;
+		String[] columnNames = {REF, ITEM, NOTE, AMOUNT, INTEREST_RATE, INTEREST, "Recuring", CATEGORY, DATE_START};
+		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+		
+		try (
+				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
+				PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				){
+			st.setString(1, month);
+	        st.setString(2, value);
+	        rs = st.executeQuery();
+        	while (rs.next()) {
+	            int ref = rs.getInt(REF);
+	            String item = rs.getString(ITEM);
+	            String note = rs.getString(NOTE);
+	            double amount = rs.getDouble(AMOUNT);
+	            String interestRate = rs.getString(INTEREST_RATE);
+	            String interest = rs.getString(INTEREST);
+	            String recur = Integer.parseInt(rs.getString(RECUR)) == 1 ? "YES" : "NO";
+	            String category = rs.getString(CATEGORY);
+	            String date = rs.getString(DATE_START);
+	            tableModel.addRow(new Object[]{ref, item, note, amount, interestRate, interest, recur, category, date});
+        	}
+		} catch (SQLException e) {
+			throw new SQLException("Error executing month query: " + e.getMessage(), e);
+		} finally {
+			if (rs != null) {
+	            rs.close();
+	        }
+		}
+		JTable table = new JTable(tableModel);
+	    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	    return table;
+	}
 	
 	/**
 	 * THIS METHOD ASSUMES username EXISTS!
