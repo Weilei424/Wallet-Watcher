@@ -15,7 +15,7 @@ Misc tfsa;
 		
 	}
 	// TODO: Test fails
-	// @Test
+	@Test
 	void test() {
 		String date ="2021-02-11";
 		double amount =1000;

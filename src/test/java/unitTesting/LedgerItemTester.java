@@ -23,7 +23,7 @@ class LedgerItemTester {
 
 
 	// TODO: Test fails
-	// @Test
+	@Test
 	void testSetterGetter() {
 		assertEquals("xxxxxx", obj.getNote());
 		assertTrue(Math.abs(obj.getAmount() - 0.00) <= 0.0001);
