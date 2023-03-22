@@ -200,9 +200,6 @@ class DBUtilTester {
 	
 	@Order(11)
 	@Test
-	
-	
-	
 	void testdelete() throws SQLException {
 		String s1 = "testitem ";
 		String s2 = "testnote ";
@@ -216,9 +213,22 @@ class DBUtilTester {
 		catch(Exception e) {
 			fail();
 		}
-			
-		
 	}
 	
+	@Order(12)
+	@Test
+	void testMonth() {
+		try {
+			JTable table = DBUtil.queryMonth(demo.getUserName(), "expense", "3");
+			String result = table.getValueAt(3, 3) + "";
+			assertEquals(255.64 + "", result);
+
+			result = table.getValueAt(5, 2) + "";
+			assertEquals("testnote 294", result);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
