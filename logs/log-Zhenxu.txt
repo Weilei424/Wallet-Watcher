@@ -218,3 +218,6 @@ Mar 22nd 22:35:05
 ===============================================
 Mar 23rd 01:02:32
 	Added queryMonth() in DBUtil class.
+===============================================
+Mar 23rd 19:41:23
+	Added test cases for queryMonth().
