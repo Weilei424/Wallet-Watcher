@@ -134,13 +134,13 @@ public class EarningPageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);
 
 		try {
-			ep.earningTable = DBUtil.query(User.getLoginAs(),"tag","expense");
+			ep.earningTable = DBUtil.query(User.getLoginAs(),"tag","earning");
 			ep.mainEpFrame.dispose();
 			ep = new EarningPage();
 			ep.mainEpFrame.setVisible(true);
@@ -157,7 +157,7 @@ public class EarningPageForm implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new BudgetPageForm();
+		new EarningPageForm();
 	}
 
 }
