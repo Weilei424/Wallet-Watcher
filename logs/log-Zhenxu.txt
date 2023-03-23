@@ -221,3 +221,6 @@ Mar 23rd 01:02:32
 ===============================================
 Mar 23rd 19:41:23
 	Added test cases for queryMonth().
+===============================================
+Mar 23rd 23:06:53
+	Added UI pages for investment.
