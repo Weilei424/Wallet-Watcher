@@ -140,7 +140,7 @@ public class BudgetPageForm implements ActionListener {
 		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
 
 		try {
-			bp.budgetTable = DBUtil.query(User.getLoginAs(),"tag","expense");
+			bp.budgetTable = DBUtil.query(User.getLoginAs(),"tag","budget");
 			bp.mainEpFrame.dispose();
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
