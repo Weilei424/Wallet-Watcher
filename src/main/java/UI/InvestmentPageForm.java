@@ -122,7 +122,7 @@ public class InvestmentPageForm implements ActionListener {
 
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();
-			ep.mainEpFrame.setVisible(true);
+			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
 			
 		}
@@ -141,9 +141,9 @@ public class InvestmentPageForm implements ActionListener {
 
 		try {
 			ep.investmentTable = DBUtil.query(User.getLoginAs(),"tag","investment");
-			ep.mainEpFrame.dispose();
+			ep.mainIvFrame.dispose();
 			ep = new InvestmentPage();
-			ep.mainEpFrame.setVisible(true);
+			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
 			investmentPageFrame.dispose();
 			} catch(SQLException er) {
