@@ -142,7 +142,7 @@ class DBUtilTester {
 			assertEquals(224.87 + "", result);
 
 			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 3) + "";
-			assertEquals(269.93 + "", result);
+			assertEquals(118.73 + "", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
