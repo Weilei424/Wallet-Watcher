@@ -45,6 +45,7 @@ public class MainUi implements ActionListener {
 
 		// Initializing all variables
 		mainFrame = new JFrame();
+		mainFrame.setLocationRelativeTo(null);
 		mainPanel = new JPanel();
 		userLogIn = new JButton("Login!");
 		welcomeText = new JLabel("Welcome to Wallet Watcher!", SwingConstants.CENTER);
