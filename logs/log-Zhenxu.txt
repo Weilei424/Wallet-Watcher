@@ -224,3 +224,14 @@ Mar 23rd 19:41:23
 ===============================================
 Mar 23rd 23:06:53
 	Added UI pages for investment.
+===============================================
+Mar 24th 02:46:36
+	added investment as an option to nav page，
+	
+	made investment page, login page, 
+	centralized when open.
+	
+	refactored variable names in investmentform.
+	
+	made right click popup window for update 
+	and delete in InvestmentPage.
