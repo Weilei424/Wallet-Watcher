@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -177,6 +179,9 @@ public class InvestmentPage implements ActionListener {
 		                        investmentTable.setValueAt(newValue, row, 2);
 		                    } else if (option3Selected) {
 		                        selection = "amount";
+		                        BigDecimal bd = new BigDecimal(newValue);
+		            			bd = bd.setScale(2, RoundingMode.HALF_UP);
+		            			newValue = bd.doubleValue() + "";
 		                        investmentTable.setValueAt(newValue, row, 3);
 		                    }
 		                    DBUtil.update(User.getLoginAs(), ref, selection, newValue);
