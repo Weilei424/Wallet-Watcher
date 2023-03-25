@@ -36,7 +36,7 @@ class DBUtilTester {
 
 	
 	
-	String[] tagArr = {"bill", "expense", "earning", "investment", "stock", "misc", "card"};
+	String[] tagArr = {"bill", "expense", "earning", "investment", "misc", "card"};
 	
 	@Order(0)
 	@Test
@@ -116,13 +116,13 @@ class DBUtilTester {
 		Random r = new Random();
 		
 		try {
-			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 7)]));
+			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 6)]));
 			/**
 			 * DO NOT UNCOMMENT THESE LINES BELOW!
 			 * These lines are just for initializing only!
 			 */
 //			for (int i = 0; i < 20; i++) {
-//				assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 7)]));
+//				assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 6)]));
 //			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -136,13 +136,13 @@ class DBUtilTester {
 		
 		try {
 			JTable table = DBUtil.query(demo.getUserName(), "tag", "misc");
-			Object value = table.getValueAt(0, 8);
+			Object value = table.getValueAt(0, 6);
 			assertFalse(value.equals(null));
 			String result = DBUtil.query("ceojeff", "ref", "18").getValueAt(0, 3) + "";
-			assertEquals(224.87 + "", result);
+			assertEquals(186.71 + "", result);
 
-			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(11, 3) + "";
-			assertEquals(118.73 + "", result);
+			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(10, 3) + "";
+			assertEquals(259.31 + "", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -205,7 +205,7 @@ class DBUtilTester {
 		String s2 = "testnote ";
 		Random r = new Random();
 		try {
-			DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 7)]);
+			DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 6)]);
 			
 			assertTrue(DBUtil.delete(demo.getUserName(), DBUtil.getRefofLast(demo.getUserName())));
 			
@@ -221,10 +221,10 @@ class DBUtilTester {
 		try {
 			JTable table = DBUtil.queryMonth(demo.getUserName(), "expense", "3");
 			String result = table.getValueAt(3, 3) + "";
-			assertEquals(255.64 + "", result);
+			assertEquals(0.82 + "", result);
 
 			result = table.getValueAt(5, 2) + "";
-			assertEquals("testnote 294", result);
+			assertEquals("testnote 57", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
