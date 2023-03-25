@@ -202,7 +202,7 @@ public class CardPursePage implements ActionListener {
 				        DBUtil.delete(User.getLoginAs(), ref);
 				        try
 						{ 
-				        	cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","investment");
+				        	cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");
 						}
 						catch(SQLException er)
 						{ 
