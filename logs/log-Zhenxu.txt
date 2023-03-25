@@ -253,4 +253,15 @@ Mar 25th 01:29:20
 ===============================================
 Mar 25th 01:58:03
 	fixed bug for onclick delete for UI.
+===============================================
+Mar 25th 15:16:32
+	Removed stub db from Card class, and split
+	nested classes. Also removed unused variables.
+	Updated tester file for Card.
 	
+	Changed the button of 'remove all' into
+	'export' in CardPursePage.
+	
+	Meeting with Mustafa, about application
+	performance improvement ideas. Reset the 
+	cloud DB.
