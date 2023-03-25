@@ -40,6 +40,7 @@ public class InvestmentPageForm implements ActionListener {
 		this.framesCreated = 0;
 
 		investmentPageFrame = new JFrame();
+		investmentPageFrame.setLocationRelativeTo(null);
 		investmentPageForm = new JPanel();
 
 		investmentPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));

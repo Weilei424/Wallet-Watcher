@@ -438,6 +438,7 @@ public class Settings {
 	{ 
 		settingsFrame=new JFrame(); 
 		settingsFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+		settingsFrame.setLocationRelativeTo(null);
 		mainPage=new JPanel(); 
 		titleMain=new JLabel("Settings");
 		titleMain.setFont(new Font("Arial",Font.BOLD,32));

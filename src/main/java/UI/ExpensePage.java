@@ -56,8 +56,9 @@ public class ExpensePage implements ActionListener {
 		
 		
 		mainEpFrame = new JFrame();
+		mainEpFrame.setLocationRelativeTo(null);
 		mainEpPanel = new JPanel();
-		this.tempLedgerItem = tempLedgerItem;
+		
 		this.isRemoved = false;
 
 		// Initialize main title on page, along with initializing button and layouts

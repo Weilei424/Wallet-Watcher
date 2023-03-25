@@ -43,6 +43,7 @@ public class CardPursePageForm implements ActionListener{
 			this.framesCreated = 0;
 
 			cardPurseFrame = new JFrame();
+			cardPurseFrame.setLocationRelativeTo(null);
 			cardPurseForm = new JPanel();
 
 			cardPurseForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));

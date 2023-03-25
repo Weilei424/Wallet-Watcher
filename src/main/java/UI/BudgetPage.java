@@ -53,6 +53,7 @@ public class BudgetPage implements ActionListener {
 		
 		
 		mainEpFrame = new JFrame();
+		mainEpFrame.setLocationRelativeTo(null);
 		mainEpPanel = new JPanel();
 		this.isRemoved = false;
 

@@ -123,6 +123,7 @@ public class Signup{
 	{ 
 
 		page=new JFrame("Signup Page"); 
+		page.setLocationRelativeTo(null);
 		page.setSize(500,500);
 		panel=new JPanel(new GridLayout(8,8));
 		page.add(panel);

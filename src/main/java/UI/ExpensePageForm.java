@@ -40,11 +40,10 @@ public class ExpensePageForm implements ActionListener {
 
 	public ExpensePageForm() {
 
-		this.ledgerItem = ledgerItem;
-		this.expData = expData;
 		this.framesCreated = 0;
 
 		expensePageFrame = new JFrame();
+		expensePageFrame.setLocationRelativeTo(null);
 		expensePageForm = new JPanel();
 
 		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));

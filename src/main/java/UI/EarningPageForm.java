@@ -40,6 +40,7 @@ public class EarningPageForm implements ActionListener {
 		this.framesCreated = 0;
 
 		earningPageFrame = new JFrame();
+		earningPageFrame.setLocationRelativeTo(null);
 		earningPageForm = new JPanel();
 
 		earningPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));

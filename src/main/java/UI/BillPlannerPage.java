@@ -33,7 +33,7 @@ public class BillPlannerPage implements ActionListener {
 	private JLabel title;
 	private JButton toMenu;
 //	private JTextArea billInfo;
-	private ExpensePageForm epForm;
+	private BillPlannerPageForm bpForm;
 	private LedgerItem tempLedgerItem;
 	private JTable billTable;
 	public JScrollPane billScroller;
@@ -48,10 +48,11 @@ public class BillPlannerPage implements ActionListener {
 		billScroller = new JScrollPane(billTable);
 
 		mainBpPage = new JFrame();
+		mainBpPage.setLocationRelativeTo(null);
 		mainBpPanel = new JPanel();
-		epForm = new ExpensePageForm();
-		epForm.expensePageFrame.setVisible(false);
-		this.tempLedgerItem = tempLedgerItem;
+		bpForm = new BillPlannerPageForm();
+		bpForm.billPlannerPageFrame.setVisible(false);
+
 
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Bills Due");
@@ -128,7 +129,9 @@ public class BillPlannerPage implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		bpForm = new BillPlannerPageForm();
+		bpForm.billPlannerPageFrame.setVisible(true);
+		mainBpPage.dispose();
 
 	}
 

@@ -123,6 +123,7 @@ public class navigatorPage {
 	public navigatorPage() {
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		navigator.setLocationRelativeTo(null);
 
 		label=new JPanel();
 		label.setBorder(BorderFactory.createEmptyBorder(0,0,0,550));

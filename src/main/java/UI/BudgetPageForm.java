@@ -40,6 +40,7 @@ public class BudgetPageForm implements ActionListener {
 		this.framesCreated = 0;
 
 		budgetPageFrame = new JFrame();
+		budgetPageFrame.setLocationRelativeTo(null);
 		budgetPageForm = new JPanel();
 
 		budgetPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));

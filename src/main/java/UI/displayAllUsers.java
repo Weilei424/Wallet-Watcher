@@ -43,6 +43,7 @@ public class displayAllUsers implements ActionListener {
 		displayScroller = new JScrollPane(expenseTable);
 
 		displayFrame = new JFrame();
+		displayFrame.setLocationRelativeTo(null);
 		mainDisplayPanel = new JPanel();
 
 		// Initialize main title on page, along with initializing button and layouts

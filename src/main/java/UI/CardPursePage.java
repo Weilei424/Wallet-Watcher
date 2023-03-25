@@ -50,8 +50,9 @@ public class CardPursePage implements ActionListener {
 		cardScroller = new JScrollPane(cardPurseTable);
 
 		mainCpPage = new JFrame();
+		mainCpPage.setLocationRelativeTo(null);
 		mainCpPanel = new JPanel();
-		this.tempLedgerItem = tempLedgerItem;
+		
 
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("User Cards");

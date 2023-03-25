@@ -40,6 +40,7 @@ public class BillPlannerPageForm implements ActionListener {
 		this.framesCreated = 0;
 
 		billPlannerPageFrame = new JFrame();
+		billPlannerPageFrame.setLocationRelativeTo(null);
 		billPlannerPageForm = new JPanel();
 
 		billPlannerPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
