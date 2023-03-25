@@ -32,6 +32,7 @@ public class navigatorPage {
 	JButton budgetPage;
 	JButton cardPage;
 	JButton investmentPage;
+	JButton billPage;
 	JButton settings; 
 	JButton logOut;
 	
@@ -48,6 +49,7 @@ public class navigatorPage {
 	EarningPage earnings;
 	CardPursePage cardPurse;
 	InvestmentPage investment;
+	BillPlannerPage bill;
 	Settings settingsPage;
 	MainUi logIn;
 
@@ -59,7 +61,7 @@ public class navigatorPage {
 		}
 	};
 
-	// TODO
+
 	ActionListener earningDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			earnings=new EarningPage();
@@ -91,7 +93,12 @@ public class navigatorPage {
       }
 	};
 
-	
+	ActionListener billPlannerDirect = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			bill = new BillPlannerPage();
+			bill.mainBpPage.setVisible(true);
+      }
+	};
 	
 	ActionListener logOutDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -145,6 +152,9 @@ public class navigatorPage {
 		investmentPage = new JButton("Investment");
 		investmentPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
+		billPage = new JButton("Bill Planner");
+		billPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
 		settings=new JButton("Settings");
 		settings.setBorder(new EmptyBorder(10,10,10,10));
 		
@@ -158,6 +168,7 @@ public class navigatorPage {
 		earningsPage.addActionListener(earningDirect);
 		expensePage.addActionListener(expenseDirect);
 		investmentPage.addActionListener(investmentDirect);
+		billPage.addActionListener(billPlannerDirect);
 		settings.addActionListener(settingsDirect);
 		logOut.addActionListener(logOutDirect);
 
@@ -166,6 +177,7 @@ public class navigatorPage {
 		buttons.add(expensePage);
 		buttons.add(earningsPage);
 		buttons.add(investmentPage);
+		buttons.add(billPage);
 		buttons.add(settings);
 		buttons.add(logOut);
 
