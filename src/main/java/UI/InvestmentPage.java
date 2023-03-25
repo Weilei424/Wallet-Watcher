@@ -56,8 +56,6 @@ public class InvestmentPage implements ActionListener {
 	private JMenuItem updateMenuItem;
 	private JMenuItem deleteMenuItem;
 	private JDialog dialog;
-	private JTextField textField;
-	private JButton submitButton;
 	private JRadioButton item;
 	private JRadioButton note;
 	private JRadioButton amount;
