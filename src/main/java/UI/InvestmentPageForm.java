@@ -28,9 +28,9 @@ public class InvestmentPageForm implements ActionListener {
 	public JTextField investmentCostInput;
 	// JLabel expenseCategory; *No real code for this yet
 	private JLabel investmentDescription;
-	public JTextField earningDescriptionInput;
-	private JLabel earningDate;
-	public JTextField earningDateInput;
+	public JTextField investmentDescriptionInput;
+	private JLabel investmentDate;
+	public JTextField investmentDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private InvestmentPage ep;
@@ -71,20 +71,20 @@ public class InvestmentPageForm implements ActionListener {
 		investmentDescription.setLocation(100, 300);
 		investmentPageForm.add(investmentDescription);
 
-		earningDescriptionInput = new JTextField();
-		earningDescriptionInput.setSize(100, 20);
-		earningDescriptionInput.setLocation(200, 300);
-		investmentPageForm.add(earningDescriptionInput);
+		investmentDescriptionInput = new JTextField();
+		investmentDescriptionInput.setSize(100, 20);
+		investmentDescriptionInput.setLocation(200, 300);
+		investmentPageForm.add(investmentDescriptionInput);
 
-		earningDate = new JLabel("Date:");
-		earningDate.setSize(100, 20);
-		earningDate.setLocation(100, 400);
-		investmentPageForm.add(earningDate);
+		investmentDate = new JLabel("Date:");
+		investmentDate.setSize(100, 20);
+		investmentDate.setLocation(100, 400);
+		investmentPageForm.add(investmentDate);
 
-		earningDateInput = new JTextField();
-		earningDateInput.setSize(100, 20);
-		earningDateInput.setLocation(200, 400);
-		investmentPageForm.add(earningDateInput);
+		investmentDateInput = new JTextField();
+		investmentDateInput.setSize(100, 20);
+		investmentDateInput.setLocation(200, 400);
+		investmentPageForm.add(investmentDateInput);
 
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
@@ -110,11 +110,11 @@ public class InvestmentPageForm implements ActionListener {
 	}
 
 	public JTextField getInvestmentDescriptionInput() {
-		return earningDescriptionInput;
+		return investmentDescriptionInput;
 	}
 
 	public JTextField getInvestmentDateInput() {
-		return earningDateInput;
+		return investmentDateInput;
 	}
 
 	@Override
@@ -128,8 +128,8 @@ public class InvestmentPageForm implements ActionListener {
 		}
 
 		String expName = investmentNameInput.getText();
-		String expNote = earningDescriptionInput.getText();
-		String expDate = earningDateInput.getText();
+		String expNote = investmentDescriptionInput.getText();
+		String expDate = investmentDateInput.getText();
 		double expCost = Double.parseDouble(investmentCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
