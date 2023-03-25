@@ -9,6 +9,8 @@ import java.sql.Statement;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import businessLogic.Util;
 import persistence.Investment;
@@ -478,7 +480,10 @@ public final class DBUtil {
 		
 		if (column.equals("amount") || column.equals("interest_rate") || column.equals("interest") || column.equals("recur")) 
 			num = Double.parseDouble(value);
-		
+			BigDecimal bd = new BigDecimal(num);
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			num = bd.doubleValue();
+
 		try (
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				PreparedStatement st = conn.prepareStatement(update, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
