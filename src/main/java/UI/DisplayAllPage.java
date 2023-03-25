@@ -23,7 +23,7 @@ import DB.DBUtil;
 import persistence.LedgerItem;
 import persistence.User;
 
-public class displayAllUsers implements ActionListener {
+public class DisplayAllPage implements ActionListener {
 
 	public JFrame displayFrame;
 	private JPanel mainDisplayPanel;
@@ -34,7 +34,7 @@ public class displayAllUsers implements ActionListener {
 	private JScrollPane displayScroller;
 	private navigatorPage navigation;
 
-	public displayAllUsers() {
+	public DisplayAllPage() {
 
 		try {
 			expenseTable = DBUtil.query(User.getLoginAs(), "tag", "all");
@@ -113,7 +113,7 @@ public class displayAllUsers implements ActionListener {
 //		        page.setVisible(true);
 //	}
 	public static void main(String[] args) {
-		new displayAllUsers();
+		new DisplayAllPage();
 	}
 
 	@Override
