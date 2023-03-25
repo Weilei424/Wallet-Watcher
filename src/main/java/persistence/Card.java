@@ -39,37 +39,4 @@ import java.util.List;
 			return this.quantity;
 		}
 	}
-	
-	class bankingCard extends Card
-	{ 
-		protected double spendingLimit;
-		public bankingCard(String name, double quantity, double spendingLimit, String note)
-		{
-			super(name,quantity,note);
-			this.spendingLimit=spendingLimit;
-		}
-		
-	}
-	
-	class CreditCard extends bankingCard
-	{ 
-		private double interest; 
-		private Date monthlyPayment;
-		public CreditCard(String name, double quantity, double interest, Date monthlyPayment, String note,double spendingLimit)
-		{
-			super(name,quantity,spendingLimit,note);
-			this.interest=interest;
-			this.monthlyPayment=monthlyPayment;
-		}
-	}
 
-	class PointsCard extends Card
-	{
-		private double ratio; 
-		public PointsCard(String name, double quantity, double ratio, String note)
-		{
-			super(name,quantity,note);
-			this.ratio=ratio;
-		}
-		
-	}
