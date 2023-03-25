@@ -235,3 +235,12 @@ Mar 24th 02:46:36
 	
 	made right click popup window for update 
 	and delete in InvestmentPage.
+===============================================
+Mar 24th 22:22:14
+	Added BillPlannerPageForm.
+	
+	Added bill planner to nav page.
+	
+	Display all button added to nav page.
+	
+	Set all frames to be centralized upon open.
