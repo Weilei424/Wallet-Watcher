@@ -43,7 +43,7 @@ public class CardPursePage implements ActionListener {
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
 	private JButton addNewCard;
-	private JButton removeCard;
+	private JButton export;
 	private JButton toMenu;
 	private JLabel title;
 	// private JTextArea cardInfo;
@@ -216,19 +216,8 @@ public class CardPursePage implements ActionListener {
 				    }
 				});
 		
-		// This is the text area which shows all of the "ledger" information
 
-//		cardInfo = new JTextArea();
-//		cardInfo.append("Card Name" + "\t" + "\t");
-//		cardInfo.append("Name On Card" + "\t" + "\t");
-//		cardInfo.append("Card Balance" + "\t" + "\t");
-//		cardInfo.append("Card Type");
-//		cardInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-//		// Disables user from being able to add any text into area as it is only for
-//		// displaying the ledger
-//		cardInfo.setEditable(false);
-
-		removeCard = new JButton(new AbstractAction("Remove All Expenses") {
+		export = new JButton(new AbstractAction("Export current page as csv file") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -242,7 +231,7 @@ public class CardPursePage implements ActionListener {
 			}
 
 		});
-		removeCard.setForeground(Color.green);
+		export.setForeground(Color.green);
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
@@ -256,7 +245,7 @@ public class CardPursePage implements ActionListener {
 		mainCpPage.add(mainPanel, BorderLayout.NORTH);
 		// mainCpPage.add(cardInfo, BorderLayout.CENTER);
 		mainCpPage.add(cardScroller, BorderLayout.CENTER);
-		mainCpPage.add(removeCard, BorderLayout.SOUTH);
+		mainCpPage.add(export, BorderLayout.SOUTH);
 		mainCpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainCpPage.setTitle("Card Purse");
 		mainCpPage.setSize(1000, 1000);
