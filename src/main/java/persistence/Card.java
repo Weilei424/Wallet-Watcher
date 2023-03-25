@@ -4,46 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CardData {
-	public List <Card> Cards=new ArrayList<>();
-	private Double cash; //added for now
-	//default constructor
-	public CardData()
-	{
-		cash=0.0; 
-	}
-	
-	public void addBankingCard(String name, double quantity, double spendingLimit, String note)
-	{ 
-		Cards.add(new bankingCard(name, quantity, spendingLimit, note));
-		cash+=quantity;
-	}
-	
-	public void addCreditCard(String name, double quantity, double interest, Date monthlyPayment, String note,double spendingLimit)
-	{ 
-		Cards.add(new CreditCard(name, quantity, interest, monthlyPayment, note, spendingLimit));
-		cash+=quantity;
-
-	}
-	
-	public void addPointsCard(String name, double quantity, double ratio, String note)
-	{ 
-		Cards.add(new PointsCard(name, quantity, ratio, note));
-		cash+=quantity;
-	}
-	
-	public Card getCard(String param)
-	{
-		for(Card card: Cards)
-		{
-			if(card.getName().equals(param))
-			{
-				return card;
-			}
-		}
-		return null;
-	}
-	
 	
 	
 	public abstract class Card
@@ -80,7 +40,7 @@ public class CardData {
 		}
 	}
 	
-	public class bankingCard extends Card
+	class bankingCard extends Card
 	{ 
 		protected double spendingLimit;
 		public bankingCard(String name, double quantity, double spendingLimit, String note)
@@ -90,7 +50,8 @@ public class CardData {
 		}
 		
 	}
-	public class CreditCard extends bankingCard
+	
+	class CreditCard extends bankingCard
 	{ 
 		private double interest; 
 		private Date monthlyPayment;
@@ -102,7 +63,7 @@ public class CardData {
 		}
 	}
 
-	public class PointsCard extends Card
+	class PointsCard extends Card
 	{
 		private double ratio; 
 		public PointsCard(String name, double quantity, double ratio, String note)
@@ -112,4 +73,3 @@ public class CardData {
 		}
 		
 	}
-}
