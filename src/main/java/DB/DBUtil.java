@@ -24,8 +24,8 @@ public final class DBUtil {
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3306";
 	
 	private static final String CLOUDUSERNAME = "team7";
-	private static final String CLOUDPASSWORD = "eecs2311!";
-	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher2.mysql.database.azure.com:3306%s?useSSL=true";
+	private static final String CLOUDPASSWORD = "Eecs2311";
+	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher3.mysql.database.azure.com:3306%s?useSSL=true";
 	
 	private static final int LOCAL = 0;
 	private static final int CLOUD = 1;
