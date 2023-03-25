@@ -27,6 +27,7 @@ public class navigatorPage {
 	JPanel buttons; 
 	
 	//buttons to redirect to different pages 
+	JButton allPage;
 	JButton expensePage;
 	JButton earningsPage;
 	JButton budgetPage;
@@ -44,6 +45,7 @@ public class navigatorPage {
 	
 	JPanel label;
 	JLabel navPage;
+	DisplayAllPage all;
 	ExpensePage expense;
 	BudgetPage budget;
 	EarningPage earnings;
@@ -53,6 +55,14 @@ public class navigatorPage {
 	Settings settingsPage;
 	MainUi logIn;
 
+	ActionListener allDirect = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			all = new DisplayAllPage();
+			all.displayFrame.setVisible(true);
+			navigator.dispose();
+		}
+	};
+	
 	ActionListener expenseDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			expense = new ExpensePage();
@@ -133,10 +143,13 @@ public class navigatorPage {
 
 		// padding for buttons
 
+		allPage = new JButton("Display all");
+		allPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
 		expensePage = new JButton("Expense");
 		expensePage.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		earningsPage = new JButton("Earnings");
+		earningsPage = new JButton("Earning");
 		earningsPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 
@@ -164,6 +177,7 @@ public class navigatorPage {
 
 		navPage.setBorder(new EmptyBorder(0, 550, 0, 0));
 
+		allPage.addActionListener(allDirect);
 		budgetPage.addActionListener(budgetDirect);
 		cardPage.addActionListener(cardPurseDirect);
 		earningsPage.addActionListener(earningDirect);
@@ -173,6 +187,7 @@ public class navigatorPage {
 		settings.addActionListener(settingsDirect);
 		logOut.addActionListener(logOutDirect);
 
+		buttons.add(allPage);
 		buttons.add(budgetPage);
 		buttons.add(cardPage);
 		buttons.add(expensePage);
