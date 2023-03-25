@@ -2,7 +2,7 @@ package persistence;
 
 import java.util.Date;
 
-class CreditCard extends BankingCard
+public class CreditCard extends BankingCard
 { 
 	private double interest; 
 	private Date monthlyPayment;
