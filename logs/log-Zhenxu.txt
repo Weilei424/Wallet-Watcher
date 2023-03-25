@@ -244,3 +244,13 @@ Mar 24th 22:22:14
 	Display all button added to nav page.
 	
 	Set all frames to be centralized upon open.
+===============================================
+Mar 25th 01:29:20
+	Added update and delete pop up menu on 
+	right click on table for :
+	BillPlannerPage class, CardPursePage class,
+	EarningPage class, ExpensePage class.
+===============================================
+Mar 25th 01:58:03
+	fixed bug for onclick delete for UI.
+	
