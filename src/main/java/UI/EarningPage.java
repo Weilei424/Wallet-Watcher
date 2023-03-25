@@ -231,7 +231,12 @@ public class EarningPage implements ActionListener {
 						catch(SQLException er)
 						{ 
 						}
-				        earningScroller = new JScrollPane(earningTable);
+				        JScrollPane newScroller = new JScrollPane(earningTable);
+				        mainEpFrame.remove(earningScroller);
+				        earningScroller = newScroller;
+				        mainEpFrame.add(earningScroller, BorderLayout.CENTER);
+				        mainEpFrame.revalidate();
+				        mainEpFrame.repaint();
 				    }
 				});
 		

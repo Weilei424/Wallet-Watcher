@@ -211,7 +211,12 @@ public class InvestmentPage implements ActionListener {
 				catch(SQLException er)
 				{ 
 				}
-				investmentScroller = new JScrollPane(investmentTable);
+		        JScrollPane newScroller = new JScrollPane(investmentTable);
+		        mainIvFrame.remove(investmentScroller);
+		        investmentScroller = newScroller;
+		        mainIvFrame.add(investmentScroller, BorderLayout.CENTER);
+		        mainIvFrame.revalidate();
+		        mainIvFrame.repaint();
 		    }
 		});
 		

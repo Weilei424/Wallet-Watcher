@@ -213,7 +213,12 @@ public class ExpensePage implements ActionListener {
 						catch(SQLException er)
 						{ 
 						}
-				        expenseScroller = new JScrollPane(expenseTable);
+				        JScrollPane newScroller = new JScrollPane(expenseTable);
+				        mainEpFrame.remove(expenseScroller);
+				        expenseScroller = newScroller;
+				        mainEpFrame.add(expenseScroller, BorderLayout.CENTER);
+				        mainEpFrame.revalidate();
+				        mainEpFrame.repaint();
 				    }
 				});
 		

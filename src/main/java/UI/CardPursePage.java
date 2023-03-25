@@ -207,7 +207,12 @@ public class CardPursePage implements ActionListener {
 						catch(SQLException er)
 						{ 
 						}
-						cardScroller = new JScrollPane(cardPurseTable);
+				        JScrollPane newScroller = new JScrollPane(cardPurseTable);
+				        mainCpPage.remove(cardScroller);
+				        cardScroller = newScroller;
+				        mainCpPage.add(cardScroller, BorderLayout.CENTER);
+				        mainCpPage.revalidate();
+				        mainCpPage.repaint();
 				    }
 				});
 		

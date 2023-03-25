@@ -206,7 +206,12 @@ public class BillPlannerPage implements ActionListener {
 						catch(SQLException er)
 						{ 
 						}
-						billScroller = new JScrollPane(billTable);
+				        JScrollPane newScroller = new JScrollPane(billTable);
+				        mainBpPage.remove(billScroller);
+				        billScroller = newScroller;
+				        mainBpPage.add(billScroller, BorderLayout.CENTER);
+				        mainBpPage.revalidate();
+				        mainBpPage.repaint();
 				    }
 				});
 		
