@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import persistence.User;
+import persistence.UserStorage;
 
 public class navigatorPage {
 	JFrame navigator;
@@ -131,6 +132,7 @@ public class navigatorPage {
 	};
 
 	public navigatorPage() {
+		
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		navigator.setLocationRelativeTo(null);

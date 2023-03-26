@@ -83,16 +83,20 @@ public final class User {
 		this.ref = ref;
 	}
 	
-	private void setBudget(BudgetData budget)
+	public static void setBudget(BudgetData budget)
 	{ 
 		currBudget=budget;
+	}
+	public static BudgetData getBudget()
+	{ 
+		return currBudget;
 	}
 	
 	private String generateSalt() {
 		byte[] array = new byte[7]; 
 	   	new Random().nextBytes(array);
 	    String salt = new String(array, Charset.forName("UTF-8"));
-
+	    
 		return salt;
 	}
 }

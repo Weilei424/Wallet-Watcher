@@ -24,7 +24,7 @@ public final class DBUtil {
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3306";
 	
 	private static final String CLOUDUSERNAME = "team7";
-	private static final String CLOUDPASSWORD = "eecs2311!";
+	private static final String CLOUDPASSWORD = "Eecs2311!";
 	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher2.mysql.database.azure.com:3306%s?useSSL=true";
 	
 	private static final int LOCAL = 0;
@@ -598,7 +598,8 @@ public final class DBUtil {
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = st.executeQuery(query);
-				) {
+				) 
+		{
 			while (rs.next()) 
 				max = rs.getInt("COUNT(*)");
 		} catch (SQLException e) {
