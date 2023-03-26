@@ -360,7 +360,7 @@ public final class DBUtil {
 	 */
 	public static JTable query(String username, String column, String value) throws SQLException {
 	    String query = "SELECT * FROM " + username;
-	    String[] columnNames = {REF, ITEM, NOTE, AMOUNT, "Recuring", CATEGORY, DATE_START};
+	    String[] columnNames = {REF, ITEM, NOTE, AMOUNT, "Recuring", CATEGORY, "date"};
 	    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
 	    ResultSet rs = null;
