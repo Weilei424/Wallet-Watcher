@@ -30,10 +30,13 @@ public class MiscPageForm implements ActionListener{
 		public JTextField miscDescriptionInput;
 		private JLabel miscDate;
 		public JTextField miscDateInput;
+		public JTextField miscCatInput;
+		private JLabel miscCat;
 		private JButton submit;
 		private LedgerItem ledgerItem;
 		private MiscPage mip;
 		private int framesCreated;
+		private String category;
 
 		public MiscPageForm() {
 			this.framesCreated = 0;
@@ -85,6 +88,16 @@ public class MiscPageForm implements ActionListener{
 			miscDateInput.setSize(100, 20);
 			miscDateInput.setLocation(200, 400);
 			miscForm.add(miscDateInput);
+			
+			miscCat = new JLabel("Category:");
+			miscDate.setSize(100, 20);
+			miscDate.setLocation(100, 500);
+			miscForm.add(miscCat);
+
+			miscCatInput = new JTextField();
+			miscCatInput.setSize(100, 20);
+			miscCatInput.setLocation(200, 500);
+			miscForm.add(miscCatInput);
 
 			submit = new JButton("Submit");
 			submit.setBounds(20, 10, 100, 50);
@@ -129,10 +142,11 @@ public class MiscPageForm implements ActionListener{
 			String expName = miscNameInput.getText();
 			String expNote = miscDescriptionInput.getText();
 			String expDate = miscDateInput.getText();
+			category = miscCatInput.getText();
 			double expCost = Double.parseDouble(miscCostInput.getText());
 
 			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-
+			this.ledgerItem.setCategory(category);
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "misc");
 
 		
