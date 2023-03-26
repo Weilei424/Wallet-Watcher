@@ -20,6 +20,11 @@ public final class Util {
 	private Util() {
 	}
 
+	/**
+	 * This method converts a JTable instance into a File instance.
+	 * @param 	table is a JTable instance.
+	 * @param 	file is a File instance that is converted from JTable.
+	 */
 	public static void exportToExcel(JTable table, File file) {
 		try {
 			Workbook workbook = new XSSFWorkbook();
