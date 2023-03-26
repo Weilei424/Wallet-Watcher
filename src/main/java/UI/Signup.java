@@ -63,7 +63,7 @@ public class Signup{
 	
 	//UI's that are initialized onclick
 	MainUi redirect;
-	navigatorPage nav;
+	NavigatorPage nav;
 
 	//action listeners for going to the menu
 	ActionListener backToMenu=new ActionListener(){
@@ -102,7 +102,7 @@ public class Signup{
 				//change the redirect to the nav page and adds the user to the database
 				DBUtil.createUser(assumedUser);
 				User.setLoginAs(userName);
-				nav=new navigatorPage();
+				nav=new NavigatorPage();
 				nav.navigator.setVisible(true);
 				page.dispose();	
 			}

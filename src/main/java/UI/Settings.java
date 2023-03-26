@@ -27,7 +27,7 @@ import persistence.User;
 
 public class Settings { 
 	JFrame settingsFrame; 
-	navigatorPage redirect;
+	NavigatorPage redirect;
 	MainUi main;
 	//Different main titles for user
 	JLabel titleMain; 
@@ -266,7 +266,7 @@ public class Settings {
 				DBUtil.joinUserAccs(User.getLoginAs(),username2Input.getText(),newFirstName.getText(), newLastName.getText(),newUserInput.getText(), newPasswordInput.getText(), "Personal");				
 				User.setLoginAs(newUserInput.getText());
 				settingsFrame.dispose();
-				redirect=new navigatorPage();	
+				redirect=new NavigatorPage();	
 			}
 		}
 	};
@@ -429,7 +429,7 @@ public class Settings {
 	ActionListener NavDirect=new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			settingsFrame.dispose();
-			redirect=new navigatorPage();
+			redirect=new NavigatorPage();
 		}
 	};
 	

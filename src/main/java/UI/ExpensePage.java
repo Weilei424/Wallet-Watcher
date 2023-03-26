@@ -53,7 +53,7 @@ public class ExpensePage implements ActionListener {
 	public JTable expenseTable;
 	private JScrollPane expenseScroller;
 	private boolean isRemoved;
-	private navigatorPage navigation;
+	private NavigatorPage navigation;
 	public static volatile int numberOfExpenses = 0;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
@@ -96,7 +96,7 @@ public class ExpensePage implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				navigation = new navigatorPage();
+				navigation = new NavigatorPage();
 				mainEpFrame.dispose();
 			}
 		});

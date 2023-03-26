@@ -51,7 +51,7 @@ public class EarningPage implements ActionListener {
 	public JTable earningTable;
 	private JScrollPane earningScroller;
 	private boolean isRemoved;
-	private navigatorPage navigation;
+	private NavigatorPage navigation;
 	public static volatile int numberOfEarnings = 0;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
@@ -93,7 +93,7 @@ public class EarningPage implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				navigation = new navigatorPage();
+				navigation = new NavigatorPage();
 				mainEpFrame.dispose();
 			}
 		});

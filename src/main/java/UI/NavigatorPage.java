@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import persistence.User;
 
-public class navigatorPage {
+public class NavigatorPage {
 	JFrame navigator;
 
 	JPanel buttons; 
@@ -34,6 +34,7 @@ public class navigatorPage {
 	JButton cardPage;
 	JButton investmentPage;
 	JButton billPage;
+	JButton miscPage;
 	JButton settings; 
 	JButton logOut;
 	
@@ -52,6 +53,7 @@ public class navigatorPage {
 	CardPursePage cardPurse;
 	InvestmentPage investment;
 	BillPlannerPage bill;
+	MiscPage misc;
 	Settings settingsPage;
 	MainUi logIn;
 
@@ -110,6 +112,13 @@ public class navigatorPage {
       }
 	};
 	
+	ActionListener miscPlannerDirect = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			misc = new MiscPage();
+			misc.mainMiPage.setVisible(true);
+      }
+	};
+	
 	ActionListener logOutDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			logIn = new MainUi();
@@ -130,7 +139,7 @@ public class navigatorPage {
 		
 	};
 
-	public navigatorPage() {
+	public NavigatorPage() {
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		navigator.setLocationRelativeTo(null);
@@ -169,6 +178,9 @@ public class navigatorPage {
 		billPage = new JButton("Bill Planner");
 		billPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
+		miscPage = new JButton("Misc Earning");
+		miscPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
 		settings=new JButton("Settings");
 		settings.setBorder(new EmptyBorder(10,10,10,10));
 		
@@ -184,6 +196,7 @@ public class navigatorPage {
 		expensePage.addActionListener(expenseDirect);
 		investmentPage.addActionListener(investmentDirect);
 		billPage.addActionListener(billPlannerDirect);
+		miscPage.addActionListener(miscPlannerDirect);
 		settings.addActionListener(settingsDirect);
 		logOut.addActionListener(logOutDirect);
 
@@ -194,6 +207,7 @@ public class navigatorPage {
 		buttons.add(earningsPage);
 		buttons.add(investmentPage);
 		buttons.add(billPage);
+		buttons.add(miscPage);
 		buttons.add(settings);
 		buttons.add(logOut);
 
@@ -206,6 +220,6 @@ public class navigatorPage {
 	}
 
 	public static void main(String[] args) {
-		new navigatorPage();
+		new NavigatorPage();
 	}
 }

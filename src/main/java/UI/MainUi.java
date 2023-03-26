@@ -34,7 +34,7 @@ public class MainUi implements ActionListener {
 	private JTextField userTextInput;
 	private JLabel passwordText;
 	private JPasswordField userPasswordInput;
-	private navigatorPage page;
+	private NavigatorPage page;
 	private Signup signupPage;
 	
 	private JLabel signup;
@@ -113,7 +113,7 @@ public class MainUi implements ActionListener {
 
 		if (DBUtil.validateUser(uName, uPass)) {
 			User.setLoginAs(uName);
-			page = new navigatorPage();
+			page = new NavigatorPage();
 			mainFrame.dispose();
 		} else {
 			JOptionPane.showMessageDialog(mainFrame, "Sorry, not a valid username or password");

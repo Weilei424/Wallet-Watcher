@@ -50,7 +50,7 @@ public class BillPlannerPage implements ActionListener {
 	private LedgerItem tempLedgerItem;
 	private JTable billTable;
 	public JScrollPane billScroller;
-	private navigatorPage nav;
+	private NavigatorPage nav;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
 	private JMenuItem deleteMenuItem;
@@ -89,7 +89,7 @@ public class BillPlannerPage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				nav = new navigatorPage();
+				nav = new NavigatorPage();
 				mainBpPage.dispose();
 			}
 		});
