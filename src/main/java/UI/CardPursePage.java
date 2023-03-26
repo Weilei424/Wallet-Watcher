@@ -252,6 +252,7 @@ public class CardPursePage implements ActionListener {
 					}
 				});
 		export.setForeground(Color.green);
+		export.setPreferredSize(new Dimension(150, 50));
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
