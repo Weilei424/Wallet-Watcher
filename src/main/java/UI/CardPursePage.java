@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 
+import java.io.File;
+
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -33,6 +35,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -217,20 +220,37 @@ public class CardPursePage implements ActionListener {
 				});
 		
 
-		export = new JButton(new AbstractAction("Export current page as csv file") {
+				export = new JButton(new AbstractAction("Export current page as Excel file") {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JTextField filenameField = new JTextField();
+						filenameField.setColumns(20);
+						filenameField.setPreferredSize(new Dimension(200, filenameField.getPreferredSize().height));
+						JButton submitButton = new JButton("Submit");
+						JPanel panel = new JPanel();
+						panel.add(new JLabel("Enter filename: "));
+						panel.add(filenameField);
+						panel.add(submitButton);
+						JDialog dialog = new JDialog();
+						dialog.setPreferredSize(new Dimension(300, 200));
+						dialog.add(panel);
+						dialog.pack();
+						dialog.setLocationRelativeTo(null);
+						dialog.setVisible(true);
 
-//					cardInfo.setText(null);
-//					cardInfo.append("Card Name" + "\t");
-//					cardInfo.append("Name On Card" + "\t");
-//					cardInfo.append("Card Balance" + "\t" + "\t" + "\t");
-//					cardInfo.append("Card Type");
-//				 
-			}
-
-		});
+						submitButton.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								String filename = filenameField.getText();
+								dialog.dispose();
+								File outputFile = new File("./Excel Sheets Exported/" + filename + ".xlsx");
+								Util.exportToExcel(cardPurseTable, outputFile);
+								JOptionPane.showMessageDialog(null, "Export successfully to \"Excel Sheets Exported\" folder.");
+							}
+						});
+					}
+				});
 		export.setForeground(Color.green);
 
 		// This panel holds all other elements in the frame
