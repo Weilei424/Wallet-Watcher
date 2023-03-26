@@ -265,3 +265,13 @@ Mar 25th 15:16:32
 	Meeting with Mustafa, about application
 	performance improvement ideas. Reset the 
 	cloud DB.
+===============================================
+Mar 25th 23:01:27
+	Added Apache POI api to build.gradle.
+	Added .xlsx to .gitignore.
+	
+	Updated JTable display column name in DBUtil.
+	
+	Added exportToExcel() method in Util class.
+	
+	Added  export to excel button in CardPursePage.
