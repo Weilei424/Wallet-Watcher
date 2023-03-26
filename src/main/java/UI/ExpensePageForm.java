@@ -79,7 +79,7 @@ public class ExpensePageForm implements ActionListener {
 		radioGroup.add(entertainment);
 		radioGroup.add(financial);
 		radioGroup.add(other);
-		category = "";
+		category = "default";
 		other.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -75,7 +75,7 @@ public class EarningPageForm implements ActionListener {
 		radioGroup.add(sell);
 		radioGroup.add(unexpected);
 		radioGroup.add(other);
-		category = "";
+		category = "default";
 		other.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
