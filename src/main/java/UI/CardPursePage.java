@@ -49,9 +49,6 @@ public class CardPursePage implements ActionListener {
 	private JButton export;
 	private JButton toMenu;
 	private JLabel title;
-	// private JTextArea cardInfo;
-	private ExpensePageForm epForm;
-	private LedgerItem tempLedgerItem;
 	public JTable cardPurseTable;
 	public JScrollPane cardScroller;
 	private navigatorPage nav;

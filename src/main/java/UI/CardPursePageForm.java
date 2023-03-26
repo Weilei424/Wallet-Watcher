@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import DB.DBUtil;
-import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -101,19 +100,19 @@ public class CardPursePageForm implements ActionListener{
 
 		}
 
-		public JTextField getExpenseNameInput() {
+		public JTextField getCardNameInput() {
 			return cardNameInput;
 		}
 
-		public JTextField getExpenseCostInput() {
+		public JTextField getCardCostInput() {
 			return cardCostInput;
 		}
 
-		public JTextField getExpenseDescriptionInput() {
+		public JTextField getCardDescriptionInput() {
 			return cardDescriptionInput;
 		}
 
-		public JTextField getExpenseDateInput() {
+		public JTextField getCardDateInput() {
 			return cardDateInput;
 		}
 
@@ -139,7 +138,7 @@ public class CardPursePageForm implements ActionListener{
 		
 
 			try {
-				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","expense");
+				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");
 				cpp.mainCpPage.dispose();
 				cpp = new CardPursePage();
 				cpp.mainCpPage.setVisible(true);
