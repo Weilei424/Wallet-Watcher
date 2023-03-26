@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import DB.DBUtil;
@@ -35,6 +37,15 @@ public class EarningPageForm implements ActionListener {
 	private LedgerItem ledgerItem;
 	private EarningPage ep;
 	private int framesCreated;
+	private ButtonGroup radioGroup;
+	private JRadioButton salary;
+	private JRadioButton commission;
+	private JRadioButton sidegig;
+	private JRadioButton sell;
+	private JRadioButton unexpected;
+	private JRadioButton other;
+	private JTextField othertext;
+	private String category;
 
 	public EarningPageForm() {
 		this.framesCreated = 0;
@@ -42,7 +53,52 @@ public class EarningPageForm implements ActionListener {
 		earningPageFrame = new JFrame();
 		earningPageFrame.setLocationRelativeTo(null);
 		earningPageForm = new JPanel();
-
+		radioGroup = new ButtonGroup();
+		othertext = new JTextField(20);
+		othertext.setPreferredSize(null);
+		
+		salary = new JRadioButton("Salary");
+		salary.setBorderPainted(true);
+		commission = new JRadioButton("Commission");
+		commission.setBorderPainted(true);
+		sidegig = new JRadioButton("Side Gig");
+		sidegig.setBorderPainted(true);
+		sell = new JRadioButton("Sold Something");
+		sell.setBorderPainted(true);
+		unexpected = new JRadioButton("Unexpected");
+		unexpected.setBorderPainted(true);
+		other = new JRadioButton("Ohter:");
+		
+		radioGroup.add(salary);
+		radioGroup.add(commission);
+		radioGroup.add(sidegig);
+		radioGroup.add(sell);
+		radioGroup.add(unexpected);
+		radioGroup.add(other);
+		category = "";
+		other.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (other.isSelected()) {
+                    othertext.setEnabled(true);
+                    othertext.requestFocus();
+                    category = othertext.getText();
+                } else if (salary.isSelected()) {
+                	category = "Bills";
+                } else if (commission.isSelected()) {
+                	category = "Food";
+                } else if (sidegig.isSelected()) {
+                	category = "Commute";
+                } else if (sell.isSelected()) {
+                	category = "Entertainment";
+                } else if (unexpected.isSelected()) {
+                	category = "Financial";
+                } else {
+                    othertext.setEnabled(false);
+                }
+            }
+        });
+		
 		earningPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		earningPageForm.setLayout(new GridLayout(5, 1));
 		earningPageForm.setBackground(Color.cyan);
@@ -87,6 +143,14 @@ public class EarningPageForm implements ActionListener {
 		earningDateInput.setLocation(200, 400);
 		earningPageForm.add(earningDateInput);
 
+		earningPageForm.add(salary);
+		earningPageForm.add(commission);
+		earningPageForm.add(sidegig);
+		earningPageForm.add(sell);
+		earningPageForm.add(unexpected);
+		earningPageForm.add(other);
+		earningPageForm.add(othertext);
+		
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -96,7 +160,7 @@ public class EarningPageForm implements ActionListener {
 		earningPageFrame.add(earningPageForm, BorderLayout.CENTER);
 		earningPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		earningPageFrame.setTitle("Add Earning");
-		earningPageFrame.setSize(400, 300);
+		earningPageFrame.setSize(600, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		earningPageFrame.setVisible(true);
 
