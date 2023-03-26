@@ -275,3 +275,6 @@ Mar 25th 23:01:27
 	Added exportToExcel() method in Util class.
 	
 	Added  export to excel button in CardPursePage.
+===============================================
+Mar 26th 00:17:24
+	Added MiscPage and MiscPageForm
