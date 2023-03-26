@@ -84,15 +84,15 @@ public class EarningPageForm implements ActionListener {
                     othertext.requestFocus();
                     category = othertext.getText();
                 } else if (salary.isSelected()) {
-                	category = "Bills";
+                	category = "Salary";
                 } else if (commission.isSelected()) {
-                	category = "Food";
+                	category = "Commission";
                 } else if (sidegig.isSelected()) {
-                	category = "Commute";
+                	category = "Side Gig";
                 } else if (sell.isSelected()) {
-                	category = "Entertainment";
+                	category = "Sold Something";
                 } else if (unexpected.isSelected()) {
-                	category = "Financial";
+                	category = "Unexpected";
                 } else {
                     othertext.setEnabled(false);
                 }
@@ -198,7 +198,8 @@ public class EarningPageForm implements ActionListener {
 		double expCost = Double.parseDouble(earningCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-
+		this.ledgerItem.setCategory(category);
+		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
 
 		ep.setTempLedgerItem(this.ledgerItem);
