@@ -278,3 +278,8 @@ Mar 25th 23:01:27
 ===============================================
 Mar 26th 00:17:24
 	Added MiscPage and MiscPageForm
+===============================================
+Mar 26th 16:50:03
+	Added radio selection for category for:
+	ExpensePageForm class, EarningPageForm class
+	MiscPageForm class.
