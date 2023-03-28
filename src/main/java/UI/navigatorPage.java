@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import persistence.User;
-import persistence.UserStorage;
+import persistence.LedgerList;
 
 public class navigatorPage {
 	JFrame navigator;
