@@ -32,7 +32,7 @@ public class DisplayAllPage implements ActionListener {
 	private JLabel title;
 	public JTable expenseTable;
 	private JScrollPane displayScroller;
-	private navigatorPage navigation;
+	private NavigatorPage navigation;
 
 	public DisplayAllPage() {
 
@@ -55,7 +55,7 @@ public class DisplayAllPage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				navigation = new navigatorPage();
+				navigation = new NavigatorPage();
 				displayFrame.dispose();
 			}
 		});

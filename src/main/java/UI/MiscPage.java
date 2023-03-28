@@ -51,7 +51,7 @@ public class MiscPage implements ActionListener {
 	private JLabel title;
 	public JTable miscTable;
 	public JScrollPane miscScroller;
-	private navigatorPage nav;
+	private NavigatorPage nav;
 	private MiscPageForm mpf;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
@@ -89,7 +89,7 @@ public class MiscPage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				nav = new navigatorPage();
+				nav = new NavigatorPage();
 				mainMiPage.dispose();
 			}
 		});

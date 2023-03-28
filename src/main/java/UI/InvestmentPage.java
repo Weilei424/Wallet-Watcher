@@ -52,7 +52,7 @@ public class InvestmentPage implements ActionListener {
 	public JTable investmentTable;
 	private JScrollPane investmentScroller;
 	private boolean isRemoved;
-	private navigatorPage navigation;
+	private NavigatorPage navigation;
 	public static volatile int numberOfInvestments = 0;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
@@ -94,7 +94,7 @@ public class InvestmentPage implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				navigation = new navigatorPage();
+				navigation = new NavigatorPage();
 				mainIvFrame.dispose();
 			}
 		});

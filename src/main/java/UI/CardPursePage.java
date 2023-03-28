@@ -51,7 +51,7 @@ public class CardPursePage implements ActionListener {
 	private JLabel title;
 	public JTable cardPurseTable;
 	public JScrollPane cardScroller;
-	private navigatorPage nav;
+	private NavigatorPage nav;
 	private CardPursePageForm cppf;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
@@ -89,7 +89,7 @@ public class CardPursePage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				nav = new navigatorPage();
+				nav = new NavigatorPage();
 				mainCpPage.dispose();
 			}
 		});

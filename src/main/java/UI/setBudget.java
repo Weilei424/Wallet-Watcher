@@ -31,7 +31,7 @@ import java.time.temporal.ChronoUnit;
 public class setBudget {
 	public JFrame popup;  
 	
-	public navigatorPage nav;
+	public NavigatorPage nav;
 	
 	private JPanel page;
 	
@@ -89,7 +89,7 @@ public class setBudget {
 	    	if(ChronoUnit.DAYS.between(curr,endDate)>0L)
 	    	{
 	    		User.setBudget(new BudgetData(budgetAmount,endDate));
-	    		nav=new navigatorPage();
+	    		nav=new NavigatorPage();
 	    		popup.dispose();
 	    	}
 	    	else

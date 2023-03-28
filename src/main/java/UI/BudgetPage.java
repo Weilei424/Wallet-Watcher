@@ -37,7 +37,7 @@ public class BudgetPage implements ActionListener {
 	public JTable budgetTable;
 	private JScrollPane budgetScroller;
 	private boolean isRemoved;
-	private navigatorPage navigation;
+	private NavigatorPage navigation;
 	public static volatile int numberOfBudgets = 0;
 
 	public BudgetPage() {
@@ -70,7 +70,7 @@ public class BudgetPage implements ActionListener {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				navigation = new navigatorPage();
+				navigation = new NavigatorPage();
 				mainEpFrame.dispose();
 			}
 		});

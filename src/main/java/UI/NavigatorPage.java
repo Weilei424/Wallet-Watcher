@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import persistence.User;
 
-public class navigatorPage {
+public class NavigatorPage {
 	JFrame navigator;
 
 	JPanel buttons; 
@@ -139,7 +139,7 @@ public class navigatorPage {
 		
 	};
 
-	public navigatorPage() {
+	public NavigatorPage() {
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		navigator.setLocationRelativeTo(null);
@@ -220,6 +220,6 @@ public class navigatorPage {
 	}
 
 	public static void main(String[] args) {
-		new navigatorPage();
+		new NavigatorPage();
 	}
 }
