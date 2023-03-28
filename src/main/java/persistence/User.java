@@ -10,6 +10,10 @@ import businessLogic.Util;
 public final class User {
 	private static String loginAs;
 	private static BudgetData currBudget; 
+	public static LedgerList earnings; 
+	public static LedgerList expenses; 
+	public static LedgerList cards; 
+	
 	
 	private String firstName;
 	private String lastName;

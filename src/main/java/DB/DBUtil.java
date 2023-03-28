@@ -24,8 +24,8 @@ public final class DBUtil {
 	private static final String CONN_STRING = "jdbc:mysql://localhost:3306";
 	
 	private static final String CLOUDUSERNAME = "team7";
-	private static final String CLOUDPASSWORD = "Eecs2311!";
-	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher2.mysql.database.azure.com:3306%s?useSSL=true";
+	private static final String CLOUDPASSWORD = "Eecs2311";
+	private static final String CLOUDCONN_STRING = "jdbc:mysql://wallet-watcher3.mysql.database.azure.com:3306%s?useSSL=true";
 	
 	private static final int LOCAL = 0;
 	private static final int CLOUD = 1;
@@ -35,7 +35,7 @@ public final class DBUtil {
 	public static final String EXPENSE = "expense";
 	public static final String EARNING = "earning";
 	public static final String INVESTMENT = "investment";
-	public static final String STOCK = "stock";
+	public static final String BUDGET = "budget";
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
 	public static final String BILL = "bill";
@@ -51,6 +51,7 @@ public final class DBUtil {
 	public static final String RECUR = "recur";
 	public static final String CATEGORY = "category";
 	public static final String DATE_START = "date_start";
+	public static final String DATE_END = "date_end";
 	
 	/**
 	 * This method returns a Connection object to selected DB.
@@ -81,13 +82,12 @@ public final class DBUtil {
 				+ "    username VARCHAR(100),\r\n"
 				+ "    item VARCHAR(100),\r\n"
 				+ "    note VARCHAR(200),\r\n"
-				+ "    tag ENUM('bill', 'expense', 'earning', 'investment', 'stock', 'misc', 'card'),\r\n"
+				+ "    tag ENUM('bill', 'expense', 'earning', 'investment', 'budget', 'misc', 'card'),\r\n"
 				+ "    amount FLOAT,\r\n"
-				+ "    interest_rate FLOAT,\r\n"
-				+ "    interest FLOAT,\r\n"
 				+ "    recur BOOL,\r\n"
 				+ "    category VARCHAR(20),\r\n"
 				+ "    date_start DATE,\r\n"
+				+ "    date_end DATE,\r\n"	
 				+ "    PRIMARY KEY(ref)\r\n"
 				+ "    )";
 		ResultSet rs = null;
@@ -259,8 +259,6 @@ public final class DBUtil {
 		String tag = getTag(type);
 		
 		double amount = ledger.getAmount();
-		double interestRate = 0.00;
-		double interest = 0.00;
 		int recur = ledger.isRecurring() == true ? 1 : 0;
 		String category = ledger.getCategory();
 		String dateStart = ledger.getDate().toString();
@@ -268,11 +266,9 @@ public final class DBUtil {
 			amount = ((Stock_Fund) ledger).getCurrent();
 		if (ledger instanceof Investment) {
 			Investment obj = (Investment) ledger;
-			interestRate = obj.getRate();
-			interest = obj.getInterest();
 		}
 		
-		String insert = "INSERT INTO " + username + " (username, item, note, tag, amount, interest_rate, interest, recur, category, date_start) VALUES (?, ?, ?, ?, TRUNCATE(?, 2), ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO " + username + " (username, item, note, tag, amount, recur, category, date_start) VALUES (?, ?, ?, ?, TRUNCATE(?, 2), ?, ?, ?)";
 		
 		try (
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
@@ -283,11 +279,9 @@ public final class DBUtil {
 			p.setString(3, note);
 			p.setString(4, tag);
 			p.setDouble(5, amount);
-			p.setDouble(6, interestRate);
-			p.setDouble(7, interest);
-			p.setInt(8, recur);
-			p.setString(9, category);
-			p.setString(10, dateStart);
+			p.setInt(6, recur);
+			p.setString(7, category);
+			p.setString(8, dateStart);
 			p.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
@@ -366,7 +360,7 @@ public final class DBUtil {
 	 */
 	public static JTable query(String username, String column, String value) throws SQLException {
 	    String query = "SELECT * FROM " + username;
-	    String[] columnNames = {REF, ITEM, NOTE, AMOUNT, INTEREST_RATE, INTEREST, "Recuring", CATEGORY, DATE_START};
+	    String[] columnNames = {REF, ITEM, NOTE, AMOUNT, "Recuring", CATEGORY, "date"};
 	    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
 	    ResultSet rs = null;
@@ -380,12 +374,10 @@ public final class DBUtil {
 	            String item = rs.getString(ITEM);
 	            String note = rs.getString(NOTE);
 	            double amount = rs.getDouble(AMOUNT);
-	            String interestRate = rs.getString(INTEREST_RATE);
-	            String interest = rs.getString(INTEREST);
 	            String recur = Integer.parseInt(rs.getString(RECUR)) == 1 ? "YES" : "NO";
 	            String category = rs.getString(CATEGORY);
 	            String date = rs.getString(DATE_START);
-	            tableModel.addRow(new Object[]{ref, item, note, amount, interestRate, interest, recur, category, date});
+	            tableModel.addRow(new Object[]{ref, item, note, amount, recur, category, date});
 	        }
 	    } catch (SQLException e) {
 	        throw new SQLException("Error executing query: " + e.getMessage(), e);
@@ -424,7 +416,7 @@ public final class DBUtil {
 	public static JTable queryMonth(String username, String value, String month) throws SQLException {
 		String query = "SELECT * FROM " + username + " WHERE MONTH(date_start) = ? AND tag = ?";
 		ResultSet rs = null;
-		String[] columnNames = {REF, ITEM, NOTE, AMOUNT, INTEREST_RATE, INTEREST, "Recuring", CATEGORY, DATE_START};
+		String[] columnNames = {REF, ITEM, NOTE, AMOUNT, "Recuring", CATEGORY, DATE_START};
 		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 		
 		try (
@@ -438,13 +430,11 @@ public final class DBUtil {
 	            int ref = rs.getInt(REF);
 	            String item = rs.getString(ITEM);
 	            String note = rs.getString(NOTE);
-	            double amount = rs.getDouble(AMOUNT);
-	            String interestRate = rs.getString(INTEREST_RATE);
-	            String interest = rs.getString(INTEREST);
+	            double amount = rs.getDouble(AMOUNT);;
 	            String recur = Integer.parseInt(rs.getString(RECUR)) == 1 ? "YES" : "NO";
 	            String category = rs.getString(CATEGORY);
 	            String date = rs.getString(DATE_START);
-	            tableModel.addRow(new Object[]{ref, item, note, amount, interestRate, interest, recur, category, date});
+	            tableModel.addRow(new Object[]{ref, item, note, amount, recur, category, date});
         	}
 		} catch (SQLException e) {
 			throw new SQLException("Error executing month query: " + e.getMessage(), e);
@@ -478,7 +468,7 @@ public final class DBUtil {
 		double num = 0.00;
 		String update = "UPDATE " + username + " SET " + col + " = ? WHERE ref = ?";
 		
-		if (column.equals("amount") || column.equals("interest_rate") || column.equals("interest") || column.equals("recur")) 
+		if (column.equals("amount") || column.equals("recur")) 
 			num = Double.parseDouble(value);
 			BigDecimal bd = new BigDecimal(num);
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
@@ -520,7 +510,7 @@ public final class DBUtil {
 			case INVESTMENT:
 				tag = type;
 				break;
-			case STOCK:
+			case BUDGET:
 				tag = type;
 				break;
 			case MISC:
@@ -562,12 +552,6 @@ public final class DBUtil {
 			case AMOUNT:
 				col = column;
 				break;
-			case INTEREST_RATE:
-				col = column;
-				break;
-			case INTEREST:
-				col = column;
-				break;
 			case RECUR:
 				col = column;
 				break;
@@ -575,6 +559,9 @@ public final class DBUtil {
 				col = column;
 				break;
 			case DATE_START:
+				col = column;
+				break;
+			case DATE_END:
 				col = column;
 				break;
 			default:
@@ -598,8 +585,7 @@ public final class DBUtil {
 				Connection conn = DBUtil.getConnection(CLOUD, CLOUDDB);
 				Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet rs = st.executeQuery(query);
-				) 
-		{
+				) {
 			while (rs.next()) 
 				max = rs.getInt("COUNT(*)");
 		} catch (SQLException e) {
@@ -656,10 +642,10 @@ public final class DBUtil {
 	private static void combineUserTables(String name1,String name2,String newName)
 	{ 
 		String query=String.format("CREATE TABLE %s AS "
-				+ "SELECT ref, username, item, note, tag, amount, interest_rate, interest, recur, category, date_start "
+				+ "SELECT ref, username, item, note, tag, amount, recur, category, date_start, date_end "
 				+ "FROM %s "
 				+ "UNION ALL "
-				+ "SELECT ref, username, item, note, tag, amount, interest_rate, interest, recur, category, date_start "
+				+ "SELECT ref, username, item, note, tag, amount, recur, category, date_start, date_end "
 				+ "FROM %s;",newName,name1,name2);
 		
 		String query2=String.format("DROP TABLE %s,%s","name1","name2");

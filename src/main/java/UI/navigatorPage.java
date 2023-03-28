@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import DB.DBUtil;
 import persistence.User;
 import persistence.LedgerList;
 
@@ -55,6 +57,7 @@ public class navigatorPage {
 	BillPlannerPage bill;
 	Settings settingsPage;
 	MainUi logIn;
+
 
 	ActionListener allDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -131,8 +134,28 @@ public class navigatorPage {
 		
 	};
 
-	public navigatorPage() {
+	public void init()
+	{ 
 		
+		try
+		{ 
+			User.expenses=new LedgerList(LedgerList.getEntries(DBUtil.query(User.getLoginAs(),"tag","expense")));
+			User.earnings=new LedgerList(LedgerList.getEntries(DBUtil.query(User.getLoginAs(),"tag","earning")));
+			User.cards=new LedgerList(LedgerList.getEntries(DBUtil.query(User.getLoginAs(),"tag","card")));
+
+		}
+		catch(SQLException e)
+		{
+		}
+		LedgerList.sortByLocalDate(User.expenses);
+		for(int x=0; x<User.expenses.items.size(); x++)
+		{ 
+			System.out.print(User.expenses.items.get(x));
+		}
+		
+	}
+	public navigatorPage() {
+		init();
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		navigator.setLocationRelativeTo(null);
