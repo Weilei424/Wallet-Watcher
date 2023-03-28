@@ -39,20 +39,20 @@ import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
-public class CardPursePage implements ActionListener {
+public class MiscPage implements ActionListener {
 
-	public JFrame mainCpPage;
+	public JFrame mainMiPage;
 	private JPanel mainCpPanel;
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
-	private JButton addNewCard;
+	private JButton addNewMisc;
 	private JButton export;
 	private JButton toMenu;
 	private JLabel title;
-	public JTable cardPurseTable;
-	public JScrollPane cardScroller;
+	public JTable miscTable;
+	public JScrollPane miscScroller;
 	private navigatorPage nav;
-	private CardPursePageForm cppf;
+	private MiscPageForm mpf;
 	private JPopupMenu popupMenu;
 	private JMenuItem updateMenuItem;
 	private JMenuItem deleteMenuItem;
@@ -63,34 +63,34 @@ public class CardPursePage implements ActionListener {
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
 	
-	public CardPursePage() {
+	public MiscPage() {
 
 		try {
-			cardPurseTable = DBUtil.query(User.getLoginAs(), "tag", "card");
+			miscTable = DBUtil.query(User.getLoginAs(), "tag", "misc");
 		} catch (SQLException er) {
 		}
-		cardScroller = new JScrollPane(cardPurseTable);
+		miscScroller = new JScrollPane(miscTable);
 
-		mainCpPage = new JFrame();
-		mainCpPage.setLocationRelativeTo(null);
+		mainMiPage = new JFrame();
+		mainMiPage.setLocationRelativeTo(null);
 		mainCpPanel = new JPanel();
 		
 
 		// Initialize main title on page, along with initializing button and layouts
-		title = new JLabel("User Cards");
+		title = new JLabel("Misc earning");
 		title.setSize(30, 30);
 		title.setFont(new Font("Tahoma", Font.BOLD, 60));
 
-		addNewCard = new JButton("Add New Card");
-		addNewCard.setSize(40, 40);
-		addNewCard.addActionListener(this);
+		addNewMisc = new JButton("Add New Misc Item");
+		addNewMisc.setSize(40, 40);
+		addNewMisc.addActionListener(this);
 
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				nav = new navigatorPage();
-				mainCpPage.dispose();
+				mainMiPage.dispose();
 			}
 		});
 
@@ -98,9 +98,9 @@ public class CardPursePage implements ActionListener {
 		// another button
 		mainCpPanel.setLayout(new GridLayout(1, 3));
 		mainCpPanel.add(title);
-		mainCpPanel.add(addNewCard);
+		mainCpPanel.add(addNewMisc);
 		mainCpPanel.add(toMenu);
-		mainCpPanel.add(cardScroller);
+		mainCpPanel.add(miscScroller);
 		mainCpPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete
@@ -110,16 +110,16 @@ public class CardPursePage implements ActionListener {
 				popupMenu.add(updateMenuItem);
 				popupMenu.add(deleteMenuItem);
 				
-				cardPurseTable.addMouseListener(new MouseAdapter() {
+				miscTable.addMouseListener(new MouseAdapter() {
 				    public void mousePressed(MouseEvent e) {
 				        // check if the mouse button pressed is the right button
 				        if (SwingUtilities.isRightMouseButton(e)) {
 				            // get the row index of the clicked cell
-				            int row = cardPurseTable.rowAtPoint(e.getPoint());
+				            int row = miscTable.rowAtPoint(e.getPoint());
 				            
 				            // if the row index is valid, select the row
-				            if (row >= 0 && row < cardPurseTable.getRowCount()) {
-				            	cardPurseTable.setRowSelectionInterval(row, row);
+				            if (row >= 0 && row < miscTable.getRowCount()) {
+				            	miscTable.setRowSelectionInterval(row, row);
 				            }
 				            
 				            // show the popup menu
@@ -130,15 +130,15 @@ public class CardPursePage implements ActionListener {
 
 				updateMenuItem.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
-				        int row = cardPurseTable.getSelectedRow();
-				        int ref = (int) cardPurseTable.getModel().getValueAt(row, 0);
+				        int row = miscTable.getSelectedRow();
+				        int ref = (int) miscTable.getModel().getValueAt(row, 0);
 				        
 				        if (row != -1) {
 				            // Get the value of the selected row's ID column
-				            int id = (int) cardPurseTable.getValueAt(row, 0);
+				            int id = (int) miscTable.getValueAt(row, 0);
 				            
 				            // Create a new dialog box to prompt the user for input
-				            dialog = new JDialog(mainCpPage, "Update Item", Dialog.ModalityType.APPLICATION_MODAL);
+				            dialog = new JDialog(mainMiPage, "Update Item", Dialog.ModalityType.APPLICATION_MODAL);
 				            dialog.setPreferredSize(new Dimension(500, 400));
 				            dialogPanel = new JPanel(new GridLayout(0, 1));
 				            JLabel label = new JLabel("Enter new value:");
@@ -169,16 +169,16 @@ public class CardPursePage implements ActionListener {
 				                    
 				                    if (option1Selected) {
 				                        selection = "item";
-				                        cardPurseTable.setValueAt(newValue, row, 1);
+				                        miscTable.setValueAt(newValue, row, 1);
 				                    } else if (option2Selected) {
 				                        selection = "note";
-				                        cardPurseTable.setValueAt(newValue, row, 2);
+				                        miscTable.setValueAt(newValue, row, 2);
 				                    } else if (option3Selected) {
 				                        selection = "amount";
 				                        BigDecimal bd = new BigDecimal(newValue);
 				            			bd = bd.setScale(2, RoundingMode.HALF_UP);
 				            			newValue = bd.doubleValue() + "";
-				                        cardPurseTable.setValueAt(newValue, row, 3);
+				                        miscTable.setValueAt(newValue, row, 3);
 				                    }
 				                    DBUtil.update(User.getLoginAs(), ref, selection, newValue);
 				                    // Close the dialog box
@@ -197,22 +197,22 @@ public class CardPursePage implements ActionListener {
 
 				deleteMenuItem.addActionListener(new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
-				        int row = cardPurseTable.getSelectedRow();
-				        int ref = (int) cardPurseTable.getModel().getValueAt(row, 0);
+				        int row = miscTable.getSelectedRow();
+				        int ref = (int) miscTable.getModel().getValueAt(row, 0);
 				        DBUtil.delete(User.getLoginAs(), ref);
 				        try
 						{ 
-				        	cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");
+				        	miscTable = DBUtil.query(User.getLoginAs(),"tag","misc");
 						}
 						catch(SQLException er)
 						{ 
 						}
-				        JScrollPane newScroller = new JScrollPane(cardPurseTable);
-				        mainCpPage.remove(cardScroller);
-				        cardScroller = newScroller;
-				        mainCpPage.add(cardScroller, BorderLayout.CENTER);
-				        mainCpPage.revalidate();
-				        mainCpPage.repaint();
+				        JScrollPane newScroller = new JScrollPane(miscTable);
+				        mainMiPage.remove(miscScroller);
+				        miscScroller = newScroller;
+				        mainMiPage.add(miscScroller, BorderLayout.CENTER);
+				        mainMiPage.revalidate();
+				        mainMiPage.repaint();
 				    }
 				});
 		
@@ -242,7 +242,7 @@ public class CardPursePage implements ActionListener {
 								String filename = filenameField.getText();
 								dialog.dispose();
 								File outputFile = new File("./Excel Sheets Exported/" + filename + ".xlsx");
-								Util.exportToExcel(cardPurseTable, outputFile);
+								Util.exportToExcel(miscTable, outputFile);
 								JOptionPane.showMessageDialog(null, "Export successfully to \"Excel Sheets Exported\" folder.");
 							}
 						});
@@ -260,22 +260,20 @@ public class CardPursePage implements ActionListener {
 
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it
-		mainCpPage.add(mainPanel, BorderLayout.NORTH);
-		// mainCpPage.add(cardInfo, BorderLayout.CENTER);
-		mainCpPage.add(cardScroller, BorderLayout.CENTER);
-		mainCpPage.add(export, BorderLayout.SOUTH);
-		mainCpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainCpPage.setTitle("Card Purse");
-		mainCpPage.setSize(1000, 1000);
-		// expensePageFrame.pack(); // when setSize on, then remove pack
-		mainCpPage.setVisible(true);
+		mainMiPage.add(mainPanel, BorderLayout.NORTH);
+		mainMiPage.add(miscScroller, BorderLayout.CENTER);
+		mainMiPage.add(export, BorderLayout.SOUTH);
+		mainMiPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainMiPage.setTitle("Misc earning");
+		mainMiPage.setSize(1000, 1000);
+		mainMiPage.setVisible(true);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		cppf = new CardPursePageForm();
-		mainCpPage.dispose();
+		mpf = new MiscPageForm();
+		mainMiPage.dispose();
 
 	}
 
@@ -284,7 +282,7 @@ public class CardPursePage implements ActionListener {
 	}
 
 	public JButton getAddNewCard() {
-		return addNewCard;
+		return addNewMisc;
 	}
 
 }

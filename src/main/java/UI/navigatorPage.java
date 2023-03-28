@@ -9,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,9 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import DB.DBUtil;
 import persistence.User;
-import persistence.LedgerList;
 
 public class navigatorPage {
 	JFrame navigator;
@@ -37,6 +34,7 @@ public class navigatorPage {
 	JButton cardPage;
 	JButton investmentPage;
 	JButton billPage;
+	JButton miscPage;
 	JButton settings; 
 	JButton logOut;
 	
@@ -55,9 +53,9 @@ public class navigatorPage {
 	CardPursePage cardPurse;
 	InvestmentPage investment;
 	BillPlannerPage bill;
+	MiscPage misc;
 	Settings settingsPage;
 	MainUi logIn;
-
 
 	ActionListener allDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -114,6 +112,13 @@ public class navigatorPage {
       }
 	};
 	
+	ActionListener miscPlannerDirect = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			misc = new MiscPage();
+			misc.mainMiPage.setVisible(true);
+      }
+	};
+	
 	ActionListener logOutDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			logIn = new MainUi();
@@ -134,28 +139,7 @@ public class navigatorPage {
 		
 	};
 
-	public void init()
-	{ 
-		
-		try
-		{ 
-			User.expenses=new LedgerList(LedgerList.getEntries(DBUtil.query(User.getLoginAs(),"tag","expense")));
-			User.earnings=new LedgerList(LedgerList.getEntries(DBUtil.query(User.getLoginAs(),"tag","earning")));
-			User.cards=new LedgerList(LedgerList.getEntries(DBUtil.query(User.getLoginAs(),"tag","card")));
-
-		}
-		catch(SQLException e)
-		{
-		}
-		LedgerList.sortByLocalDate(User.expenses);
-		for(int x=0; x<User.expenses.items.size(); x++)
-		{ 
-			System.out.print(User.expenses.items.get(x));
-		}
-		
-	}
 	public navigatorPage() {
-		init();
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		navigator.setLocationRelativeTo(null);
@@ -194,6 +178,9 @@ public class navigatorPage {
 		billPage = new JButton("Bill Planner");
 		billPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
+		miscPage = new JButton("Misc Earning");
+		miscPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
 		settings=new JButton("Settings");
 		settings.setBorder(new EmptyBorder(10,10,10,10));
 		
@@ -209,6 +196,7 @@ public class navigatorPage {
 		expensePage.addActionListener(expenseDirect);
 		investmentPage.addActionListener(investmentDirect);
 		billPage.addActionListener(billPlannerDirect);
+		miscPage.addActionListener(miscPlannerDirect);
 		settings.addActionListener(settingsDirect);
 		logOut.addActionListener(logOutDirect);
 
@@ -219,6 +207,7 @@ public class navigatorPage {
 		buttons.add(earningsPage);
 		buttons.add(investmentPage);
 		buttons.add(billPage);
+		buttons.add(miscPage);
 		buttons.add(settings);
 		buttons.add(logOut);
 

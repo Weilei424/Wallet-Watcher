@@ -16,7 +16,6 @@ public class Outputform {
 	public static final String STOCK = "stock";
 	public static final String MISC = "misc";
 	public static final String CARD = "card";
-	
 	public static final String ITEM = "item";
 	public static final String NOTE = "note";
 	public static final String TAG = "tag";
@@ -26,18 +25,8 @@ public class Outputform {
 	public static final String RECUR = "recur";
 	public static final String CATEGORY = "category";
 	public static final String DATE_START = "date_start";
-	
 	private static String user;
-	
 	public JTable form;
-	
-	
-	
-	
-	
-	
-	
-	
 		
 	public Outputform(String username) throws SQLException {
 		this.form=DBUtil.query(username, "tag", "all");
@@ -49,15 +38,8 @@ public class Outputform {
 		this.user=user;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	public void outputFile(String filename)throws IOException {
-		
+
+	public void outputFile(String filename)throws IOException {		
 		String Path = "./csvfile/"+filename;
 		TableModel model = this.form.getModel();
 		File file = new File(Path);
@@ -77,18 +59,7 @@ public class Outputform {
 	      }
 	      csvWriter.write("\n");
 	    }
-
-	    csvWriter.close();
-	  
-		
+	    csvWriter.close();		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

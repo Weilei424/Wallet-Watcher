@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import DB.DBUtil;
-import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -27,7 +26,6 @@ public class CardPursePageForm implements ActionListener{
 		public JTextField cardNameInput;
 		private JLabel cardCost;
 		public JTextField cardCostInput;
-		// JLabel expenseCategory; *No real code for this yet
 		private JLabel cardDescription;
 		public JTextField cardDescriptionInput;
 		private JLabel cardDate;
@@ -38,8 +36,6 @@ public class CardPursePageForm implements ActionListener{
 		private int framesCreated;
 
 		public CardPursePageForm() {
-
-			this.ledgerItem = ledgerItem;
 			this.framesCreated = 0;
 
 			cardPurseFrame = new JFrame();
@@ -56,7 +52,6 @@ public class CardPursePageForm implements ActionListener{
 			cardPurseForm.add(cardName);
 
 			cardNameInput = new JTextField();
-			// expenseNameInput.setBounds(200, 100, 100, 20);
 			cardNameInput.setSize(100, 20);
 			cardNameInput.setLocation(300, 100);
 			cardPurseForm.add(cardNameInput);
@@ -101,24 +96,23 @@ public class CardPursePageForm implements ActionListener{
 			cardPurseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			cardPurseFrame.setTitle("Add Cards");
 			cardPurseFrame.setSize(400, 300);
-			// expensePageFrame.pack(); // when setSize on, then remove pack
 			cardPurseFrame.setVisible(true);
 
 		}
 
-		public JTextField getExpenseNameInput() {
+		public JTextField getCardNameInput() {
 			return cardNameInput;
 		}
 
-		public JTextField getExpenseCostInput() {
+		public JTextField getCardCostInput() {
 			return cardCostInput;
 		}
 
-		public JTextField getExpenseDescriptionInput() {
+		public JTextField getCardDescriptionInput() {
 			return cardDescriptionInput;
 		}
 
-		public JTextField getExpenseDateInput() {
+		public JTextField getCardDateInput() {
 			return cardDateInput;
 		}
 
@@ -141,17 +135,10 @@ public class CardPursePageForm implements ActionListener{
 
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
 
-			
-			// String previousText = cpp.getLedgerInfo().getText();
-			// cpp.getLedgerInfo().append("\n");
-			// cpp.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
-			// cpp.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
-			// cpp.getLedgerInfo().append(this.getLedgerItem().getDate() + "\t" + "\t");
-			// cpp.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
-		//	cpp.setNumberOfExpenses(cpp.getNumberOfExpenses() + 1);
+		
 
 			try {
-				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","expense");
+				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");
 				cpp.mainCpPage.dispose();
 				cpp = new CardPursePage();
 				cpp.mainCpPage.setVisible(true);
@@ -159,23 +146,7 @@ public class CardPursePageForm implements ActionListener{
 				} catch(SQLException er) {
 					
 				}
-			
-//			if (cpp.isRemoved() == true) {
-//				cpp.getLedgerInfo().setText(null);
-//				cpp.getLedgerInfo().append("Name of Expense" + "\t");
-//				cpp.getLedgerInfo().append("Cost of Expense" + "\t");
-//				cpp.getLedgerInfo().append("Date Due" + "\t");
-//				cpp.getLedgerInfo().append("Special Notes");
-//				cpp.setRemoved(false);
-//			}
-
 			this.framesCreated++;
-
-//			System.out.println(this.ledgerItem.getItemName());
-//			System.out.println(this.ledgerItem.getAmount());
-//			System.out.println(this.ledgerItem.getNote());
-			// System.out.println(this.ledgerItem.getDate());
-
 		}
 
 		public LedgerItem getLedgerItem() {
@@ -185,8 +156,4 @@ public class CardPursePageForm implements ActionListener{
 		public static void main(String[] args) {
 			new CardPursePageForm();
 		}
-
-	
-
-	
 }
