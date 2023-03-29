@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import DB.DBUtil;
@@ -37,7 +39,16 @@ public class ExpensePageForm implements ActionListener {
 	private ExpenseInputData expData;
 	private ExpensePage ep;
 	private int framesCreated;
-
+	private ButtonGroup radioGroup;
+	private JRadioButton bills;
+	private JRadioButton food;
+	private JRadioButton commute;
+	private JRadioButton entertainment;
+	private JRadioButton financial;
+	private JRadioButton other;
+	private JTextField othertext;
+	private String category;
+	
 	public ExpensePageForm() {
 
 		this.framesCreated = 0;
@@ -45,7 +56,53 @@ public class ExpensePageForm implements ActionListener {
 		expensePageFrame = new JFrame();
 		expensePageFrame.setLocationRelativeTo(null);
 		expensePageForm = new JPanel();
-
+		radioGroup = new ButtonGroup();
+		othertext = new JTextField(20);
+		othertext.setPreferredSize(null);
+		
+		bills = new JRadioButton("Bills");
+		bills.setBorderPainted(true);
+		food = new JRadioButton("Food");
+		food.setBorderPainted(true);
+		commute = new JRadioButton("Commute");
+		commute.setBorderPainted(true);
+		entertainment = new JRadioButton("Entertainment");
+		entertainment.setBorderPainted(true);
+		financial = new JRadioButton("Financial");
+		financial.setBorderPainted(true);
+		other = new JRadioButton("Ohter:");
+		
+		
+		radioGroup.add(bills);
+		radioGroup.add(food);
+		radioGroup.add(commute);
+		radioGroup.add(entertainment);
+		radioGroup.add(financial);
+		radioGroup.add(other);
+		category = "default";
+		other.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (other.isSelected()) {
+                    othertext.setEnabled(true);
+                    othertext.requestFocus();
+                    category = othertext.getText();
+                } else if (bills.isSelected()) {
+                	category = "Bills";
+                } else if (food.isSelected()) {
+                	category = "Food";
+                } else if (commute.isSelected()) {
+                	category = "Commute";
+                } else if (entertainment.isSelected()) {
+                	category = "Entertainment";
+                } else if (financial.isSelected()) {
+                	category = "Financial";
+                } else {
+                    othertext.setEnabled(false);
+                }
+            }
+        });
+		
 		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		expensePageForm.setLayout(new GridLayout(5, 1));
 		expensePageForm.setBackground(Color.cyan);
@@ -91,6 +148,14 @@ public class ExpensePageForm implements ActionListener {
 		expenseDateInput.setLocation(200, 400);
 		expensePageForm.add(expenseDateInput);
 
+		expensePageForm.add(bills);
+		expensePageForm.add(food);
+		expensePageForm.add(commute);
+		expensePageForm.add(entertainment);
+		expensePageForm.add(financial);
+		expensePageForm.add(other);
+		expensePageForm.add(othertext);
+		
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -100,7 +165,7 @@ public class ExpensePageForm implements ActionListener {
 		expensePageFrame.add(expensePageForm, BorderLayout.CENTER);
 		expensePageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		expensePageFrame.setTitle("Add Expense");
-		expensePageFrame.setSize(400, 300);
+		expensePageFrame.setSize(600, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		expensePageFrame.setVisible(true);
 
@@ -138,16 +203,11 @@ public class ExpensePageForm implements ActionListener {
 		double expCost = Double.parseDouble(expenseCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		this.ledgerItem.setCategory(category);
 
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
 		ep.setTempLedgerItem(this.ledgerItem);
-		// String previousText = ep.getLedgerInfo().getText();
-		// ep.getLedgerInfo().append("\n");
-		// ep.getLedgerInfo().append(this.getLedgerItem().getItemName() + "\t" + "\t");
-		// ep.getLedgerInfo().append(this.getLedgerItem().getAmount() + "\t" + "\t");
-		// ep.getLedgerInfo().append(this.getLedgerItem().getDate() + "\t" + "\t");
-		// ep.getLedgerInfo().append(this.getLedgerItem().getNote() + "\t");
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
 		try {
@@ -158,25 +218,8 @@ public class ExpensePageForm implements ActionListener {
 			ep.getAddExpense().setVisible(false);
 			expensePageFrame.dispose();
 			} catch(SQLException er) {
-				
 			}
-		
-//		if (ep.isRemoved() == true) {
-//			ep.getLedgerInfo().setText(null);
-//			ep.getLedgerInfo().append("Name of Expense" + "\t");
-//			ep.getLedgerInfo().append("Cost of Expense" + "\t");
-//			ep.getLedgerInfo().append("Date Due" + "\t");
-//			ep.getLedgerInfo().append("Special Notes");
-//			ep.setRemoved(false);
-//		}
-
 		this.framesCreated++;
-
-//		System.out.println(this.ledgerItem.getItemName());
-//		System.out.println(this.ledgerItem.getAmount());
-//		System.out.println(this.ledgerItem.getNote());
-		// System.out.println(this.ledgerItem.getDate());
-
 	}
 
 	public LedgerItem getLedgerItem() {
