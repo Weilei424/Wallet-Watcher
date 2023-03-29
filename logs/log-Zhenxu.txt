@@ -253,4 +253,34 @@ Mar 25th 01:29:20
 ===============================================
 Mar 25th 01:58:03
 	fixed bug for onclick delete for UI.
+===============================================
+Mar 25th 15:16:32
+	Removed stub db from Card class, and split
+	nested classes. Also removed unused variables.
+	Updated tester file for Card.
+	
+	Changed the button of 'remove all' into
+	'export' in CardPursePage.
+	
+	Meeting with Mustafa, about application
+	performance improvement ideas. Reset the 
+	cloud DB.
+===============================================
+Mar 25th 23:01:27
+	Added Apache POI api to build.gradle.
+	Added .xlsx to .gitignore.
+	
+	Updated JTable display column name in DBUtil.
+	
+	Added exportToExcel() method in Util class.
+	
+	Added  export to excel button in CardPursePage.
+===============================================
+Mar 26th 00:17:24
+	Added MiscPage and MiscPageForm
+===============================================
+Mar 26th 16:50:03
+	Added radio selection for category for:
+	ExpensePageForm class, EarningPageForm class
+	MiscPageForm class.
 	
