@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import UI.ErrorPage;
 import businessLogic.Util;
 import persistence.Investment;
 import persistence.LedgerItem;
@@ -114,6 +115,7 @@ public final class DBUtil {
 				u.setRef(rs.getInt("ref"));
 			newTable.execute("CREATE TABLE " + u.getUserName() + createTable);
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from createUser()");
 		} finally {
 			if (rs != null) 
@@ -143,6 +145,7 @@ public final class DBUtil {
 				}
 			}
 		} catch (Exception e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from checkUser()");
 		} finally {
 			return flag;
@@ -171,6 +174,7 @@ public final class DBUtil {
 				}
 			}
 		} catch (Exception e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from validateUser()");
 		} finally {
 			return result;
@@ -198,6 +202,7 @@ public final class DBUtil {
 				}
 			}
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from changePW()");
 		} finally {
 			return flag;
@@ -234,6 +239,7 @@ public final class DBUtil {
 				flag = true;
 			}
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from deleteUser()");
 		}
 		
@@ -285,6 +291,7 @@ public final class DBUtil {
 			p.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from insert()");
 		}
 			
@@ -312,6 +319,7 @@ public final class DBUtil {
 			st.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from delete()");
 		}
 		
@@ -336,6 +344,7 @@ public final class DBUtil {
 		}
 		
 		catch (SQLException e) {
+			new ErrorPage("Error executing query", e);
 	        throw new SQLException("Error executing query: " + e.getMessage(), e);
 	    } finally {
 	        if (rs != null) 
@@ -380,6 +389,7 @@ public final class DBUtil {
 	            tableModel.addRow(new Object[]{ref, item, note, amount, recur, category, date});
 	        }
 	    } catch (SQLException e) {
+			new ErrorPage("Error executing query", e);
 	        throw new SQLException("Error executing query: " + e.getMessage(), e);
 	    } finally {
 	        if (rs != null) {
@@ -437,6 +447,7 @@ public final class DBUtil {
 	            tableModel.addRow(new Object[]{ref, item, note, amount, recur, category, date});
         	}
 		} catch (SQLException e) {
+			new ErrorPage("Error executing month query", e);
 			throw new SQLException("Error executing month query: " + e.getMessage(), e);
 		} finally {
 			if (rs != null) {
@@ -483,6 +494,7 @@ public final class DBUtil {
 			st.executeUpdate();
 			flag = true;
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from insert()");
 		}
 		
@@ -589,6 +601,7 @@ public final class DBUtil {
 			while (rs.next()) 
 				max = rs.getInt("COUNT(*)");
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from getMaxRow()");
 		}
 		
@@ -615,6 +628,7 @@ public final class DBUtil {
 			while (rs.next()) 
 				flag = rs.getInt(getResult);
 		} catch (SQLException e) {
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from refExist()");
 		}
 		
@@ -658,7 +672,8 @@ public final class DBUtil {
 				statement.execute(query);
 			}
 			catch(SQLException e)
-			{ 
+			{
+				new ErrorPage(e);
 				System.out.println(e.getMessage() + " from combineUserTables()");
 			}
 	}
@@ -675,7 +690,8 @@ public final class DBUtil {
 			DBUtil.createUser(user);
 		}
 		catch(SQLException e)
-		{ 
+		{
+			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from combineUsers()");
 		}
 	}
