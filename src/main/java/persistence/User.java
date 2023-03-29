@@ -1,6 +1,7 @@
 package persistence;
 
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,6 +9,11 @@ import businessLogic.Util;
 
 public final class User {
 	private static String loginAs;
+	private static BudgetData currBudget; 
+	public static LedgerList earnings; 
+	public static LedgerList expenses; 
+	public static LedgerList cards; 
+	
 	
 	private String firstName;
 	private String lastName;
@@ -80,12 +86,21 @@ public final class User {
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
-
+	
+	public static void setBudget(BudgetData budget)
+	{ 
+		currBudget=budget;
+	}
+	public static BudgetData getBudget()
+	{ 
+		return currBudget;
+	}
+	
 	private String generateSalt() {
 		byte[] array = new byte[7]; 
 	   	new Random().nextBytes(array);
 	    String salt = new String(array, Charset.forName("UTF-8"));
-
+	    
 		return salt;
 	}
 }
