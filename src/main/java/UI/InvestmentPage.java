@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -32,6 +33,7 @@ import javax.swing.SwingUtilities;
 import java.awt.Dialog;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -43,7 +45,7 @@ public class InvestmentPage implements ActionListener {
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
 	private JButton addInvestment;
-	private JButton removeInvestment;
+	private JButton export;
 	private JButton toMenu;
 	private JLabel title;
 	//private JTextArea ledgerInfo;
@@ -220,6 +222,41 @@ public class InvestmentPage implements ActionListener {
 		    }
 		});
 		
+		// export file
+		export = new JButton(new AbstractAction("Export current page as Excel file") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTextField filenameField = new JTextField();
+				filenameField.setColumns(20);
+				filenameField.setPreferredSize(new Dimension(200, filenameField.getPreferredSize().height));
+				JButton submitButton = new JButton("Submit");
+				JPanel panel = new JPanel();
+				panel.add(new JLabel("Enter filename: "));
+				panel.add(filenameField);
+				panel.add(submitButton);
+				JDialog dialog = new JDialog();
+				dialog.setPreferredSize(new Dimension(300, 200));
+				dialog.add(panel);
+				dialog.pack();
+				dialog.setLocationRelativeTo(null);
+				dialog.setVisible(true);
+
+				submitButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String filename = filenameField.getText();
+						dialog.dispose();
+						File outputFile = new File("./Excel Sheets Exported/" + filename + ".xlsx");
+						Util.exportToExcel(investmentTable, outputFile);
+						JOptionPane.showMessageDialog(null, "Export successfully to \"Excel Sheets Exported\" folder.");
+					}
+				});
+			}
+		});
+		export.setForeground(Color.green);
+		export.setPreferredSize(new Dimension(150, 50));
+		
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -230,8 +267,7 @@ public class InvestmentPage implements ActionListener {
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it
 		mainIvFrame.add(mainPanel, BorderLayout.NORTH);
-		//mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
-		//mainEpFrame.add(removeInvestment, BorderLayout.SOUTH);
+		mainIvFrame.add(export, BorderLayout.SOUTH);
 		mainIvFrame.add(investmentScroller, BorderLayout.CENTER);
 		mainIvFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainIvFrame.setTitle("Investments");
