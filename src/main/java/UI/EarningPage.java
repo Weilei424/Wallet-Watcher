@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -31,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -42,10 +44,10 @@ public class EarningPage implements ActionListener {
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
 	private JButton addEarning;
-	private JButton removeEarning;
+	private JButton export;
 	private JButton toMenu;
 	private JLabel title;
-	//private JTextArea ledgerInfo;
+	// private JTextArea ledgerInfo;
 	private EarningPageForm epForm;
 	private LedgerItem tempLedgerItem;
 	public JTable earningTable;
@@ -64,17 +66,13 @@ public class EarningPage implements ActionListener {
 	private ButtonGroup buttonGroup;
 
 	public EarningPage() {
-		
-		try
-		{ 
-	       	earningTable = DBUtil.query(User.getLoginAs(),"tag","earning");
-		}
-		catch(SQLException er)
-		{ 
+
+		try {
+			earningTable = DBUtil.query(User.getLoginAs(), "tag", "earning");
+		} catch (SQLException er) {
 		}
 		earningScroller = new JScrollPane(earningTable);
-		
-		
+
 		mainEpFrame = new JFrame();
 		mainEpFrame.setLocationRelativeTo(null);
 		mainEpPanel = new JPanel();
@@ -88,9 +86,9 @@ public class EarningPage implements ActionListener {
 		addEarning = new JButton("Add New Earnings");
 		addEarning.setSize(40, 40);
 		addEarning.addActionListener(this);
-		
+
 		toMenu = new JButton(new AbstractAction("Main Menu") {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				navigation = new NavigatorPage();
@@ -106,19 +104,39 @@ public class EarningPage implements ActionListener {
 		mainEpPanel.add(toMenu);
 		mainEpPanel.setBackground(Color.green);
 
-		removeEarning = new JButton(new AbstractAction("Remove All Expenses") {
+		export = new JButton(new AbstractAction("Export current page as Excel file") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (numberOfEarnings > 0) {
-					
-				} else {
-					JOptionPane.showMessageDialog(mainEpFrame, "You need to input expenses first!");
-				}
-			}
+				JTextField filenameField = new JTextField();
+				filenameField.setColumns(20);
+				filenameField.setPreferredSize(new Dimension(200, filenameField.getPreferredSize().height));
+				JButton submitButton = new JButton("Submit");
+				JPanel panel = new JPanel();
+				panel.add(new JLabel("Enter filename: "));
+				panel.add(filenameField);
+				panel.add(submitButton);
+				JDialog dialog = new JDialog();
+				dialog.setPreferredSize(new Dimension(300, 200));
+				dialog.add(panel);
+				dialog.pack();
+				dialog.setLocationRelativeTo(null);
+				dialog.setVisible(true);
 
+				submitButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String filename = filenameField.getText();
+						dialog.dispose();
+						File outputFile = new File("./Excel Sheets Exported/" + filename + ".xlsx");
+						Util.exportToExcel(earningTable, outputFile);
+						JOptionPane.showMessageDialog(null, "Export successfully to \"Excel Sheets Exported\" folder.");
+					}
+				});
+			}
 		});
-		removeEarning.setForeground(Color.green);
+		export.setForeground(Color.green);
+		export.setPreferredSize(new Dimension(150, 50));
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
@@ -128,123 +146,120 @@ public class EarningPage implements ActionListener {
 		mainPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete
-				this.popupMenu = new JPopupMenu();
-				this.updateMenuItem = new JMenuItem("Update");
-				this.deleteMenuItem = new JMenuItem("Delete");
-				popupMenu.add(updateMenuItem);
-				popupMenu.add(deleteMenuItem);
-				
-				earningTable.addMouseListener(new MouseAdapter() {
-				    public void mousePressed(MouseEvent e) {
-				        // check if the mouse button pressed is the right button
-				        if (SwingUtilities.isRightMouseButton(e)) {
-				            // get the row index of the clicked cell
-				            int row = earningTable.rowAtPoint(e.getPoint());
-				            
-				            // if the row index is valid, select the row
-				            if (row >= 0 && row < earningTable.getRowCount()) {
-				            	earningTable.setRowSelectionInterval(row, row);
-				            }
-				            
-				            // show the popup menu
-				            popupMenu.show(e.getComponent(), e.getX(), e.getY());
-				        }
-				    }
-				});
+		this.popupMenu = new JPopupMenu();
+		this.updateMenuItem = new JMenuItem("Update");
+		this.deleteMenuItem = new JMenuItem("Delete");
+		popupMenu.add(updateMenuItem);
+		popupMenu.add(deleteMenuItem);
 
-				updateMenuItem.addActionListener(new ActionListener() {
-				    public void actionPerformed(ActionEvent e) {
-				        int row = earningTable.getSelectedRow();
-				        int ref = (int) earningTable.getModel().getValueAt(row, 0);
-				        
-				        if (row != -1) {
-				            // Get the value of the selected row's ID column
-				            int id = (int) earningTable.getValueAt(row, 0);
-				            
-				            // Create a new dialog box to prompt the user for input
-				            dialog = new JDialog(mainEpFrame, "Update Item", Dialog.ModalityType.APPLICATION_MODAL);
-				            dialog.setPreferredSize(new Dimension(500, 400));
-				            dialogPanel = new JPanel(new GridLayout(0, 1));
-				            JLabel label = new JLabel("Enter new value:");
-				            JTextField textField = new JTextField();
-				            item = new JRadioButton("Item name");
-				            note = new JRadioButton("Note");
-				            amount = new JRadioButton("Amount");
-				            buttonGroup = new ButtonGroup();
-				            buttonGroup.add(item);
-				            buttonGroup.add(note);
-				            buttonGroup.add(amount);
-				            dialogPanel.add(label);
-				            dialogPanel.add(textField);
-				            dialogPanel.add(item);
-				            dialogPanel.add(note);
-				            dialogPanel.add(amount);
-				            
-				            // Create a "Submit" button to close the dialog box
-				            JButton submitButton = new JButton("Submit");
-				            submitButton.addActionListener(new ActionListener() {
-				                public void actionPerformed(ActionEvent e) {
-				                    // Get the value entered by the user
-				                	String selection = "";
-				                    String newValue = textField.getText();
-				                    boolean option1Selected = item.isSelected();
-				                    boolean option2Selected = note.isSelected();
-				                    boolean option3Selected = amount.isSelected();
-				                    
-				                    if (option1Selected) {
-				                        selection = "item";
-				                        earningTable.setValueAt(newValue, row, 1);
-				                    } else if (option2Selected) {
-				                        selection = "note";
-				                        earningTable.setValueAt(newValue, row, 2);
-				                    } else if (option3Selected) {
-				                        selection = "amount";
-				                        BigDecimal bd = new BigDecimal(newValue);
-				            			bd = bd.setScale(2, RoundingMode.HALF_UP);
-				            			newValue = bd.doubleValue() + "";
-				            			earningTable.setValueAt(newValue, row, 3);
-				                    }
-				                    DBUtil.update(User.getLoginAs(), ref, selection, newValue);
-				                    // Close the dialog box
-				                    dialog.dispose();
-				                }
-				            });
-				            dialogPanel.add(submitButton);
-				            
-				            dialog.add(dialogPanel);
-				            dialog.pack();
-				            dialog.setLocationRelativeTo(null);
-				            dialog.setVisible(true);
-				        }
-				    }
-				});
+		earningTable.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				// check if the mouse button pressed is the right button
+				if (SwingUtilities.isRightMouseButton(e)) {
+					// get the row index of the clicked cell
+					int row = earningTable.rowAtPoint(e.getPoint());
 
-				deleteMenuItem.addActionListener(new ActionListener() {
-				    public void actionPerformed(ActionEvent e) {
-				        int row = earningTable.getSelectedRow();
-				        int ref = (int) earningTable.getModel().getValueAt(row, 0);
-				        DBUtil.delete(User.getLoginAs(), ref);
-				        try
-						{ 
-				        	earningTable = DBUtil.query(User.getLoginAs(),"tag","earning");
+					// if the row index is valid, select the row
+					if (row >= 0 && row < earningTable.getRowCount()) {
+						earningTable.setRowSelectionInterval(row, row);
+					}
+
+					// show the popup menu
+					popupMenu.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
+		});
+
+		updateMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = earningTable.getSelectedRow();
+				int ref = (int) earningTable.getModel().getValueAt(row, 0);
+
+				if (row != -1) {
+					// Get the value of the selected row's ID column
+					int id = (int) earningTable.getValueAt(row, 0);
+
+					// Create a new dialog box to prompt the user for input
+					dialog = new JDialog(mainEpFrame, "Update Item", Dialog.ModalityType.APPLICATION_MODAL);
+					dialog.setPreferredSize(new Dimension(500, 400));
+					dialogPanel = new JPanel(new GridLayout(0, 1));
+					JLabel label = new JLabel("Enter new value:");
+					JTextField textField = new JTextField();
+					item = new JRadioButton("Item name");
+					note = new JRadioButton("Note");
+					amount = new JRadioButton("Amount");
+					buttonGroup = new ButtonGroup();
+					buttonGroup.add(item);
+					buttonGroup.add(note);
+					buttonGroup.add(amount);
+					dialogPanel.add(label);
+					dialogPanel.add(textField);
+					dialogPanel.add(item);
+					dialogPanel.add(note);
+					dialogPanel.add(amount);
+
+					// Create a "Submit" button to close the dialog box
+					JButton submitButton = new JButton("Submit");
+					submitButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							// Get the value entered by the user
+							String selection = "";
+							String newValue = textField.getText();
+							boolean option1Selected = item.isSelected();
+							boolean option2Selected = note.isSelected();
+							boolean option3Selected = amount.isSelected();
+
+							if (option1Selected) {
+								selection = "item";
+								earningTable.setValueAt(newValue, row, 1);
+							} else if (option2Selected) {
+								selection = "note";
+								earningTable.setValueAt(newValue, row, 2);
+							} else if (option3Selected) {
+								selection = "amount";
+								BigDecimal bd = new BigDecimal(newValue);
+								bd = bd.setScale(2, RoundingMode.HALF_UP);
+								newValue = bd.doubleValue() + "";
+								earningTable.setValueAt(newValue, row, 3);
+							}
+							DBUtil.update(User.getLoginAs(), ref, selection, newValue);
+							// Close the dialog box
+							dialog.dispose();
 						}
-						catch(SQLException er)
-						{ 
-						}
-				        JScrollPane newScroller = new JScrollPane(earningTable);
-				        mainEpFrame.remove(earningScroller);
-				        earningScroller = newScroller;
-				        mainEpFrame.add(earningScroller, BorderLayout.CENTER);
-				        mainEpFrame.revalidate();
-				        mainEpFrame.repaint();
-				    }
-				});
-		
+					});
+					dialogPanel.add(submitButton);
+
+					dialog.add(dialogPanel);
+					dialog.pack();
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				}
+			}
+		});
+
+		deleteMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = earningTable.getSelectedRow();
+				int ref = (int) earningTable.getModel().getValueAt(row, 0);
+				DBUtil.delete(User.getLoginAs(), ref);
+				try {
+					earningTable = DBUtil.query(User.getLoginAs(), "tag", "earning");
+				} catch (SQLException er) {
+				}
+				JScrollPane newScroller = new JScrollPane(earningTable);
+				mainEpFrame.remove(earningScroller);
+				earningScroller = newScroller;
+				mainEpFrame.add(earningScroller, BorderLayout.CENTER);
+				mainEpFrame.revalidate();
+				mainEpFrame.repaint();
+			}
+		});
+
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it
 		mainEpFrame.add(mainPanel, BorderLayout.NORTH);
-		//mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
-		mainEpFrame.add(removeEarning, BorderLayout.SOUTH);
+		// mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
+		mainEpFrame.add(export, BorderLayout.SOUTH);
 		mainEpFrame.add(earningScroller, BorderLayout.CENTER);
 		mainEpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainEpFrame.setTitle("Earnings");
