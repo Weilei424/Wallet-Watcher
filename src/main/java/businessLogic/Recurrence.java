@@ -3,6 +3,7 @@ package businessLogic;
 import java.util.ArrayList;
 import java.util.Date;
 
+import UI.ErrorPage;
 import exceptions.InvalidDateException;
 import persistence.LedgerItem;
 
@@ -24,6 +25,7 @@ public class Recurrence {
 			if (flag)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
+			new ErrorPage("Invalid date.", e);
 			System.out.println("invalid date");
 		}
 		

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+
+import UI.ErrorPage;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -58,6 +60,7 @@ public final class Util {
 			}
 			System.out.println("Table data exported to Excel file successfully.");
 		} catch (IOException e) {
+			new ErrorPage(e);
 			e.printStackTrace();
 		}
 	}
@@ -74,6 +77,7 @@ public final class Util {
 			if (ChronoUnit.DAYS.between(beginAt, endAt) < 0)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
+			new ErrorPage("Invalid date.", e);
 			System.out.println("invalid date");
 		}
 		int year = endAt.getYear() - beginAt.getYear();
@@ -94,6 +98,7 @@ public final class Util {
 			if (ChronoUnit.DAYS.between(beginAt, endAt) < 0)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
+			new ErrorPage("Invalid date.", e);
 			System.out.println("invalid date");
 		}
 		int year = endAt.getYear() - beginAt.getYear();
@@ -113,6 +118,7 @@ public final class Util {
 			if (ChronoUnit.DAYS.between(beginAt, endAt) < 0)
 				throw new InvalidDateException();
 		} catch (IllegalArgumentException e) {
+			new ErrorPage("Invalid date.", e);
 			System.out.println("invalid date");
 		}
 		int biweeks = (Util.getWeek(endAt) - Util.getWeek(beginAt) + calcYear(beginAt, endAt) * 52) / 2;
