@@ -71,12 +71,13 @@ public class ErrorPage implements ActionListener {
         if (!isStackTraceShown) {
             stackTraceFrame.setVisible(true);
             showStackTrace.setText("Collapse");
+            errorPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
         } else {
             stackTraceFrame.setVisible(false);
             showStackTrace.setText("Expand");
+            errorPage.pack();
         }
         isStackTraceShown = !isStackTraceShown;
-        errorPage.pack();
     }
 
 }
