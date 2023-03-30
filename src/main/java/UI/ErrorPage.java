@@ -18,6 +18,8 @@ public class ErrorPage implements ActionListener {
     private boolean isStackTraceShown = false;
 
     public ErrorPage(String error, Exception exception) {
+        if (GraphicsEnvironment.isHeadless()) return;
+
         errorPage = new JFrame();
         errorPage.setLocationRelativeTo(null);
 
