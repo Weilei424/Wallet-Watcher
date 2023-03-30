@@ -274,7 +274,7 @@ Mar 25th 23:01:27
 	
 	Added exportToExcel() method in Util class.
 	
-	Added  export to excel button in CardPursePage.
+	Added export to excel button in CardPursePage.
 ===============================================
 Mar 26th 00:17:24
 	Added MiscPage and MiscPageForm
@@ -282,9 +282,22 @@ Mar 26th 00:17:24
 Mar 26th 16:50:03
 	Added radio selection for category for:
 	ExpensePageForm class, EarningPageForm class
+<<<<<<< Upstream, based on origin/main
 <<<<<<< HEAD
 	MiscPageForm class.
 =======
 	MiscPageForm class.
 	
 >>>>>>> refs/remotes/origin/navfixed
+=======
+	MiscPageForm class.
+===============================================
+Mar 29th 11:30:00
+	Meeting with Mustafa and Brahmjot.
+===============================================
+Mar 30th 16:50:04
+	Added export to excel button in BillPlannerPage class,
+	DisplayAllPage class, EarningPage class,
+	ExpensePage class, MiscPage class.
+	
+>>>>>>> 919ce97 updated log
