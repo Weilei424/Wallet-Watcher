@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -22,6 +23,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -32,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -42,7 +45,7 @@ public class BillPlannerPage implements ActionListener {
 	private JPanel mainPanel; // main panel to hold all other panels in the expense page form
 	// JPanel ledgerPanel;
 	private JButton addNewBill;
-	private JButton removeBill;
+	private JButton export;
 	private JLabel title;
 	private JButton toMenu;
 //	private JTextArea billInfo;
@@ -214,32 +217,41 @@ public class BillPlannerPage implements ActionListener {
 				        mainBpPage.repaint();
 				    }
 				});
-		
-		// This is the text area which shows all of the "ledger" information
 
-//		billInfo = new JTextArea();
-//		billInfo.append("Bill Name" + "\t" + "\t");
-//		billInfo.append("Bill Charge" + "\t" + "\t");
-//		billInfo.append("Date Due" + "\t" + "\t");
-//		billInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-//		// Disables user from being able to add any text into area as it is only for
-//		// displaying the ledger
-//		billInfo.setEditable(false);
+				//export file
+				export = new JButton(new AbstractAction("Export current page as Excel file") {
 
-		removeBill = new JButton(new AbstractAction("Remove All Bills") {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JTextField filenameField = new JTextField();
+						filenameField.setColumns(20);
+						filenameField.setPreferredSize(new Dimension(200, filenameField.getPreferredSize().height));
+						JButton submitButton = new JButton("Submit");
+						JPanel panel = new JPanel();
+						panel.add(new JLabel("Enter filename: "));
+						panel.add(filenameField);
+						panel.add(submitButton);
+						JDialog dialog = new JDialog();
+						dialog.setPreferredSize(new Dimension(300, 200));
+						dialog.add(panel);
+						dialog.pack();
+						dialog.setLocationRelativeTo(null);
+						dialog.setVisible(true);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-//				billInfo.setText(null);
-//				billInfo.append("Bill Name" + "\t");
-//				billInfo.append("Bill Charge" + "\t");
-//				billInfo.append("Date Due" + "\t" + "\t" + "\t");
-
-			}
-
-		});
-		removeBill.setForeground(Color.green);
+						submitButton.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								String filename = filenameField.getText();
+								dialog.dispose();
+								File outputFile = new File("./Excel Sheets Exported/" + filename + ".xlsx");
+								Util.exportToExcel(billTable, outputFile);
+								JOptionPane.showMessageDialog(null, "Export successfully to \"Excel Sheets Exported\" folder.");
+							}
+						});
+					}
+				});
+		export.setForeground(Color.green);
+		export.setPreferredSize(new Dimension(150, 50));
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
@@ -252,7 +264,7 @@ public class BillPlannerPage implements ActionListener {
 		// enclosed in it
 		mainBpPage.add(mainPanel, BorderLayout.NORTH);
 		// mainBpPage.add(billInfo, BorderLayout.CENTER);
-		mainBpPage.add(removeBill, BorderLayout.SOUTH);
+		mainBpPage.add(export, BorderLayout.SOUTH);
 		mainBpPage.add(billScroller, BorderLayout.CENTER);
 		mainBpPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainBpPage.setTitle("Upcoming Bills");
