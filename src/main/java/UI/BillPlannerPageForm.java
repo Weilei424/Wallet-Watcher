@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import DB.DBUtil;
@@ -35,6 +37,13 @@ public class BillPlannerPageForm implements ActionListener {
 	private LedgerItem ledgerItem;
 	private InvestmentPage ep;
 	private int framesCreated;
+	private ButtonGroup radioGroup;
+	private JRadioButton utility;
+	private JRadioButton creditCard;
+	private JRadioButton loan;
+	private JRadioButton other;
+	private JTextField othertext;
+	private String category;
 
 	public BillPlannerPageForm() {
 		this.framesCreated = 0;
@@ -42,7 +51,42 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerPageFrame = new JFrame();
 		billPlannerPageFrame.setLocationRelativeTo(null);
 		billPlannerPageForm = new JPanel();
+		radioGroup = new ButtonGroup();
+		othertext = new JTextField(20);
+		othertext.setPreferredSize(null);
 
+		utility = new JRadioButton("Utility");
+		utility.setBorderPainted(true);
+		creditCard = new JRadioButton("Credit Card");
+		creditCard.setBorderPainted(true);
+		loan = new JRadioButton("Loan");
+		loan.setBorderPainted(true);
+		other = new JRadioButton("Other:");
+		
+		radioGroup.add(utility);
+		radioGroup.add(creditCard);
+		radioGroup.add(loan);
+		radioGroup.add(other);
+		category = "default";
+		other.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (other.isSelected()) {
+                    othertext.setEnabled(true);
+                    othertext.requestFocus();
+                    category = othertext.getText();
+                } else if (utility.isSelected()) {
+                	category = "Utility";
+                } else if (creditCard.isSelected()) {
+                	category = "Credit Card";
+                } else if (loan.isSelected()) {
+                	category = "Loan";
+                } else {
+                    othertext.setEnabled(false);
+                }
+            }
+        });
+		
 		billPlannerPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		billPlannerPageForm.setLayout(new GridLayout(5, 1));
 		billPlannerPageForm.setBackground(Color.cyan);
@@ -87,6 +131,12 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerDateInput.setLocation(200, 400);
 		billPlannerPageForm.add(billPlannerDateInput);
 
+		billPlannerPageForm.add(utility);
+		billPlannerPageForm.add(creditCard);
+		billPlannerPageForm.add(loan);
+		billPlannerPageForm.add(other);
+		billPlannerPageForm.add(othertext);
+		
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -96,7 +146,7 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerPageFrame.add(billPlannerPageForm, BorderLayout.CENTER);
 		billPlannerPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		billPlannerPageFrame.setTitle("Add Bill");
-		billPlannerPageFrame.setSize(400, 300);
+		billPlannerPageFrame.setSize(600, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		billPlannerPageFrame.setVisible(true);
 
@@ -134,7 +184,8 @@ public class BillPlannerPageForm implements ActionListener {
 		double expCost = Double.parseDouble(billPlannerCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-
+		this.ledgerItem.setCategory(category);
+		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
 		ep.setTempLedgerItem(this.ledgerItem);
@@ -158,7 +209,7 @@ public class BillPlannerPageForm implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new InvestmentPageForm();
+		new BillPlannerPageForm();
 	}
 
 }

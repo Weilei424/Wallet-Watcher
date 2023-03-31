@@ -67,7 +67,7 @@ public class EarningPageForm implements ActionListener {
 		sell.setBorderPainted(true);
 		unexpected = new JRadioButton("Unexpected");
 		unexpected.setBorderPainted(true);
-		other = new JRadioButton("Ohter:");
+		other = new JRadioButton("Other:");
 		
 		radioGroup.add(salary);
 		radioGroup.add(commission);

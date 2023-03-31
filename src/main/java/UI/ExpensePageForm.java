@@ -70,7 +70,7 @@ public class ExpensePageForm implements ActionListener {
 		entertainment.setBorderPainted(true);
 		financial = new JRadioButton("Financial");
 		financial.setBorderPainted(true);
-		other = new JRadioButton("Ohter:");
+		other = new JRadioButton("Other:");
 		
 		
 		radioGroup.add(bills);
