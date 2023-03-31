@@ -34,10 +34,8 @@ public class InvestmentPageForm implements ActionListener {
 	public JTextField investmentNameInput;
 	private JLabel investmentCost;
 	public JTextField investmentCostInput;
-	// JLabel expenseCategory; *No real code for this yet
 	private JLabel investmentDescription;
 	public JTextField investmentDescriptionInput;
-	private JLabel investmentDate;
 	public JTextField investmentDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
