@@ -5,7 +5,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -15,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -46,6 +52,9 @@ public class InvestmentPageForm implements ActionListener {
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
+	private JLabel dateSelector;
+	private JDateChooser dateChooser;
+	private String formattedDate;
 
 	public InvestmentPageForm() {
 		this.framesCreated = 0;
@@ -56,7 +65,7 @@ public class InvestmentPageForm implements ActionListener {
 		radioGroup = new ButtonGroup();
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
-		
+
 		stock = new JRadioButton("Stock");
 		stock.setBorderPainted(true);
 		bond = new JRadioButton("Bond");
@@ -68,8 +77,7 @@ public class InvestmentPageForm implements ActionListener {
 		saving = new JRadioButton("Saving acc");
 		saving.setBorderPainted(true);
 		other = new JRadioButton("Other:");
-		
-		
+
 		radioGroup.add(stock);
 		radioGroup.add(bond);
 		radioGroup.add(mfund);
@@ -77,28 +85,60 @@ public class InvestmentPageForm implements ActionListener {
 		radioGroup.add(saving);
 		radioGroup.add(other);
 		category = "default";
+
+		stock.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (stock.isSelected())
+					category = "Stock";
+			}
+		});
+
+		bond.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (bond.isSelected())
+					category = "Bond";
+			}
+		});
+
+		mfund.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mfund.isSelected())
+					category = "Mutual Fund";
+			}
+		});
+
+		gic.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (gic.isSelected())
+					category = "GIC";
+			}
+		});
+
+		saving.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (saving.isSelected())
+					category = "Saving account";
+			}
+		});
+
 		other.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (other.isSelected()) {
-                    othertext.setEnabled(true);
-                    othertext.requestFocus();
-                    category = othertext.getText();
-                } else if (stock.isSelected()) {
-                	category = "Stock";
-                } else if (bond.isSelected()) {
-                	category = "Bond";
-                } else if (mfund.isSelected()) {
-                	category = "Mutual Fund";
-                } else if (gic.isSelected()) {
-                	category = "GIC";
-                } else if (saving.isSelected()) {
-                	category = "Saving acc";
-                } else {
-                    othertext.setEnabled(false);
-                }
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					othertext.setEnabled(true);
+					othertext.requestFocus();
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
+
 		investmentPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		investmentPageForm.setLayout(new GridLayout(5, 1));
 		investmentPageForm.setBackground(Color.cyan);
@@ -133,15 +173,21 @@ public class InvestmentPageForm implements ActionListener {
 		investmentDescriptionInput.setLocation(200, 300);
 		investmentPageForm.add(investmentDescriptionInput);
 
-		investmentDate = new JLabel("Date:");
-		investmentDate.setSize(100, 20);
-		investmentDate.setLocation(100, 400);
-		investmentPageForm.add(investmentDate);
+		dateSelector = new JLabel("Selected date: ");
+		dateChooser = new JDateChooser();
 
-		investmentDateInput = new JTextField();
-		investmentDateInput.setSize(100, 20);
-		investmentDateInput.setLocation(200, 400);
-		investmentPageForm.add(investmentDateInput);
+		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("date".equals(evt.getPropertyName())) {
+					Date selectedDate = (Date) evt.getNewValue();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					formattedDate = dateFormat.format(selectedDate);
+					dateSelector.setText("Selected date: " + formattedDate);
+				}
+			}
+		});
+		investmentPageForm.add(dateSelector);
+		investmentPageForm.add(dateChooser);
 
 		investmentPageForm.add(stock);
 		investmentPageForm.add(bond);
@@ -150,7 +196,7 @@ public class InvestmentPageForm implements ActionListener {
 		investmentPageForm.add(saving);
 		investmentPageForm.add(other);
 		investmentPageForm.add(othertext);
-		
+
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -189,32 +235,32 @@ public class InvestmentPageForm implements ActionListener {
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
-			
+
 		}
 
 		String expName = investmentNameInput.getText();
 		String expNote = investmentDescriptionInput.getText();
-		String expDate = investmentDateInput.getText();
+		String expDate = formattedDate;
 		double expCost = Double.parseDouble(investmentCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
-		
+
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
 
 		try {
-			ep.investmentTable = DBUtil.query(User.getLoginAs(),"tag","investment");
+			ep.investmentTable = DBUtil.query(User.getLoginAs(), "tag", "investment");
 			ep.mainIvFrame.dispose();
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
 			investmentPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
+		} catch (SQLException er) {
+
+		}
 		this.framesCreated++;
 	}
 
