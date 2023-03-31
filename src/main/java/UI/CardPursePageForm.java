@@ -7,12 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -118,6 +113,11 @@ public class CardPursePageForm implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			if (cardNameInput.getText().isEmpty() || cardCostInput.getText().isEmpty() || cardDateInput.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(cardPurseFrame, "Please enter the name, balance, and date.");
+				return;
+			}
 
 			if (this.framesCreated < 1) {
 				cpp = new CardPursePage();

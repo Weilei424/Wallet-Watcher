@@ -7,12 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -120,6 +115,11 @@ public class BudgetPageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (budgetNameInput.getText().isEmpty() || budgetCostInput.getText().isEmpty() || budgetDateInput.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(budgetPageFrame, "Please enter the name, amount, and date.");
+			return;
+		}
 
 		if (this.framesCreated < 1) {
 			bp = new BudgetPage();

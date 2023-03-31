@@ -7,12 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -131,6 +126,11 @@ public class MiscPageForm implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			if (miscNameInput.getText().isEmpty() || miscCostInput.getText().isEmpty() || miscDateInput.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(miscFrame, "Please enter the name, amount, and date.");
+				return;
+			}
 
 			if (this.framesCreated < 1) {
 				mip = new MiscPage();

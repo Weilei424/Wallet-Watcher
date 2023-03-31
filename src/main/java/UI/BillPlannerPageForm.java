@@ -7,14 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -170,6 +163,11 @@ public class BillPlannerPageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty() || billPlannerDateInput.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(billPlannerPageFrame, "Please enter the name, cost, and date.");
+			return;
+		}
 
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();

@@ -7,14 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -184,6 +177,11 @@ public class EarningPageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (earningNameInput.getText().isEmpty() || earningCostInput.getText().isEmpty() || earningDateInput.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(earningPageFrame, "Please enter the name, amount, and date.");
+			return;
+		}
 
 		if (this.framesCreated < 1) {
 			ep = new EarningPage();
