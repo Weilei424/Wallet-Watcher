@@ -298,4 +298,7 @@ Mar 30th 16:50:04
 	Added export to excel button in BillPlannerPage class,
 	DisplayAllPage class, EarningPage class,
 	ExpensePage class, MiscPage class.
-
+===============================================
+Mar 31st 01:06:40
+	Added radio selection for category for:
+	BillPlannerPageForm class, InvestmentPageForm class
