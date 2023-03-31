@@ -71,13 +71,13 @@ public class BillPlannerPageForm implements ActionListener {
 		loan = new JRadioButton("Loan");
 		loan.setBorderPainted(true);
 		other = new JRadioButton("Other:");
-		
+
 		radioGroup.add(utility);
 		radioGroup.add(creditCard);
 		radioGroup.add(loan);
 		radioGroup.add(other);
 		category = "default";
-		
+
 		utility.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -85,7 +85,7 @@ public class BillPlannerPageForm implements ActionListener {
 					category = "Utility";
 			}
 		});
-		
+
 		creditCard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +93,7 @@ public class BillPlannerPageForm implements ActionListener {
 					category = "Credit Card";
 			}
 		});
-		
+
 		loan.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -101,20 +101,20 @@ public class BillPlannerPageForm implements ActionListener {
 					category = "Loan";
 			}
 		});
-		
+
 		other.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (other.isSelected()) {
-                    othertext.setEnabled(true);
-                    othertext.requestFocus();
-                    category = othertext.getText();
-                } else {
-                    othertext.setEnabled(false);
-                }
-            }
-        });
-		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					othertext.setEnabled(true);
+					othertext.requestFocus();
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
+
 		billPlannerPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		billPlannerPageForm.setLayout(new GridLayout(5, 1));
 		billPlannerPageForm.setBackground(Color.cyan);
@@ -150,27 +150,27 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerPageForm.add(billPlannerDescriptionInput);
 
 		dateSelector = new JLabel("Selected date: ");
-        dateChooser = new JDateChooser();
-        
-        dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-                if ("date".equals(evt.getPropertyName())) {
-                    Date selectedDate = (Date) evt.getNewValue();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    formattedDate = dateFormat.format(selectedDate);
-                    dateSelector.setText("Selected date: " + formattedDate);
-                }
-            }
-        });
-        billPlannerPageForm.add(dateChooser);
-        billPlannerPageForm.add(dateSelector);
-        
+		dateChooser = new JDateChooser();
+
+		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("date".equals(evt.getPropertyName())) {
+					Date selectedDate = (Date) evt.getNewValue();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					formattedDate = dateFormat.format(selectedDate);
+					dateSelector.setText("Selected date: " + formattedDate);
+				}
+			}
+		});
+		billPlannerPageForm.add(dateSelector);
+		billPlannerPageForm.add(dateChooser);
+
 		billPlannerPageForm.add(utility);
 		billPlannerPageForm.add(creditCard);
 		billPlannerPageForm.add(loan);
 		billPlannerPageForm.add(other);
 		billPlannerPageForm.add(othertext);
-		
+
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -209,7 +209,7 @@ public class BillPlannerPageForm implements ActionListener {
 			ep = new BillPlannerPage();
 			ep.mainBpPage.setVisible(true);
 			ep.getAddNewBill().setVisible(false);
-			
+
 		}
 
 		String expName = billPlannerNameInput.getText();
@@ -219,20 +219,19 @@ public class BillPlannerPageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
-		
+
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
-
 		try {
-			ep.setBillTable(DBUtil.query(User.getLoginAs(),"tag","bill"));
+			ep.setBillTable(DBUtil.query(User.getLoginAs(), "tag", "bill"));
 			ep.mainBpPage.dispose();
 			ep = new BillPlannerPage();
 			ep.mainBpPage.setVisible(true);
 			ep.getAddNewBill().setVisible(false);
-		//	billPlannerPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
+			// billPlannerPageFrame.dispose();
+		} catch (SQLException er) {
+
+		}
 		this.framesCreated++;
 	}
 
