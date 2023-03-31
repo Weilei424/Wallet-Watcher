@@ -33,14 +33,8 @@ public class Recurrence {
 		this.endDate = endDate;
 		switch (frequency) {
 			case "weekly":
-				this.frequency = frequency;
-				break;
 			case "biweekly":
-					this.frequency = frequency;
-					break;
 			case "monthly":
-				this.frequency = frequency;
-				break;
 			case "yearly":
 				this.frequency = frequency;
 				break;
