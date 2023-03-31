@@ -5,7 +5,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -15,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import persistence.ExpenseInputData;
@@ -29,10 +35,8 @@ public class ExpensePageForm implements ActionListener {
 	public JTextField expenseNameInput;
 	private JLabel expenseCost;
 	public JTextField expenseCostInput;
-	// JLabel expenseCategory; *No real code for this yet
 	private JLabel expenseDescription;
 	public JTextField expenseDescriptionInput;
-	private JLabel expenseDate;
 	public JTextField expenseDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
@@ -48,7 +52,10 @@ public class ExpensePageForm implements ActionListener {
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
-	
+	private JLabel dateSelector;
+	private JDateChooser dateChooser;
+	private String formattedDate;
+
 	public ExpensePageForm() {
 
 		this.framesCreated = 0;
@@ -59,7 +66,7 @@ public class ExpensePageForm implements ActionListener {
 		radioGroup = new ButtonGroup();
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
-		
+
 		bills = new JRadioButton("Bills");
 		bills.setBorderPainted(true);
 		food = new JRadioButton("Food");
@@ -71,8 +78,7 @@ public class ExpensePageForm implements ActionListener {
 		financial = new JRadioButton("Financial");
 		financial.setBorderPainted(true);
 		other = new JRadioButton("Other:");
-		
-		
+
 		radioGroup.add(bills);
 		radioGroup.add(food);
 		radioGroup.add(commute);
@@ -80,29 +86,60 @@ public class ExpensePageForm implements ActionListener {
 		radioGroup.add(financial);
 		radioGroup.add(other);
 		category = "default";
+
+		bills.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (bills.isSelected())
+					category = "Bills";
+			}
+		});
+
+		food.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (food.isSelected())
+					category = "Food";
+			}
+		});
+
+		commute.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (commute.isSelected())
+					category = "Commute";
+			}
+		});
+
+		entertainment.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (entertainment.isSelected())
+					category = "Entertainment";
+			}
+		});
+
+		financial.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (financial.isSelected())
+					category = "Financial";
+			}
+		});
+
 		other.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (other.isSelected()) {
-                    othertext.setEnabled(true);
-                    othertext.requestFocus();
-                    category = othertext.getText();
-                } else if (bills.isSelected()) {
-                	category = "Bills";
-                } else if (food.isSelected()) {
-                	category = "Food";
-                } else if (commute.isSelected()) {
-                	category = "Commute";
-                } else if (entertainment.isSelected()) {
-                	category = "Entertainment";
-                } else if (financial.isSelected()) {
-                	category = "Financial";
-                } else {
-                    othertext.setEnabled(false);
-                }
-            }
-        });
-		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					othertext.setEnabled(true);
+					othertext.requestFocus();
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
+
 		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		expensePageForm.setLayout(new GridLayout(5, 1));
 		expensePageForm.setBackground(Color.cyan);
@@ -138,15 +175,21 @@ public class ExpensePageForm implements ActionListener {
 		expenseDescriptionInput.setLocation(200, 300);
 		expensePageForm.add(expenseDescriptionInput);
 
-		expenseDate = new JLabel("Date of payment:");
-		expenseDate.setSize(100, 20);
-		expenseDate.setLocation(100, 400);
-		expensePageForm.add(expenseDate);
+		dateSelector = new JLabel("Selected date: ");
+		dateChooser = new JDateChooser();
 
-		expenseDateInput = new JTextField();
-		expenseDateInput.setSize(100, 20);
-		expenseDateInput.setLocation(200, 400);
-		expensePageForm.add(expenseDateInput);
+		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("date".equals(evt.getPropertyName())) {
+					Date selectedDate = (Date) evt.getNewValue();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					formattedDate = dateFormat.format(selectedDate);
+					dateSelector.setText("Selected date: " + formattedDate);
+				}
+			}
+		});
+		expensePageForm.add(dateSelector);
+		expensePageForm.add(dateChooser);
 
 		expensePageForm.add(bills);
 		expensePageForm.add(food);
@@ -155,7 +198,7 @@ public class ExpensePageForm implements ActionListener {
 		expensePageForm.add(financial);
 		expensePageForm.add(other);
 		expensePageForm.add(othertext);
-		
+
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -194,12 +237,12 @@ public class ExpensePageForm implements ActionListener {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
-			
+
 		}
 
 		String expName = expenseNameInput.getText();
 		String expNote = expenseDescriptionInput.getText();
-		String expDate = expenseDateInput.getText();
+		String expDate = formattedDate;
 		double expCost = Double.parseDouble(expenseCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
@@ -211,14 +254,14 @@ public class ExpensePageForm implements ActionListener {
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
 		try {
-			ep.expenseTable = DBUtil.query(User.getLoginAs(),"tag","expense");
+			ep.expenseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");
 			ep.mainEpFrame.dispose();
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
 			expensePageFrame.dispose();
-			} catch(SQLException er) {
-			}
+		} catch (SQLException er) {
+		}
 		this.framesCreated++;
 	}
 
