@@ -281,6 +281,26 @@ public class BillPlannerPage implements ActionListener {
 		mainBpPage.dispose();
 
 	}
+	
+	public JButton getAddNewBill() {
+		return addNewBill;
+	}
+
+	public JTable getBillTable() {
+		return billTable;
+	}
+
+	public void setBillTable(JTable billTable) {
+		this.billTable = billTable;
+	}
+
+	public JScrollPane getBillScroller() {
+		return billScroller;
+	}
+
+	public void setTempLedgerItem(LedgerItem tempLedgerItem) {
+		this.tempLedgerItem = tempLedgerItem;
+	}
 
 	public static void main(String[] args) {
 		new BillPlannerPage();
