@@ -144,7 +144,7 @@ public class setBudget {
 	    { 
 	    	years[x]=curr.getYear()+x;
 	    }
-	    year= new JComboBox(years);
+	    year= new JComboBox<>(years);
 	    year.setSelectedIndex(0);
 
 	    JLabel chooseYear=new JLabel("Year:");
@@ -159,7 +159,7 @@ public class setBudget {
 	    { 
 	    	months[x]=x+1;
 	    }
-	    month= new JComboBox(months);
+	    month= new JComboBox<>(months);
 	    month.setSelectedIndex(0);
 	    
 	    JLabel chooseMonth=new JLabel("Month:");
@@ -179,7 +179,7 @@ public class setBudget {
 	    { 
 	    	days[x]=x+1;
 	    }
-	    day= new JComboBox(days);
+	    day= new JComboBox<>(days);
 	    
 	    JLabel chooseDay=new JLabel("Day:");
 
