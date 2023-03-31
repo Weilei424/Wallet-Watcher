@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -29,7 +30,6 @@ public class InvestmentPageForm implements ActionListener {
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private InvestmentPage ep;
-	private int framesCreated;
 	private ButtonGroup radioGroup;
 	private JRadioButton stock;
 	private JRadioButton bond;
@@ -41,8 +41,6 @@ public class InvestmentPageForm implements ActionListener {
 	private String category;
 
 	public InvestmentPageForm() {
-		this.framesCreated = 0;
-
 		investmentPageFrame = new JFrame();
 		investmentPageFrame.setLocationRelativeTo(null);
 		investmentPageForm = new JPanel();
@@ -202,13 +200,9 @@ public class InvestmentPageForm implements ActionListener {
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
-		if (this.framesCreated < 1) {
-			ep = new InvestmentPage();
-			ep.mainIvFrame.setVisible(true);
-			ep.getAddInvestment().setVisible(false);
-
-		}
-
+		if (ep != null) Util.disposeIfExists(ep.mainIvFrame);
+		ep = new InvestmentPage();
+		ep.mainIvFrame.setVisible(true);
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
 
@@ -217,12 +211,8 @@ public class InvestmentPageForm implements ActionListener {
 			ep.mainIvFrame.dispose();
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
-			ep.getAddInvestment().setVisible(false);
 			investmentPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
-		this.framesCreated++;
+		} catch (SQLException ignored) {}
 	}
 
 	public LedgerItem getLedgerItem() {

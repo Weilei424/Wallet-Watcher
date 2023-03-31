@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -30,12 +31,9 @@ public class MiscPageForm implements ActionListener{
 		private JButton submit;
 		private LedgerItem ledgerItem;
 		private MiscPage mip;
-		private int framesCreated;
 		private String category;
 
 		public MiscPageForm() {
-			this.framesCreated = 0;
-
 			miscFrame = new JFrame();
 			miscFrame.setLocationRelativeTo(null);
 			miscForm = new JPanel();
@@ -151,23 +149,16 @@ public class MiscPageForm implements ActionListener{
 			this.ledgerItem.setCategory(category);
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "misc");
 
-			if (this.framesCreated < 1) {
-				mip = new MiscPage();
-				mip.mainMiPage.setVisible(true);
-				mip.getAddNewCard().setVisible(false);
-
-			}
+			if (mip != null) Util.disposeIfExists(mip.mainMiPage);
+			mip = new MiscPage();
+			mip.mainMiPage.setVisible(true);
 
 			try {
 				mip.miscTable = DBUtil.query(User.getLoginAs(),"tag","misc");
 				mip.mainMiPage.dispose();
 				mip = new MiscPage();
 				mip.mainMiPage.setVisible(true);
-				mip.getAddNewCard().setVisible(false);
-				} catch(SQLException er) {
-					
-				}
-			this.framesCreated++;
+			} catch (SQLException ignored) {}
 		}
 
 		public LedgerItem getLedgerItem() {

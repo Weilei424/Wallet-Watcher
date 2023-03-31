@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -29,11 +30,8 @@ public class BudgetPageForm implements ActionListener {
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private BudgetPage bp;
-	private int framesCreated;
 
 	public BudgetPageForm() {
-		this.framesCreated = 0;
-
 		budgetPageFrame = new JFrame();
 		budgetPageFrame.setLocationRelativeTo(null);
 		budgetPageForm = new JPanel();
@@ -138,13 +136,9 @@ public class BudgetPageForm implements ActionListener {
 
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
 
-		if (this.framesCreated < 1) {
-			bp = new BudgetPage();
-			bp.mainEpFrame.setVisible(true);
-			bp.getAddBudget().setVisible(false);
-
-		}
-
+		if (bp != null) Util.disposeIfExists(bp.mainEpFrame);
+		bp = new BudgetPage();
+		bp.mainEpFrame.setVisible(true);
 		bp.setTempLedgerItem(this.ledgerItem);
 		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
 
@@ -153,12 +147,8 @@ public class BudgetPageForm implements ActionListener {
 			bp.mainEpFrame.dispose();
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
-			bp.getAddBudget().setVisible(false);
 			budgetPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
-		this.framesCreated++;
+		} catch (SQLException ignored) {}
 	}
 
 	public LedgerItem getLedgerItem() {

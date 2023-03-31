@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -29,7 +30,6 @@ public class EarningPageForm implements ActionListener {
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private EarningPage ep;
-	private int framesCreated;
 	private ButtonGroup radioGroup;
 	private JRadioButton salary;
 	private JRadioButton commission;
@@ -41,8 +41,6 @@ public class EarningPageForm implements ActionListener {
 	private String category;
 
 	public EarningPageForm() {
-		this.framesCreated = 0;
-
 		earningPageFrame = new JFrame();
 		earningPageFrame.setLocationRelativeTo(null);
 		earningPageForm = new JPanel();
@@ -202,13 +200,9 @@ public class EarningPageForm implements ActionListener {
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
 
-		if (this.framesCreated < 1) {
-			ep = new EarningPage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddEarning().setVisible(false);
-
-		}
-
+		if (ep != null) Util.disposeIfExists(ep.mainEpFrame);
+		ep = new EarningPage();
+		ep.mainEpFrame.setVisible(true);
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);
 
@@ -217,12 +211,8 @@ public class EarningPageForm implements ActionListener {
 			ep.mainEpFrame.dispose();
 			ep = new EarningPage();
 			ep.mainEpFrame.setVisible(true);
-			ep.getAddEarning().setVisible(false);
 			earningPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
-		this.framesCreated++;
+		} catch (SQLException ignored) {}
 	}
 
 	public LedgerItem getLedgerItem() {

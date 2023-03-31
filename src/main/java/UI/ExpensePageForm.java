@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 import persistence.User;
@@ -31,7 +32,6 @@ public class ExpensePageForm implements ActionListener {
 	private LedgerItem ledgerItem;
 	private ExpenseInputData expData;
 	private ExpensePage ep;
-	private int framesCreated;
 	private ButtonGroup radioGroup;
 	private JRadioButton bills;
 	private JRadioButton food;
@@ -43,9 +43,6 @@ public class ExpensePageForm implements ActionListener {
 	private String category;
 	
 	public ExpensePageForm() {
-
-		this.framesCreated = 0;
-
 		expensePageFrame = new JFrame();
 		expensePageFrame.setLocationRelativeTo(null);
 		expensePageForm = new JPanel();
@@ -207,13 +204,9 @@ public class ExpensePageForm implements ActionListener {
 
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
-		if (this.framesCreated < 1) {
-			ep = new ExpensePage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddExpense().setVisible(false);
-
-		}
-
+		if (ep != null) Util.disposeIfExists(ep.mainEpFrame);
+		ep = new ExpensePage();
+		ep.mainEpFrame.setVisible(true);
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
@@ -222,11 +215,8 @@ public class ExpensePageForm implements ActionListener {
 			ep.mainEpFrame.dispose();
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
-			ep.getAddExpense().setVisible(false);
 			expensePageFrame.dispose();
-			} catch(SQLException er) {
-			}
-		this.framesCreated++;
+		} catch(SQLException ignored) {}
 	}
 
 	public LedgerItem getLedgerItem() {

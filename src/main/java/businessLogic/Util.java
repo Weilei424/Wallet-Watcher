@@ -10,7 +10,7 @@ import UI.ErrorPage;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.JTable;
+import javax.swing.*;
 
 import exceptions.InvalidDateException;
 
@@ -149,4 +149,14 @@ public final class Util {
 	public static String encrypt(String password, String salt) {
 		return "" + (password + salt).hashCode();
 	}
+
+	/**
+	 * This method disposes a frame if it exists.
+	 *
+	 * @param frame is the frame to dispose.
+	 */
+	public static void disposeIfExists(JFrame frame) {
+		if (frame != null) frame.dispose();
+	}
+
 }

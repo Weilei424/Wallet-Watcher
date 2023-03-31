@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -28,11 +29,8 @@ public class CardPursePageForm implements ActionListener{
 		private JButton submit;
 		private LedgerItem ledgerItem;
 		private CardPursePage cpp;
-		private int framesCreated;
 
 		public CardPursePageForm() {
-			this.framesCreated = 0;
-
 			cardPurseFrame = new JFrame();
 			cardPurseFrame.setLocationRelativeTo(null);
 			cardPurseForm = new JPanel();
@@ -136,23 +134,16 @@ public class CardPursePageForm implements ActionListener{
 
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
 
-			if (this.framesCreated < 1) {
-				cpp = new CardPursePage();
-				cpp.mainCpPage.setVisible(true);
-				cpp.getAddNewCard().setVisible(false);
-
-			}
+			if (cpp != null) Util.disposeIfExists(cpp.mainCpPage);
+			cpp = new CardPursePage();
+			cpp.mainCpPage.setVisible(true);
 
 			try {
 				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");
 				cpp.mainCpPage.dispose();
 				cpp = new CardPursePage();
 				cpp.mainCpPage.setVisible(true);
-				cpp.getAddNewCard().setVisible(false);
-				} catch(SQLException er) {
-					
-				}
-			this.framesCreated++;
+			} catch (SQLException ignored) {}
 		}
 
 		public LedgerItem getLedgerItem() {

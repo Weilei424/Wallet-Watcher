@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import DB.DBUtil;
+import businessLogic.Util;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -29,7 +30,6 @@ public class BillPlannerPageForm implements ActionListener {
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private InvestmentPage ep;
-	private int framesCreated;
 	private ButtonGroup radioGroup;
 	private JRadioButton utility;
 	private JRadioButton creditCard;
@@ -39,8 +39,6 @@ public class BillPlannerPageForm implements ActionListener {
 	private String category;
 
 	public BillPlannerPageForm() {
-		this.framesCreated = 0;
-
 		billPlannerPageFrame = new JFrame();
 		billPlannerPageFrame.setLocationRelativeTo(null);
 		billPlannerPageForm = new JPanel();
@@ -188,13 +186,9 @@ public class BillPlannerPageForm implements ActionListener {
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
-		if (this.framesCreated < 1) {
-			ep = new InvestmentPage();
-			ep.mainIvFrame.setVisible(true);
-			ep.getAddInvestment().setVisible(false);
-
-		}
-
+		if (ep != null) Util.disposeIfExists(ep.mainIvFrame);
+		ep = new InvestmentPage();
+		ep.mainIvFrame.setVisible(true);
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
 
@@ -203,12 +197,8 @@ public class BillPlannerPageForm implements ActionListener {
 			ep.mainIvFrame.dispose();
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
-			ep.getAddInvestment().setVisible(false);
 			billPlannerPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
-		this.framesCreated++;
+		} catch (SQLException ignored) {}
 	}
 
 	public LedgerItem getLedgerItem() {
