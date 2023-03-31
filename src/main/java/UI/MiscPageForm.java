@@ -5,14 +5,21 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -28,7 +35,6 @@ public class MiscPageForm implements ActionListener{
 		public JTextField miscCostInput;
 		private JLabel miscDescription;
 		public JTextField miscDescriptionInput;
-		private JLabel miscDate;
 		public JTextField miscDateInput;
 		public JTextField miscCatInput;
 		private JLabel miscCat;
@@ -37,6 +43,9 @@ public class MiscPageForm implements ActionListener{
 		private MiscPage mip;
 		private int framesCreated;
 		private String category;
+		private JLabel dateSelector;
+		private JDateChooser dateChooser;
+		private String formattedDate;
 
 		public MiscPageForm() {
 			this.framesCreated = 0;
@@ -79,19 +88,25 @@ public class MiscPageForm implements ActionListener{
 			miscDescriptionInput.setLocation(200, 300);
 			miscForm.add(miscDescriptionInput);
 
-			miscDate = new JLabel("Date of payment:");
-			miscDate.setSize(100, 20);
-			miscDate.setLocation(100, 400);
-			miscForm.add(miscDate);
+			dateSelector = new JLabel("Selected date: ");
+			dateChooser = new JDateChooser();
 
-			miscDateInput = new JTextField();
-			miscDateInput.setSize(100, 20);
-			miscDateInput.setLocation(200, 400);
-			miscForm.add(miscDateInput);
+			dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+				public void propertyChange(PropertyChangeEvent evt) {
+					if ("date".equals(evt.getPropertyName())) {
+						Date selectedDate = (Date) evt.getNewValue();
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						formattedDate = dateFormat.format(selectedDate);
+						dateSelector.setText("Selected date: " + formattedDate);
+					}
+				}
+			});
+			miscForm.add(dateSelector);
+			miscForm.add(dateChooser);
 			
 			miscCat = new JLabel("Category:");
-			miscDate.setSize(100, 20);
-			miscDate.setLocation(100, 500);
+			miscCat.setSize(100, 20);
+			miscCat.setLocation(100, 500);
 			miscForm.add(miscCat);
 
 			miscCatInput = new JTextField();
@@ -108,7 +123,7 @@ public class MiscPageForm implements ActionListener{
 			miscFrame.add(miscForm, BorderLayout.CENTER);
 			miscFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			miscFrame.setTitle("Add Miscs");
-			miscFrame.setSize(400, 300);
+			miscFrame.setSize(600, 400);
 			miscFrame.setVisible(true);
 
 		}
@@ -141,7 +156,7 @@ public class MiscPageForm implements ActionListener{
 
 			String expName = miscNameInput.getText();
 			String expNote = miscDescriptionInput.getText();
-			String expDate = miscDateInput.getText();
+			String expDate = formattedDate;
 			category = miscCatInput.getText();
 			double expCost = Double.parseDouble(miscCostInput.getText());
 
