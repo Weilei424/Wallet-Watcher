@@ -121,21 +121,29 @@ public class BudgetPageForm implements ActionListener {
 			return;
 		}
 
+		String expName = budgetNameInput.getText();
+		String expNote = budgetDescriptionInput.getText();
+		String expDate = budgetDateInput.getText();
+
+		try {
+			double expCost = Double.parseDouble(budgetCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		} catch (IllegalArgumentException ex) {
+			new ErrorPage("Date is not a valid date.", ex);
+			return;
+		}
+
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
+
 		if (this.framesCreated < 1) {
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
 			bp.getAddBudget().setVisible(false);
-			
+
 		}
-
-		String expName = budgetNameInput.getText();
-		String expNote = budgetDescriptionInput.getText();
-		String expDate = budgetDateInput.getText();
-		double expCost = Double.parseDouble(budgetCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
 
 		bp.setTempLedgerItem(this.ledgerItem);
 		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);

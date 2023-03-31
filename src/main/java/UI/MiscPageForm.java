@@ -132,24 +132,31 @@ public class MiscPageForm implements ActionListener{
 				return;
 			}
 
-			if (this.framesCreated < 1) {
-				mip = new MiscPage();
-				mip.mainMiPage.setVisible(true);
-				mip.getAddNewCard().setVisible(false);
-				
-			}
-
 			String expName = miscNameInput.getText();
 			String expNote = miscDescriptionInput.getText();
 			String expDate = miscDateInput.getText();
 			category = miscCatInput.getText();
-			double expCost = Double.parseDouble(miscCostInput.getText());
 
-			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			try {
+				double expCost = Double.parseDouble(miscCostInput.getText());
+				this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			} catch (NumberFormatException ex) {
+				new ErrorPage("Amount is not a valid number.", ex);
+				return;
+			} catch (IllegalArgumentException ex) {
+				new ErrorPage("Date is not a valid date.", ex);
+				return;
+			}
+
 			this.ledgerItem.setCategory(category);
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "misc");
 
-		
+			if (this.framesCreated < 1) {
+				mip = new MiscPage();
+				mip.mainMiPage.setVisible(true);
+				mip.getAddNewCard().setVisible(false);
+
+			}
 
 			try {
 				mip.miscTable = DBUtil.query(User.getLoginAs(),"tag","misc");

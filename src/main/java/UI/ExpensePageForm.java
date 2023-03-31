@@ -188,22 +188,31 @@ public class ExpensePageForm implements ActionListener {
 			return;
 		}
 
+		String expName = expenseNameInput.getText();
+		String expNote = expenseDescriptionInput.getText();
+		String expDate = expenseDateInput.getText();
+
+		try {
+			double expCost = Double.parseDouble(expenseCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		} catch (IllegalArgumentException ex) {
+			new ErrorPage("Date is not a valid date.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
+
 		if (this.framesCreated < 1) {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
-			
+
 		}
-
-		String expName = expenseNameInput.getText();
-		String expNote = expenseDescriptionInput.getText();
-		String expDate = expenseDateInput.getText();
-		double expCost = Double.parseDouble(expenseCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);

@@ -169,22 +169,31 @@ public class BillPlannerPageForm implements ActionListener {
 			return;
 		}
 
+		String expName = billPlannerNameInput.getText();
+		String expNote = billPlannerDescriptionInput.getText();
+		String expDate = billPlannerDateInput.getText();
+
+		try {
+			double expCost = Double.parseDouble(billPlannerCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		} catch (IllegalArgumentException ex) {
+			new ErrorPage("Date is not a valid date.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+		
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
+
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
-			
+
 		}
-
-		String expName = billPlannerNameInput.getText();
-		String expNote = billPlannerDescriptionInput.getText();
-		String expDate = billPlannerDateInput.getText();
-		double expCost = Double.parseDouble(billPlannerCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-		
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);

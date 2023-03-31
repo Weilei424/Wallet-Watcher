@@ -183,22 +183,31 @@ public class EarningPageForm implements ActionListener {
 			return;
 		}
 
+		String expName = earningNameInput.getText();
+		String expNote = earningDescriptionInput.getText();
+		String expDate = earningDateInput.getText();
+
+		try {
+			double expCost = Double.parseDouble(earningCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		} catch (IllegalArgumentException ex) {
+			new ErrorPage("Date is not a valid date.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+		
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
+
 		if (this.framesCreated < 1) {
 			ep = new EarningPage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddEarning().setVisible(false);
-			
+
 		}
-
-		String expName = earningNameInput.getText();
-		String expNote = earningDescriptionInput.getText();
-		String expDate = earningDateInput.getText();
-		double expCost = Double.parseDouble(earningCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-		
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);

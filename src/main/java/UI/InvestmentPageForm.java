@@ -183,22 +183,31 @@ public class InvestmentPageForm implements ActionListener {
 			return;
 		}
 
+		String expName = investmentNameInput.getText();
+		String expNote = investmentDescriptionInput.getText();
+		String expDate = investmentDateInput.getText();
+
+		try {
+			double expCost = Double.parseDouble(investmentCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		} catch (IllegalArgumentException ex) {
+			new ErrorPage("Date is not a valid date.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+		
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
+
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
-			
+
 		}
-
-		String expName = investmentNameInput.getText();
-		String expNote = investmentDescriptionInput.getText();
-		String expDate = investmentDateInput.getText();
-		double expCost = Double.parseDouble(investmentCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-		
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
