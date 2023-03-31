@@ -302,3 +302,10 @@ Mar 30th 16:50:04
 Mar 31st 01:06:40
 	Added radio selection for category for:
 	BillPlannerPageForm class, InvestmentPageForm class
+===============================================
+Mar 31st 17:16:49
+	date selector added to: BillPlannerPageForm class,
+	CardPursePageForm class, EarningPageForm class,
+	ExpensePageForm class, InvestmentPageForm class,
+	MiscPageForm class.
+	
