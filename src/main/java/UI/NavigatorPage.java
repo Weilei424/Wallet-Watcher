@@ -220,6 +220,7 @@ public class NavigatorPage {
 		navigator.getContentPane().setLayout(new BorderLayout());
 	    navigator.getContentPane().add(label, BorderLayout.NORTH);
 	    navigator.getContentPane().add(buttons, BorderLayout.CENTER);
+		navigator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigator.setVisible(true);
 	}
 

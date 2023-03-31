@@ -242,7 +242,7 @@ public class Signup{
 		page.setVisible(true);
 		page.setExtendedState (java.awt.Frame.MAXIMIZED_BOTH);
 
-		
+		page.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 	public static void main(String[] args) {

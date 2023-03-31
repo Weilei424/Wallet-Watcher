@@ -462,6 +462,7 @@ public class Settings {
 		topMost.add(button1);
 		
 		settingsFrame.add(topMost);
+		settingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		settingsFrame.setVisible(true);
 		
 	}
