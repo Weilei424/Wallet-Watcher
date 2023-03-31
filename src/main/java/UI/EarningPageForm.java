@@ -5,7 +5,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -15,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -31,7 +37,6 @@ public class EarningPageForm implements ActionListener {
 	// JLabel expenseCategory; *No real code for this yet
 	private JLabel earningDescription;
 	public JTextField earningDescriptionInput;
-	private JLabel earningDate;
 	public JTextField earningDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
@@ -46,6 +51,9 @@ public class EarningPageForm implements ActionListener {
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
+	private JLabel dateSelector;
+	private JDateChooser dateChooser;
+	private String formattedDate;
 
 	public EarningPageForm() {
 		this.framesCreated = 0;
@@ -76,6 +84,47 @@ public class EarningPageForm implements ActionListener {
 		radioGroup.add(unexpected);
 		radioGroup.add(other);
 		category = "default";
+		
+		salary.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (salary.isSelected())
+					category = "Salary";
+			}
+		});
+		
+		commission.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (commission.isSelected())
+					category = "Commission";
+			}
+		});
+		
+		sidegig.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sidegig.isSelected())
+					category = "Side Gig";
+			}
+		});
+		
+		unexpected.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (unexpected.isSelected())
+					category = "Unexpected";
+			}
+		});
+		
+		sell.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sell.isSelected())
+					category = "Sold Something";
+			}
+		});
+		
 		other.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,16 +132,6 @@ public class EarningPageForm implements ActionListener {
                     othertext.setEnabled(true);
                     othertext.requestFocus();
                     category = othertext.getText();
-                } else if (salary.isSelected()) {
-                	category = "Salary";
-                } else if (commission.isSelected()) {
-                	category = "Commission";
-                } else if (sidegig.isSelected()) {
-                	category = "Side Gig";
-                } else if (sell.isSelected()) {
-                	category = "Sold Something";
-                } else if (unexpected.isSelected()) {
-                	category = "Unexpected";
                 } else {
                     othertext.setEnabled(false);
                 }
@@ -133,15 +172,21 @@ public class EarningPageForm implements ActionListener {
 		earningDescriptionInput.setLocation(200, 300);
 		earningPageForm.add(earningDescriptionInput);
 
-		earningDate = new JLabel("Date:");
-		earningDate.setSize(100, 20);
-		earningDate.setLocation(100, 400);
-		earningPageForm.add(earningDate);
+		dateSelector = new JLabel("Selected date: ");
+		dateChooser = new JDateChooser();
 
-		earningDateInput = new JTextField();
-		earningDateInput.setSize(100, 20);
-		earningDateInput.setLocation(200, 400);
-		earningPageForm.add(earningDateInput);
+		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("date".equals(evt.getPropertyName())) {
+					Date selectedDate = (Date) evt.getNewValue();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					formattedDate = dateFormat.format(selectedDate);
+					dateSelector.setText("Selected date: " + formattedDate);
+				}
+			}
+		});
+		earningPageForm.add(dateSelector);
+		earningPageForm.add(dateChooser);
 
 		earningPageForm.add(salary);
 		earningPageForm.add(commission);
@@ -194,7 +239,7 @@ public class EarningPageForm implements ActionListener {
 
 		String expName = earningNameInput.getText();
 		String expNote = earningDescriptionInput.getText();
-		String expDate = earningDateInput.getText();
+		String expDate = formattedDate;
 		double expCost = Double.parseDouble(earningCostInput.getText());
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
