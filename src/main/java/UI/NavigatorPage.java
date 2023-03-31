@@ -94,6 +94,7 @@ public class NavigatorPage {
 		public void actionPerformed(ActionEvent e) {
 			cardPurse = new CardPursePage();
 			cardPurse.mainCpPage.setVisible(true);
+			navigator.dispose();
       }
 	};
 
@@ -102,6 +103,7 @@ public class NavigatorPage {
 		public void actionPerformed(ActionEvent e) {
 			investment = new InvestmentPage();
 			investment.mainIvFrame.setVisible(true);
+			navigator.dispose();
       }
 	};
 
@@ -109,6 +111,7 @@ public class NavigatorPage {
 		public void actionPerformed(ActionEvent e) {
 			bill = new BillPlannerPage();
 			bill.mainBpPage.setVisible(true);
+			navigator.dispose();
       }
 	};
 	
@@ -116,6 +119,7 @@ public class NavigatorPage {
 		public void actionPerformed(ActionEvent e) {
 			misc = new MiscPage();
 			misc.mainMiPage.setVisible(true);
+			navigator.dispose();
       }
 	};
 	
@@ -216,6 +220,7 @@ public class NavigatorPage {
 		navigator.getContentPane().setLayout(new BorderLayout());
 	    navigator.getContentPane().add(label, BorderLayout.NORTH);
 	    navigator.getContentPane().add(buttons, BorderLayout.CENTER);
+		navigator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigator.setVisible(true);
 	}
 
