@@ -61,7 +61,7 @@ public final class DBUtil {
 	 * CLOUD(1) will return Azure cloud MYSQL connection;
 	 * @param 	tableName is a String of the table name that goes after the address.
 	 * @return	a Connection object to selected DB.
-	 * @throws 	SQLException.
+	 * @throws 	SQLException
 	 */
 	private static Connection getConnection(int connectionType, String tableName) throws SQLException {
 		if (connectionType == 0)
@@ -73,7 +73,7 @@ public final class DBUtil {
 	 * This method insert a new user row in users table. Also create an user's ledger item table name by username.
 	 * This method will NOT create duplicate user account under the same username.
 	 * @param 	u is the User object to be added.
-	 * @throws 	SQLException.
+	 * @throws 	SQLException
 	 */
 	public static void createUser(User u) throws SQLException {
 		String query = "INSERT INTO users (username, hashcode, salt, firstname, lastname, acctype) values (?, ?, ?, ?, ?, ?)";
@@ -125,10 +125,9 @@ public final class DBUtil {
 	
 	/**
 	 * This method check if the input username exists in the DB.
-	 * @param 	u is an username in String.
+	 * @param 	username is an username in String.
 	 * @return	false is exist, true otherwise.
 	 */
-	@SuppressWarnings("finally")
 	public static boolean checkUser(String username) {
 		String query = "SELECT * FROM users";
 		boolean flag = true;
@@ -147,9 +146,8 @@ public final class DBUtil {
 		} catch (Exception e) {
 			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from checkUser()");
-		} finally {
-			return flag;
 		}
+		return flag;
 	}
 	
 	/**
@@ -158,7 +156,6 @@ public final class DBUtil {
 	 * @param	pw is the user's password.
 	 * @return	true if username and password matches, false otherwise.
 	 */
-	@SuppressWarnings("finally")
 	public static boolean validateUser(String username, String pw) {
 		boolean result = false;
 		String query = "SELECT * FROM users";
@@ -176,12 +173,10 @@ public final class DBUtil {
 		} catch (Exception e) {
 			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from validateUser()");
-		} finally {
-			return result;
 		}
+		return result;
 	}
-	
-	@SuppressWarnings("finally")
+
 	public static boolean changePW(String username, String oldpw, String newpw) {
 		String query = "SELECT * FROM users";
 		String change = "UPDATE users SET hashcode = ? WHERE ref = ?";
@@ -204,9 +199,8 @@ public final class DBUtil {
 		} catch (SQLException e) {
 			new ErrorPage(e);
 			System.out.println(e.getMessage() + " from changePW()");
-		} finally {
-			return flag;
 		}
+		return flag;
 	}
 	
 	/**
