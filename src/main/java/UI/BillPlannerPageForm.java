@@ -246,10 +246,7 @@ public class BillPlannerPageForm implements ActionListener {
 			ep.mainBpPage.setVisible(true);
 			ep.getAddNewBill().setVisible(false);
 			// billPlannerPageFrame.dispose();
-		} catch (SQLException er) {
-
-		}
-		this.framesCreated++;
+		} catch (SQLException ignored) {}
 	}
 
 	public LedgerItem getLedgerItem() {
