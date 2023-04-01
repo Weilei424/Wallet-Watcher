@@ -40,9 +40,11 @@ public class NavigatorPage {
 	JButton investmentPage;
 	JButton billPage;
 	JButton miscPage;
+	
 	JButton settings; 
 	JButton logOut;
-	
+	Analypage ana;
+	JButton addana;
 	
 	//buttons for account management page
 	JButton changePassword; 
@@ -58,6 +60,7 @@ public class NavigatorPage {
 	CardPursePage cardPurse;
 	InvestmentPage investment;
 	BillPlannerPage bill;
+	
 	MiscPage misc;
 	Settings settingsPage;
 	MainUi logIn;
@@ -120,6 +123,20 @@ public class NavigatorPage {
 			navigator.dispose();
       }
 	};
+	
+	ActionListener Analyzedirect = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			ana = new Analypage(4);
+			ana.anaPageFrame.setVisible(true);
+			navigator.dispose();
+		}
+		
+		
+		
+		
+	};
+	
+	
 	
 	ActionListener miscPlannerDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -191,12 +208,21 @@ public class NavigatorPage {
 			earningsPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 
-			budgetPage = new JButton("Budget");
-			budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
-			navPage = new JLabel("Navigation Page");
-			navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
-			
-		    label.add(navPage, BorderLayout.CENTER); // add the label to the CENTER of the BorderLayout
+
+		budgetPage = new JButton("Budget");
+		budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		
+		
+		addana = new JButton("Analytic");
+		addana.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		
+		
+		navPage = new JLabel("Navigation Page");
+		navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
+		
+	    label.add(navPage, BorderLayout.CENTER); // add the label to the CENTER of the BorderLayout
 
 			cardPage = new JButton("Card Purse");
 			cardPage.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -218,27 +244,31 @@ public class NavigatorPage {
 
 			navPage.setBorder(new EmptyBorder(0, 550, 0, 0));
 
-			allPage.addActionListener(allDirect);
-			budgetPage.addActionListener(budgetDirect);
-			cardPage.addActionListener(cardPurseDirect);
-			earningsPage.addActionListener(earningDirect);
-			expensePage.addActionListener(expenseDirect);
-			investmentPage.addActionListener(investmentDirect);
-			billPage.addActionListener(billPlannerDirect);
-			miscPage.addActionListener(miscPlannerDirect);
-			settings.addActionListener(settingsDirect);
-			logOut.addActionListener(logOutDirect);
 
-			buttons.add(allPage);
-			buttons.add(budgetPage);
-			buttons.add(cardPage);
-			buttons.add(expensePage);
-			buttons.add(earningsPage);
-			buttons.add(investmentPage);
-			buttons.add(billPage);
-			buttons.add(miscPage);
-			buttons.add(settings);
-			buttons.add(logOut);
+		allPage.addActionListener(allDirect);
+		budgetPage.addActionListener(budgetDirect);
+		cardPage.addActionListener(cardPurseDirect);
+		earningsPage.addActionListener(earningDirect);
+		expensePage.addActionListener(expenseDirect);
+		investmentPage.addActionListener(investmentDirect);
+		addana.addActionListener(Analyzedirect);
+		billPage.addActionListener(billPlannerDirect);
+		miscPage.addActionListener(miscPlannerDirect);
+		settings.addActionListener(settingsDirect);
+		logOut.addActionListener(logOutDirect);
+
+
+		buttons.add(allPage);
+		buttons.add(budgetPage);
+		buttons.add(cardPage);
+		buttons.add(expensePage);
+		buttons.add(earningsPage);
+		buttons.add(investmentPage);
+		buttons.add(billPage);
+		buttons.add(miscPage);
+		buttons.add(settings);
+		buttons.add(logOut);
+		buttons.add(addana);
 
 			buttons.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
 		   

@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
+import businessLogic.Recurrence;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -44,8 +46,6 @@ public class InvestmentPageForm implements ActionListener {
 	private ButtonGroup radioGroup;
 	private JRadioButton stock;
 	private JRadioButton bond;
-	private JRadioButton mfund;
-	private JRadioButton gic;
 	private JRadioButton saving;
 	private JRadioButton other;
 	private JTextField othertext;
@@ -53,6 +53,8 @@ public class InvestmentPageForm implements ActionListener {
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
 	private String formattedDate;
+	private JCheckBox checkBox;
+	private boolean recur;
 
 	public InvestmentPageForm() {
 		this.framesCreated = 0;
@@ -63,23 +65,30 @@ public class InvestmentPageForm implements ActionListener {
 		radioGroup = new ButtonGroup();
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
+		
+		checkBox = new JCheckBox("Recurring");
+
+		checkBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (checkBox.isSelected()) {
+		            recur = true;
+		        } else {
+		            recur = false;
+		        }
+			}
+		});
 
 		stock = new JRadioButton("Stock");
 		stock.setBorderPainted(true);
 		bond = new JRadioButton("Bond");
 		bond.setBorderPainted(true);
-		mfund = new JRadioButton("Mutual Fund");
-		mfund.setBorderPainted(true);
-		gic = new JRadioButton("GIC");
-		gic.setBorderPainted(true);
 		saving = new JRadioButton("Saving acc");
 		saving.setBorderPainted(true);
 		other = new JRadioButton("Other:");
 
 		radioGroup.add(stock);
 		radioGroup.add(bond);
-		radioGroup.add(mfund);
-		radioGroup.add(gic);
 		radioGroup.add(saving);
 		radioGroup.add(other);
 		category = "default";
@@ -97,22 +106,6 @@ public class InvestmentPageForm implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (bond.isSelected())
 					category = "Bond";
-			}
-		});
-
-		mfund.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (mfund.isSelected())
-					category = "Mutual Fund";
-			}
-		});
-
-		gic.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (gic.isSelected())
-					category = "GIC";
 			}
 		});
 
@@ -171,6 +164,8 @@ public class InvestmentPageForm implements ActionListener {
 		investmentDescriptionInput.setLocation(200, 300);
 		investmentPageForm.add(investmentDescriptionInput);
 
+		investmentPageForm.add(checkBox);
+		
 		dateSelector = new JLabel("Selected date: ");
 		dateChooser = new JDateChooser();
 
@@ -189,8 +184,6 @@ public class InvestmentPageForm implements ActionListener {
 
 		investmentPageForm.add(stock);
 		investmentPageForm.add(bond);
-		investmentPageForm.add(mfund);
-		investmentPageForm.add(gic);
 		investmentPageForm.add(saving);
 		investmentPageForm.add(other);
 		investmentPageForm.add(othertext);
@@ -243,7 +236,9 @@ public class InvestmentPageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
-
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
+		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
 		ep.setTempLedgerItem(this.ledgerItem);

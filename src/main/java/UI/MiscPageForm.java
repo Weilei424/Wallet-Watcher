@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
+import businessLogic.Recurrence;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -46,7 +47,9 @@ public class MiscPageForm implements ActionListener{
 		private JLabel dateSelector;
 		private JDateChooser dateChooser;
 		private String formattedDate;
-
+		private JCheckBox checkBox;
+		private boolean recur;
+		
 		public MiscPageForm() {
 			this.framesCreated = 0;
 
@@ -54,6 +57,19 @@ public class MiscPageForm implements ActionListener{
 			miscFrame.setLocationRelativeTo(null);
 			miscForm = new JPanel();
 
+			checkBox = new JCheckBox("Recurring");
+
+			checkBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (checkBox.isSelected()) {
+			            recur = true;
+			        } else {
+			            recur = false;
+			        }
+				}
+			});
+			
 			miscForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 			miscForm.setLayout(new GridLayout(5, 1));
 			miscForm.setBackground(Color.cyan);
@@ -88,6 +104,8 @@ public class MiscPageForm implements ActionListener{
 			miscDescriptionInput.setLocation(200, 300);
 			miscForm.add(miscDescriptionInput);
 
+			miscForm.add(checkBox);
+			
 			dateSelector = new JLabel("Selected date: ");
 			dateChooser = new JDateChooser();
 
@@ -162,9 +180,10 @@ public class MiscPageForm implements ActionListener{
 
 			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 			this.ledgerItem.setCategory(category);
+			if (recur)
+				this.ledgerItem.setRecurring(new Recurrence());
+			
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "misc");
-
-		
 
 			try {
 				mip.miscTable = DBUtil.query(User.getLoginAs(),"tag","misc");

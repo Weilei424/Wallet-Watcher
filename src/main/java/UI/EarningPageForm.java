@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
+import businessLogic.Recurrence;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -46,14 +48,14 @@ public class EarningPageForm implements ActionListener {
 	private JRadioButton salary;
 	private JRadioButton commission;
 	private JRadioButton sidegig;
-	private JRadioButton sell;
-	private JRadioButton unexpected;
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
 	private String formattedDate;
+	private JCheckBox checkBox;
+	private boolean recur;
 
 	public EarningPageForm() {
 		this.framesCreated = 0;
@@ -65,23 +67,30 @@ public class EarningPageForm implements ActionListener {
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
 		
+		checkBox = new JCheckBox("Recurring");
+
+		checkBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (checkBox.isSelected()) {
+		            recur = true;
+		        } else {
+		            recur = false;
+		        }
+			}
+		});
+		
 		salary = new JRadioButton("Salary");
 		salary.setBorderPainted(true);
 		commission = new JRadioButton("Commission");
 		commission.setBorderPainted(true);
 		sidegig = new JRadioButton("Side Gig");
 		sidegig.setBorderPainted(true);
-		sell = new JRadioButton("Sold Something");
-		sell.setBorderPainted(true);
-		unexpected = new JRadioButton("Unexpected");
-		unexpected.setBorderPainted(true);
 		other = new JRadioButton("Other:");
 		
 		radioGroup.add(salary);
 		radioGroup.add(commission);
 		radioGroup.add(sidegig);
-		radioGroup.add(sell);
-		radioGroup.add(unexpected);
 		radioGroup.add(other);
 		category = "default";
 		
@@ -108,23 +117,7 @@ public class EarningPageForm implements ActionListener {
 					category = "Side Gig";
 			}
 		});
-		
-		unexpected.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (unexpected.isSelected())
-					category = "Unexpected";
-			}
-		});
-		
-		sell.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (sell.isSelected())
-					category = "Sold Something";
-			}
-		});
-		
+
 		other.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,6 +164,8 @@ public class EarningPageForm implements ActionListener {
 		earningDescriptionInput.setSize(100, 20);
 		earningDescriptionInput.setLocation(200, 300);
 		earningPageForm.add(earningDescriptionInput);
+		
+		earningPageForm.add(checkBox);
 
 		dateSelector = new JLabel("Selected date: ");
 		dateChooser = new JDateChooser();
@@ -191,8 +186,6 @@ public class EarningPageForm implements ActionListener {
 		earningPageForm.add(salary);
 		earningPageForm.add(commission);
 		earningPageForm.add(sidegig);
-		earningPageForm.add(sell);
-		earningPageForm.add(unexpected);
 		earningPageForm.add(other);
 		earningPageForm.add(othertext);
 		
@@ -244,6 +237,8 @@ public class EarningPageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
 

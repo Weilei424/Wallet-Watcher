@@ -65,7 +65,8 @@ public class InvestmentPage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
-	
+	Analypage ana;
+	JButton addana;
 
 	public InvestmentPage() {
 		
@@ -100,13 +101,25 @@ public class InvestmentPage implements ActionListener {
 				mainIvFrame.dispose();
 			}
 		});
+		addana = new JButton(new AbstractAction("Generate Graph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(7);
+				ana.anaPageFrame.setVisible(true);
+				mainIvFrame.dispose();
+			}
+		});
+		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
 		mainIvPanel.setLayout(new GridLayout(1, 3));
 		mainIvPanel.add(title);
 		mainIvPanel.add(addInvestment);
+		mainIvPanel.add(addana);
 		mainIvPanel.add(toMenu);
+		
 		mainIvPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete
