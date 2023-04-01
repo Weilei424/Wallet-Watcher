@@ -48,8 +48,6 @@ public class EarningPageForm implements ActionListener {
 	private JRadioButton salary;
 	private JRadioButton commission;
 	private JRadioButton sidegig;
-	private JRadioButton sell;
-	private JRadioButton unexpected;
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
@@ -88,17 +86,11 @@ public class EarningPageForm implements ActionListener {
 		commission.setBorderPainted(true);
 		sidegig = new JRadioButton("Side Gig");
 		sidegig.setBorderPainted(true);
-		sell = new JRadioButton("Sold Something");
-		sell.setBorderPainted(true);
-		unexpected = new JRadioButton("Unexpected");
-		unexpected.setBorderPainted(true);
 		other = new JRadioButton("Other:");
 		
 		radioGroup.add(salary);
 		radioGroup.add(commission);
 		radioGroup.add(sidegig);
-		radioGroup.add(sell);
-		radioGroup.add(unexpected);
 		radioGroup.add(other);
 		category = "default";
 		
@@ -125,23 +117,7 @@ public class EarningPageForm implements ActionListener {
 					category = "Side Gig";
 			}
 		});
-		
-		unexpected.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (unexpected.isSelected())
-					category = "Unexpected";
-			}
-		});
-		
-		sell.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (sell.isSelected())
-					category = "Sold Something";
-			}
-		});
-		
+
 		other.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -210,8 +186,6 @@ public class EarningPageForm implements ActionListener {
 		earningPageForm.add(salary);
 		earningPageForm.add(commission);
 		earningPageForm.add(sidegig);
-		earningPageForm.add(sell);
-		earningPageForm.add(unexpected);
 		earningPageForm.add(other);
 		earningPageForm.add(othertext);
 		

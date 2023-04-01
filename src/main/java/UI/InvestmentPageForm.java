@@ -44,8 +44,6 @@ public class InvestmentPageForm implements ActionListener {
 	private ButtonGroup radioGroup;
 	private JRadioButton stock;
 	private JRadioButton bond;
-	private JRadioButton mfund;
-	private JRadioButton gic;
 	private JRadioButton saving;
 	private JRadioButton other;
 	private JTextField othertext;
@@ -68,18 +66,12 @@ public class InvestmentPageForm implements ActionListener {
 		stock.setBorderPainted(true);
 		bond = new JRadioButton("Bond");
 		bond.setBorderPainted(true);
-		mfund = new JRadioButton("Mutual Fund");
-		mfund.setBorderPainted(true);
-		gic = new JRadioButton("GIC");
-		gic.setBorderPainted(true);
 		saving = new JRadioButton("Saving acc");
 		saving.setBorderPainted(true);
 		other = new JRadioButton("Other:");
 
 		radioGroup.add(stock);
 		radioGroup.add(bond);
-		radioGroup.add(mfund);
-		radioGroup.add(gic);
 		radioGroup.add(saving);
 		radioGroup.add(other);
 		category = "default";
@@ -97,22 +89,6 @@ public class InvestmentPageForm implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (bond.isSelected())
 					category = "Bond";
-			}
-		});
-
-		mfund.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (mfund.isSelected())
-					category = "Mutual Fund";
-			}
-		});
-
-		gic.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (gic.isSelected())
-					category = "GIC";
 			}
 		});
 
@@ -189,8 +165,6 @@ public class InvestmentPageForm implements ActionListener {
 
 		investmentPageForm.add(stock);
 		investmentPageForm.add(bond);
-		investmentPageForm.add(mfund);
-		investmentPageForm.add(gic);
 		investmentPageForm.add(saving);
 		investmentPageForm.add(other);
 		investmentPageForm.add(othertext);
