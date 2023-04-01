@@ -57,6 +57,9 @@ public class NavigatorPage {
 	Settings settingsPage;
 	MainUi logIn;
 
+	//static initializations 
+	User.allbudgets.budgets=BudgetList.getEntries(DBUtilgetBudgetTable(User.getLoginAs));
+	
 	ActionListener allDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			all = new DisplayAllPage();

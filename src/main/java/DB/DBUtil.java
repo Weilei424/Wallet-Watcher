@@ -16,6 +16,7 @@ import java.math.RoundingMode;
 import UI.ErrorPage;
 import businessLogic.Util;
 import persistence.BudgetData;
+import persistence.BudgetList;
 import persistence.Investment;
 import persistence.LedgerItem;
 import persistence.Stock_Fund;
@@ -691,6 +692,29 @@ public final class DBUtil {
 			System.out.println(e.getMessage() + " from combineUsers()");
 		}
 	}
+	private static JTable getBudgetTable(String loginas) {
+		String query = "SELECT ref, amount, date_start, date_end FROM budgets WHERE user = ?";
+	    String[] columnNames = {"ref", "amount", "date_start", "date_end"};
+	    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+	    try (Connection con = DBUtil.getConnection(CLOUD, CLOUDDB);
+	         PreparedStatement pstmt = con.prepareStatement(query)) {
+	        pstmt.setString(1, loginas);
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            Object[] rowData = new Object[4];
+	            rowData[0] = rs.getInt("ref");
+	            rowData[1] = rs.getDouble("amount");
+	            rowData[2] = rs.getDate("date_start");
+	            rowData[3] = rs.getDate("date_end");
+	            model.addRow(rowData);
+	        }
+	    } catch (SQLException e) {
+	        // handle exception
+	    }
+	    JTable table = new JTable(model);
+	    return table;
+	}
 	
 	private static void addBudget(BudgetData newEntry) {
 	    String query = String.format("INSERT INTO BUDGETS(amount, date_start, date_end,user) VALUES (%f, '%s', '%s', '%s')",
@@ -759,6 +783,4 @@ public final class DBUtil {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
 }

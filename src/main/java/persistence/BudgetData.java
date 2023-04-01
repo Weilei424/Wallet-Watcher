@@ -13,7 +13,7 @@ public class BudgetData {
 	public LocalDate endDate;
 	
     public BudgetData(double budget,String endDate) {
-    	this.budget=budget;
+    	this.budget=budget; 
     	startDate=LocalDate.now(); 	
     	this.endDate=DateParser.getDateFromString(endDate);
     	this.ref=counter++;
@@ -27,6 +27,10 @@ public class BudgetData {
 
     public double getMoneyLeft(ExpenseInputData expenseInputData) {
         return budget - expenseInputData.cost;
+    }
+    public String toString()
+    { 
+    	return String.format("budget: %.2f,start-date: %s, end-date: %s\n",this.budget,this.startDate,this.endDate);
     }
     
 
