@@ -66,17 +66,11 @@ public class CardPursePage implements ActionListener {
 	private ButtonGroup buttonGroup;
 	private TableColumnModel colMod;
 	private TableColumn tabCol;
-	private TableColumnModel colMod1;
 	private TableColumn tabCol1;
-	private TableColumnModel colMod2;
 	private TableColumn tabCol2;
-	private TableColumnModel colMod3;
 	private TableColumn tabCol3;
-	private TableColumnModel colMod4;
 	private TableColumn tabCol4;
-	private TableColumnModel colMod5;
 	private TableColumn tabCol5;
-	private TableColumnModel colMod6;
 	private TableColumn tabCol6;
 	Analypage ana;
 	JButton addana;
