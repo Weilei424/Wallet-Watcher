@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -67,13 +68,13 @@ public class Settings {
 	JPanel deleteAccount;
 	
 	//mergeAcc page
-	JTextField passwordInput;
+	JPasswordField passwordInput;
 	JTextField username2Input;
-	JTextField password2Input;
+	JPasswordField password2Input;
 	JTextField newFirstName;
 	JTextField newLastName;
 	JTextField newUserInput; 
-	JTextField newPasswordInput;
+	JPasswordField newPasswordInput;
 	
 	//change passwordPage
 	JTextField oldPasswordInput;
@@ -170,7 +171,7 @@ public class Settings {
 			
 			JLabel passwordText=new JLabel("Please enter this accounts password:");
 			passwordText.setFont(new Font("Arial",Font.PLAIN,18));
-			passwordInput=new JTextField();
+			passwordInput=new JPasswordField();
 			passwordInput.setPreferredSize(new Dimension(400,40));
 			password1.add(passwordText);
 			password1.add(passwordInput);
@@ -185,7 +186,7 @@ public class Settings {
 			
 			JLabel password2Text=new JLabel("Please enter this accounts password:");
 			password2Text.setFont(new Font("Arial",Font.PLAIN,18));
-			password2Input=new JTextField();
+			password2Input=new JPasswordField();
 			password2Input.setPreferredSize(new Dimension(400,40));
 			password2.add(password2Text);
 			password2.add(password2Input);
@@ -215,7 +216,7 @@ public class Settings {
 			
 			JLabel newPassword=new JLabel("What is the new password: "); 
 			newPassword.setFont(new Font("Arial",Font.PLAIN,18));
-			newPasswordInput=new JTextField();
+			newPasswordInput=new JPasswordField();
 			newPasswordInput.setPreferredSize(new Dimension(400,40));
 			newpassword.add(newPassword);
 			newpassword.add(newPasswordInput);
@@ -311,7 +312,7 @@ public class Settings {
 			JPanel newPasswordPanel=new JPanel();
 			JLabel newPassword=new JLabel("What is the new password: "); 
 			newPassword.setFont(new Font("Arial",Font.PLAIN,18));
-			newPasswordInput=new JTextField();
+			newPasswordInput=new JPasswordField();
 			newPasswordInput.setPreferredSize(new Dimension(400,40));
 			newPasswordPanel.add(newPassword);
 			newPasswordPanel.add(newPasswordInput);
@@ -381,7 +382,7 @@ public class Settings {
 			
 			JLabel passwordText=new JLabel("Please enter this accounts password:");
 			passwordText.setFont(new Font("Arial",Font.PLAIN,18));
-			passwordInput=new JTextField();
+			passwordInput=new JPasswordField();
 			passwordInput.setPreferredSize(new Dimension(400,40));
 			
 			password1.add(passwordText);
