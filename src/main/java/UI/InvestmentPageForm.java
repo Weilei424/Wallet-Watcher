@@ -5,12 +5,19 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.*;
 
+import com.toedter.calendar.JDateChooser;
+
 import DB.DBUtil;
 import businessLogic.Util;
+import businessLogic.Recurrence;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -22,10 +29,8 @@ public class InvestmentPageForm implements ActionListener {
 	public JTextField investmentNameInput;
 	private JLabel investmentCost;
 	public JTextField investmentCostInput;
-	// JLabel expenseCategory; *No real code for this yet
 	private JLabel investmentDescription;
 	public JTextField investmentDescriptionInput;
-	private JLabel investmentDate;
 	public JTextField investmentDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
@@ -33,12 +38,15 @@ public class InvestmentPageForm implements ActionListener {
 	private ButtonGroup radioGroup;
 	private JRadioButton stock;
 	private JRadioButton bond;
-	private JRadioButton mfund;
-	private JRadioButton gic;
 	private JRadioButton saving;
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
+	private JLabel dateSelector;
+	private JDateChooser dateChooser;
+	private String formattedDate;
+	private JCheckBox checkBox;
+	private boolean recur;
 
 	public InvestmentPageForm() {
 		investmentPageFrame = new JFrame();
@@ -48,48 +56,70 @@ public class InvestmentPageForm implements ActionListener {
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
 		
+		checkBox = new JCheckBox("Recurring");
+
+		checkBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (checkBox.isSelected()) {
+		            recur = true;
+		        } else {
+		            recur = false;
+		        }
+			}
+		});
+
 		stock = new JRadioButton("Stock");
 		stock.setBorderPainted(true);
 		bond = new JRadioButton("Bond");
 		bond.setBorderPainted(true);
-		mfund = new JRadioButton("Mutual Fund");
-		mfund.setBorderPainted(true);
-		gic = new JRadioButton("GIC");
-		gic.setBorderPainted(true);
 		saving = new JRadioButton("Saving acc");
 		saving.setBorderPainted(true);
 		other = new JRadioButton("Other:");
-		
-		
+
 		radioGroup.add(stock);
 		radioGroup.add(bond);
-		radioGroup.add(mfund);
-		radioGroup.add(gic);
 		radioGroup.add(saving);
 		radioGroup.add(other);
 		category = "default";
+
+		stock.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (stock.isSelected())
+					category = "Stock";
+			}
+		});
+
+		bond.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (bond.isSelected())
+					category = "Bond";
+			}
+		});
+
+		saving.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (saving.isSelected())
+					category = "Saving account";
+			}
+		});
+
 		other.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (other.isSelected()) {
-                    othertext.setEnabled(true);
-                    othertext.requestFocus();
-                    category = othertext.getText();
-                } else if (stock.isSelected()) {
-                	category = "Stock";
-                } else if (bond.isSelected()) {
-                	category = "Bond";
-                } else if (mfund.isSelected()) {
-                	category = "Mutual Fund";
-                } else if (gic.isSelected()) {
-                	category = "GIC";
-                } else if (saving.isSelected()) {
-                	category = "Saving acc";
-                } else {
-                    othertext.setEnabled(false);
-                }
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					othertext.setEnabled(true);
+					othertext.requestFocus();
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
+
 		investmentPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		investmentPageForm.setLayout(new GridLayout(5, 1));
 		investmentPageForm.setBackground(Color.cyan);
@@ -124,24 +154,30 @@ public class InvestmentPageForm implements ActionListener {
 		investmentDescriptionInput.setLocation(200, 300);
 		investmentPageForm.add(investmentDescriptionInput);
 
-		investmentDate = new JLabel("Date:");
-		investmentDate.setSize(100, 20);
-		investmentDate.setLocation(100, 400);
-		investmentPageForm.add(investmentDate);
+		investmentPageForm.add(checkBox);
+		
+		dateSelector = new JLabel("Selected date: ");
+		dateChooser = new JDateChooser();
 
-		investmentDateInput = new JTextField();
-		investmentDateInput.setSize(100, 20);
-		investmentDateInput.setLocation(200, 400);
-		investmentPageForm.add(investmentDateInput);
+		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("date".equals(evt.getPropertyName())) {
+					Date selectedDate = (Date) evt.getNewValue();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					formattedDate = dateFormat.format(selectedDate);
+					dateSelector.setText("Selected date: " + formattedDate);
+				}
+			}
+		});
+		investmentPageForm.add(dateSelector);
+		investmentPageForm.add(dateChooser);
 
 		investmentPageForm.add(stock);
 		investmentPageForm.add(bond);
-		investmentPageForm.add(mfund);
-		investmentPageForm.add(gic);
 		investmentPageForm.add(saving);
 		investmentPageForm.add(other);
 		investmentPageForm.add(othertext);
-		
+
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -183,7 +219,7 @@ public class InvestmentPageForm implements ActionListener {
 
 		String expName = investmentNameInput.getText();
 		String expNote = investmentDescriptionInput.getText();
-		String expDate = investmentDateInput.getText();
+		String expDate = formattedDate;
 
 		try {
 			double expCost = Double.parseDouble(investmentCostInput.getText());
@@ -197,6 +233,8 @@ public class InvestmentPageForm implements ActionListener {
 		}
 
 		this.ledgerItem.setCategory(category);
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
@@ -207,7 +245,7 @@ public class InvestmentPageForm implements ActionListener {
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
 
 		try {
-			ep.investmentTable = DBUtil.query(User.getLoginAs(),"tag","investment");
+			ep.investmentTable = DBUtil.query(User.getLoginAs(), "tag", "investment");
 			ep.mainIvFrame.dispose();
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);

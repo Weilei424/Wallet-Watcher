@@ -46,9 +46,12 @@ public class EarningPage implements ActionListener {
 	private JButton addEarning;
 	private JButton export;
 	private JButton toMenu;
+	
 	private JLabel title;
 	// private JTextArea ledgerInfo;
 	private EarningPageForm epForm;
+	private Analypage ana;
+	private JButton addana;
 	private LedgerItem tempLedgerItem;
 	public JTable earningTable;
 	private JScrollPane earningScroller;
@@ -86,6 +89,21 @@ public class EarningPage implements ActionListener {
 		addEarning = new JButton("Add New Earnings");
 		addEarning.setSize(40, 40);
 		addEarning.addActionListener(this);
+		
+		
+		
+		
+		addana = new JButton(new AbstractAction("Generate Graph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(1);
+				ana.anaPageFrame.setVisible(true);
+				mainEpFrame.dispose();
+			}
+		});
+		
+		
 
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 
@@ -101,6 +119,7 @@ public class EarningPage implements ActionListener {
 		mainEpPanel.setLayout(new GridLayout(1, 3));
 		mainEpPanel.add(title);
 		mainEpPanel.add(addEarning);
+		mainEpPanel.add(addana);
 		mainEpPanel.add(toMenu);
 		mainEpPanel.setBackground(Color.green);
 
@@ -298,8 +317,13 @@ public class EarningPage implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new ExpensePage();
+		new EarningPage();
 	}
+	
+	
+	
+	
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -30,6 +30,8 @@ public class BudgetPage implements ActionListener {
 	private JButton addBudget;
 	private JButton removeExpense;
 	private JButton toMenu;
+	
+	private Analypage anapage;
 	private JLabel title;
 	//private JTextArea ledgerInfo;
 	private BudgetPageForm bpForm;
@@ -39,6 +41,8 @@ public class BudgetPage implements ActionListener {
 	private boolean isRemoved;
 	private NavigatorPage navigation;
 	public static volatile int numberOfBudgets = 0;
+	private JButton addana;
+	private Analypage ana;
 
 	public BudgetPage() {
 		
@@ -66,6 +70,20 @@ public class BudgetPage implements ActionListener {
 		addBudget.setSize(40, 40);
 		addBudget.addActionListener(this);
 		
+		
+		
+		
+		addana = new JButton(new AbstractAction("generategraph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(3);
+				ana.anaPageFrame.setVisible(true);
+				mainEpFrame.dispose();
+			}
+		});
+		
+		
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 			
 			@Override
@@ -81,6 +99,7 @@ public class BudgetPage implements ActionListener {
 		mainEpPanel.add(title);
 		mainEpPanel.add(addBudget);
 		mainEpPanel.add(toMenu);
+		mainEpPanel.add(addana);
 		mainEpPanel.setBackground(Color.green);
 
 		removeExpense = new JButton(new AbstractAction("Remove All Expenses") {

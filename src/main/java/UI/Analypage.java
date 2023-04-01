@@ -1,7 +1,10 @@
 package UI;
 
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,22 +14,30 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
-import businessLogic.Util;
 import persistence.ExpenseInputData;
-import businessLogic.Recurrence;
 import persistence.LedgerItem;
 import persistence.User;
 
-public class ExpensePageForm implements ActionListener {
+public class Analypage implements ActionListener {
 
-	public JFrame expensePageFrame;
-	private JPanel expensePageForm;
-	private JLabel expenseName;
+	public JFrame anaPageFrame;
+	public int source;
+	private JPanel anaPanel;
+	private JPanel anaPanel1;
+	private JLabel title;
 	public JTextField expenseNameInput;
 	private JLabel expenseCost;
 	public JTextField expenseCostInput;
@@ -35,54 +46,164 @@ public class ExpensePageForm implements ActionListener {
 	public JTextField expenseDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
+	private EarningPage earn;
+	private ExpenseInputData expData;
+	
+	
+	
 	private ExpensePage ep;
-	private ButtonGroup radioGroup;
-	private JRadioButton food;
-	private JRadioButton commute;
-	private JRadioButton entertainment;
-	private JRadioButton other;
+	private BudgetPage bp;
+	
+	private NavigatorPage np;
+	
+	private MiscPage mp;
+	private InvestmentPage ip;
+	private CardPursePage cp;
+	private BillPlannerPage bpp;
+	private int framesCreated;
+	private JButton resume;
+	
 	private JTextField othertext;
 	private String category;
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
 	private String formattedDate;
-	private JCheckBox checkBox;
-	private boolean recur;
+	private static final int Earn=1;
+	private static final int Expense=2;
+	
+	private static final int budget=3;
+	private static final int nav=4;
+	public Analypage(int source) {
+		this.source=source;
 
-	public ExpensePageForm() {
-		expensePageFrame = new JFrame();
-		expensePageFrame.setLocationRelativeTo(null);
-		expensePageForm = new JPanel();
-		radioGroup = new ButtonGroup();
-		othertext = new JTextField(20);
-		othertext.setPreferredSize(null);
+		this.framesCreated = 0;
 
-		checkBox = new JCheckBox("Recurring");
+		anaPageFrame = new JFrame();
+		anaPageFrame.setLocationRelativeTo(null);
+		anaPanel = new JPanel();
+		String returns="return to ";
+		String head = "Graph for ";
+		String choice ="";
+		switch(source) {
+		case 1:choice="earning";
+			break;
+		case 2:choice="expense";
+		break;
+		case 3:choice="budget";
+		break;
+		case 4:choice="overall";
+		break;
+		case 5:choice="billplan";
+		break;
+		case 6:choice="cardpurse";
+		break;
+		case 7:choice="investment";
+		break;
+		case 8:choice="misc";
+		break;
+		
+		}
+		//String choice = source==1?"earning":source==2?"expense":"budget";
+		head+=choice;
+		returns+=source!=4?choice:"Navigator";
+		title = new JLabel(head);
+		title.setSize(5, 6);
+		title.setFont(new Font("Tahoma", Font.BOLD, 40));
 
-		checkBox.addActionListener(new ActionListener() {
+		
+		
+		//add button to return to previous
+		resume = new JButton(new AbstractAction(returns) {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (checkBox.isSelected()) {
-		            recur = true;
-		        } else {
-		            recur = false;
-		        }
+				if(source==Earn)
+					earn = new EarningPage();
+				else if(source==Expense)
+					ep = new ExpensePage();
+				else if(source==budget)
+					bp = new BudgetPage();
+				else if(source==nav)
+					np = new NavigatorPage();
+				else if(source==8)
+					mp = new MiscPage();
+				else if(source==7)
+					ip = new InvestmentPage();
+				else if (source==6)
+					cp = new CardPursePage();
+				else 
+					bpp = new BillPlannerPage();
+				anaPageFrame.dispose();
 			}
 		});
+		resume.setSize(40, 40);
 		
+		
+		
+		
+		// This panel holds the top elements including the title and the ability to add
+				// another button
+				anaPanel.setLayout(new GridLayout(1, 3));
+				anaPanel.add(title);
+				//anaPanel.add(addEarning);
+				//anaPanel.add(addana);
+				anaPanel.add(resume);
+				anaPanel.setBackground(Color.green);
+		
+				
+				
+				anaPanel1 = new JPanel();
+				anaPanel1.setLayout(new BorderLayout());
+				anaPanel1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				anaPanel1.add(anaPanel);
+				anaPanel1.setBackground(Color.cyan);
+				
+				
+				
+				
+				anaPageFrame.add(anaPanel1, BorderLayout.NORTH);
+				// mainEpFrame.add(ledgerInfo, BorderLayout.CENTER);
+				//mainEpFrame.add(export, BorderLayout.SOUTH);
+				//mainEpFrame.add(earningScroller, BorderLayout.CENTER);
+				anaPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				anaPageFrame.setTitle("Earnings analyze");
+				anaPageFrame.setSize(1000, 1000);
+				// expensePageFrame.pack(); // when setSize on, then remove pack
+				anaPageFrame.setVisible(true);
+		//radioGroup = new ButtonGroup();
+		
+		//othertext = new JTextField(20);
+		//othertext.setPreferredSize(null);
+
+		
+		/*
+		bills = new JRadioButton("Bills");
+		bills.setBorderPainted(true);
 		food = new JRadioButton("Food");
 		food.setBorderPainted(true);
 		commute = new JRadioButton("Commute");
 		commute.setBorderPainted(true);
 		entertainment = new JRadioButton("Entertainment");
 		entertainment.setBorderPainted(true);
+		financial = new JRadioButton("Financial");
+		financial.setBorderPainted(true);
 		other = new JRadioButton("Other:");
 
+		radioGroup.add(bills);
 		radioGroup.add(food);
 		radioGroup.add(commute);
 		radioGroup.add(entertainment);
+		radioGroup.add(financial);
 		radioGroup.add(other);
 		category = "default";
+
+		bills.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (bills.isSelected())
+					category = "Bills";
+			}
+		});
 
 		food.addActionListener(new ActionListener() {
 			@Override
@@ -108,6 +229,14 @@ public class ExpensePageForm implements ActionListener {
 			}
 		});
 
+		financial.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (financial.isSelected())
+					category = "Financial";
+			}
+		});
+
 		other.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,11 +249,12 @@ public class ExpensePageForm implements ActionListener {
 				}
 			}
 		});
+		*/
 
-		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		expensePageForm.setLayout(new GridLayout(5, 1));
-		expensePageForm.setBackground(Color.cyan);
+		
 
+		
+		/*
 		expenseName = new JLabel("Name of Expense:");
 		expenseName.setSize(100, 20);
 		expenseName.setLocation(100, 100);
@@ -155,8 +285,6 @@ public class ExpensePageForm implements ActionListener {
 		expenseDescriptionInput.setSize(100, 20);
 		expenseDescriptionInput.setLocation(200, 300);
 		expensePageForm.add(expenseDescriptionInput);
-		
-		expensePageForm.add(checkBox);
 
 		dateSelector = new JLabel("Selected date: ");
 		dateChooser = new JDateChooser();
@@ -171,12 +299,17 @@ public class ExpensePageForm implements ActionListener {
 				}
 			}
 		});
+		
+		
+		/*
 		expensePageForm.add(dateSelector);
 		expensePageForm.add(dateChooser);
 
+		expensePageForm.add(bills);
 		expensePageForm.add(food);
 		expensePageForm.add(commute);
 		expensePageForm.add(entertainment);
+		expensePageForm.add(financial);
 		expensePageForm.add(other);
 		expensePageForm.add(othertext);
 
@@ -192,8 +325,9 @@ public class ExpensePageForm implements ActionListener {
 		expensePageFrame.setSize(600, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		expensePageFrame.setVisible(true);
-
+*/
 	}
+	
 
 	public JTextField getExpenseNameInput() {
 		return expenseNameInput;
@@ -211,38 +345,28 @@ public class ExpensePageForm implements ActionListener {
 		return expenseDateInput;
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		/*
 
-		if (expenseNameInput.getText().isEmpty() || expenseCostInput.getText().isEmpty() || expenseDateInput.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(expensePageFrame, "Please enter the name, cost, and date.");
-			return;
+		if (this.framesCreated < 1) {
+			ep = new ExpensePage();
+			ep.mainEpFrame.setVisible(true);
+			ep.getAddExpense().setVisible(false);
+
 		}
 
 		String expName = expenseNameInput.getText();
 		String expNote = expenseDescriptionInput.getText();
 		String expDate = formattedDate;
+		double expCost = Double.parseDouble(expenseCostInput.getText());
 
-		try {
-			double expCost = Double.parseDouble(expenseCostInput.getText());
-			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		} catch (NumberFormatException ex) {
-			new ErrorPage("Amount is not a valid number.", ex);
-			return;
-		} catch (IllegalArgumentException ex) {
-			new ErrorPage("Date is not a valid date.", ex);
-			return;
-		}
-
+		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
-		if (recur)
-			this.ledgerItem.setRecurring(new Recurrence());
-		
+
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
-		if (ep != null) Util.disposeIfExists(ep.mainEpFrame);
-		ep = new ExpensePage();
-		ep.mainEpFrame.setVisible(true);
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
@@ -251,8 +375,12 @@ public class ExpensePageForm implements ActionListener {
 			ep.mainEpFrame.dispose();
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
+			ep.getAddExpense().setVisible(false);
 			expensePageFrame.dispose();
-		} catch(SQLException ignored) {}
+		} catch (SQLException er) {
+		}
+		this.framesCreated++;
+		*/
 	}
 
 	public LedgerItem getLedgerItem() {
@@ -260,7 +388,7 @@ public class ExpensePageForm implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new ExpensePageForm();
+		new Analypage(4);
 	}
 
 }

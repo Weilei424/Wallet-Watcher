@@ -5,9 +5,15 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.*;
+
+import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import businessLogic.Util;
@@ -29,12 +35,77 @@ public class CardPursePageForm implements ActionListener{
 		private JButton submit;
 		private LedgerItem ledgerItem;
 		private CardPursePage cpp;
+		private int framesCreated;
+		private ButtonGroup radioGroup;
+		private JRadioButton debitCard;
+		private JRadioButton creditCard;
+		private JRadioButton pointsCard;
+		private JRadioButton other;
+		private JTextField othertext;
+		private String category;
+		private JLabel dateSelector;
+		private JDateChooser dateChooser;
+		private String formattedDate;
 
 		public CardPursePageForm() {
 			cardPurseFrame = new JFrame();
 			cardPurseFrame.setLocationRelativeTo(null);
 			cardPurseForm = new JPanel();
+			radioGroup = new ButtonGroup();
+			othertext = new JTextField(20);
+			othertext.setPreferredSize(null);
+			
+			debitCard = new JRadioButton("Debit Card");
+			debitCard.setBorderPainted(true);
+			creditCard = new JRadioButton("Credit Card");
+			creditCard.setBorderPainted(true);
+			pointsCard = new JRadioButton("Points Card");
+			pointsCard.setBorderPainted(true);
+			other = new JRadioButton("Other:");
 
+			radioGroup.add(debitCard);
+			radioGroup.add(creditCard);
+			radioGroup.add(pointsCard);
+			radioGroup.add(other);
+			category = "default";
+
+			debitCard.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (debitCard.isSelected())
+						category = "Debit Card";
+				}
+			});
+
+			creditCard.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (creditCard.isSelected())
+						category = "Credit Card";
+				}
+			});
+
+			pointsCard.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (pointsCard.isSelected())
+						category = "Points Card";
+				}
+			});
+
+			other.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (other.isSelected()) {
+						othertext.setEnabled(true);
+						othertext.requestFocus();
+						category = othertext.getText();
+					} else {
+						othertext.setEnabled(false);
+					}
+				}
+			});
+			
 			cardPurseForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 			cardPurseForm.setLayout(new GridLayout(5, 1));
 			cardPurseForm.setBackground(Color.cyan);
@@ -69,15 +140,27 @@ public class CardPursePageForm implements ActionListener{
 			cardDescriptionInput.setLocation(200, 300);
 			cardPurseForm.add(cardDescriptionInput);
 
-			cardDate = new JLabel("Date of payment:");
-			cardDate.setSize(100, 20);
-			cardDate.setLocation(100, 400);
-			cardPurseForm.add(cardDate);
+			dateSelector = new JLabel("Selected date: ");
+			dateChooser = new JDateChooser();
 
-			cardDateInput = new JTextField();
-			cardDateInput.setSize(100, 20);
-			cardDateInput.setLocation(200, 400);
-			cardPurseForm.add(cardDateInput);
+			dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+				public void propertyChange(PropertyChangeEvent evt) {
+					if ("date".equals(evt.getPropertyName())) {
+						Date selectedDate = (Date) evt.getNewValue();
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						formattedDate = dateFormat.format(selectedDate);
+						dateSelector.setText("Selected date: " + formattedDate);
+					}
+				}
+			});
+			cardPurseForm.add(dateSelector);
+			cardPurseForm.add(dateChooser);
+			
+			cardPurseForm.add(debitCard);
+			cardPurseForm.add(creditCard);
+			cardPurseForm.add(pointsCard);
+			cardPurseForm.add(other);
+			cardPurseForm.add(othertext);
 
 			submit = new JButton("Submit");
 			submit.setBounds(20, 10, 100, 50);
@@ -88,7 +171,7 @@ public class CardPursePageForm implements ActionListener{
 			cardPurseFrame.add(cardPurseForm, BorderLayout.CENTER);
 			cardPurseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			cardPurseFrame.setTitle("Add Cards");
-			cardPurseFrame.setSize(400, 300);
+			cardPurseFrame.setSize(600, 400);
 			cardPurseFrame.setVisible(true);
 
 		}
@@ -119,7 +202,7 @@ public class CardPursePageForm implements ActionListener{
 
 			String expName = cardNameInput.getText();
 			String expNote = cardDescriptionInput.getText();
-			String expDate = cardDateInput.getText();
+			String expDate = formattedDate;
 
 			try {
 				double expCost = Double.parseDouble(cardCostInput.getText());
@@ -132,6 +215,7 @@ public class CardPursePageForm implements ActionListener{
 				return;
 			}
 
+			this.ledgerItem.setCategory(category);
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
 
 			if (cpp != null) Util.disposeIfExists(cpp.mainCpPage);

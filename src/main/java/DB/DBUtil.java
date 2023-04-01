@@ -14,7 +14,6 @@ import java.math.RoundingMode;
 
 import UI.ErrorPage;
 import businessLogic.Util;
-import persistence.Investment;
 import persistence.LedgerItem;
 import persistence.Stock_Fund;
 import persistence.User;
@@ -264,9 +263,6 @@ public final class DBUtil {
 		String dateStart = ledger.getDate().toString();
 		if (ledger instanceof Stock_Fund)
 			amount = ((Stock_Fund) ledger).getCurrent();
-		if (ledger instanceof Investment) {
-			Investment obj = (Investment) ledger;
-		}
 		
 		String insert = "INSERT INTO " + username + " (username, item, note, tag, amount, recur, category, date_start) VALUES (?, ?, ?, ?, TRUNCATE(?, 2), ?, ?, ?)";
 		

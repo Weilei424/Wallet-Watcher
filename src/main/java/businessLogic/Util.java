@@ -28,8 +28,7 @@ public final class Util {
 	 * @param 	file is a File instance that is converted from JTable.
 	 */
 	public static void exportToExcel(JTable table, File file) {
-		try {
-			Workbook workbook = new XSSFWorkbook();
+		try (Workbook workbook = new XSSFWorkbook()) {
 			Sheet sheet = workbook.createSheet("Sheet 1");
 
 			Row headerRow = sheet.createRow(0);
@@ -62,6 +61,8 @@ public final class Util {
 		} catch (IOException e) {
 			new ErrorPage(e);
 			e.printStackTrace();
+		} finally {
+			//workbook.close();
 		}
 	}
 

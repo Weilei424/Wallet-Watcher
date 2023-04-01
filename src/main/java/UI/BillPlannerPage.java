@@ -63,6 +63,8 @@ public class BillPlannerPage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
+	Analypage ana;
+	JButton addana;
 
 	public BillPlannerPage() {
 
@@ -96,13 +98,26 @@ public class BillPlannerPage implements ActionListener {
 				mainBpPage.dispose();
 			}
 		});
+		
+		addana = new JButton(new AbstractAction("Generate Graph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(5);
+				ana.anaPageFrame.setVisible(true);
+				mainBpPage.dispose();
+			}
+		});
+		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
 		mainBpPanel.setLayout(new GridLayout(1, 3));
 		mainBpPanel.add(title);
 		mainBpPanel.add(addNewBill);
+		mainBpPanel.add(addana);
 		mainBpPanel.add(toMenu);
+		
 		mainBpPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete
@@ -280,6 +295,26 @@ public class BillPlannerPage implements ActionListener {
 		bpForm.billPlannerPageFrame.setVisible(true);
 		mainBpPage.dispose();
 
+	}
+	
+	public JButton getAddNewBill() {
+		return addNewBill;
+	}
+
+	public JTable getBillTable() {
+		return billTable;
+	}
+
+	public void setBillTable(JTable billTable) {
+		this.billTable = billTable;
+	}
+
+	public JScrollPane getBillScroller() {
+		return billScroller;
+	}
+
+	public void setTempLedgerItem(LedgerItem tempLedgerItem) {
+		this.tempLedgerItem = tempLedgerItem;
 	}
 
 	public static void main(String[] args) {

@@ -26,6 +26,7 @@ dependencies {
 	implementation 'com.formdev:flatlaf:3.0'
 	implementation 'org.apache.poi:poi:5.2.0'
     implementation 'org.apache.poi:poi-ooxml:5.2.0'
+    implementation 'com.toedter:jcalendar:1.4'
 }
 
 // Tasks
