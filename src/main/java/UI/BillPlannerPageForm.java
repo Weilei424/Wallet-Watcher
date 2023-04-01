@@ -39,7 +39,6 @@ public class BillPlannerPageForm implements ActionListener {
 	// JLabel expenseCategory; *No real code for this yet
 	private JLabel billPlannerDescription;
 	public JTextField billPlannerDescriptionInput;
-	private JLabel billPlannerDate;
 	public JTextField billPlannerDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
