@@ -11,15 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -221,6 +213,11 @@ public class InvestmentPageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (investmentNameInput.getText().isEmpty() || investmentCostInput.getText().isEmpty() || dateChooser == null) {
+			JOptionPane.showMessageDialog(investmentPageFrame, "Please enter the name, amount, and date.");
+			return;
+		}
 
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();

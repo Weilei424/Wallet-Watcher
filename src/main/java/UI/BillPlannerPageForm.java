@@ -11,15 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -222,6 +214,11 @@ public class BillPlannerPageForm implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty() || dateChooser == null) {
+			JOptionPane.showMessageDialog(billPlannerPageFrame, "Please enter the name, cost, and date.");
+			return;
+		}
 
 		if (this.framesCreated < 1) {
 			ep = new BillPlannerPage();

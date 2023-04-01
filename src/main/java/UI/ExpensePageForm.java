@@ -216,6 +216,11 @@ public class ExpensePageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if (expenseNameInput.getText().isEmpty() || expenseCostInput.getText().isEmpty() || date == null) {
+			JOptionPane.showMessageDialog(expensePageFrame, "Please enter the name, cost, and date.");
+			return;
+		}
+
 		if (this.framesCreated < 1) {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);

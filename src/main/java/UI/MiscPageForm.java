@@ -11,13 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -164,6 +158,11 @@ public class MiscPageForm implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			if (miscNameInput.getText().isEmpty() || miscCostInput.getText().isEmpty() || dateChooser == null) {
+				JOptionPane.showMessageDialog(miscFrame, "Please enter the name, amount, and date.");
+				return;
+			}
 
 			if (this.framesCreated < 1) {
 				mip = new MiscPage();
