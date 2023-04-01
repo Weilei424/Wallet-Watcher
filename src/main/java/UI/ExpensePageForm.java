@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
+import businessLogic.Recurrence;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 import persistence.User;
@@ -44,17 +46,17 @@ public class ExpensePageForm implements ActionListener {
 	private ExpensePage ep;
 	private int framesCreated;
 	private ButtonGroup radioGroup;
-	private JRadioButton bills;
 	private JRadioButton food;
 	private JRadioButton commute;
 	private JRadioButton entertainment;
-	private JRadioButton financial;
 	private JRadioButton other;
 	private JTextField othertext;
 	private String category;
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
 	private String formattedDate;
+	private JCheckBox checkBox;
+	private boolean recur;
 
 	public ExpensePageForm() {
 
@@ -67,33 +69,32 @@ public class ExpensePageForm implements ActionListener {
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
 
-		bills = new JRadioButton("Bills");
-		bills.setBorderPainted(true);
+		checkBox = new JCheckBox("Recurring");
+
+		checkBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (checkBox.isSelected()) {
+		            recur = true;
+		        } else {
+		            recur = false;
+		        }
+			}
+		});
+		
 		food = new JRadioButton("Food");
 		food.setBorderPainted(true);
 		commute = new JRadioButton("Commute");
 		commute.setBorderPainted(true);
 		entertainment = new JRadioButton("Entertainment");
 		entertainment.setBorderPainted(true);
-		financial = new JRadioButton("Financial");
-		financial.setBorderPainted(true);
 		other = new JRadioButton("Other:");
 
-		radioGroup.add(bills);
 		radioGroup.add(food);
 		radioGroup.add(commute);
 		radioGroup.add(entertainment);
-		radioGroup.add(financial);
 		radioGroup.add(other);
 		category = "default";
-
-		bills.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (bills.isSelected())
-					category = "Bills";
-			}
-		});
 
 		food.addActionListener(new ActionListener() {
 			@Override
@@ -116,14 +117,6 @@ public class ExpensePageForm implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (entertainment.isSelected())
 					category = "Entertainment";
-			}
-		});
-
-		financial.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (financial.isSelected())
-					category = "Financial";
 			}
 		});
 
@@ -174,6 +167,8 @@ public class ExpensePageForm implements ActionListener {
 		expenseDescriptionInput.setSize(100, 20);
 		expenseDescriptionInput.setLocation(200, 300);
 		expensePageForm.add(expenseDescriptionInput);
+		
+		expensePageForm.add(checkBox);
 
 		dateSelector = new JLabel("Selected date: ");
 		dateChooser = new JDateChooser();
@@ -191,11 +186,9 @@ public class ExpensePageForm implements ActionListener {
 		expensePageForm.add(dateSelector);
 		expensePageForm.add(dateChooser);
 
-		expensePageForm.add(bills);
 		expensePageForm.add(food);
 		expensePageForm.add(commute);
 		expensePageForm.add(entertainment);
-		expensePageForm.add(financial);
 		expensePageForm.add(other);
 		expensePageForm.add(othertext);
 
@@ -247,7 +240,9 @@ public class ExpensePageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
-
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
+		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
 		ep.setTempLedgerItem(this.ledgerItem);
