@@ -5,10 +5,11 @@ import java.util.Random;
 
 public final class User {
 	private static String loginAs;
-	private static BudgetData currBudget; 
-	public static LedgerList earnings; 
-	public static LedgerList expenses; 
-	public static LedgerList cards; 
+	public static BudgetData currBudget;
+	public static BudgetList allbudgets=new BudgetList(); 
+	public static LedgerList earnings=new LedgerList(); 
+	public static LedgerList expenses=new LedgerList(); 
+	public static LedgerList cards=new LedgerList(); 
 	
 	
 	private String firstName;

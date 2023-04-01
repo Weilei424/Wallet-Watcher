@@ -9,6 +9,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -19,6 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import DB.DBUtil;
+import persistence.BudgetList;
+import persistence.LedgerList;
 import persistence.User;
 
 public class NavigatorPage {
@@ -59,7 +66,8 @@ public class NavigatorPage {
 	MiscPage misc;
 	Settings settingsPage;
 	MainUi logIn;
-
+	setBudget redirectPage;
+	//static initializations 	
 	ActionListener allDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			all = new DisplayAllPage();
@@ -159,8 +167,50 @@ public class NavigatorPage {
 		}
 		
 	};
-
+	
+	public void init()
+	{ 
+		User.allbudgets.budgets=BudgetList.getEntries(DBUtil.getBudgetTable(User.getLoginAs()));
+		if(User.allbudgets.budgets.size()>0)
+		{ 
+			User.allbudgets.sortByLocalDate();
+			User.currBudget=User.allbudgets.budgets.get(User.allbudgets.budgets.size()-1);
+		}
+		try
+		{
+			User.cards.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "card"));
+			User.earnings.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "earnings"));
+			User.expenses.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "expense"));	
+		}
+		catch(SQLException e)
+		{ 
+		}
+		
+	}
 	public NavigatorPage() {
+		init();
+		if(User.currBudget!=null && User.currBudget.endDate.compareTo(LocalDate.now())>=0)
+		{ 
+			createPage();
+		}
+		else
+		{ 
+			createPage(); 
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+			    @Override
+			    public void run() {
+					redirectPage=new setBudget(); 
+					navigator.dispose();
+					JOptionPane.showMessageDialog(redirectPage.popup, "You don't have a current budget, please enter a budget");
+			    }
+			}, 1000);
+		}
+	}
+	
+	
+	public void createPage()
+	{ 
 		navigator = new JFrame("Navigation Page");
 		navigator.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		navigator.setLocationRelativeTo(null);
@@ -183,20 +233,21 @@ public class NavigatorPage {
 		earningsPage.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 
-		budgetPage = new JButton("Budget");
-		budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
-		
-		
-		
-		addana = new JButton("Analytic");
-		addana.setBorder(new EmptyBorder(10, 10, 10, 10));
-		
-		
-		
-		navPage = new JLabel("Navigation Page");
-		navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
-		
-	    label.add(navPage, BorderLayout.CENTER); // add the label to the CENTER of the BorderLayout
+
+	budgetPage = new JButton("Budget");
+	budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+	
+	
+	
+	addana = new JButton("Analytic");
+	addana.setBorder(new EmptyBorder(10, 10, 10, 10));
+	
+	
+	
+	navPage = new JLabel("Navigation Page");
+	navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
+	
+    label.add(navPage, BorderLayout.CENTER); // add the label to the CENTER of the BorderLayout
 
 		cardPage = new JButton("Card Purse");
 		cardPage.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -218,29 +269,31 @@ public class NavigatorPage {
 
 		navPage.setBorder(new EmptyBorder(0, 550, 0, 0));
 
-		allPage.addActionListener(allDirect);
-		budgetPage.addActionListener(budgetDirect);
-		cardPage.addActionListener(cardPurseDirect);
-		earningsPage.addActionListener(earningDirect);
-		expensePage.addActionListener(expenseDirect);
-		investmentPage.addActionListener(investmentDirect);
-		addana.addActionListener(Analyzedirect);
-		billPage.addActionListener(billPlannerDirect);
-		miscPage.addActionListener(miscPlannerDirect);
-		settings.addActionListener(settingsDirect);
-		logOut.addActionListener(logOutDirect);
 
-		buttons.add(allPage);
-		buttons.add(budgetPage);
-		buttons.add(cardPage);
-		buttons.add(expensePage);
-		buttons.add(earningsPage);
-		buttons.add(investmentPage);
-		buttons.add(billPage);
-		buttons.add(miscPage);
-		buttons.add(settings);
-		buttons.add(logOut);
-		buttons.add(addana);
+	allPage.addActionListener(allDirect);
+	budgetPage.addActionListener(budgetDirect);
+	cardPage.addActionListener(cardPurseDirect);
+	earningsPage.addActionListener(earningDirect);
+	expensePage.addActionListener(expenseDirect);
+	investmentPage.addActionListener(investmentDirect);
+	addana.addActionListener(Analyzedirect);
+	billPage.addActionListener(billPlannerDirect);
+	miscPage.addActionListener(miscPlannerDirect);
+	settings.addActionListener(settingsDirect);
+	logOut.addActionListener(logOutDirect);
+
+
+	buttons.add(allPage);
+	buttons.add(budgetPage);
+	buttons.add(cardPage);
+	buttons.add(expensePage);
+	buttons.add(earningsPage);
+	buttons.add(investmentPage);
+	buttons.add(billPage);
+	buttons.add(miscPage);
+	buttons.add(settings);
+	buttons.add(logOut);
+	buttons.add(addana);
 
 		buttons.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
 	   
@@ -249,9 +302,5 @@ public class NavigatorPage {
 	    navigator.getContentPane().add(buttons, BorderLayout.CENTER);
 		navigator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigator.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		new NavigatorPage();
 	}
 }
