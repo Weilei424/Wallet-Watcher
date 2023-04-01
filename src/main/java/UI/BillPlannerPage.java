@@ -99,7 +99,7 @@ public class BillPlannerPage implements ActionListener {
 			}
 		});
 		
-		addana = new JButton(new AbstractAction("generategraph") {
+		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -115,8 +115,9 @@ public class BillPlannerPage implements ActionListener {
 		mainBpPanel.setLayout(new GridLayout(1, 3));
 		mainBpPanel.add(title);
 		mainBpPanel.add(addNewBill);
-		mainBpPanel.add(toMenu);
 		mainBpPanel.add(addana);
+		mainBpPanel.add(toMenu);
+		
 		mainBpPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete

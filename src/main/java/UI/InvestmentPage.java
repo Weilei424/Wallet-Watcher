@@ -101,7 +101,7 @@ public class InvestmentPage implements ActionListener {
 				mainIvFrame.dispose();
 			}
 		});
-		addana = new JButton(new AbstractAction("generategraph") {
+		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,6 +119,7 @@ public class InvestmentPage implements ActionListener {
 		mainIvPanel.add(addInvestment);
 		mainIvPanel.add(addana);
 		mainIvPanel.add(toMenu);
+		
 		mainIvPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete
