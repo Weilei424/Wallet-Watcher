@@ -125,7 +125,7 @@ public class EarningPageForm implements ActionListener {
 		
 		earningPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		earningPageForm.setLayout(new GridLayout(5, 1));
-		earningPageForm.setBackground(Color.cyan);
+		earningPageForm.setBackground(new Color(137, 208, 240));
 
 		earningName = new JLabel("Name of Earning:");
 		earningName.setSize(100, 20);

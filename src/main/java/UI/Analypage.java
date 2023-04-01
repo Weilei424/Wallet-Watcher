@@ -172,7 +172,7 @@ public class Analypage implements ActionListener {
 				//anaPanel.add(addEarning);
 				//anaPanel.add(addana);
 				anaPanel.add(resume);
-				anaPanel.setBackground(Color.green);
+				anaPanel.setBackground(new Color(144, 238, 144));
 		
 				
 				
@@ -180,7 +180,7 @@ public class Analypage implements ActionListener {
 				anaPanel1.setLayout(new BorderLayout());
 				anaPanel1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 				anaPanel1.add(anaPanel);
-				anaPanel1.setBackground(Color.cyan);
+				anaPanel1.setBackground(new Color(144, 238, 144));
 				
 				
 				

@@ -93,7 +93,7 @@ public class BudgetPageForm implements ActionListener {
 
 		budgetPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		budgetPageForm.setLayout(new GridLayout(6, 2));
-		budgetPageForm.setBackground(Color.cyan);
+		budgetPageForm.setBackground(new Color(137, 208, 240));
 
 		budgetName = new JLabel("Name of Budget:");
 		budgetName.setSize(100, 20);
