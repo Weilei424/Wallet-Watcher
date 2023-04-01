@@ -42,7 +42,6 @@ public class ExpensePageForm implements ActionListener {
 	public JTextField expenseDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
-	private ExpenseInputData expData;
 	private ExpensePage ep;
 	private int framesCreated;
 	private ButtonGroup radioGroup;
