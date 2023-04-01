@@ -35,9 +35,11 @@ public class NavigatorPage {
 	JButton investmentPage;
 	JButton billPage;
 	JButton miscPage;
+	
 	JButton settings; 
 	JButton logOut;
-	
+	Analypage ana;
+	JButton addana;
 	
 	//buttons for account management page
 	JButton changePassword; 
@@ -53,6 +55,7 @@ public class NavigatorPage {
 	CardPursePage cardPurse;
 	InvestmentPage investment;
 	BillPlannerPage bill;
+	
 	MiscPage misc;
 	Settings settingsPage;
 	MainUi logIn;
@@ -115,6 +118,20 @@ public class NavigatorPage {
       }
 	};
 	
+	ActionListener Analyzedirect = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			ana = new Analypage(4);
+			ana.anaPageFrame.setVisible(true);
+			navigator.dispose();
+		}
+		
+		
+		
+		
+	};
+	
+	
+	
 	ActionListener miscPlannerDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			misc = new MiscPage();
@@ -168,6 +185,14 @@ public class NavigatorPage {
 
 		budgetPage = new JButton("Budget");
 		budgetPage.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		
+		
+		addana = new JButton("Analytic");
+		addana.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		
+		
 		navPage = new JLabel("Navigation Page");
 		navPage.setFont(new Font(navPage.getFont().getFontName(), Font.PLAIN, 24));
 		
@@ -199,6 +224,7 @@ public class NavigatorPage {
 		earningsPage.addActionListener(earningDirect);
 		expensePage.addActionListener(expenseDirect);
 		investmentPage.addActionListener(investmentDirect);
+		addana.addActionListener(Analyzedirect);
 		billPage.addActionListener(billPlannerDirect);
 		miscPage.addActionListener(miscPlannerDirect);
 		settings.addActionListener(settingsDirect);
@@ -214,6 +240,7 @@ public class NavigatorPage {
 		buttons.add(miscPage);
 		buttons.add(settings);
 		buttons.add(logOut);
+		buttons.add(addana);
 
 		buttons.setBorder(BorderFactory.createEmptyBorder(100,0,0,0));
 	   

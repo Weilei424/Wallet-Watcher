@@ -62,6 +62,8 @@ public class CardPursePage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
+	Analypage ana;
+	JButton addana;
 
 	public CardPursePage() {
 
@@ -92,6 +94,16 @@ public class CardPursePage implements ActionListener {
 				mainCpPage.dispose();
 			}
 		});
+		addana = new JButton(new AbstractAction("generategraph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(6);
+				ana.anaPageFrame.setVisible(true);
+				mainCpPage.dispose();
+			}
+		});
+		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
@@ -99,6 +111,7 @@ public class CardPursePage implements ActionListener {
 		mainCpPanel.add(title);
 		mainCpPanel.add(addNewCard);
 		mainCpPanel.add(toMenu);
+		mainCpPanel.add(addana);
 		mainCpPanel.add(cardScroller);
 		mainCpPanel.setBackground(Color.green);
 
