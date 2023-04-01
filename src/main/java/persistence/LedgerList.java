@@ -11,10 +11,9 @@ import businessLogic.Recurrence;
 
 public class LedgerList {
 	
-	public List<LedgerItem> items;
-	public LedgerList(List<LedgerItem> item)
+	public List<LedgerItem> items=new ArrayList<>();
+	public LedgerList()
 	{ 
-		items=item;
 	}
 	public static List<LedgerItem> getEntries(JTable table)
 	{ 

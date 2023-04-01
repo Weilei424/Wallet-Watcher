@@ -12,7 +12,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -24,11 +27,29 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.Year;
+
+
+import org.jfree.chart.ChartPanel;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
+import persistence.LedgerList;
 import persistence.User;
 
 public class Analypage implements ActionListener {
@@ -73,6 +94,9 @@ public class Analypage implements ActionListener {
 	
 	private static final int budget=3;
 	private static final int nav=4;
+	
+  
+	
 	public Analypage(int source) {
 		this.source=source;
 
@@ -170,163 +194,22 @@ public class Analypage implements ActionListener {
 				anaPageFrame.setSize(1000, 1000);
 				// expensePageFrame.pack(); // when setSize on, then remove pack
 				anaPageFrame.setVisible(true);
-		//radioGroup = new ButtonGroup();
+				
 		
-		//othertext = new JTextField(20);
-		//othertext.setPreferredSize(null);
-
-		
-		/*
-		bills = new JRadioButton("Bills");
-		bills.setBorderPainted(true);
-		food = new JRadioButton("Food");
-		food.setBorderPainted(true);
-		commute = new JRadioButton("Commute");
-		commute.setBorderPainted(true);
-		entertainment = new JRadioButton("Entertainment");
-		entertainment.setBorderPainted(true);
-		financial = new JRadioButton("Financial");
-		financial.setBorderPainted(true);
-		other = new JRadioButton("Other:");
-
-		radioGroup.add(bills);
-		radioGroup.add(food);
-		radioGroup.add(commute);
-		radioGroup.add(entertainment);
-		radioGroup.add(financial);
-		radioGroup.add(other);
-		category = "default";
-
-		bills.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (bills.isSelected())
-					category = "Bills";
-			}
-		});
-
-		food.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (food.isSelected())
-					category = "Food";
-			}
-		});
-
-		commute.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (commute.isSelected())
-					category = "Commute";
-			}
-		});
-
-		entertainment.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (entertainment.isSelected())
-					category = "Entertainment";
-			}
-		});
-
-		financial.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (financial.isSelected())
-					category = "Financial";
-			}
-		});
-
-		other.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (other.isSelected()) {
-					othertext.setEnabled(true);
-					othertext.requestFocus();
-					category = othertext.getText();
-				} else {
-					othertext.setEnabled(false);
-				}
-			}
-		});
-		*/
-
-		
-
-		
-		/*
-		expenseName = new JLabel("Name of Expense:");
-		expenseName.setSize(100, 20);
-		expenseName.setLocation(100, 100);
-		expensePageForm.add(expenseName);
-
-		expenseNameInput = new JTextField();
-		// expenseNameInput.setBounds(200, 100, 100, 20);
-		expenseNameInput.setSize(100, 20);
-		expenseNameInput.setLocation(300, 100);
-		expensePageForm.add(expenseNameInput);
-
-		expenseCost = new JLabel("Cost of Expense:");
-		expenseCost.setSize(100, 20);
-		expenseCost.setLocation(100, 200);
-		expensePageForm.add(expenseCost);
-
-		expenseCostInput = new JTextField();
-		expenseCostInput.setSize(100, 20);
-		expenseCostInput.setLocation(200, 200);
-		expensePageForm.add(expenseCostInput);
-
-		expenseDescription = new JLabel("Description of Expense:");
-		expenseDescription.setSize(100, 20);
-		expenseDescription.setLocation(100, 300);
-		expensePageForm.add(expenseDescription);
-
-		expenseDescriptionInput = new JTextField();
-		expenseDescriptionInput.setSize(100, 20);
-		expenseDescriptionInput.setLocation(200, 300);
-		expensePageForm.add(expenseDescriptionInput);
-
-		dateSelector = new JLabel("Selected date: ");
-		dateChooser = new JDateChooser();
-
-		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				if ("date".equals(evt.getPropertyName())) {
-					Date selectedDate = (Date) evt.getNewValue();
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-					formattedDate = dateFormat.format(selectedDate);
-					dateSelector.setText("Selected date: " + formattedDate);
-				}
-			}
-		});
-		
-		
-		/*
-		expensePageForm.add(dateSelector);
-		expensePageForm.add(dateChooser);
-
-		expensePageForm.add(bills);
-		expensePageForm.add(food);
-		expensePageForm.add(commute);
-		expensePageForm.add(entertainment);
-		expensePageForm.add(financial);
-		expensePageForm.add(other);
-		expensePageForm.add(othertext);
-
-		submit = new JButton("Submit");
-		submit.setBounds(20, 10, 100, 50);
-		submit.addActionListener(this);
-		expensePageForm.add(submit);
-
-		// Adding the expense form panel into the main frame
-		expensePageFrame.add(expensePageForm, BorderLayout.CENTER);
-		expensePageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		expensePageFrame.setTitle("Add Expense");
-		expensePageFrame.setSize(600, 400);
-		// expensePageFrame.pack(); // when setSize on, then remove pack
-		expensePageFrame.setVisible(true);
-*/
 	}
+	public void pieChartCategory(LedgerList list)
+	{ 
+		
+	}
+	public void histogramMonthlyExpense(LedgerList list)
+	{ 
+		
+	}
+	public void lineGraphDaily(LedgerList list)
+	{ 
+		
+	}
+
 	
 
 	public JTextField getExpenseNameInput() {
@@ -348,39 +231,7 @@ public class Analypage implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*
-
-		if (this.framesCreated < 1) {
-			ep = new ExpensePage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddExpense().setVisible(false);
-
-		}
-
-		String expName = expenseNameInput.getText();
-		String expNote = expenseDescriptionInput.getText();
-		String expDate = formattedDate;
-		double expCost = Double.parseDouble(expenseCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
-
-		ep.setTempLedgerItem(this.ledgerItem);
-		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
-
-		try {
-			ep.expenseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");
-			ep.mainEpFrame.dispose();
-			ep = new ExpensePage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddExpense().setVisible(false);
-			expensePageFrame.dispose();
-		} catch (SQLException er) {
-		}
-		this.framesCreated++;
-		*/
+	
 	}
 
 	public LedgerItem getLedgerItem() {

@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import DB.DBUtil;
 import persistence.BudgetData;
 import persistence.User;
 
@@ -89,6 +90,8 @@ public class setBudget {
 	    	if(ChronoUnit.DAYS.between(curr,endDate)>0L)
 	    	{
 	    		User.setBudget(new BudgetData(budgetAmount,endDate.toString()));
+	    		DBUtil.addBudget(new BudgetData(budgetAmount,endDate.toString()));
+	   
 	    		nav=new NavigatorPage();
 	    		popup.dispose();
 	    	}

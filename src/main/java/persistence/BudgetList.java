@@ -12,7 +12,7 @@ public class BudgetList {
 	
 	public BudgetList()
 	{ 
-		
+	
 	}
 	public static List<BudgetData> getEntries(JTable table)
 	{ 
