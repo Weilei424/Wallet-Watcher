@@ -33,6 +33,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import DB.DBUtil;
 import businessLogic.Util;
@@ -62,6 +64,14 @@ public class MiscPage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
+	private TableColumnModel colMod;
+	private TableColumn tabCol;
+	private TableColumn tabCol1;
+	private TableColumn tabCol2;
+	private TableColumn tabCol3;
+	private TableColumn tabCol4;
+	private TableColumn tabCol5;
+	private TableColumn tabCol6;
 	Analypage ana;
 	JButton addana;
 
@@ -72,6 +82,34 @@ public class MiscPage implements ActionListener {
 		} catch (SQLException er) {
 		}
 		miscScroller = new JScrollPane(miscTable);
+		
+		colMod = miscTable.getColumnModel();
+		tabCol = colMod.getColumn(0);
+		tabCol.setPreferredWidth(150);
+		
+		//colMod1 = cardPurseTable.getColumnModel();
+		tabCol1 = colMod.getColumn(1);
+		tabCol1.setPreferredWidth(150);
+		
+		//colMod2 = cardPurseTable.getColumnModel();
+		tabCol2 = colMod.getColumn(2);
+		tabCol2.setPreferredWidth(150);
+		
+		//colMod3 = cardPurseTable.getColumnModel();
+		tabCol3 = colMod.getColumn(3);
+		tabCol3.setPreferredWidth(150);
+		
+		//colMod4 = cardPurseTable.getColumnModel();
+		tabCol4 = colMod.getColumn(4);
+		tabCol4.setPreferredWidth(150);
+		
+		//colMod5 = cardPurseTable.getColumnModel();
+		tabCol5 = colMod.getColumn(5);
+		tabCol5.setPreferredWidth(130);
+		
+		//colMod6 = cardPurseTable.getColumnModel();
+		tabCol6 = colMod.getColumn(6);
+		tabCol6.setPreferredWidth(90);
 
 		mainMiPage = new JFrame();
 		mainMiPage.setLocationRelativeTo(null);
@@ -288,9 +326,9 @@ public class MiscPage implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		new CardPursePage();
-	}
+//	public static void main(String[] args) {
+//		new CardPursePage();
+//	}
 
 	public JButton getAddNewCard() {
 		return addNewMisc;
