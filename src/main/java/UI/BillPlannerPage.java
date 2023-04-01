@@ -51,7 +51,7 @@ public class BillPlannerPage implements ActionListener {
 //	private JTextArea billInfo;
 	private BillPlannerPageForm bpForm;
 	private LedgerItem tempLedgerItem;
-	private JTable billTable;
+	public JTable billTable;
 	public JScrollPane billScroller;
 	private NavigatorPage nav;
 	private JPopupMenu popupMenu;

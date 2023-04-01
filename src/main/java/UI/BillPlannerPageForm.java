@@ -29,7 +29,7 @@ public class BillPlannerPageForm implements ActionListener {
 	public JTextField billPlannerDateInput;
 	private JButton submit;
 	private LedgerItem ledgerItem;
-	private InvestmentPage ep;
+	private BillPlannerPage ep;
 	private ButtonGroup radioGroup;
 	private JRadioButton utility;
 	private JRadioButton creditCard;
@@ -186,17 +186,15 @@ public class BillPlannerPageForm implements ActionListener {
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
-		if (ep != null) Util.disposeIfExists(ep.mainIvFrame);
-		ep = new InvestmentPage();
-		ep.mainIvFrame.setVisible(true);
-		ep.setTempLedgerItem(this.ledgerItem);
-		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
+		if (ep != null) Util.disposeIfExists(ep.mainBpPage);
+		ep = new BillPlannerPage();
+		ep.mainBpPage.setVisible(true);
 
 		try {
-			ep.investmentTable = DBUtil.query(User.getLoginAs(),"tag","bill");
-			ep.mainIvFrame.dispose();
-			ep = new InvestmentPage();
-			ep.mainIvFrame.setVisible(true);
+			ep.billTable = DBUtil.query(User.getLoginAs(),"tag","bill");
+			ep.mainBpPage.dispose();
+			ep = new BillPlannerPage();
+			ep.mainBpPage.setVisible(true);
 			billPlannerPageFrame.dispose();
 		} catch (SQLException ignored) {}
 	}
