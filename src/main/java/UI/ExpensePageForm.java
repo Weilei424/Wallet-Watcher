@@ -221,19 +221,18 @@ public class ExpensePageForm implements ActionListener {
 			return;
 		}
 
-		if (this.framesCreated < 1) {
-			ep = new ExpensePage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddExpense().setVisible(false);
-
-		}
-
 		String expName = expenseNameInput.getText();
 		String expNote = expenseDescriptionInput.getText();
 		String expDate = formattedDate;
-		double expCost = Double.parseDouble(expenseCostInput.getText());
 
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		try {
+			double expCost = Double.parseDouble(expenseCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
 		this.ledgerItem.setCategory(category);
 		if (recur)
 			this.ledgerItem.setRecurring(new Recurrence());
@@ -242,6 +241,13 @@ public class ExpensePageForm implements ActionListener {
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
+
+		if (this.framesCreated < 1) {
+			ep = new ExpensePage();
+			ep.mainEpFrame.setVisible(true);
+			ep.getAddExpense().setVisible(false);
+
+		}
 
 		try {
 			ep.expenseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");

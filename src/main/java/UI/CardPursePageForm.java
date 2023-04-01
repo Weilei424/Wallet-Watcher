@@ -201,23 +201,27 @@ public class CardPursePageForm implements ActionListener{
 				return;
 			}
 
+			String expName = cardNameInput.getText();
+			String expNote = cardDescriptionInput.getText();
+			String expDate = formattedDate;
+
+			try {
+				double expCost = Double.parseDouble(cardCostInput.getText());
+				this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			} catch (NumberFormatException ex) {
+				new ErrorPage("Amount is not a valid number.", ex);
+				return;
+			}
+
+			this.ledgerItem.setCategory(category);
+			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
+
 			if (this.framesCreated < 1) {
 				cpp = new CardPursePage();
 				cpp.mainCpPage.setVisible(true);
 				cpp.getAddNewCard().setVisible(false);
-				
+
 			}
-
-			String expName = cardNameInput.getText();
-			String expNote = cardDescriptionInput.getText();
-			String expDate = formattedDate;
-			double expCost = Double.parseDouble(cardCostInput.getText());
-
-			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-			this.ledgerItem.setCategory(category);
-			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
-
-		
 
 			try {
 				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");

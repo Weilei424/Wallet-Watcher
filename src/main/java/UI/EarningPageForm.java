@@ -220,19 +220,18 @@ public class EarningPageForm implements ActionListener {
 			return;
 		}
 
-		if (this.framesCreated < 1) {
-			ep = new EarningPage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddEarning().setVisible(false);
-			
-		}
-
 		String expName = earningNameInput.getText();
 		String expNote = earningDescriptionInput.getText();
 		String expDate = formattedDate;
-		double expCost = Double.parseDouble(earningCostInput.getText());
 
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		try {
+			double expCost = Double.parseDouble(earningCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
 		this.ledgerItem.setCategory(category);
 		if (recur)
 			this.ledgerItem.setRecurring(new Recurrence());
@@ -241,6 +240,13 @@ public class EarningPageForm implements ActionListener {
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);
+
+		if (this.framesCreated < 1) {
+			ep = new EarningPage();
+			ep.mainEpFrame.setVisible(true);
+			ep.getAddEarning().setVisible(false);
+
+		}
 
 		try {
 			ep.earningTable = DBUtil.query(User.getLoginAs(),"tag","earning");

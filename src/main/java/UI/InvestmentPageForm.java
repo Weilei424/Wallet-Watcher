@@ -219,19 +219,18 @@ public class InvestmentPageForm implements ActionListener {
 			return;
 		}
 
-		if (this.framesCreated < 1) {
-			ep = new InvestmentPage();
-			ep.mainIvFrame.setVisible(true);
-			ep.getAddInvestment().setVisible(false);
-
-		}
-
 		String expName = investmentNameInput.getText();
 		String expNote = investmentDescriptionInput.getText();
 		String expDate = formattedDate;
-		double expCost = Double.parseDouble(investmentCostInput.getText());
 
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		try {
+			double expCost = Double.parseDouble(investmentCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
 		this.ledgerItem.setCategory(category);
 		if (recur)
 			this.ledgerItem.setRecurring(new Recurrence());
@@ -240,6 +239,13 @@ public class InvestmentPageForm implements ActionListener {
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
+
+		if (this.framesCreated < 1) {
+			ep = new InvestmentPage();
+			ep.mainIvFrame.setVisible(true);
+			ep.getAddInvestment().setVisible(false);
+
+		}
 
 		try {
 			ep.investmentTable = DBUtil.query(User.getLoginAs(), "tag", "investment");
