@@ -188,7 +188,7 @@ public class BudgetPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (budgetNameInput.getText().isEmpty() || budgetCostInput.getText().isEmpty() || date == null) {
+		if (budgetNameInput.getText().isEmpty() || budgetCostInput.getText().isEmpty() || date.getDate() == null) {
 			JOptionPane.showMessageDialog(budgetPageFrame, "Please enter the name, amount, and date.");
 			return;
 		}

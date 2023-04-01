@@ -215,7 +215,7 @@ public class EarningPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (earningNameInput.getText().isEmpty() || earningCostInput.getText().isEmpty() || dateChooser == null) {
+		if (earningNameInput.getText().isEmpty() || earningCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
 			JOptionPane.showMessageDialog(earningPageFrame, "Please enter the name, amount, and date.");
 			return;
 		}

@@ -196,7 +196,7 @@ public class CardPursePageForm implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (cardNameInput.getText().isEmpty() || cardCostInput.getText().isEmpty() || dateChooser == null) {
+			if (cardNameInput.getText().isEmpty() || cardCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
 				JOptionPane.showMessageDialog(cardPurseFrame, "Please enter the name, balance, and date.");
 				return;
 			}

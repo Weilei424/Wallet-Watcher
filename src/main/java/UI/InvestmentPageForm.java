@@ -214,7 +214,7 @@ public class InvestmentPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (investmentNameInput.getText().isEmpty() || investmentCostInput.getText().isEmpty() || dateChooser == null) {
+		if (investmentNameInput.getText().isEmpty() || investmentCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
 			JOptionPane.showMessageDialog(investmentPageFrame, "Please enter the name, amount, and date.");
 			return;
 		}

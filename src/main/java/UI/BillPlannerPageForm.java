@@ -215,7 +215,7 @@ public class BillPlannerPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty() || dateChooser == null) {
+		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
 			JOptionPane.showMessageDialog(billPlannerPageFrame, "Please enter the name, cost, and date.");
 			return;
 		}

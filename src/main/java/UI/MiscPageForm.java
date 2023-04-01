@@ -159,7 +159,7 @@ public class MiscPageForm implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (miscNameInput.getText().isEmpty() || miscCostInput.getText().isEmpty() || dateChooser == null) {
+			if (miscNameInput.getText().isEmpty() || miscCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
 				JOptionPane.showMessageDialog(miscFrame, "Please enter the name, amount, and date.");
 				return;
 			}
