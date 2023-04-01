@@ -1,11 +1,7 @@
 package persistence;
 
 import java.nio.charset.Charset;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Random;
-
-import businessLogic.Util;
 
 public final class User {
 	private static String loginAs;

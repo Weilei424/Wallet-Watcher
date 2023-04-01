@@ -82,6 +82,6 @@ public class LedgerItem {
 	}
 
 	public String toString() { 
-		return String.format( "%s: %s %f \n \t %s \n",this.date, this.itemName, this.amount, this.note);
+		return String.format( "%s: %s %f \n \t %s \n", this.date, this.itemName, this.amount, this.note);
 	}
 }
