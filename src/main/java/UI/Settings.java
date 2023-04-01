@@ -484,26 +484,30 @@ public class Settings {
 		button1=new JPanel();
 		toAcc=new JButton("Account Settings");
 		toNav=new JButton("Back to Nav Page");
-		themeLabel = new JLabel("Theme:");
-		String[] themeList = {"Light", "Dark", "macOS Light", "macOS Dark", "IntelliJ Light", "Darcula"};
-		themes = new JComboBox<>(themeList);
-		themes.setSelectedIndex(curIndex);
 		toNav.setPreferredSize(new Dimension(500,100));
 		toAcc.setPreferredSize(new Dimension(500,100));
 		
 		
 		toAcc.addActionListener(AccDirect);
 		toNav.addActionListener(NavDirect);
-		themes.addActionListener(themeListener);
 		button1.add(toNav);
 		button1.add(toAcc);
-		button1.add(themeLabel);
-		button1.add(themes);
+
+		button2 = new JPanel();
+		themeLabel = new JLabel("Theme:");
+		String[] themeList = {"Light", "Dark", "macOS Light", "macOS Dark", "IntelliJ Light", "Darcula"};
+		themes = new JComboBox<>(themeList);
+		themes.setSelectedIndex(curIndex);
+
+		themes.addActionListener(themeListener);
+		button2.add(themeLabel);
+		button2.add(themes);
 			
 		topMost=new JPanel();
 		topMost.setLayout(new GridLayout(5,3,1,1));
 		topMost.add(mainPage);
 		topMost.add(button1);
+		topMost.add(button2);
 		
 		settingsFrame.add(topMost);
 		settingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
