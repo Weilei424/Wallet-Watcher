@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
+import businessLogic.Recurrence;
 import persistence.LedgerItem;
 import persistence.User;
 
@@ -53,6 +55,8 @@ public class BillPlannerPageForm implements ActionListener {
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
 	private String formattedDate;
+	private JCheckBox checkBox;
+	private boolean recur;
 
 	public BillPlannerPageForm() {
 		this.framesCreated = 0;
@@ -63,7 +67,20 @@ public class BillPlannerPageForm implements ActionListener {
 		radioGroup = new ButtonGroup();
 		othertext = new JTextField(20);
 		othertext.setPreferredSize(null);
+		
+		checkBox = new JCheckBox("Recurring");
 
+		checkBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (checkBox.isSelected()) {
+		            recur = true;
+		        } else {
+		            recur = false;
+		        }
+			}
+		});
+		
 		utility = new JRadioButton("Utility");
 		utility.setBorderPainted(true);
 		creditCard = new JRadioButton("Credit Card");
@@ -148,6 +165,8 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerDescriptionInput.setSize(100, 20);
 		billPlannerDescriptionInput.setLocation(200, 300);
 		billPlannerPageForm.add(billPlannerDescriptionInput);
+		
+		billPlannerPageForm.add(checkBox);
 
 		dateSelector = new JLabel("Selected date: ");
 		dateChooser = new JDateChooser();
@@ -219,6 +238,8 @@ public class BillPlannerPageForm implements ActionListener {
 
 		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
 		this.ledgerItem.setCategory(category);
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
 
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
