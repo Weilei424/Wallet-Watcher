@@ -308,4 +308,15 @@ Mar 31st 17:16:49
 	CardPursePageForm class, EarningPageForm class,
 	ExpensePageForm class, InvestmentPageForm class,
 	MiscPageForm class.
+===============================================
+Mar 31st 22:34:46
+	recurrence checkbox added to: BillPlannerPageForm
+	class, EarningPageForm class, ExpensePageForm Class,
+	InvestmentPageForm class, MiscPageForm class.
 	
+	rearranged category selection for:
+	ExpensePageForm class, EarningPageForm class,
+	InvestmentPageForm class.
+===============================================
+Apr 1st 00:31:48
+	removed unused imports and variables for some classes.
