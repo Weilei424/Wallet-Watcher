@@ -33,6 +33,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import DB.DBUtil;
 import businessLogic.Util;
@@ -62,6 +64,20 @@ public class CardPursePage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
+	private TableColumnModel colMod;
+	private TableColumn tabCol;
+	private TableColumnModel colMod1;
+	private TableColumn tabCol1;
+	private TableColumnModel colMod2;
+	private TableColumn tabCol2;
+	private TableColumnModel colMod3;
+	private TableColumn tabCol3;
+	private TableColumnModel colMod4;
+	private TableColumn tabCol4;
+	private TableColumnModel colMod5;
+	private TableColumn tabCol5;
+	private TableColumnModel colMod6;
+	private TableColumn tabCol6;
 	Analypage ana;
 	JButton addana;
 
@@ -72,6 +88,34 @@ public class CardPursePage implements ActionListener {
 		} catch (SQLException er) {
 		}
 		cardScroller = new JScrollPane(cardPurseTable);
+
+		colMod = cardPurseTable.getColumnModel();
+		tabCol = colMod.getColumn(0);
+		tabCol.setPreferredWidth(150);
+		
+		//colMod1 = cardPurseTable.getColumnModel();
+		tabCol1 = colMod.getColumn(1);
+		tabCol1.setPreferredWidth(150);
+		
+		//colMod2 = cardPurseTable.getColumnModel();
+		tabCol2 = colMod.getColumn(2);
+		tabCol2.setPreferredWidth(150);
+		
+		//colMod3 = cardPurseTable.getColumnModel();
+		tabCol3 = colMod.getColumn(3);
+		tabCol3.setPreferredWidth(150);
+		
+		//colMod4 = cardPurseTable.getColumnModel();
+		tabCol4 = colMod.getColumn(4);
+		tabCol4.setPreferredWidth(150);
+		
+		//colMod5 = cardPurseTable.getColumnModel();
+		tabCol5 = colMod.getColumn(5);
+		tabCol5.setPreferredWidth(150);
+		
+		//colMod6 = cardPurseTable.getColumnModel();
+		tabCol6 = colMod.getColumn(6);
+		tabCol6.setPreferredWidth(95);
 
 		mainCpPage = new JFrame();
 		mainCpPage.setLocationRelativeTo(null);
@@ -103,7 +147,6 @@ public class CardPursePage implements ActionListener {
 				mainCpPage.dispose();
 			}
 		});
-		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
@@ -112,7 +155,7 @@ public class CardPursePage implements ActionListener {
 		mainCpPanel.add(addNewCard);
 		mainCpPanel.add(addana);
 		mainCpPanel.add(toMenu);
-		
+
 		mainCpPanel.add(cardScroller);
 		mainCpPanel.setBackground(Color.green);
 
