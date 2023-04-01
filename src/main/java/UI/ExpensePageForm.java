@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -198,151 +199,6 @@ public class ExpensePageForm implements ActionListener {
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		expensePageFrame.setVisible(true);
 
-//		this.framesCreated = 0;
-//
-//		expensePageFrame = new JFrame();
-//		expensePageFrame.setLocationRelativeTo(null);
-//		expensePageForm = new JPanel();
-//		radioGroup = new ButtonGroup();
-//		othertext = new JTextField(20);
-//		othertext.setPreferredSize(null);
-//
-//		checkBox = new JCheckBox("Recurring");
-//
-//		checkBox.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (checkBox.isSelected()) {
-//		            recur = true;
-//		        } else {
-//		            recur = false;
-//		        }
-//			}
-//		});
-//		
-//		food = new JRadioButton("Food");
-//		food.setBorderPainted(true);
-//		commute = new JRadioButton("Commute");
-//		commute.setBorderPainted(true);
-//		entertainment = new JRadioButton("Entertainment");
-//		entertainment.setBorderPainted(true);
-//		other = new JRadioButton("Other:");
-//
-//		radioGroup.add(food);
-//		radioGroup.add(commute);
-//		radioGroup.add(entertainment);
-//		radioGroup.add(other);
-//		category = "default";
-//
-//		food.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (food.isSelected())
-//					category = "Food";
-//			}
-//		});
-//
-//		commute.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (commute.isSelected())
-//					category = "Commute";
-//			}
-//		});
-//
-//		entertainment.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (entertainment.isSelected())
-//					category = "Entertainment";
-//			}
-//		});
-//
-//		other.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (other.isSelected()) {
-//					othertext.setEnabled(true);
-//					othertext.requestFocus();
-//					category = othertext.getText();
-//				} else {
-//					othertext.setEnabled(false);
-//				}
-//			}
-//		});
-//
-//		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-//		expensePageForm.setLayout(new GridLayout(5, 1));
-//		expensePageForm.setBackground(Color.cyan);
-//
-//		expenseName = new JLabel("Name of Expense:");
-//		expenseName.setSize(100, 20);
-//		expenseName.setLocation(100, 100);
-//		expensePageForm.add(expenseName);
-//
-//		expenseNameInput = new JTextField();
-//		// expenseNameInput.setBounds(200, 100, 100, 20);
-//		expenseNameInput.setSize(100, 20);
-//		expenseNameInput.setLocation(300, 100);
-//		expensePageForm.add(expenseNameInput);
-//
-//		expenseCost = new JLabel("Cost of Expense:");
-//		expenseCost.setSize(100, 20);
-//		expenseCost.setLocation(100, 200);
-//		expensePageForm.add(expenseCost);
-//
-//		expenseCostInput = new JTextField();
-//		expenseCostInput.setSize(100, 20);
-//		expenseCostInput.setLocation(200, 200);
-//		expensePageForm.add(expenseCostInput);
-//
-//		expenseDescription = new JLabel("Description of Expense:");
-//		expenseDescription.setSize(100, 20);
-//		expenseDescription.setLocation(100, 300);
-//		expensePageForm.add(expenseDescription);
-//
-//		expenseDescriptionInput = new JTextField();
-//		expenseDescriptionInput.setSize(100, 20);
-//		expenseDescriptionInput.setLocation(200, 300);
-//		expensePageForm.add(expenseDescriptionInput);
-//		
-//		expensePageForm.add(checkBox);
-//
-//		dateSelector = new JLabel("Selected date: ");
-//		dateChooser = new JDateChooser();
-//
-//		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				if ("date".equals(evt.getPropertyName())) {
-//					Date selectedDate = (Date) evt.getNewValue();
-//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//					formattedDate = dateFormat.format(selectedDate);
-//					dateSelector.setText("Selected date: " + formattedDate);
-//				}
-//			}
-//		});
-//		expensePageForm.add(dateSelector);
-//		expensePageForm.add(dateChooser);
-//
-//		expensePageForm.add(food);
-//		expensePageForm.add(commute);
-//		expensePageForm.add(entertainment);
-//		expensePageForm.add(other);
-//		expensePageForm.add(othertext);
-//
-//		submit = new JButton("Submit");
-//		submit.setBounds(20, 10, 100, 50);
-//		submit.addActionListener(this);
-//		expensePageForm.add(submit);
-//
-//		// Adding the expense form panel into the main frame
-//		expensePageFrame.add(expensePageForm, BorderLayout.CENTER);
-//		expensePageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		expensePageFrame.setTitle("Add Expense");
-//		expensePageFrame.setSize(600, 400);
-//		// expensePageFrame.pack(); // when setSize on, then remove pack
-//		expensePageFrame.setVisible(true);
-
 	}
 
 	public JTextField getExpenseNameInput() {
@@ -392,6 +248,7 @@ public class ExpensePageForm implements ActionListener {
 		} catch (SQLException er) {
 		}
 		this.framesCreated++;
+
 	}
 
 	public LedgerItem getLedgerItem() {
