@@ -158,7 +158,7 @@ public class ExpensePage implements ActionListener {
 		mainEpPanel.add(addana);
 		mainEpPanel.add(toMenu);
 		
-		mainEpPanel.setBackground(Color.green);
+		mainEpPanel.setBackground(new Color(144, 238, 144));
 
 		// pop up menu, on click for update and delete
 		this.popupMenu = new JPopupMenu();
@@ -310,7 +310,7 @@ public class ExpensePage implements ActionListener {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(mainEpPanel);
-		mainPanel.setBackground(Color.green);
+		mainPanel.setBackground(new Color(144, 238, 144));
 
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it

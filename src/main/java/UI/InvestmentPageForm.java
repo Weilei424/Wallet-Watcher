@@ -124,7 +124,7 @@ public class InvestmentPageForm implements ActionListener {
 
 		investmentPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		investmentPageForm.setLayout(new GridLayout(5, 1));
-		investmentPageForm.setBackground(Color.cyan);
+		investmentPageForm.setBackground(new Color(137, 208, 240));
 
 		investmentName = new JLabel("Name of Investment:");
 		investmentName.setSize(100, 20);

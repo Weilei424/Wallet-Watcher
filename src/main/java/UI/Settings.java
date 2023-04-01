@@ -11,19 +11,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import DB.DBUtil;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import persistence.User;
 
 public class Settings { 
@@ -78,7 +75,46 @@ public class Settings {
 	
 	//change passwordPage
 	JTextField oldPasswordInput;
-	
+
+	JLabel themeLabel;
+	JComboBox<String> themes;
+	private static int curIndex = 0;
+
+	ActionListener themeListener = event -> {
+		JComboBox box = (JComboBox) event.getSource();
+		String selected = (String) box.getSelectedItem();
+		if (selected == null) return;
+
+		switch (selected) {
+			case "Light":
+				FlatLightLaf.setup();
+				curIndex = 0;
+				break;
+			case "Dark":
+				FlatDarkLaf.setup();
+				curIndex = 1;
+				break;
+			case "macOS Light":
+				FlatMacLightLaf.setup();
+				curIndex = 2;
+				break;
+			case "macOS Dark":
+				FlatMacDarkLaf.setup();
+				curIndex = 3;
+				break;
+			case "IntelliJ Light":
+				FlatIntelliJLaf.setup();
+				curIndex = 4;
+				break;
+			case "Darcula":
+				FlatDarculaLaf.setup();
+				curIndex = 5;
+				break;
+		}
+
+		SwingUtilities.updateComponentTreeUI(settingsFrame);
+	};
+
 	//adding action listeners to do the redirects 
 	ActionListener AccDirect=new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -456,11 +492,22 @@ public class Settings {
 		toNav.addActionListener(NavDirect);
 		button1.add(toNav);
 		button1.add(toAcc);
+
+		button2 = new JPanel();
+		themeLabel = new JLabel("Theme:");
+		String[] themeList = {"Light", "Dark", "macOS Light", "macOS Dark", "IntelliJ Light", "Darcula"};
+		themes = new JComboBox<>(themeList);
+		themes.setSelectedIndex(curIndex);
+
+		themes.addActionListener(themeListener);
+		button2.add(themeLabel);
+		button2.add(themes);
 			
 		topMost=new JPanel();
 		topMost.setLayout(new GridLayout(5,3,1,1));
 		topMost.add(mainPage);
 		topMost.add(button1);
+		topMost.add(button2);
 		
 		settingsFrame.add(topMost);
 		settingsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

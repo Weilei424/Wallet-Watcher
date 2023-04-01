@@ -143,14 +143,14 @@ public class DisplayAllPage implements ActionListener {
 		mainDisplayPanel.setLayout(new GridLayout(1, 3));
 		mainDisplayPanel.add(title);
 		mainDisplayPanel.add(toMenu);
-		mainDisplayPanel.setBackground(Color.green);
+		mainDisplayPanel.setBackground(new Color(144, 238, 144));
 
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(mainDisplayPanel);
-		mainPanel.setBackground(Color.green);
+		mainPanel.setBackground(new Color(144, 238, 144));
 
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it

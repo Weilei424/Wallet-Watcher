@@ -66,7 +66,7 @@ public class MiscPageForm implements ActionListener{
 			
 			miscForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 			miscForm.setLayout(new GridLayout(5, 1));
-			miscForm.setBackground(Color.cyan);
+			miscForm.setBackground(new Color(137, 208, 240));
 
 			miscdName = new JLabel("Name of Misc:");
 			miscdName.setSize(100, 20);

@@ -109,7 +109,7 @@ public class CardPursePageForm implements ActionListener{
 			
 			cardPurseForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 			cardPurseForm.setLayout(new GridLayout(5, 1));
-			cardPurseForm.setBackground(Color.cyan);
+			cardPurseForm.setBackground(new Color(137, 208, 240));
 
 			cardName = new JLabel("Name of Card:");
 			cardName.setSize(100, 20);

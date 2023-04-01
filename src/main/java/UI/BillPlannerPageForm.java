@@ -125,7 +125,7 @@ public class BillPlannerPageForm implements ActionListener {
 
 		billPlannerPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		billPlannerPageForm.setLayout(new GridLayout(5, 1));
-		billPlannerPageForm.setBackground(Color.cyan);
+		billPlannerPageForm.setBackground(new Color(137, 208, 240));
 
 		billPlannerName = new JLabel("Name of Bill:");
 		billPlannerName.setSize(100, 20);

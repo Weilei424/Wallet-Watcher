@@ -120,7 +120,7 @@ public class ExpensePageForm implements ActionListener {
 
 		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		expensePageForm.setLayout(new GridLayout(7, 2));
-		expensePageForm.setBackground(Color.cyan);
+		expensePageForm.setBackground(new Color(137, 208, 240));
 
 		expenseName = new JLabel("Name of Budget:");
 		expenseName.setSize(100, 20);
