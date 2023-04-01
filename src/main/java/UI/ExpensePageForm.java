@@ -239,15 +239,15 @@ public class ExpensePageForm implements ActionListener {
 
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
-		ep.setTempLedgerItem(this.ledgerItem);
-		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
-
 		if (this.framesCreated < 1) {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
 
 		}
+
+		ep.setTempLedgerItem(this.ledgerItem);
+		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);
 
 		try {
 			ep.expenseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");

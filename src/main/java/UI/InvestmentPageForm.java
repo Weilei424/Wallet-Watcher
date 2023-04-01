@@ -237,15 +237,15 @@ public class InvestmentPageForm implements ActionListener {
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
-		ep.setTempLedgerItem(this.ledgerItem);
-		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
-
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
 
 		}
+
+		ep.setTempLedgerItem(this.ledgerItem);
+		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);
 
 		try {
 			ep.investmentTable = DBUtil.query(User.getLoginAs(), "tag", "investment");

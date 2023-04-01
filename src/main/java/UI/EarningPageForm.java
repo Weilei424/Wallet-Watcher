@@ -238,15 +238,15 @@ public class EarningPageForm implements ActionListener {
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
 
-		ep.setTempLedgerItem(this.ledgerItem);
-		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);
-
 		if (this.framesCreated < 1) {
 			ep = new EarningPage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddEarning().setVisible(false);
 
 		}
+
+		ep.setTempLedgerItem(this.ledgerItem);
+		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);
 
 		try {
 			ep.earningTable = DBUtil.query(User.getLoginAs(),"tag","earning");

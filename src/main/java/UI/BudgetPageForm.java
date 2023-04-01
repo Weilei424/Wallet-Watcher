@@ -207,15 +207,15 @@ public class BudgetPageForm implements ActionListener {
 
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
 
-		bp.setTempLedgerItem(this.ledgerItem);
-		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
-
 		if (this.framesCreated < 1) {
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
 			bp.getAddBudget().setVisible(false);
 
 		}
+
+		bp.setTempLedgerItem(this.ledgerItem);
+		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
 
 		try {
 			bp.budgetTable = DBUtil.query(User.getLoginAs(), "tag", "budget");
