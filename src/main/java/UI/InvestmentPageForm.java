@@ -11,15 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -222,24 +214,35 @@ public class InvestmentPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if (investmentNameInput.getText().isEmpty() || investmentCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
+			JOptionPane.showMessageDialog(investmentPageFrame, "Please enter the name, amount, and date.");
+			return;
+		}
+
+		String expName = investmentNameInput.getText();
+		String expNote = investmentDescriptionInput.getText();
+		String expDate = formattedDate;
+
+		try {
+			double expCost = Double.parseDouble(investmentCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
+		
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
+
 		if (this.framesCreated < 1) {
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
 			ep.getAddInvestment().setVisible(false);
 
 		}
-
-		String expName = investmentNameInput.getText();
-		String expNote = investmentDescriptionInput.getText();
-		String expDate = formattedDate;
-		double expCost = Double.parseDouble(investmentCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-		if (recur)
-			this.ledgerItem.setRecurring(new Recurrence());
-		
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "investment");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfInvestment(ep.getNumberOfInvestment() + 1);

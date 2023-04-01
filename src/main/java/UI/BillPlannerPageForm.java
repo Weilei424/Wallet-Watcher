@@ -11,15 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -223,24 +215,35 @@ public class BillPlannerPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
+			JOptionPane.showMessageDialog(billPlannerPageFrame, "Please enter the name, cost, and date.");
+			return;
+		}
+
+		String expName = billPlannerNameInput.getText();
+		String expNote = billPlannerDescriptionInput.getText();
+		String expDate = formattedDate;
+
+		try {
+			double expCost = Double.parseDouble(billPlannerCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
+
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
+
 		if (this.framesCreated < 1) {
 			ep = new BillPlannerPage();
 			ep.mainBpPage.setVisible(true);
 			ep.getAddNewBill().setVisible(false);
 
 		}
-
-		String expName = billPlannerNameInput.getText();
-		String expNote = billPlannerDescriptionInput.getText();
-		String expDate = formattedDate;
-		double expCost = Double.parseDouble(billPlannerCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-		if (recur)
-			this.ledgerItem.setRecurring(new Recurrence());
-
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "bill");
 
 		try {
 			ep.setBillTable(DBUtil.query(User.getLoginAs(), "tag", "bill"));

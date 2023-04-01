@@ -11,15 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -223,24 +215,35 @@ public class EarningPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (this.framesCreated < 1) {
-			ep = new EarningPage();
-			ep.mainEpFrame.setVisible(true);
-			ep.getAddEarning().setVisible(false);
-			
+		if (earningNameInput.getText().isEmpty() || earningCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
+			JOptionPane.showMessageDialog(earningPageFrame, "Please enter the name, amount, and date.");
+			return;
 		}
 
 		String expName = earningNameInput.getText();
 		String expNote = earningDescriptionInput.getText();
 		String expDate = formattedDate;
-		double expCost = Double.parseDouble(earningCostInput.getText());
 
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		try {
+			double expCost = Double.parseDouble(earningCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
 		this.ledgerItem.setCategory(category);
 		if (recur)
 			this.ledgerItem.setRecurring(new Recurrence());
 		
 		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "earning");
+
+		if (this.framesCreated < 1) {
+			ep = new EarningPage();
+			ep.mainEpFrame.setVisible(true);
+			ep.getAddEarning().setVisible(false);
+
+		}
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfEarning(ep.getNumberOfEarning() + 1);

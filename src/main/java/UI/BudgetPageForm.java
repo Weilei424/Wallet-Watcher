@@ -11,16 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -197,21 +188,31 @@ public class BudgetPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if (budgetNameInput.getText().isEmpty() || budgetCostInput.getText().isEmpty() || date.getDate() == null) {
+			JOptionPane.showMessageDialog(budgetPageFrame, "Please enter the name, amount, and date.");
+			return;
+		}
+
+		String expName = budgetNameInput.getText();
+		String expNote = budgetDescriptionInput.getText();
+		String expDate = formattedDate;
+
+		try {
+			double expCost = Double.parseDouble(budgetCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
+
 		if (this.framesCreated < 1) {
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
 			bp.getAddBudget().setVisible(false);
 
 		}
-
-		String expName = budgetNameInput.getText();
-		String expNote = budgetDescriptionInput.getText();
-		String expDate = budgetDateInput.getText();
-		double expCost = Double.parseDouble(budgetCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "budget");
 
 		bp.setTempLedgerItem(this.ledgerItem);
 		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
