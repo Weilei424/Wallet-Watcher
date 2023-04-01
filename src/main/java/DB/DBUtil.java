@@ -692,7 +692,7 @@ public final class DBUtil {
 			System.out.println(e.getMessage() + " from combineUsers()");
 		}
 	}
-	private static JTable getBudgetTable(String loginas) {
+	public static JTable getBudgetTable(String loginas) {
 		String query = "SELECT ref, amount, date_start, date_end FROM budgets WHERE user = ?";
 	    String[] columnNames = {"ref", "amount", "date_start", "date_end"};
 	    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -716,7 +716,7 @@ public final class DBUtil {
 	    return table;
 	}
 	
-	private static void addBudget(BudgetData newEntry) {
+	public static void addBudget(BudgetData newEntry) {
 	    String query = String.format("INSERT INTO BUDGETS(amount, date_start, date_end,user) VALUES (%f, '%s', '%s', '%s')",
 	            newEntry.budget, java.sql.Date.valueOf(newEntry.startDate).toString(),
 	            java.sql.Date.valueOf(newEntry.endDate).toString(), User.getLoginAs());
@@ -736,7 +736,7 @@ public final class DBUtil {
 	    }
 	}
 	
-	private static void deleteBudget(int ref)
+	public static void deleteBudget(int ref)
 	{ 
 	    String query = String.format("DELETE FROM BUDGETS WHERE ref = %d", ref);
 		try
@@ -752,7 +752,7 @@ public final class DBUtil {
 		}
 	}
 	
-	private static void	modifyBudgetAmount(int newAmount, int ref)
+	public static void	modifyBudgetAmount(int newAmount, int ref)
 	{ 
 	    String query = String.format("Update budgets set amount=%f where ref=%d", newAmount,ref);
 		try
@@ -768,7 +768,7 @@ public final class DBUtil {
 		}
 	}
 	
-	private static void	modifyBudgetEndDate(LocalDate newDate, int ref)
+	public static void	modifyBudgetEndDate(LocalDate newDate, int ref)
 	{ 
 	    String query = String.format("Update budgets set date_end=%s where ref=%d", java.sql.Date.valueOf(newDate),ref);
 		try
