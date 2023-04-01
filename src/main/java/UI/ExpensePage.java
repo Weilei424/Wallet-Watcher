@@ -66,6 +66,8 @@ public class ExpensePage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
+	private JButton addana;
+	private Analypage ana;
 
 	public ExpensePage() {
 
@@ -89,6 +91,17 @@ public class ExpensePage implements ActionListener {
 		addExpense = new JButton("Add New Expense");
 		addExpense.setSize(40, 40);
 		addExpense.addActionListener(this);
+		
+		addana = new JButton(new AbstractAction("generategraph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(2);
+				ana.anaPageFrame.setVisible(true);
+				mainEpFrame.dispose();
+			}
+		});
+		
 
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 
@@ -105,6 +118,7 @@ public class ExpensePage implements ActionListener {
 		mainEpPanel.add(title);
 		mainEpPanel.add(addExpense);
 		mainEpPanel.add(toMenu);
+		mainEpPanel.add(addana);
 		mainEpPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete

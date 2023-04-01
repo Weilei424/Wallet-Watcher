@@ -62,6 +62,8 @@ public class MiscPage implements ActionListener {
 	private JRadioButton amount;
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
+	Analypage ana;
+	JButton addana;
 
 	public MiscPage() {
 
@@ -92,6 +94,17 @@ public class MiscPage implements ActionListener {
 				mainMiPage.dispose();
 			}
 		});
+		
+		addana = new JButton(new AbstractAction("generategraph") {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ana = new Analypage(8);
+				ana.anaPageFrame.setVisible(true);
+				mainMiPage.dispose();
+			}
+		});
+		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
@@ -99,6 +112,7 @@ public class MiscPage implements ActionListener {
 		mainCpPanel.add(title);
 		mainCpPanel.add(addNewMisc);
 		mainCpPanel.add(toMenu);
+		mainCpPanel.add(addana);
 		mainCpPanel.add(miscScroller);
 		mainCpPanel.setBackground(Color.green);
 
