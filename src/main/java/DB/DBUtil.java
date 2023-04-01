@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +15,7 @@ import java.math.RoundingMode;
 
 import UI.ErrorPage;
 import businessLogic.Util;
+import persistence.BudgetData;
 import persistence.Investment;
 import persistence.LedgerItem;
 import persistence.Stock_Fund;
@@ -689,4 +691,74 @@ public final class DBUtil {
 			System.out.println(e.getMessage() + " from combineUsers()");
 		}
 	}
+	
+	private static void addBudget(BudgetData newEntry) {
+	    String query = String.format("INSERT INTO BUDGETS(amount, date_start, date_end,user) VALUES (%f, '%s', '%s', '%s')",
+	            newEntry.budget, java.sql.Date.valueOf(newEntry.startDate).toString(),
+	            java.sql.Date.valueOf(newEntry.endDate).toString(), User.getLoginAs());
+	    try (Connection con = DBUtil.getConnection(CLOUD, CLOUDDB);
+	         Statement statement = con.createStatement()) {
+	        statement.execute(query);
+
+	        String query2 = "SELECT LAST_INSERT_ID() AS ref";
+	        try (ResultSet rs = statement.executeQuery(query2)) {
+	            if (rs.next()) {
+	                newEntry.ref = rs.getInt("ref");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        new ErrorPage(e);
+	        System.out.println(e.getMessage());
+	    }
+	}
+	
+	private static void deleteBudget(int ref)
+	{ 
+	    String query = String.format("DELETE FROM BUDGETS WHERE ref = %d", ref);
+		try
+		{ 
+			Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
+			Statement statement = con.createStatement () ;
+			statement.execute(query);
+		}
+		catch(SQLException e)
+		{
+			new ErrorPage(e);
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static void	modifyBudgetAmount(int newAmount, int ref)
+	{ 
+	    String query = String.format("Update budgets set amount=%f where ref=%d", newAmount,ref);
+		try
+		{ 
+			Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
+			Statement statement = con.createStatement () ;
+			statement.execute(query);
+		}
+		catch(SQLException e)
+		{
+			new ErrorPage(e);
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static void	modifyBudgetEndDate(LocalDate newDate, int ref)
+	{ 
+	    String query = String.format("Update budgets set date_end=%s where ref=%d", java.sql.Date.valueOf(newDate),ref);
+		try
+		{ 
+			Connection con=DBUtil.getConnection(CLOUD,CLOUDDB);
+			Statement statement = con.createStatement () ;
+			statement.execute(query);
+		}
+		catch(SQLException e)
+		{
+			new ErrorPage(e);
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
 }

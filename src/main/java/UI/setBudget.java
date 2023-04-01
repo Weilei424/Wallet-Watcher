@@ -88,7 +88,7 @@ public class setBudget {
 	    			(int)month.getSelectedItem(),(int)day.getSelectedItem());
 	    	if(ChronoUnit.DAYS.between(curr,endDate)>0L)
 	    	{
-	    		User.setBudget(new BudgetData(budgetAmount,endDate));
+	    		User.setBudget(new BudgetData(budgetAmount,endDate.toString()));
 	    		nav=new NavigatorPage();
 	    		popup.dispose();
 	    	}
