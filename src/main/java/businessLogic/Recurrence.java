@@ -12,6 +12,10 @@ public class Recurrence {
 	private String frequency;
 	private Date endDate;
 	
+	public Recurrence() {
+		
+	}
+	
 	/**
 	 * /**
 	 * This constructor constructs Recurrence object. 
