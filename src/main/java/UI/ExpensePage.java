@@ -92,7 +92,7 @@ public class ExpensePage implements ActionListener {
 		addExpense.setSize(40, 40);
 		addExpense.addActionListener(this);
 		
-		addana = new JButton(new AbstractAction("generategraph") {
+		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,8 +117,9 @@ public class ExpensePage implements ActionListener {
 		mainEpPanel.setLayout(new GridLayout(1, 3));
 		mainEpPanel.add(title);
 		mainEpPanel.add(addExpense);
-		mainEpPanel.add(toMenu);
 		mainEpPanel.add(addana);
+		mainEpPanel.add(toMenu);
+		
 		mainEpPanel.setBackground(Color.green);
 
 		// pop up menu, on click for update and delete

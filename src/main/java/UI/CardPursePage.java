@@ -94,7 +94,7 @@ public class CardPursePage implements ActionListener {
 				mainCpPage.dispose();
 			}
 		});
-		addana = new JButton(new AbstractAction("generategraph") {
+		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,8 +110,9 @@ public class CardPursePage implements ActionListener {
 		mainCpPanel.setLayout(new GridLayout(1, 3));
 		mainCpPanel.add(title);
 		mainCpPanel.add(addNewCard);
-		mainCpPanel.add(toMenu);
 		mainCpPanel.add(addana);
+		mainCpPanel.add(toMenu);
+		
 		mainCpPanel.add(cardScroller);
 		mainCpPanel.setBackground(Color.green);
 

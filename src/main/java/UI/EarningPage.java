@@ -93,7 +93,7 @@ public class EarningPage implements ActionListener {
 		
 		
 		
-		addana = new JButton(new AbstractAction("generategraph") {
+		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {

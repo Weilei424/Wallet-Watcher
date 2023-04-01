@@ -81,7 +81,7 @@ public class Analypage implements ActionListener {
 		anaPageFrame = new JFrame();
 		anaPageFrame.setLocationRelativeTo(null);
 		anaPanel = new JPanel();
-		
+		String returns="return to ";
 		String head = "Graph for ";
 		String choice ="";
 		switch(source) {
@@ -105,6 +105,7 @@ public class Analypage implements ActionListener {
 		}
 		//String choice = source==1?"earning":source==2?"expense":"budget";
 		head+=choice;
+		returns+=source!=4?choice:"Navigator";
 		title = new JLabel(head);
 		title.setSize(5, 6);
 		title.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -112,7 +113,7 @@ public class Analypage implements ActionListener {
 		
 		
 		//add button to return to previous
-		resume = new JButton(new AbstractAction(choice) {
+		resume = new JButton(new AbstractAction(returns) {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
