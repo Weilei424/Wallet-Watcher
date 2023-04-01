@@ -64,7 +64,7 @@ public class BudgetPage implements ActionListener {
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Budget");
 		title.setSize(30, 30);
-		title.setFont(new Font("Tahoma", Font.BOLD, 60));
+		title.setFont(new Font("Tahoma", Font.BOLD, 40));
 
 		addBudget = new JButton("Add New Budgets");
 		addBudget.setSize(40, 40);

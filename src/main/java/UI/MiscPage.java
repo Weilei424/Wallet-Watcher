@@ -80,7 +80,7 @@ public class MiscPage implements ActionListener {
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Misc earning");
 		title.setSize(30, 30);
-		title.setFont(new Font("Tahoma", Font.BOLD, 60));
+		title.setFont(new Font("Tahoma", Font.BOLD, 40));
 
 		addNewMisc = new JButton("Add New Misc Item");
 		addNewMisc.setSize(40, 40);

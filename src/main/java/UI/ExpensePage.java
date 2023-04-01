@@ -86,7 +86,7 @@ public class ExpensePage implements ActionListener {
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Expenses");
 		title.setSize(30, 30);
-		title.setFont(new Font("Tahoma", Font.BOLD, 60));
+		title.setFont(new Font("Tahoma", Font.BOLD, 40));
 
 		addExpense = new JButton("Add New Expense");
 		addExpense.setSize(40, 40);

@@ -80,7 +80,7 @@ public class CardPursePage implements ActionListener {
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("User Cards");
 		title.setSize(30, 30);
-		title.setFont(new Font("Tahoma", Font.BOLD, 60));
+		title.setFont(new Font("Tahoma", Font.BOLD, 40));
 
 		addNewCard = new JButton("Add New Card");
 		addNewCard.setSize(40, 40);
@@ -289,9 +289,9 @@ public class CardPursePage implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		new CardPursePage();
-	}
+//	public static void main(String[] args) {
+//		new CardPursePage();
+//	}
 
 	public JButton getAddNewCard() {
 		return addNewCard;
