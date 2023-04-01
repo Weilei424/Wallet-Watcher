@@ -25,7 +25,6 @@ import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import businessLogic.Recurrence;
-import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 import persistence.User;
 
