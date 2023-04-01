@@ -5,14 +5,24 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
 import persistence.LedgerItem;
@@ -34,9 +44,56 @@ public class BudgetPageForm implements ActionListener {
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private BudgetPage bp;
+	private JLabel expenseType;
+	private JRadioButton food;
+	private JRadioButton commute;
+	private JRadioButton entertainment;
+	private JRadioButton other;
+	private JDateChooser date;
+	private Box buttonBox;
+	private ButtonGroup radioGroup;
+	private String category;
+	private String formattedDate;
 	private int framesCreated;
 
 	public BudgetPageForm() {
+
+		food = new JRadioButton("Food");
+		commute = new JRadioButton("Commute");
+		entertainment = new JRadioButton("Entertainment");
+		other = new JRadioButton("Other");
+
+		buttonBox = Box.createHorizontalBox();
+
+		buttonBox.add(food);
+		buttonBox.add(commute);
+		buttonBox.add(entertainment);
+		buttonBox.add(other);
+
+		food.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (food.isSelected())
+					category = "Food";
+			}
+		});
+
+		commute.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (commute.isSelected())
+					category = "Commute";
+			}
+		});
+
+		entertainment.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (entertainment.isSelected())
+					category = "Entertainment";
+			}
+		});
+
 		this.framesCreated = 0;
 
 		budgetPageFrame = new JFrame();
@@ -44,7 +101,7 @@ public class BudgetPageForm implements ActionListener {
 		budgetPageForm = new JPanel();
 
 		budgetPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		budgetPageForm.setLayout(new GridLayout(5, 1));
+		budgetPageForm.setLayout(new GridLayout(6, 2));
 		budgetPageForm.setBackground(Color.cyan);
 
 		budgetName = new JLabel("Name of Budget:");
@@ -82,10 +139,29 @@ public class BudgetPageForm implements ActionListener {
 		budgetDate.setLocation(100, 400);
 		budgetPageForm.add(budgetDate);
 
-		budgetDateInput = new JTextField();
-		budgetDateInput.setSize(100, 20);
-		budgetDateInput.setLocation(200, 400);
-		budgetPageForm.add(budgetDateInput);
+		date = new JDateChooser();
+
+		date.addPropertyChangeListener("date", new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ("date".equals(evt.getPropertyName())) {
+					Date selectedDate = (Date) evt.getNewValue();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					formattedDate = dateFormat.format(selectedDate);
+					budgetDate.setText("Selected date: " + formattedDate);
+				}
+			}
+		});
+
+		budgetPageForm.add(date);
+		
+		expenseType = new JLabel("Type of Expense:");
+		
+		budgetPageForm.add(expenseType);
+		budgetPageForm.add(buttonBox);
+		
+		JLabel blank = new JLabel();
+		
+		budgetPageForm.add(blank);
 
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
@@ -96,7 +172,7 @@ public class BudgetPageForm implements ActionListener {
 		budgetPageFrame.add(budgetPageForm, BorderLayout.CENTER);
 		budgetPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		budgetPageFrame.setTitle("Add Budget");
-		budgetPageFrame.setSize(400, 300);
+		budgetPageFrame.setSize(800, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		budgetPageFrame.setVisible(true);
 
@@ -125,7 +201,7 @@ public class BudgetPageForm implements ActionListener {
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
 			bp.getAddBudget().setVisible(false);
-			
+
 		}
 
 		String expName = budgetNameInput.getText();
@@ -141,15 +217,15 @@ public class BudgetPageForm implements ActionListener {
 		bp.setNumberOfBudgets(bp.getNumberOfExpenses() + 1);
 
 		try {
-			bp.budgetTable = DBUtil.query(User.getLoginAs(),"tag","budget");
+			bp.budgetTable = DBUtil.query(User.getLoginAs(), "tag", "budget");
 			bp.mainEpFrame.dispose();
 			bp = new BudgetPage();
 			bp.mainEpFrame.setVisible(true);
 			bp.getAddBudget().setVisible(false);
 			budgetPageFrame.dispose();
-			} catch(SQLException er) {
-				
-			}
+		} catch (SQLException er) {
+
+		}
 		this.framesCreated++;
 	}
 
