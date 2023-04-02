@@ -31,7 +31,7 @@ import persistence.LedgerItem;
 import persistence.LedgerList;
 import persistence.User;
 
-public class InfoSheet implements ActionListener{
+public class InfoSheet implements ActionListener {
 
 	JFrame infoFrame;
 	JPanel infoPanel;
@@ -48,7 +48,7 @@ public class InfoSheet implements ActionListener{
 	double avgCommute;
 	double avgEntertain;
 	NavigatorPage nav;
-	
+
 	ActionListener menu = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			nav = new NavigatorPage();
@@ -58,24 +58,23 @@ public class InfoSheet implements ActionListener{
 
 	public InfoSheet() {
 		// average total expenses
-		
-		infoTitle = new JLabel("Your Average Expenses Are:");
-	//	infoTitle.setFont(new Font("Courier", Font.BOLD, 12));
-		infoTitle.setLocation(200, 50);
-		
 
-		avgExpenses = averageExpenses(User.expenses, "Expenses", null);
-		avgFood = averageExpenses(User.expenses, "Expenses", "Food");
-		avgCommute = averageExpenses(User.expenses, "Expenses", "Commute");
-		avgEntertain = averageExpenses(User.expenses, "Expenses", "Entertainment");
+		infoTitle = new JLabel("Your Average Expenses Are:");
+		// infoTitle.setFont(new Font("Courier", Font.BOLD, 12));
+		infoTitle.setLocation(200, 50);
+
+		avgExpenses = averageExpenses(User.expenses, "expense", "hi");
+		avgFood = averageExpenses(User.expenses, "expense", "Food");
+		avgCommute = averageExpenses(User.expenses, "expense", "Commute");
+		avgEntertain = averageExpenses(User.expenses, "expense", "Entertainment");
 
 		infoFrame = new JFrame();
 		infoFrame.setLocationRelativeTo(null);
 		infoTitlePanel = new JPanel();
 		infoPanel = new JPanel();
-		
+
 		infoTitlePanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 0, 50));
-	//	infoTitlePanel.setLayout(null);
+		// infoTitlePanel.setLayout(null);
 		infoTitlePanel.setBackground(new Color(137, 208, 240));
 		infoTitlePanel.add(infoTitle);
 
@@ -103,22 +102,17 @@ public class InfoSheet implements ActionListener{
 		infoPanel.add(averageFood);
 		infoPanel.add(averageCommute);
 		infoPanel.add(averageEntertainment);
-		
+
 		returnMenu = new JPanel();
-		returnMenu.setBackground(new Color(137,208,240));
+		returnMenu.setBackground(new Color(137, 208, 240));
 		returnMenu.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 50));
-		
+
 		returnToMenu = new JButton("Return to menu");
-		
-		
+
 		returnToMenu.addActionListener(menu);
-		
+
 		returnMenu.add(returnToMenu);
 
-		// average food
-
-		// average commute
-		// average enter
 		infoFrame.add(infoTitlePanel, BorderLayout.NORTH);
 		infoFrame.add(infoPanel);
 		infoFrame.add(returnMenu, BorderLayout.SOUTH);
@@ -134,11 +128,8 @@ public class InfoSheet implements ActionListener{
 		Map<String, Double> map = userList.categorize(averageChoice);
 		double average = 0;
 		String specificC = specificChoice;
-		String f = "Food";
-		String c = "Commute";
-		String e = "Entertainment";
 
-		if (specificC == null) {
+		if (specificC.equals("hi")) {
 			for (Map.Entry<String, Double> entry : map.entrySet()) {
 				average += entry.getValue();
 			}
@@ -159,7 +150,7 @@ public class InfoSheet implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
