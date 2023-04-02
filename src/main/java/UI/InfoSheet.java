@@ -31,7 +31,7 @@ import persistence.LedgerItem;
 import persistence.LedgerList;
 import persistence.User;
 
-public class InfoSheet {
+public class InfoSheet implements ActionListener{
 
 	JFrame infoFrame;
 	JPanel infoPanel;
@@ -48,6 +48,13 @@ public class InfoSheet {
 	double avgCommute;
 	double avgEntertain;
 	NavigatorPage nav;
+	
+	ActionListener menu = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			nav = new NavigatorPage();
+			infoFrame.dispose();
+		}
+	};
 
 	public InfoSheet() {
 		// average total expenses
@@ -102,16 +109,9 @@ public class InfoSheet {
 		returnMenu.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 50));
 		
 		returnToMenu = new JButton("Return to menu");
-		returnToMenu.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(returnToMenu.isSelected()) {
-					nav = new NavigatorPage();
-					nav.navigator.setVisible(true);
-					infoFrame.dispose();
-				}
-			}
-		});
+		
+		
+		returnToMenu.addActionListener(menu);
 		
 		returnMenu.add(returnToMenu);
 
@@ -154,6 +154,12 @@ public class InfoSheet {
 
 	public static void main(String[] args) {
 		new InfoSheet();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
