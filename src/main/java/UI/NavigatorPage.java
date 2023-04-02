@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,6 +27,8 @@ import javax.swing.border.EmptyBorder;
 
 import DB.DBUtil;
 import persistence.BudgetList;
+import persistence.LedgerItem;
+
 import persistence.LedgerList;
 import persistence.User;
 
@@ -179,8 +183,10 @@ public class NavigatorPage {
 		try
 		{
 			User.cards.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "card"));
-			User.earnings.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "earnings"));
+			User.earnings.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "earning"));
 			User.expenses.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "expense"));	
+			User.investments.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "investment"));	
+
 		}
 		catch(SQLException e)
 		{ 
@@ -189,6 +195,8 @@ public class NavigatorPage {
 	}
 	public NavigatorPage() {
 		init();
+		
+
 		if(User.currBudget!=null && User.currBudget.endDate.compareTo(LocalDate.now())>=0)
 		{ 
 			createPage();
@@ -208,7 +216,7 @@ public class NavigatorPage {
 		}
 	}
 	
-	
+
 	public void createPage()
 	{ 
 		navigator = new JFrame("Navigation Page");
@@ -303,4 +311,5 @@ public class NavigatorPage {
 		navigator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigator.setVisible(true);
 	}
+
 }

@@ -28,7 +28,14 @@ public class LedgerItem {
 		this.note = note;
 		this.category = new Category();
 	}
-	
+	public LedgerItem(String date, double amount, String itemName, String note,String category) {
+		this.date = DateParser.getDateFromString(date);
+		this.amount = amount;
+		this.itemName = itemName;
+		this.note = note;
+		this.category = new Category();
+		this.category.setName(category);
+	}
 	public LocalDate getDate() {
 		return this.date;
 	}
@@ -82,6 +89,6 @@ public class LedgerItem {
 	}
 
 	public String toString() { 
-		return String.format( "%s: %s %f \n \t %s \n", this.date, this.itemName, this.amount, this.note);
+		return String.format( "%s\n", this.category.getName());
 	}
 }
