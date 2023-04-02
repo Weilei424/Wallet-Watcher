@@ -10,6 +10,8 @@ public final class User {
 	public static LedgerList earnings=new LedgerList(); 
 	public static LedgerList expenses=new LedgerList(); 
 	public static LedgerList cards=new LedgerList(); 
+	public static LedgerList investments=new LedgerList();
+	
 	
 	
 	private String firstName;

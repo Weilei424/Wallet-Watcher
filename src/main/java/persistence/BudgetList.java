@@ -1,7 +1,10 @@
 package persistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -50,5 +53,33 @@ public class BudgetList {
             this.budgets.set(i, temp); 
         }
 	}
+	/*public Map<String,Double> mapforEachDay(String type)
+	{
+		Map<String,Double> map=new LinkedHashMap<>();
+		LocalDate today=LocalDate.now();
+		this.sortByLocalDate();
+		
+		for(int x=0; x<this.budgets.size();x++)
+		{
+			if(x==0)
+			{ 
+				 today=this.budgets.get(x).endDate;
+				 map.put(today, this.budgets.get(x).budget);
+			}
+			else if(this.budgets.get(x).endDate.compareTo(today)>0)
+			{
+				 today=this.budgets.get(x).endDate;
+				 map.put(today, this.budgets.get(x).budget);
+			} 			
+			else
+			{ 
+				 map.put(today, 
+						 map.get(today) + this.items.get(x).amount);
+			}
+		}
+		return map;	
+		}
+	
+	*/
 	
 }

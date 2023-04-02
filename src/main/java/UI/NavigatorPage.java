@@ -184,23 +184,15 @@ public class NavigatorPage {
 			User.cards.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "card"));
 			User.earnings.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "earning"));
 			User.expenses.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "expense"));	
+			User.investments.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "investment"));	
 		}
 		catch(SQLException e)
 		{ 
 		}
 		
 	}
-	public void categorizationTester()
-	{ 
-		Map<String,Double> map=new HashMap<>();
-		map=User.earnings.mapfor30days("expense");
-		for (Map.Entry<String, Double> entry : map.entrySet()) {
-		    System.out.println(entry.getKey() + ": " + entry.getValue());
-		}
-	}
 	public NavigatorPage() {
 		init();
-		categorizationTester();
 		
 		if(User.currBudget!=null && User.currBudget.endDate.compareTo(LocalDate.now())>=0)
 		{ 

@@ -74,6 +74,18 @@ public class LedgerList {
 			map.put("Commission", 0.0);
 			map.put("Side Gig", 0.0);
 		}
+		if(type.compareTo("card")==0)
+		{
+			map.put("Credit Card", 0.0);
+			map.put("Points Card", 0.0);
+			map.put("Debit Card", 0.0);
+		}
+		if(type.compareTo("investment")==0)
+		{
+			map.put("Stock", 0.0);
+			map.put("Bond", 0.0);
+			map.put("Saving account", 0.0);
+		}
 		for(LedgerItem item:this.items)
 		{
 			if(map.containsKey(item.category.getName()))
@@ -83,6 +95,16 @@ public class LedgerList {
 		}
 		return map;
 	}
+	
+
+	 /* list of categories:
+	  Expense: Food, Commute, Entertainment
+	  Earning: Salary, Commission, Side Gig
+	  CardPurse: Debit Card, Credit Card, Points Card
+	  Investment: Stock, Bond, Saving Account
+	 */
+	
+	
 	public Map<String,Double> mapfor30days(String type)
 	{
 		Map<String,Double> map=new LinkedHashMap<>();
@@ -117,19 +139,32 @@ public class LedgerList {
 		return map;
 	}
 	
-	public Map<String,Double> mapforEachDay(String type)
+	public Map<LocalDate,Double> mapforEachDay(String type)
 	{
-		 Map<String,Double> page=null;
-		 return page;
-	}
+		Map<LocalDate,Double> map=new LinkedHashMap<>();
+		LocalDate today=LocalDate.now();
+		LedgerList.sortByLocalDate(this);
+		
+		for(int x=0; x<this.items.size();x++)
+		{
+			if(x==0)
+			{ 
+				 today=this.items.get(x).date;
+				 map.put(today, this.items.get(x).amount);
+			}
+			else if(this.items.get(x).date.compareTo(today)>0)
+			{
+				 today=this.items.get(x).date;
+				 map.put(today, this.items.get(x).amount);
+			} 			
+			else
+			{ 
+				 map.put(today, 
+						 map.get(today) + this.items.get(x).amount);
+			}
+		}
+		return map;	
+		}
 	
-
-	 /* list of categories:
-	  Expense: Food, Commute, Entertainment
-	  Earning: Salary, Commission, Side Gig
-	  BillPlanner: Utility, Credit Card, Loan
-	  CardPurse: Debit Card, Credit Card, Points Card
-	  Investment: Stock, Bond, Saving Account
-	 */
 	
 }

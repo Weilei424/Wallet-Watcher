@@ -32,6 +32,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.DateTickUnit;
+import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -93,7 +95,6 @@ public class Analypage implements ActionListener {
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
 	private String formattedDate;
-	private ChartPanel piechart;
 	private static final int Earn=1;
 	private static final int Expense=2;
 	
@@ -101,7 +102,10 @@ public class Analypage implements ActionListener {
 	private static final int nav=4;
 	
 	private JPanel panel;
-	 ChartPanel chartPanel;
+	private ChartPanel piechart;
+	private ChartPanel histogram;
+	private ChartPanel linegraph;
+
 	 
 	public Analypage(int source) {
 		this.source=source;
@@ -204,18 +208,40 @@ public class Analypage implements ActionListener {
 				{ 
 					pieChartCategory(User.earnings, choice);
 					histogramMonthlyExpense(User.earnings, choice);
+					lineGraphDaily(User.earnings, choice);
 					panel.add(piechart);
-					panel.add(chartPanel);
+					panel.add(histogram);
+					panel.add(linegraph);
 				}
 				if(source==2)
 				{ 
 					pieChartCategory(User.expenses, choice);
-					histogramMonthlyExpense(User.earnings, choice);
+					histogramMonthlyExpense(User.expenses, choice);
+					lineGraphDaily(User.expenses, choice);
 					panel.add(piechart);
-					panel.add(chartPanel);
+					panel.add(histogram);
+					panel.add(linegraph);
 				}
-
-
+				if(source==6)
+				{ 
+					pieChartCategory(User.cards, choice);
+					histogramMonthlyExpense(User.cards, choice);
+					lineGraphDaily(User.cards, choice);
+					panel.add(piechart);
+					panel.add(histogram);
+					panel.add(linegraph);
+				}
+				if(source==7)
+				{ 
+					pieChartCategory(User.investments, choice);
+					histogramMonthlyExpense(User.investments, choice);
+					lineGraphDaily(User.investments, choice);
+					panel.add(piechart);
+					panel.add(histogram);
+					panel.add(linegraph);
+				}
+				
+		
 				anaPageFrame.add(panel);
 				anaPageFrame.setVisible(true);
 				
@@ -262,11 +288,32 @@ public class Analypage implements ActionListener {
 	        chart.setBackgroundPaint(Color.WHITE);
 
 	        // Create a ChartPanel object and add it to a JFrame
-	        chartPanel = new ChartPanel(chart);
+	        histogram = new ChartPanel(chart);
 	}
-	public void lineGraphDaily(LedgerList list)
+	public void lineGraphDaily(LedgerList list, String choice)
 	{ 
-		
+		 Map<LocalDate, Double> data = list.mapforEachDay(choice);
+	        // Create a TimeSeriesCollection using the HashMap values and keys
+	        TimeSeriesCollection dataset = new TimeSeriesCollection();
+	        TimeSeries series = new TimeSeries("Data");
+	        for (LocalDate key : data.keySet()) {
+	            Day day = new Day(key.getDayOfMonth(), key.getMonthValue(), key.getYear());
+	            series.add(day, data.get(key));
+	        }
+	        dataset.addSeries(series);
+	        
+	        // Create a JFreeChart object with a DateAxis
+	        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+	                "Daily "+choice, "Date", "Daily Amount", dataset, 
+	                true, true, false);
+	        DateAxis axis = (DateAxis) chart.getXYPlot().getDomainAxis();
+	        axis.setDateFormatOverride(new java.text.SimpleDateFormat("dd-MM-yyyy"));
+
+	        // Customize the chart's appearance
+	        chart.getXYPlot().setRangeGridlinePaint(Color.BLACK);
+	        
+	        // Create a ChartPanel object
+	        linegraph = new ChartPanel(chart);
 	}
 
 	
