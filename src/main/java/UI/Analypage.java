@@ -60,6 +60,7 @@ import java.util.List;
 import com.toedter.calendar.JDateChooser;
 
 import DB.DBUtil;
+import persistence.BudgetList;
 import persistence.ExpenseInputData;
 import persistence.LedgerItem;
 import persistence.LedgerList;
@@ -232,6 +233,11 @@ public class Analypage implements ActionListener {
 					panel.add(histogram);
 					panel.add(linegraph);
 				}
+				if(source==3)
+				{ 
+					histogramBudget(User.allbudgets);
+					panel.add(histogram);
+				}
 				if(source==6)
 				{ 
 					pieChartCategory(User.cards, choice);
@@ -340,6 +346,40 @@ public class Analypage implements ActionListener {
 	    // Create a ChartPanel object and add it to a JFrame
 	    histogram = new ChartPanel(chart);
 	}
+	
+	public void histogramBudget(BudgetList list)
+	{ 
+	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	    Map<String,Double> map=list.mapForEachBudget();
+	    // Add the data to the dataset
+	    for (String xValue : map.keySet()) {
+	        Double yValue = map.get(xValue);
+	        dataset.addValue(yValue, "Amount", xValue);
+	    }
+
+	    // Create a JFreeChart object
+	    JFreeChart chart = ChartFactory.createBarChart(
+	            "How much your budgets have been",
+	            "Budget",
+	            "Amount",
+	            dataset,
+	            PlotOrientation.VERTICAL,
+	            true,
+	            true,
+	            false);
+
+	    // Set chart properties
+	    chart.setBackgroundPaint(Color.WHITE);
+	    CategoryPlot plot = chart.getCategoryPlot();
+	    CategoryAxis axis = plot.getDomainAxis();
+	    axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+	    axis.setMaximumCategoryLabelLines(2);
+
+	    // Create a ChartPanel object and add it to a JFrame
+	    histogram = new ChartPanel(chart);
+	}
+	
+	
 	public void lineGraphDaily(LedgerList list, String choice)
 	{ 
 		 Map<LocalDate, Double> data = list.mapforEachDay(choice);
