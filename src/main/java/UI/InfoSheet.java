@@ -132,7 +132,6 @@ public class InfoSheet implements ActionListener {
 		if (specificC.equals("hi")) {
 			for (Map.Entry<String, Double> entry : map.entrySet()) {
 				average += entry.getValue();
-				System.out.println(entry.getKey());
 			}
 		} else {
 			if (map.containsKey(specificC)) {
