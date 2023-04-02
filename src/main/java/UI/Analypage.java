@@ -41,6 +41,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 
@@ -295,7 +298,7 @@ public class Analypage implements ActionListener {
 	}
 
 
-	public void lineGraphDaily(LedgerList list)
+	public void lineGraphDaily(LedgerList list, String choice)
 	{ 
 		 Map<LocalDate, Double> data = list.mapforEachDay(choice);
 	        // Create a TimeSeriesCollection using the HashMap values and keys
