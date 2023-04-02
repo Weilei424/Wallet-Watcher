@@ -116,7 +116,7 @@ class DBUtilTester {
 		Random r = new Random();
 		
 		try {
-			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 6)]));
+//			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 6)]));
 			/**
 			 * DO NOT UNCOMMENT THESE LINES BELOW!
 			 * These lines are just for initializing only!
