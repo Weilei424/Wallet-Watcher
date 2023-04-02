@@ -74,7 +74,7 @@ public class LedgerList {
 			map.put("Commission", 0.0);
 			map.put("Side Gig", 0.0);
 		}
-		if(type.compareTo("card")==0)
+		if(type.compareTo("cardpurse")==0)
 		{
 			map.put("Credit Card", 0.0);
 			map.put("Points Card", 0.0);
@@ -165,6 +165,14 @@ public class LedgerList {
 		}
 		return map;	
 		}
-	
+	public Map<String,Double> mapforeachcard()
+	{
+		Map<String,Double> map=new LinkedHashMap<>();
+		for(int x=0; x<this.items.size(); x++)
+		{ 
+			map.put(this.items.get(x).itemName, this.items.get(x).amount);
+		}
+		return map;
+	}	
 	
 }

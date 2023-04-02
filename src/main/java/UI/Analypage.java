@@ -32,10 +32,14 @@ import javax.swing.JTextField;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.CategoryLabelWidthType;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -231,11 +235,13 @@ public class Analypage implements ActionListener {
 				if(source==6)
 				{ 
 					pieChartCategory(User.cards, choice);
-					histogramMonthlyExpense(User.cards, choice);
-					lineGraphDaily(User.cards, choice);
+					histogramCard(User.cards);
 					panel.add(piechart);
 					panel.add(histogram);
-					panel.add(linegraph);
+
+					//add histogram of card amounts
+					
+					
 				}
 				if(source==7)
 				{ 
@@ -278,6 +284,7 @@ public class Analypage implements ActionListener {
 	            Double yValue = map.get(xValue);
 	            dataset.addValue(yValue, "Values", xValue);
 	        }
+	        
 
 	        // Create a JFreeChart object
 	        JFreeChart chart = ChartFactory.createBarChart(
@@ -290,6 +297,11 @@ public class Analypage implements ActionListener {
 	                true,
 	                false);
 
+		    CategoryPlot plot = chart.getCategoryPlot();
+		    CategoryAxis axis = plot.getDomainAxis();
+		    axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+		    axis.setMaximumCategoryLabelLines(2);
+		    
 	        // Set chart properties
 	        chart.setBackgroundPaint(Color.WHITE);
 
@@ -297,7 +309,37 @@ public class Analypage implements ActionListener {
 	        histogram = new ChartPanel(chart);
 	}
 
+	public void histogramCard(LedgerList list)
+	{ 
+	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	    Map<String,Double> map=list.mapforeachcard();
+	    // Add the data to the dataset
+	    for (String xValue : map.keySet()) {
+	        Double yValue = map.get(xValue);
+	        dataset.addValue(yValue, "Amount", xValue);
+	    }
 
+	    // Create a JFreeChart object
+	    JFreeChart chart = ChartFactory.createBarChart(
+	            "How much is stored in each card",
+	            "Cards",
+	            "Amount",
+	            dataset,
+	            PlotOrientation.VERTICAL,
+	            true,
+	            true,
+	            false);
+
+	    // Set chart properties
+	    chart.setBackgroundPaint(Color.WHITE);
+	    CategoryPlot plot = chart.getCategoryPlot();
+	    CategoryAxis axis = plot.getDomainAxis();
+	    axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+	    axis.setMaximumCategoryLabelLines(2);
+
+	    // Create a ChartPanel object and add it to a JFrame
+	    histogram = new ChartPanel(chart);
+	}
 	public void lineGraphDaily(LedgerList list, String choice)
 	{ 
 		 Map<LocalDate, Double> data = list.mapforEachDay(choice);
