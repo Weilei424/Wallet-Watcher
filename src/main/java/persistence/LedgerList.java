@@ -1,8 +1,13 @@
 package persistence;
 
 import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -28,7 +33,8 @@ public class LedgerList {
 	    	double amount=(Double)model.getValueAt(i,3);
 	    	String itemname=(String)model.getValueAt(i,1);	
 	    	String note=(String)model.getValueAt(i,2);
-	    	objects.add(new LedgerItem(date.toString(),amount,itemname,note));
+	    	String category=(String)model.getValueAt(i, 5);
+	    	objects.add(new LedgerItem(date.toString(),amount,itemname,note,category));
 
 	    }
 		return objects;
@@ -53,6 +59,77 @@ public class LedgerList {
             item.items.set(i, temp); 
         }
 	}
+	public Map<String,Double> categorize(String type)
+	{ 
+		Map<String,Double> map=new HashMap<>();
+		if(type.compareTo("expense")==0)
+		{
+			map.put("Food", 0.0);
+			map.put("Commute", 0.0);
+			map.put("Entertainment", 0.0);
+		}
+		if(type.compareTo("earning")==0)
+		{
+			map.put("Salary", 0.0);
+			map.put("Commission", 0.0);
+			map.put("Side Gig", 0.0);
+		}
+		for(LedgerItem item:this.items)
+		{
+			if(map.containsKey(item.category.getName()))
+			{	
+				map.put(item.category.getName(), map.get(item.category.getName())+item.amount);				
+			}
+		}
+		return map;
+	}
+	public Map<String,Double> mapfor30days(String type)
+	{
+		Map<String,Double> map=new LinkedHashMap<>();
+		LocalDate today=LocalDate.now();
+		LocalDate monthLater=LocalDate.now();
+		LedgerList.sortByLocalDate(this);
+		
+		for(int x=0; x<this.items.size();x++)
+		{
+			if(x==0)
+			{ 
+				 today=this.items.get(x).date;
+				 monthLater=today.plusMonths(1).withDayOfMonth(1);
+				 map.put(today.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " "+
+						 today.getYear(), this.items.get(x).amount);
+			}
+			else if(this.items.get(x).date.compareTo(monthLater)>0)
+			{
+				 today=monthLater;
+				 monthLater=monthLater.plusMonths(1).withDayOfMonth(1);;
+				 map.put(today.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) +" "+ 
+						 today.getYear(), this.items.get(x).amount);
+			} 			
+			else
+			{ 
+				 map.put(today.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) +" "+ 
+						 today.getYear(), 
+						 map.get(today.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) +" "+ 
+								 today.getYear()) + this.items.get(x).amount);
+			}
+		}
+		return map;
+	}
 	
+	public Map<String,Double> mapforEachDay(String type)
+	{
+		 Map<String,Double> page=null;
+		 return page;
+	}
+	
+
+	 /* list of categories:
+	  Expense: Food, Commute, Entertainment
+	  Earning: Salary, Commission, Side Gig
+	  BillPlanner: Utility, Credit Card, Loan
+	  CardPurse: Debit Card, Credit Card, Points Card
+	  Investment: Stock, Bond, Saving Account
+	 */
 	
 }
