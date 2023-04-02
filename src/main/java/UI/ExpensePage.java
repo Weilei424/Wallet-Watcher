@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -203,6 +204,7 @@ public class ExpensePage implements ActionListener {
 					item = new JRadioButton("Item name");
 					note = new JRadioButton("Note");
 					amount = new JRadioButton("Amount");
+					amount.setSelected(true);
 					buttonGroup = new ButtonGroup();
 					buttonGroup.add(item);
 					buttonGroup.add(note);

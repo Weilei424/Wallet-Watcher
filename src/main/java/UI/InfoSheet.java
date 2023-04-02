@@ -64,6 +64,7 @@ public class InfoSheet implements ActionListener {
 		infoTitle.setLocation(200, 50);
 
 		avgExpenses = averageExpenses(User.expenses, "expense", "hi");
+		System.out.print(avgExpenses);
 		avgFood = averageExpenses(User.expenses, "expense", "Food");
 		avgCommute = averageExpenses(User.expenses, "expense", "Commute");
 		avgEntertain = averageExpenses(User.expenses, "expense", "Entertainment");

@@ -203,6 +203,8 @@ public class InvestmentPage implements ActionListener {
 		            item = new JRadioButton("Item name");
 		            note = new JRadioButton("Note");
 		            amount = new JRadioButton("Amount");
+					amount.setSelected(true);
+
 		            buttonGroup = new ButtonGroup();
 		            buttonGroup.add(item);
 		            buttonGroup.add(note);

@@ -200,6 +200,7 @@ public class CardPursePage implements ActionListener {
 					buttonGroup.add(item);
 					buttonGroup.add(note);
 					buttonGroup.add(amount);
+					amount.setSelected(true);
 					dialogPanel.add(label);
 					dialogPanel.add(textField);
 					dialogPanel.add(item);
