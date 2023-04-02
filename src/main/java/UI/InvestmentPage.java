@@ -158,7 +158,7 @@ public class InvestmentPage implements ActionListener {
 		mainIvPanel.add(addana);
 		mainIvPanel.add(toMenu);
 		
-		mainIvPanel.setBackground(Color.green);
+		mainIvPanel.setBackground(new Color(144, 238, 144));
 
 		// pop up menu, on click for update and delete
 		this.popupMenu = new JPopupMenu();
@@ -313,7 +313,7 @@ public class InvestmentPage implements ActionListener {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(mainIvPanel);
-		mainPanel.setBackground(Color.green);
+		mainPanel.setBackground(new Color(144, 238, 144));
 
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it

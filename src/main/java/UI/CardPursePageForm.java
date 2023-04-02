@@ -11,14 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -116,7 +109,7 @@ public class CardPursePageForm implements ActionListener{
 			
 			cardPurseForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 			cardPurseForm.setLayout(new GridLayout(5, 1));
-			cardPurseForm.setBackground(Color.cyan);
+			cardPurseForm.setBackground(new Color(137, 208, 240));
 
 			cardName = new JLabel("Name of Card:");
 			cardName.setSize(100, 20);
@@ -203,23 +196,32 @@ public class CardPursePageForm implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (this.framesCreated < 1) {
-				cpp = new CardPursePage();
-				cpp.mainCpPage.setVisible(true);
-				cpp.getAddNewCard().setVisible(false);
-				
+			if (cardNameInput.getText().isEmpty() || cardCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
+				JOptionPane.showMessageDialog(cardPurseFrame, "Please enter the name, balance, and date.");
+				return;
 			}
 
 			String expName = cardNameInput.getText();
 			String expNote = cardDescriptionInput.getText();
 			String expDate = formattedDate;
-			double expCost = Double.parseDouble(cardCostInput.getText());
 
-			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			try {
+				double expCost = Double.parseDouble(cardCostInput.getText());
+				this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			} catch (NumberFormatException ex) {
+				new ErrorPage("Amount is not a valid number.", ex);
+				return;
+			}
+
 			this.ledgerItem.setCategory(category);
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "card");
 
-		
+			if (this.framesCreated < 1) {
+				cpp = new CardPursePage();
+				cpp.mainCpPage.setVisible(true);
+				cpp.getAddNewCard().setVisible(false);
+
+			}
 
 			try {
 				cpp.cardPurseTable = DBUtil.query(User.getLoginAs(),"tag","card");

@@ -90,7 +90,7 @@ public class MainUi implements ActionListener {
 		mainPanel.add(passwordText);
 		mainPanel.add(userPasswordInput);
 		mainPanel.add(userLogIn);
-		mainPanel.setBackground(Color.GREEN);
+		mainPanel.setBackground(new Color(144, 238, 144));
 		mainPanel.add(signup);
 		
 		// Adding it all to the main frame to be visible in UI

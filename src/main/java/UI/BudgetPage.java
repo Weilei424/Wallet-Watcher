@@ -139,7 +139,7 @@ public class BudgetPage implements ActionListener {
 		mainEpPanel.add(addBudget);
 		mainEpPanel.add(toMenu);
 		mainEpPanel.add(addana);
-		mainEpPanel.setBackground(Color.green);
+		mainEpPanel.setBackground(new Color(144, 238, 144));
 
 		removeExpense = new JButton(new AbstractAction("Remove All Expenses") {
 
@@ -164,7 +164,7 @@ public class BudgetPage implements ActionListener {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(mainEpPanel);
-		mainPanel.setBackground(Color.green);
+		mainPanel.setBackground(new Color(144, 238, 144));
 
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it
