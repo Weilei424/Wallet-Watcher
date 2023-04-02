@@ -1,0 +1,159 @@
+package UI;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import persistence.LedgerItem;
+import persistence.LedgerList;
+import persistence.User;
+
+public class InfoSheet {
+
+	JFrame infoFrame;
+	JPanel infoPanel;
+	JPanel infoTitlePanel;
+	JPanel returnMenu;
+	JLabel infoTitle;
+	JLabel averageExpenses;
+	JLabel averageFood;
+	JLabel averageCommute;
+	JLabel averageEntertainment;
+	JButton returnToMenu;
+	double avgExpenses;
+	double avgFood;
+	double avgCommute;
+	double avgEntertain;
+	NavigatorPage nav;
+
+	public InfoSheet() {
+		// average total expenses
+		
+		infoTitle = new JLabel("Your Average Expenses Are:");
+	//	infoTitle.setFont(new Font("Courier", Font.BOLD, 12));
+		infoTitle.setLocation(200, 50);
+		
+
+		avgExpenses = averageExpenses(User.expenses, "Expenses", null);
+		avgFood = averageExpenses(User.expenses, "Expenses", "Food");
+		avgCommute = averageExpenses(User.expenses, "Expenses", "Commute");
+		avgEntertain = averageExpenses(User.expenses, "Expenses", "Entertainment");
+
+		infoFrame = new JFrame();
+		infoFrame.setLocationRelativeTo(null);
+		infoTitlePanel = new JPanel();
+		infoPanel = new JPanel();
+		
+		infoTitlePanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 0, 50));
+	//	infoTitlePanel.setLayout(null);
+		infoTitlePanel.setBackground(new Color(137, 208, 240));
+		infoTitlePanel.add(infoTitle);
+
+		infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 0, 50));
+		infoPanel.setLayout(new GridLayout(5, 2));
+		infoPanel.setBackground(new Color(137, 208, 240));
+
+		averageExpenses = new JLabel("Average Total User Expenses: " + avgExpenses);
+		averageExpenses.setSize(100, 20);
+		averageExpenses.setLocation(100, 100);
+
+		averageFood = new JLabel("Average User Spent on Food: " + avgFood);
+		averageFood.setSize(100, 20);
+		averageFood.setLocation(100, 200);
+
+		averageCommute = new JLabel("Average User Spent on Commuting: " + avgCommute);
+		averageCommute.setSize(100, 20);
+		averageCommute.setLocation(100, 200);
+
+		averageEntertainment = new JLabel("Average User Spent on Entertainment: " + avgEntertain);
+		averageEntertainment.setSize(100, 20);
+		averageEntertainment.setLocation(100, 300);
+
+		infoPanel.add(averageExpenses);
+		infoPanel.add(averageFood);
+		infoPanel.add(averageCommute);
+		infoPanel.add(averageEntertainment);
+		
+		returnMenu = new JPanel();
+		returnMenu.setBackground(new Color(137,208,240));
+		returnMenu.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 50));
+		
+		returnToMenu = new JButton("Return to menu");
+		returnToMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(returnToMenu.isSelected()) {
+					nav = new NavigatorPage();
+					nav.navigator.setVisible(true);
+					infoFrame.dispose();
+				}
+			}
+		});
+		
+		returnMenu.add(returnToMenu);
+
+		// average food
+
+		// average commute
+		// average enter
+		infoFrame.add(infoTitlePanel, BorderLayout.NORTH);
+		infoFrame.add(infoPanel);
+		infoFrame.add(returnMenu, BorderLayout.SOUTH);
+		infoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		infoFrame.setTitle("User Information Sheet");
+		infoFrame.setSize(400, 400);
+		// expensePageFrame.pack(); // when setSize on, then remove pack
+		infoFrame.setVisible(true);
+	}
+
+	public double averageExpenses(LedgerList userList, String averageChoice, String specificChoice) {
+
+		Map<String, Double> map = userList.categorize(averageChoice);
+		double average = 0;
+		String specificC = specificChoice;
+		String f = "Food";
+		String c = "Commute";
+		String e = "Entertainment";
+
+		if (specificC == null) {
+			for (Map.Entry<String, Double> entry : map.entrySet()) {
+				average += entry.getValue();
+			}
+		} else {
+			if (map.containsKey(specificC)) {
+				average += map.get(specificC);
+			}
+		}
+
+		return average;
+
+	}
+
+	public static void main(String[] args) {
+		new InfoSheet();
+	}
+
+}
