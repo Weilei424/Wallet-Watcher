@@ -112,7 +112,6 @@ public class CardPursePage implements ActionListener {
 		tabCol6.setPreferredWidth(95);
 
 		mainCpPage = new JFrame();
-		mainCpPage.setLocationRelativeTo(null);
 		mainCpPanel = new JPanel();
 
 		// Initialize main title on page, along with initializing button and layouts
@@ -316,6 +315,8 @@ public class CardPursePage implements ActionListener {
 		mainCpPage.setTitle("Card Purse");
 		mainCpPage.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		mainCpPage.setLocationRelativeTo(null);
+
 		mainCpPage.setVisible(true);
 
 	}

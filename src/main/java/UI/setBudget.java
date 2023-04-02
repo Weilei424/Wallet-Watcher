@@ -108,7 +108,6 @@ public class setBudget {
 	{ 
 		popup=new JFrame();
 		popup.setSize(new Dimension(800,622));
-		popup.setLocationRelativeTo(null);
 		
 		page=new JPanel();
 		page.setLayout(new GridLayout(7,1));
@@ -223,7 +222,7 @@ public class setBudget {
 		button.add(inputBudget);
 		
 		page.add(button);
-		
+		popup.setLocationRelativeTo(null);
 		popup.setVisible(true);
 	}
 	

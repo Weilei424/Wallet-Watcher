@@ -113,7 +113,6 @@ public class BillPlannerPage implements ActionListener {
 		tabCol6.setPreferredWidth(95);
 
 		mainBpPage = new JFrame();
-		mainBpPage.setLocationRelativeTo(null);
 		mainBpPanel = new JPanel();
 		bpForm = new BillPlannerPageForm();
 		bpForm.billPlannerPageFrame.setVisible(false);
@@ -324,6 +323,7 @@ public class BillPlannerPage implements ActionListener {
 		mainBpPage.setTitle("Upcoming Bills");
 		mainBpPage.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		mainBpPage.setLocationRelativeTo(null);
 		mainBpPage.setVisible(true);
 
 	}

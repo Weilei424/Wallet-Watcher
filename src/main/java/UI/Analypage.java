@@ -122,7 +122,6 @@ public class Analypage implements ActionListener {
 		this.framesCreated = 0;
 
 		anaPageFrame = new JFrame();
-		anaPageFrame.setLocationRelativeTo(null);
 		anaPanel = new JPanel();
 		String returns="return to ";
 		String head = "Graph for ";
@@ -261,6 +260,8 @@ public class Analypage implements ActionListener {
 				
 		
 				anaPageFrame.add(panel);
+				anaPageFrame.setLocationRelativeTo(null);
+
 				anaPageFrame.setVisible(true);
 				
 		

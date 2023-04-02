@@ -96,7 +96,6 @@ public class BudgetPage implements ActionListener {
 		
 		
 		mainEpFrame = new JFrame();
-		mainEpFrame.setLocationRelativeTo(null);
 		mainEpPanel = new JPanel();
 		this.isRemoved = false;
 
@@ -176,6 +175,8 @@ public class BudgetPage implements ActionListener {
 		mainEpFrame.setTitle("Budget Plans");
 		mainEpFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		mainEpFrame.setLocationRelativeTo(null);
+
 		mainEpFrame.setVisible(true);
 
 	}

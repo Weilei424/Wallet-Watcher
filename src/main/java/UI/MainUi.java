@@ -99,6 +99,8 @@ public class MainUi implements ActionListener {
 		mainFrame.setTitle("Wallet Watcher");
 		mainFrame.setSize(450, 350);
 		// mainFrame.pack();
+		mainFrame.setLocationRelativeTo(null);
+
 		mainFrame.setVisible(true);
 
 	}

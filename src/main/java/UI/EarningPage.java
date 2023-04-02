@@ -115,7 +115,6 @@ public class EarningPage implements ActionListener {
 		tabCol6.setPreferredWidth(90);
 
 		mainEpFrame = new JFrame();
-		mainEpFrame.setLocationRelativeTo(null);
 		mainEpPanel = new JPanel();
 		this.isRemoved = false;
 
@@ -323,6 +322,8 @@ public class EarningPage implements ActionListener {
 		mainEpFrame.setTitle("Earnings");
 		mainEpFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		mainEpFrame.setLocationRelativeTo(null);
+
 		mainEpFrame.setVisible(true);
 
 	}

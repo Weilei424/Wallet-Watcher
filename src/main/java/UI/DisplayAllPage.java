@@ -87,7 +87,6 @@ public class DisplayAllPage implements ActionListener {
 		tabCol6.setPreferredWidth(90);
 
 		displayFrame = new JFrame();
-		displayFrame.setLocationRelativeTo(null);
 		mainDisplayPanel = new JPanel();
 
 		// Initialize main title on page, along with initializing button and layouts
@@ -162,6 +161,8 @@ public class DisplayAllPage implements ActionListener {
 		displayFrame.setTitle("Display all");
 		displayFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		displayFrame.setLocationRelativeTo(null);
+
 		displayFrame.setVisible(true);
 
 	}

@@ -70,7 +70,6 @@ public class InfoSheet implements ActionListener {
 		avgEntertain = averageExpenses(User.expenses, "expense", "Entertainment");
 
 		infoFrame = new JFrame();
-		infoFrame.setLocationRelativeTo(null);
 		infoTitlePanel = new JPanel();
 		infoPanel = new JPanel();
 
@@ -121,6 +120,8 @@ public class InfoSheet implements ActionListener {
 		infoFrame.setTitle("User Information Sheet");
 		infoFrame.setSize(400, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		infoFrame.setLocationRelativeTo(null);
+
 		infoFrame.setVisible(true);
 	}
 
