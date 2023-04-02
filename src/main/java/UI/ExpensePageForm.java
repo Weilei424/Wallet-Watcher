@@ -120,7 +120,7 @@ public class ExpensePageForm implements ActionListener {
 
 		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		expensePageForm.setLayout(new GridLayout(7, 2));
-		expensePageForm.setBackground(Color.cyan);
+		expensePageForm.setBackground(new Color(137, 208, 240));
 
 		expenseName = new JLabel("Name of Budget:");
 		expenseName.setSize(100, 20);
@@ -216,24 +216,35 @@ public class ExpensePageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if (expenseNameInput.getText().isEmpty() || expenseCostInput.getText().isEmpty() || date.getDate() == null) {
+			JOptionPane.showMessageDialog(expensePageFrame, "Please enter the name, cost, and date.");
+			return;
+		}
+
+		String expName = expenseNameInput.getText();
+		String expNote = expenseDescriptionInput.getText();
+		String expDate = formattedDate;
+
+		try {
+			double expCost = Double.parseDouble(expenseCostInput.getText());
+			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+		} catch (NumberFormatException ex) {
+			new ErrorPage("Amount is not a valid number.", ex);
+			return;
+		}
+
+		this.ledgerItem.setCategory(category);
+		if (recur)
+			this.ledgerItem.setRecurring(new Recurrence());
+
+		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
+
 		if (this.framesCreated < 1) {
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
 			ep.getAddExpense().setVisible(false);
 
 		}
-
-		String expName = expenseNameInput.getText();
-		String expNote = expenseDescriptionInput.getText();
-		String expDate = formattedDate;
-		double expCost = Double.parseDouble(expenseCostInput.getText());
-
-		this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
-		this.ledgerItem.setCategory(category);
-		if (recur)
-			this.ledgerItem.setRecurring(new Recurrence());
-
-		DBUtil.insert(User.getLoginAs(), this.ledgerItem, "expense");
 
 		ep.setTempLedgerItem(this.ledgerItem);
 		ep.setNumberOfExpenses(ep.getNumberOfExpenses() + 1);

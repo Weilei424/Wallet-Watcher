@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -38,10 +39,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.Year;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+
 
 
 import org.jfree.chart.ChartPanel;
@@ -103,6 +103,7 @@ public class Analypage implements ActionListener {
 	private JPanel panel;
 	 ChartPanel chartPanel;
 	 
+
 	public Analypage(int source) {
 		this.source=source;
 
@@ -178,14 +179,16 @@ public class Analypage implements ActionListener {
 				//anaPanel.add(addEarning);
 				//anaPanel.add(addana);
 				anaPanel.add(resume);
-				anaPanel.setBackground(Color.green);
+
+				anaPanel.setBackground(new Color(144, 238, 144));
+		
 				
 				
 				anaPanel1 = new JPanel();
 				anaPanel1.setLayout(new BorderLayout());
 				anaPanel1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 				anaPanel1.add(anaPanel);
-				anaPanel1.setBackground(Color.cyan);
+				anaPanel1.setBackground(new Color(144, 238, 144));
 				
 				
 				
@@ -264,6 +267,7 @@ public class Analypage implements ActionListener {
 	        // Create a ChartPanel object and add it to a JFrame
 	        chartPanel = new ChartPanel(chart);
 	}
+
 	public void lineGraphDaily(LedgerList list)
 	{ 
 		

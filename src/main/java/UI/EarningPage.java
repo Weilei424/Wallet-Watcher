@@ -159,7 +159,7 @@ public class EarningPage implements ActionListener {
 		mainEpPanel.add(addEarning);
 		mainEpPanel.add(addana);
 		mainEpPanel.add(toMenu);
-		mainEpPanel.setBackground(Color.green);
+		mainEpPanel.setBackground(new Color(144, 238, 144));
 
 		export = new JButton(new AbstractAction("Export current page as Excel file") {
 
@@ -200,7 +200,7 @@ public class EarningPage implements ActionListener {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(mainEpPanel);
-		mainPanel.setBackground(Color.green);
+		mainPanel.setBackground(new Color(144, 238, 144));
 
 		// pop up menu, on click for update and delete
 		this.popupMenu = new JPopupMenu();

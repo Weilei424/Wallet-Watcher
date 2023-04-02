@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import DB.DBUtil;
 import persistence.BudgetList;
 import persistence.LedgerItem;
+
 import persistence.LedgerList;
 import persistence.User;
 
@@ -183,7 +184,7 @@ public class NavigatorPage {
 		{
 			User.cards.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "card"));
 			User.earnings.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "earning"));
-			User.expenses.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "expense"));	
+s.items=LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "expense"));	
 		}
 		catch(SQLException e)
 		{ 
@@ -202,6 +203,7 @@ public class NavigatorPage {
 		init();
 		categorizationTester();
 		
+
 		if(User.currBudget!=null && User.currBudget.endDate.compareTo(LocalDate.now())>=0)
 		{ 
 			createPage();
@@ -316,6 +318,5 @@ public class NavigatorPage {
 		navigator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigator.setVisible(true);
 	}
-	
-	
+
 }

@@ -156,7 +156,7 @@ public class BillPlannerPage implements ActionListener {
 		mainBpPanel.add(addana);
 		mainBpPanel.add(toMenu);
 		
-		mainBpPanel.setBackground(Color.green);
+		mainBpPanel.setBackground(new Color(144, 238, 144));
 
 		// pop up menu, on click for update and delete
 				this.popupMenu = new JPopupMenu();
@@ -311,7 +311,7 @@ public class BillPlannerPage implements ActionListener {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(mainBpPanel);
-		mainPanel.setBackground(Color.green);
+		mainPanel.setBackground(new Color(144, 238, 144));
 
 		// This is the main frame which holds the main panel and all other elements
 		// enclosed in it

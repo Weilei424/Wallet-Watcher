@@ -11,13 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -72,7 +66,7 @@ public class MiscPageForm implements ActionListener{
 			
 			miscForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 			miscForm.setLayout(new GridLayout(5, 1));
-			miscForm.setBackground(Color.cyan);
+			miscForm.setBackground(new Color(137, 208, 240));
 
 			miscdName = new JLabel("Name of Misc:");
 			miscdName.setSize(100, 20);
@@ -165,25 +159,36 @@ public class MiscPageForm implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (this.framesCreated < 1) {
-				mip = new MiscPage();
-				mip.mainMiPage.setVisible(true);
-				mip.getAddNewCard().setVisible(false);
-				
+			if (miscNameInput.getText().isEmpty() || miscCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
+				JOptionPane.showMessageDialog(miscFrame, "Please enter the name, amount, and date.");
+				return;
 			}
 
 			String expName = miscNameInput.getText();
 			String expNote = miscDescriptionInput.getText();
 			String expDate = formattedDate;
 			category = miscCatInput.getText();
-			double expCost = Double.parseDouble(miscCostInput.getText());
 
-			this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			try {
+				double expCost = Double.parseDouble(miscCostInput.getText());
+				this.ledgerItem = new LedgerItem(expDate, expCost, expName, expNote);
+			} catch (NumberFormatException ex) {
+				new ErrorPage("Amount is not a valid number.", ex);
+				return;
+			}
+
 			this.ledgerItem.setCategory(category);
 			if (recur)
 				this.ledgerItem.setRecurring(new Recurrence());
 			
 			DBUtil.insert(User.getLoginAs(), this.ledgerItem, "misc");
+
+			if (this.framesCreated < 1) {
+				mip = new MiscPage();
+				mip.mainMiPage.setVisible(true);
+				mip.getAddNewCard().setVisible(false);
+
+			}
 
 			try {
 				mip.miscTable = DBUtil.query(User.getLoginAs(),"tag","misc");
