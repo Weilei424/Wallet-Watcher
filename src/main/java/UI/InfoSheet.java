@@ -8,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -64,7 +66,6 @@ public class InfoSheet implements ActionListener {
 		infoTitle.setLocation(200, 50);
 
 		avgExpenses = averageExpenses(User.expenses, "expense", "hi");
-		System.out.print(avgExpenses);
 		avgFood = averageExpenses(User.expenses, "expense", "Food");
 		avgCommute = averageExpenses(User.expenses, "expense", "Commute");
 		avgEntertain = averageExpenses(User.expenses, "expense", "Entertainment");
@@ -83,19 +84,20 @@ public class InfoSheet implements ActionListener {
 		infoPanel.setLayout(new GridLayout(5, 2));
 		infoPanel.setBackground(new Color(137, 208, 240));
 
-		averageExpenses = new JLabel("Average Total User Expenses: " + avgExpenses);
+		averageExpenses = new JLabel("Average Total User Expenses: " + String.format("%.2f", avgExpenses));
 		averageExpenses.setSize(100, 20);
 		averageExpenses.setLocation(100, 100);
 
-		averageFood = new JLabel("Average User Spent on Food: " + avgFood);
+		averageFood = new JLabel("Average User Spent on Food: " + String.format("%.2f", avgFood));
 		averageFood.setSize(100, 20);
 		averageFood.setLocation(100, 200);
 
-		averageCommute = new JLabel("Average User Spent on Commuting: " + avgCommute);
+		averageCommute = new JLabel("Average User Spent on Commuting: " + String.format("%.2f", avgCommute));
 		averageCommute.setSize(100, 20);
 		averageCommute.setLocation(100, 200);
 
-		averageEntertainment = new JLabel("Average User Spent on Entertainment: " + avgEntertain);
+		averageEntertainment = new JLabel(
+				"Average User Spent on Entertainment: " + String.format("%.2f", avgEntertain));
 		averageEntertainment.setSize(100, 20);
 		averageEntertainment.setLocation(100, 300);
 
