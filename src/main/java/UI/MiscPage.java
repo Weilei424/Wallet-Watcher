@@ -132,15 +132,7 @@ public class MiscPage implements ActionListener {
 			}
 		});
 		
-		addana = new JButton(new AbstractAction("Generate Graph") {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(8);
-				ana.anaPageFrame.setVisible(true);
-				mainMiPage.dispose();
-			}
-		});
+		
 		
 
 		// This panel holds the top elements including the title and the ability to add
@@ -148,7 +140,7 @@ public class MiscPage implements ActionListener {
 		mainCpPanel.setLayout(new GridLayout(1, 3));
 		mainCpPanel.add(title);
 		mainCpPanel.add(addNewMisc);
-		mainCpPanel.add(addana);
+		
 		mainCpPanel.add(toMenu);
 		
 		mainCpPanel.add(miscScroller);
