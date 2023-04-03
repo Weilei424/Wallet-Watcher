@@ -135,14 +135,12 @@ public class Analypage implements ActionListener {
 		break;
 		case 4:choice="overall";
 		break;
-		case 5:choice="billplan";
-		break;
+		
 		case 6:choice="cardpurse";
 		break;
 		case 7:choice="investment";
 		break;
-		case 8:choice="misc";
-		break;
+		
 		
 		}
 		//String choice = source==1?"earning":source==2?"expense":"budget";

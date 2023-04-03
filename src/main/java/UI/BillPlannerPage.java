@@ -136,15 +136,7 @@ public class BillPlannerPage implements ActionListener {
 			}
 		});
 		
-		addana = new JButton(new AbstractAction("Generate Graph") {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(5);
-				ana.anaPageFrame.setVisible(true);
-				mainBpPage.dispose();
-			}
-		});
+		
 		
 
 		// This panel holds the top elements including the title and the ability to add
@@ -152,7 +144,7 @@ public class BillPlannerPage implements ActionListener {
 		mainBpPanel.setLayout(new GridLayout(1, 3));
 		mainBpPanel.add(title);
 		mainBpPanel.add(addNewBill);
-		mainBpPanel.add(addana);
+		
 		mainBpPanel.add(toMenu);
 		
 		mainBpPanel.setBackground(new Color(144, 238, 144));
