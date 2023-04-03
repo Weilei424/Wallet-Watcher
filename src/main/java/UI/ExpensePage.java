@@ -87,32 +87,32 @@ public class ExpensePage implements ActionListener {
 		} catch (SQLException er) {
 		}
 		expenseScroller = new JScrollPane(expenseTable);
-		
+
 		colMod = expenseTable.getColumnModel();
 		tabCol = colMod.getColumn(0);
 		tabCol.setPreferredWidth(150);
-		
-		//colMod1 = cardPurseTable.getColumnModel();
+
+		// colMod1 = cardPurseTable.getColumnModel();
 		tabCol1 = colMod.getColumn(1);
 		tabCol1.setPreferredWidth(150);
-		
-		//colMod2 = cardPurseTable.getColumnModel();
+
+		// colMod2 = cardPurseTable.getColumnModel();
 		tabCol2 = colMod.getColumn(2);
 		tabCol2.setPreferredWidth(150);
-		
-		//colMod3 = cardPurseTable.getColumnModel();
+
+		// colMod3 = cardPurseTable.getColumnModel();
 		tabCol3 = colMod.getColumn(3);
 		tabCol3.setPreferredWidth(150);
-		
-		//colMod4 = cardPurseTable.getColumnModel();
+
+		// colMod4 = cardPurseTable.getColumnModel();
 		tabCol4 = colMod.getColumn(4);
 		tabCol4.setPreferredWidth(150);
-		
-		//colMod5 = cardPurseTable.getColumnModel();
+
+		// colMod5 = cardPurseTable.getColumnModel();
 		tabCol5 = colMod.getColumn(5);
 		tabCol5.setPreferredWidth(130);
-		
-		//colMod6 = cardPurseTable.getColumnModel();
+
+		// colMod6 = cardPurseTable.getColumnModel();
 		tabCol6 = colMod.getColumn(6);
 		tabCol6.setPreferredWidth(90);
 
@@ -130,7 +130,7 @@ public class ExpensePage implements ActionListener {
 		addExpense = new JButton("Add New Expense");
 		addExpense.setSize(40, 40);
 		addExpense.addActionListener(this);
-		
+
 		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
@@ -140,7 +140,6 @@ public class ExpensePage implements ActionListener {
 				mainEpFrame.dispose();
 			}
 		});
-		
 
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 
@@ -158,7 +157,7 @@ public class ExpensePage implements ActionListener {
 		mainEpPanel.add(addExpense);
 		mainEpPanel.add(addana);
 		mainEpPanel.add(toMenu);
-		
+
 		mainEpPanel.setBackground(new Color(144, 238, 144));
 
 		// pop up menu, on click for update and delete
@@ -260,15 +259,20 @@ public class ExpensePage implements ActionListener {
 				int ref = (int) expenseTable.getModel().getValueAt(row, 0);
 				DBUtil.delete(User.getLoginAs(), ref);
 				try {
-					expenseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");
+					ExpensePage ep = new ExpensePage();
+					ep.expenseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");
+					mainEpFrame.dispose();
+					mainEpFrame.setVisible(false);
+					ep = new ExpensePage();
+					ep.mainEpFrame.setVisible(false);
 				} catch (SQLException er) {
 				}
-				JScrollPane newScroller = new JScrollPane(expenseTable);
-				mainEpFrame.remove(expenseScroller);
-				expenseScroller = newScroller;
-				mainEpFrame.add(expenseScroller, BorderLayout.CENTER);
-				mainEpFrame.revalidate();
-				mainEpFrame.repaint();
+//				JScrollPane newScroller = new JScrollPane(expenseTable);
+//				mainEpFrame.remove(expenseScroller);
+//				expenseScroller = newScroller;
+//				mainEpFrame.add(expenseScroller, BorderLayout.CENTER);
+//				mainEpFrame.revalidate();
+//				mainEpFrame.repaint();
 			}
 		});
 

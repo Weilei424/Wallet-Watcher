@@ -62,7 +62,7 @@ public class InfoSheet implements ActionListener {
 		// average total expenses
 
 		infoTitle = new JLabel("Your Average Expenses Are:");
-		// infoTitle.setFont(new Font("Courier", Font.BOLD, 12));
+		infoTitle.setFont(new Font("Courier", Font.BOLD, 14));
 		infoTitle.setLocation(200, 50);
 
 		avgExpenses = averageExpenses(User.expenses, "expense", "hi");
@@ -87,19 +87,24 @@ public class InfoSheet implements ActionListener {
 		averageExpenses = new JLabel("Average Total User Expenses: " + String.format("%.2f", avgExpenses));
 		averageExpenses.setSize(100, 20);
 		averageExpenses.setLocation(100, 100);
+		averageExpenses.setForeground(Color.BLACK);
 
 		averageFood = new JLabel("Average User Spent on Food: " + String.format("%.2f", avgFood));
 		averageFood.setSize(100, 20);
 		averageFood.setLocation(100, 200);
+		averageFood.setForeground(Color.BLACK);
 
 		averageCommute = new JLabel("Average User Spent on Commuting: " + String.format("%.2f", avgCommute));
 		averageCommute.setSize(100, 20);
 		averageCommute.setLocation(100, 200);
+		averageCommute.setForeground(Color.BLACK);
 
 		averageEntertainment = new JLabel(
 				"Average User Spent on Entertainment: " + String.format("%.2f", avgEntertain));
 		averageEntertainment.setSize(100, 20);
 		averageEntertainment.setLocation(100, 300);
+		averageEntertainment.setForeground(Color.black);
+		;
 
 		infoPanel.add(averageExpenses);
 		infoPanel.add(averageFood);
