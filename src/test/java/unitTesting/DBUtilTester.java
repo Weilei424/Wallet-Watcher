@@ -224,7 +224,7 @@ class DBUtilTester {
 			assertEquals(229.86 + "", result);
 
 			result = table.getValueAt(5, 2) + "";
-			assertEquals("testnote 57", result);
+			assertEquals("testnote 55", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
