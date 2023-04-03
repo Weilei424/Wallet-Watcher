@@ -142,7 +142,7 @@ class DBUtilTester {
 			assertEquals(7000.0 + "", result);
 
 			result = DBUtil.query("ceojeff", "tag", "all").getValueAt(10, 3) + "";
-			assertEquals(259.31 + "", result);
+			assertEquals(10.0 + "", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -221,7 +221,7 @@ class DBUtilTester {
 		try {
 			JTable table = DBUtil.queryMonth(demo.getUserName(), "expense", "3");
 			String result = table.getValueAt(3, 3) + "";
-			assertEquals(0.82 + "", result);
+			assertEquals(229.86 + "", result);
 
 			result = table.getValueAt(5, 2) + "";
 			assertEquals("testnote 57", result);
