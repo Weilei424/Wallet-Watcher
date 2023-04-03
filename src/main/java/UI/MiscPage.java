@@ -112,7 +112,6 @@ public class MiscPage implements ActionListener {
 		tabCol6.setPreferredWidth(90);
 
 		mainMiPage = new JFrame();
-		mainMiPage.setLocationRelativeTo(null);
 		mainCpPanel = new JPanel();
 
 		// Initialize main title on page, along with initializing button and layouts
@@ -316,6 +315,7 @@ public class MiscPage implements ActionListener {
 		mainMiPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainMiPage.setTitle("Misc earning");
 		mainMiPage.setSize(1000, 1000);
+		mainMiPage.setLocationRelativeTo(null);
 		mainMiPage.setVisible(true);
 
 	}

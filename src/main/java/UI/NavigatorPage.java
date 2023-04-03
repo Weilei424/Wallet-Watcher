@@ -196,7 +196,7 @@ public class NavigatorPage {
 					JOptionPane.showMessageDialog(redirectPage.popup,
 							"You don't have a current budget, please enter a budget");
 				}
-			}, 1000);
+			}, 250);
 		}
 	}
 

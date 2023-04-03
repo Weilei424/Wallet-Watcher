@@ -118,7 +118,6 @@ public class InvestmentPage implements ActionListener {
 		tabCol6.setPreferredWidth(90);
 		
 		mainIvFrame = new JFrame();
-		mainIvFrame.setLocationRelativeTo(null);
 		mainIvPanel = new JPanel();
 		this.isRemoved = false;
 
@@ -326,6 +325,7 @@ public class InvestmentPage implements ActionListener {
 		mainIvFrame.setTitle("Investments");
 		mainIvFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		mainIvFrame.setLocationRelativeTo(null);
 		mainIvFrame.setVisible(true);
 
 	}

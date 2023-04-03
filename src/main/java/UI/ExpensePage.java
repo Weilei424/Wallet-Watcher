@@ -117,7 +117,6 @@ public class ExpensePage implements ActionListener {
 		tabCol6.setPreferredWidth(90);
 
 		mainEpFrame = new JFrame();
-		mainEpFrame.setLocationRelativeTo(null);
 		mainEpPanel = new JPanel();
 
 		this.isRemoved = false;
@@ -324,6 +323,7 @@ public class ExpensePage implements ActionListener {
 		mainEpFrame.setTitle("Expenses");
 		mainEpFrame.setSize(1000, 1000);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
+		mainEpFrame.setLocationRelativeTo(null);
 		mainEpFrame.setVisible(true);
 
 	}
