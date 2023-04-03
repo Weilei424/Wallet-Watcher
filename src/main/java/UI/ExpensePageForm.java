@@ -122,7 +122,7 @@ public class ExpensePageForm implements ActionListener {
 		expensePageForm.setLayout(new GridLayout(7, 2));
 		expensePageForm.setBackground(new Color(137, 208, 240));
 
-		expenseName = new JLabel("Name of Budget:");
+		expenseName = new JLabel("Name of Expense:");
 		expenseName.setSize(100, 20);
 		expenseName.setLocation(100, 100);
 		expensePageForm.add(expenseName);
@@ -132,7 +132,7 @@ public class ExpensePageForm implements ActionListener {
 		expenseNameInput.setLocation(300, 100);
 		expensePageForm.add(expenseNameInput);
 
-		expenseCost = new JLabel("Amount of Budget:");
+		expenseCost = new JLabel("Amount of Expense:");
 		expenseCost.setSize(100, 20);
 		expenseCost.setLocation(100, 200);
 		expensePageForm.add(expenseCost);
@@ -142,7 +142,7 @@ public class ExpensePageForm implements ActionListener {
 		expenseCostInput.setLocation(200, 200);
 		expensePageForm.add(expenseCostInput);
 
-		expenseDescription = new JLabel("Description of Budget:");
+		expenseDescription = new JLabel("Description of Expense:");
 		expenseDescription.setSize(100, 20);
 		expenseDescription.setLocation(100, 300);
 		expensePageForm.add(expenseDescription);
@@ -194,7 +194,7 @@ public class ExpensePageForm implements ActionListener {
 		// Adding the expense form panel into the main frame
 		expensePageFrame.add(expensePageForm, BorderLayout.CENTER);
 		expensePageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		expensePageFrame.setTitle("Add Budget");
+		expensePageFrame.setTitle("Add Expense");
 		expensePageFrame.setSize(800, 400);
 		// expensePageFrame.pack(); // when setSize on, then remove pack
 		expensePageFrame.setVisible(true);
@@ -254,7 +254,6 @@ public class ExpensePageForm implements ActionListener {
 			ep.mainEpFrame.dispose();
 			ep = new ExpensePage();
 			ep.mainEpFrame.setVisible(true);
-			ep.getAddExpense().setVisible(false);
 			expensePageFrame.dispose();
 		} catch (SQLException er) {
 		}
