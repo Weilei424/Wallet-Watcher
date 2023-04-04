@@ -53,6 +53,12 @@ public class CardPursePageForm implements ActionListener {
 		creditCard = new JRadioButton("Credit Card");
 		pointsCard = new JRadioButton("Points Card");
 		other = new JRadioButton("Other");
+		
+		radioGroup = new ButtonGroup();
+		radioGroup.add(debitCard);
+		radioGroup.add(creditCard);
+		radioGroup.add(pointsCard);
+		radioGroup.add(other);
 
 //			checkBox = new JCheckBox("Recurring");
 //
@@ -361,7 +367,6 @@ public class CardPursePageForm implements ActionListener {
 			cpp.mainCpPage.dispose();
 			cpp = new CardPursePage();
 			cpp.mainCpPage.setVisible(true);
-			cpp.getAddNewCard().setVisible(false);
 		} catch (SQLException er) {
 
 		}

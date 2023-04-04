@@ -56,6 +56,12 @@ public class InvestmentPageForm implements ActionListener {
 		bond = new JRadioButton("Bond");
 		saving = new JRadioButton("Savings");
 		other = new JRadioButton("Other");
+		
+		radioGroup = new ButtonGroup();
+		radioGroup.add(stock);
+		radioGroup.add(bond);
+		radioGroup.add(saving);
+		radioGroup.add(other);
 
 //			checkBox = new JCheckBox("Recurring");
 //

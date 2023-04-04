@@ -67,6 +67,12 @@ public class ExpensePageForm implements ActionListener {
 		commute = new JRadioButton("Commute");
 		entertainment = new JRadioButton("Entertainment");
 		other = new JRadioButton("Other");
+		
+		radioGroup = new ButtonGroup();
+		radioGroup.add(food);
+		radioGroup.add(commute);
+		radioGroup.add(entertainment);
+		radioGroup.add(other);
 
 		checkBox = new JCheckBox("Recurring");
 
@@ -132,7 +138,7 @@ public class ExpensePageForm implements ActionListener {
 		expenseNameInput.setLocation(300, 100);
 		expensePageForm.add(expenseNameInput);
 
-		expenseCost = new JLabel("Amount of Expense:");
+		expenseCost = new JLabel("Expense Amount:");
 		expenseCost.setSize(100, 20);
 		expenseCost.setLocation(100, 200);
 		expensePageForm.add(expenseCost);
