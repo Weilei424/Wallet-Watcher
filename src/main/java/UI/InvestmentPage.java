@@ -124,7 +124,7 @@ public class InvestmentPage implements ActionListener {
 		// Initialize main title on page, along with initializing button and layouts
 		title = new JLabel("Investments");
 		title.setSize(30, 30);
-		title.setFont(new Font("Tahoma", Font.BOLD, 40));
+		title.setFont(new Font("Tahoma", Font.BOLD, 30));
 
 		addInvestment = new JButton("Add New Investments");
 		addInvestment.setSize(40, 40);

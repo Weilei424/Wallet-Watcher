@@ -32,6 +32,7 @@ public class EarningPageForm implements ActionListener {
 	private JLabel earningDescription;
 	public JTextField earningDescriptionInput;
 	public JTextField earningDateInput;
+	private JLabel earningType;
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private EarningPage ep;
@@ -47,45 +48,42 @@ public class EarningPageForm implements ActionListener {
 	private JDateChooser dateChooser;
 	private String formattedDate;
 	private JCheckBox checkBox;
+	private Box buttonBox;
 	private boolean recur;
 
 	public EarningPageForm() {
-		this.framesCreated = 0;
-
-		earningPageFrame = new JFrame();
-		earningPageFrame.setLocationRelativeTo(null);
-		earningPageForm = new JPanel();
-		radioGroup = new ButtonGroup();
-		othertext = new JTextField(20);
-		othertext.setPreferredSize(null);
 		
+		salary = new JRadioButton("Salary");
+		commission = new JRadioButton("Commission");
+		sidegig = new JRadioButton("Side Gig");
+		other = new JRadioButton("Other");
+		
+		radioGroup = new ButtonGroup();
+		radioGroup.add(salary);
+		radioGroup.add(commission);
+		radioGroup.add(sidegig);
+		radioGroup.add(other);
+
 		checkBox = new JCheckBox("Recurring");
 
 		checkBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (checkBox.isSelected()) {
-		            recur = true;
-		        } else {
-		            recur = false;
-		        }
+					recur = true;
+				} else {
+					recur = false;
+				}
 			}
 		});
-		
-		salary = new JRadioButton("Salary");
-		salary.setBorderPainted(true);
-		commission = new JRadioButton("Commission");
-		commission.setBorderPainted(true);
-		sidegig = new JRadioButton("Side Gig");
-		sidegig.setBorderPainted(true);
-		other = new JRadioButton("Other:");
-		
-		radioGroup.add(salary);
-		radioGroup.add(commission);
-		radioGroup.add(sidegig);
-		radioGroup.add(other);
-		category = "default";
-		
+
+		buttonBox = Box.createHorizontalBox();
+
+		buttonBox.add(salary);
+		buttonBox.add(commission);
+		buttonBox.add(sidegig);
+		buttonBox.add(other);
+
 		salary.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +91,7 @@ public class EarningPageForm implements ActionListener {
 					category = "Salary";
 			}
 		});
-		
+
 		commission.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -101,7 +99,7 @@ public class EarningPageForm implements ActionListener {
 					category = "Commission";
 			}
 		});
-		
+
 		sidegig.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,21 +108,14 @@ public class EarningPageForm implements ActionListener {
 			}
 		});
 
-		other.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (other.isSelected()) {
-                    othertext.setEnabled(true);
-                    othertext.requestFocus();
-                    category = othertext.getText();
-                } else {
-                    othertext.setEnabled(false);
-                }
-            }
-        });
-		
+		this.framesCreated = 0;
+
+		earningPageFrame = new JFrame();
+		earningPageFrame.setLocationRelativeTo(null);
+		earningPageForm = new JPanel();
+
 		earningPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		earningPageForm.setLayout(new GridLayout(5, 1));
+		earningPageForm.setLayout(new GridLayout(7, 2));
 		earningPageForm.setBackground(new Color(137, 208, 240));
 
 		earningName = new JLabel("Name of Earning:");
@@ -137,7 +128,7 @@ public class EarningPageForm implements ActionListener {
 		earningNameInput.setLocation(300, 100);
 		earningPageForm.add(earningNameInput);
 
-		earningCost = new JLabel("Amount of Earning:");
+		earningCost = new JLabel("Earning Amount:");
 		earningCost.setSize(100, 20);
 		earningCost.setLocation(100, 200);
 		earningPageForm.add(earningCost);
@@ -156,10 +147,12 @@ public class EarningPageForm implements ActionListener {
 		earningDescriptionInput.setSize(100, 20);
 		earningDescriptionInput.setLocation(200, 300);
 		earningPageForm.add(earningDescriptionInput);
-		
-		earningPageForm.add(checkBox);
 
-		dateSelector = new JLabel("Selected date: ");
+		dateSelector = new JLabel("Date:");
+		dateSelector.setSize(100, 20);
+		dateSelector.setLocation(100, 400);
+		earningPageForm.add(dateSelector);
+
 		dateChooser = new JDateChooser();
 
 		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -172,15 +165,23 @@ public class EarningPageForm implements ActionListener {
 				}
 			}
 		});
-		earningPageForm.add(dateSelector);
+
 		earningPageForm.add(dateChooser);
 
-		earningPageForm.add(salary);
-		earningPageForm.add(commission);
-		earningPageForm.add(sidegig);
-		earningPageForm.add(other);
-		earningPageForm.add(othertext);
-		
+		earningType = new JLabel("Type of Expense:");
+
+		earningPageForm.add(earningType);
+		earningPageForm.add(buttonBox);
+
+		JLabel recurring = new JLabel("Is this a recurring expense?");
+
+		earningPageForm.add(recurring);
+		earningPageForm.add(checkBox);
+
+		JLabel blank = new JLabel();
+
+		earningPageForm.add(blank);
+
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
 		submit.addActionListener(this);
@@ -189,10 +190,156 @@ public class EarningPageForm implements ActionListener {
 		// Adding the expense form panel into the main frame
 		earningPageFrame.add(earningPageForm, BorderLayout.CENTER);
 		earningPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		earningPageFrame.setTitle("Add Earning");
-		earningPageFrame.setSize(600, 400);
-		// expensePageFrame.pack(); // when setSize on, then remove pack
+		earningPageFrame.setTitle("Add Expense");
+		earningPageFrame.setSize(800, 400);
+		// earningPageFrame.pack(); // when setSize on, then remove pack
 		earningPageFrame.setVisible(true);
+		
+		
+		
+//		this.framesCreated = 0;
+//
+//		earningPageFrame = new JFrame();
+//		earningPageFrame.setLocationRelativeTo(null);
+//		earningPageForm = new JPanel();
+//		radioGroup = new ButtonGroup();
+//		othertext = new JTextField(20);
+//		othertext.setPreferredSize(null);
+//		
+//		checkBox = new JCheckBox("Recurring");
+//
+//		checkBox.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (checkBox.isSelected()) {
+//		            recur = true;
+//		        } else {
+//		            recur = false;
+//		        }
+//			}
+//		});
+//		
+//		salary = new JRadioButton("Salary");
+//		salary.setBorderPainted(true);
+//		commission = new JRadioButton("Commission");
+//		commission.setBorderPainted(true);
+//		sidegig = new JRadioButton("Side Gig");
+//		sidegig.setBorderPainted(true);
+//		other = new JRadioButton("Other:");
+//		
+//		radioGroup.add(salary);
+//		radioGroup.add(commission);
+//		radioGroup.add(sidegig);
+//		radioGroup.add(other);
+//		category = "default";
+//		
+//		salary.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (salary.isSelected())
+//					category = "Salary";
+//			}
+//		});
+//		
+//		commission.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (commission.isSelected())
+//					category = "Commission";
+//			}
+//		});
+//		
+//		sidegig.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (sidegig.isSelected())
+//					category = "Side Gig";
+//			}
+//		});
+//
+//		other.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if (other.isSelected()) {
+//                    othertext.setEnabled(true);
+//                    othertext.requestFocus();
+//                    category = othertext.getText();
+//                } else {
+//                    othertext.setEnabled(false);
+//                }
+//            }
+//        });
+//		
+//		earningPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+//		earningPageForm.setLayout(new GridLayout(5, 1));
+//		earningPageForm.setBackground(new Color(137, 208, 240));
+//
+//		earningName = new JLabel("Name of Earning:");
+//		earningName.setSize(100, 20);
+//		earningName.setLocation(100, 100);
+//		earningPageForm.add(earningName);
+//
+//		earningNameInput = new JTextField();
+//		earningNameInput.setSize(100, 20);
+//		earningNameInput.setLocation(300, 100);
+//		earningPageForm.add(earningNameInput);
+//
+//		earningCost = new JLabel("Amount of Earning:");
+//		earningCost.setSize(100, 20);
+//		earningCost.setLocation(100, 200);
+//		earningPageForm.add(earningCost);
+//
+//		earningCostInput = new JTextField();
+//		earningCostInput.setSize(100, 20);
+//		earningCostInput.setLocation(200, 200);
+//		earningPageForm.add(earningCostInput);
+//
+//		earningDescription = new JLabel("Description of Earning:");
+//		earningDescription.setSize(100, 20);
+//		earningDescription.setLocation(100, 300);
+//		earningPageForm.add(earningDescription);
+//
+//		earningDescriptionInput = new JTextField();
+//		earningDescriptionInput.setSize(100, 20);
+//		earningDescriptionInput.setLocation(200, 300);
+//		earningPageForm.add(earningDescriptionInput);
+//		
+//		earningPageForm.add(checkBox);
+//
+//		dateSelector = new JLabel("Selected date: ");
+//		dateChooser = new JDateChooser();
+//
+//		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				if ("date".equals(evt.getPropertyName())) {
+//					Date selectedDate = (Date) evt.getNewValue();
+//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//					formattedDate = dateFormat.format(selectedDate);
+//					dateSelector.setText("Selected date: " + formattedDate);
+//				}
+//			}
+//		});
+//		earningPageForm.add(dateSelector);
+//		earningPageForm.add(dateChooser);
+//
+//		earningPageForm.add(salary);
+//		earningPageForm.add(commission);
+//		earningPageForm.add(sidegig);
+//		earningPageForm.add(other);
+//		earningPageForm.add(othertext);
+//		
+//		submit = new JButton("Submit");
+//		submit.setBounds(20, 10, 100, 50);
+//		submit.addActionListener(this);
+//		earningPageForm.add(submit);
+//
+//		// Adding the expense form panel into the main frame
+//		earningPageFrame.add(earningPageForm, BorderLayout.CENTER);
+//		earningPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		earningPageFrame.setTitle("Add Earning");
+//		earningPageFrame.setSize(600, 400);
+//		// earningPageFrame.pack(); // when setSize on, then remove pack
+//		earningPageFrame.setVisible(true);
 
 	}
 

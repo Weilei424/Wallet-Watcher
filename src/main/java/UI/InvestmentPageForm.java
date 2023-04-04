@@ -31,6 +31,7 @@ public class InvestmentPageForm implements ActionListener {
 	private JLabel investmentDescription;
 	public JTextField investmentDescriptionInput;
 	public JTextField investmentDateInput;
+	private JLabel investType;
 	private JButton submit;
 	private LedgerItem ledgerItem;
 	private InvestmentPage ep;
@@ -46,44 +47,41 @@ public class InvestmentPageForm implements ActionListener {
 	private JDateChooser dateChooser;
 	private String formattedDate;
 	private JCheckBox checkBox;
+	private Box buttonBox;
 	private boolean recur;
 
 	public InvestmentPageForm() {
-		this.framesCreated = 0;
-
-		investmentPageFrame = new JFrame();
-		investmentPageFrame.setLocationRelativeTo(null);
-		investmentPageForm = new JPanel();
-		radioGroup = new ButtonGroup();
-		othertext = new JTextField(20);
-		othertext.setPreferredSize(null);
 		
-		checkBox = new JCheckBox("Recurring");
-
-		checkBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (checkBox.isSelected()) {
-		            recur = true;
-		        } else {
-		            recur = false;
-		        }
-			}
-		});
-
 		stock = new JRadioButton("Stock");
-		stock.setBorderPainted(true);
 		bond = new JRadioButton("Bond");
-		bond.setBorderPainted(true);
-		saving = new JRadioButton("Saving acc");
-		saving.setBorderPainted(true);
-		other = new JRadioButton("Other:");
-
+		saving = new JRadioButton("Savings");
+		other = new JRadioButton("Other");
+		
+		radioGroup = new ButtonGroup();
 		radioGroup.add(stock);
 		radioGroup.add(bond);
 		radioGroup.add(saving);
 		radioGroup.add(other);
-		category = "default";
+
+//			checkBox = new JCheckBox("Recurring");
+//
+//			checkBox.addActionListener(new ActionListener() {
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					if (checkBox.isSelected()) {
+//						recur = true;
+//					} else {
+//						recur = false;
+//					}
+//				}
+//			});
+
+		buttonBox = Box.createHorizontalBox();
+
+		buttonBox.add(stock);
+		buttonBox.add(bond);
+		buttonBox.add(saving);
+		buttonBox.add(other);
 
 		stock.addActionListener(new ActionListener() {
 			@Override
@@ -109,21 +107,14 @@ public class InvestmentPageForm implements ActionListener {
 			}
 		});
 
-		other.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (other.isSelected()) {
-					othertext.setEnabled(true);
-					othertext.requestFocus();
-					category = othertext.getText();
-				} else {
-					othertext.setEnabled(false);
-				}
-			}
-		});
+		this.framesCreated = 0;
+
+		investmentPageFrame = new JFrame();
+		investmentPageFrame.setLocationRelativeTo(null);
+		investmentPageForm = new JPanel();
 
 		investmentPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		investmentPageForm.setLayout(new GridLayout(5, 1));
+		investmentPageForm.setLayout(new GridLayout(7, 2));
 		investmentPageForm.setBackground(new Color(137, 208, 240));
 
 		investmentName = new JLabel("Name of Investment:");
@@ -136,7 +127,7 @@ public class InvestmentPageForm implements ActionListener {
 		investmentNameInput.setLocation(300, 100);
 		investmentPageForm.add(investmentNameInput);
 
-		investmentCost = new JLabel("Amount of Investment:");
+		investmentCost = new JLabel("Investment Amount:");
 		investmentCost.setSize(100, 20);
 		investmentCost.setLocation(100, 200);
 		investmentPageForm.add(investmentCost);
@@ -146,7 +137,7 @@ public class InvestmentPageForm implements ActionListener {
 		investmentCostInput.setLocation(200, 200);
 		investmentPageForm.add(investmentCostInput);
 
-		investmentDescription = new JLabel("Description:");
+		investmentDescription = new JLabel("Description of Investment:");
 		investmentDescription.setSize(100, 20);
 		investmentDescription.setLocation(100, 300);
 		investmentPageForm.add(investmentDescription);
@@ -156,9 +147,11 @@ public class InvestmentPageForm implements ActionListener {
 		investmentDescriptionInput.setLocation(200, 300);
 		investmentPageForm.add(investmentDescriptionInput);
 
-		investmentPageForm.add(checkBox);
-		
-		dateSelector = new JLabel("Selected date: ");
+		dateSelector = new JLabel("Date:");
+		dateSelector.setSize(100, 20);
+		dateSelector.setLocation(100, 400);
+		investmentPageForm.add(dateSelector);
+
 		dateChooser = new JDateChooser();
 
 		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -171,14 +164,17 @@ public class InvestmentPageForm implements ActionListener {
 				}
 			}
 		});
-		investmentPageForm.add(dateSelector);
+
 		investmentPageForm.add(dateChooser);
 
-		investmentPageForm.add(stock);
-		investmentPageForm.add(bond);
-		investmentPageForm.add(saving);
-		investmentPageForm.add(other);
-		investmentPageForm.add(othertext);
+		investType = new JLabel("Type of Investment:");
+
+		investmentPageForm.add(investType);
+		investmentPageForm.add(buttonBox);
+
+		JLabel blank = new JLabel();
+
+		investmentPageForm.add(blank);
 
 		submit = new JButton("Submit");
 		submit.setBounds(20, 10, 100, 50);
@@ -189,9 +185,154 @@ public class InvestmentPageForm implements ActionListener {
 		investmentPageFrame.add(investmentPageForm, BorderLayout.CENTER);
 		investmentPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		investmentPageFrame.setTitle("Add Investment");
-		investmentPageFrame.setSize(600, 400);
-		// expensePageFrame.pack(); // when setSize on, then remove pack
+		investmentPageFrame.setSize(800, 400);
+		// investmentPageFrame.pack(); // when setSize on, then remove pack
 		investmentPageFrame.setVisible(true);
+		
+		
+//		this.framesCreated = 0;
+//
+//		investmentPageFrame = new JFrame();
+//		investmentPageFrame.setLocationRelativeTo(null);
+//		investmentPageForm = new JPanel();
+//		radioGroup = new ButtonGroup();
+//		othertext = new JTextField(20);
+//		othertext.setPreferredSize(null);
+//		
+//		checkBox = new JCheckBox("Recurring");
+//
+//		checkBox.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (checkBox.isSelected()) {
+//		            recur = true;
+//		        } else {
+//		            recur = false;
+//		        }
+//			}
+//		});
+//
+//		stock = new JRadioButton("Stock");
+//		stock.setBorderPainted(true);
+//		bond = new JRadioButton("Bond");
+//		bond.setBorderPainted(true);
+//		saving = new JRadioButton("Saving acc");
+//		saving.setBorderPainted(true);
+//		other = new JRadioButton("Other:");
+//
+//		radioGroup.add(stock);
+//		radioGroup.add(bond);
+//		radioGroup.add(saving);
+//		radioGroup.add(other);
+//		category = "default";
+//
+//		stock.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (stock.isSelected())
+//					category = "Stock";
+//			}
+//		});
+//
+//		bond.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (bond.isSelected())
+//					category = "Bond";
+//			}
+//		});
+//
+//		saving.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (saving.isSelected())
+//					category = "Saving account";
+//			}
+//		});
+//
+//		other.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (other.isSelected()) {
+//					othertext.setEnabled(true);
+//					othertext.requestFocus();
+//					category = othertext.getText();
+//				} else {
+//					othertext.setEnabled(false);
+//				}
+//			}
+//		});
+//
+//		investmentPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+//		investmentPageForm.setLayout(new GridLayout(5, 1));
+//		investmentPageForm.setBackground(new Color(137, 208, 240));
+//
+//		investmentName = new JLabel("Name of Investment:");
+//		investmentName.setSize(100, 20);
+//		investmentName.setLocation(100, 100);
+//		investmentPageForm.add(investmentName);
+//
+//		investmentNameInput = new JTextField();
+//		investmentNameInput.setSize(100, 20);
+//		investmentNameInput.setLocation(300, 100);
+//		investmentPageForm.add(investmentNameInput);
+//
+//		investmentCost = new JLabel("Amount of Investment:");
+//		investmentCost.setSize(100, 20);
+//		investmentCost.setLocation(100, 200);
+//		investmentPageForm.add(investmentCost);
+//
+//		investmentCostInput = new JTextField();
+//		investmentCostInput.setSize(100, 20);
+//		investmentCostInput.setLocation(200, 200);
+//		investmentPageForm.add(investmentCostInput);
+//
+//		investmentDescription = new JLabel("Description:");
+//		investmentDescription.setSize(100, 20);
+//		investmentDescription.setLocation(100, 300);
+//		investmentPageForm.add(investmentDescription);
+//
+//		investmentDescriptionInput = new JTextField();
+//		investmentDescriptionInput.setSize(100, 20);
+//		investmentDescriptionInput.setLocation(200, 300);
+//		investmentPageForm.add(investmentDescriptionInput);
+//
+//		investmentPageForm.add(checkBox);
+//		
+//		dateSelector = new JLabel("Selected date: ");
+//		dateChooser = new JDateChooser();
+//
+//		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				if ("date".equals(evt.getPropertyName())) {
+//					Date selectedDate = (Date) evt.getNewValue();
+//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//					formattedDate = dateFormat.format(selectedDate);
+//					dateSelector.setText("Selected date: " + formattedDate);
+//				}
+//			}
+//		});
+//		investmentPageForm.add(dateSelector);
+//		investmentPageForm.add(dateChooser);
+//
+//		investmentPageForm.add(stock);
+//		investmentPageForm.add(bond);
+//		investmentPageForm.add(saving);
+//		investmentPageForm.add(other);
+//		investmentPageForm.add(othertext);
+//
+//		submit = new JButton("Submit");
+//		submit.setBounds(20, 10, 100, 50);
+//		submit.addActionListener(this);
+//		investmentPageForm.add(submit);
+//
+//		// Adding the expense form panel into the main frame
+//		investmentPageFrame.add(investmentPageForm, BorderLayout.CENTER);
+//		investmentPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		investmentPageFrame.setTitle("Add Investment");
+//		investmentPageFrame.setSize(600, 400);
+//		// expensePageFrame.pack(); // when setSize on, then remove pack
+//		investmentPageFrame.setVisible(true);
 
 	}
 
@@ -252,7 +393,6 @@ public class InvestmentPageForm implements ActionListener {
 			ep.mainIvFrame.dispose();
 			ep = new InvestmentPage();
 			ep.mainIvFrame.setVisible(true);
-			ep.getAddInvestment().setVisible(false);
 			investmentPageFrame.dispose();
 		} catch (SQLException er) {
 
