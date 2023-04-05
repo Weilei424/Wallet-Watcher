@@ -320,3 +320,14 @@ Mar 31st 22:34:46
 ===============================================
 Apr 1st 00:31:48
 	removed unused imports and variables for some classes.
+===============================================
+Apr 2nd 16:30:00
+	Meeting with entire group and did an informal 
+	postmortem analysis (recorded).
+===============================================
+Apr 2nd 22:30:00
+	Meeting with Mustafa and customer, did a demo,
+	collected customer's thoughts.
+	
+	Edit video for presentation.
+===============================================

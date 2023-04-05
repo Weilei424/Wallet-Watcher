@@ -69,7 +69,7 @@ public class NavigatorPage {
 
 	MiscPage misc;
 	Settings settingsPage;
-	MainUi logIn;
+	LoginPage logIn;
 	setBudget redirectPage;
 	InfoSheet infoSheet;
 	// static initializations
@@ -147,7 +147,7 @@ public class NavigatorPage {
 
 	ActionListener logOutDirect = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			logIn = new MainUi();
+			logIn = new LoginPage();
 			logIn.mainFrame.setVisible(true);
 			navigator.dispose();
 			User.setLoginAs(null);

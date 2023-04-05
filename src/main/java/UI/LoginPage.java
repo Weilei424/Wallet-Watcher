@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 import DB.DBUtil;
 import persistence.User;
 
-public class MainUi implements ActionListener {
+public class LoginPage implements ActionListener {
 
 	// Global Variables used for main UI
 
@@ -41,7 +41,7 @@ public class MainUi implements ActionListener {
 	
 	// The constructor holds all the initialization of every global variable and
 	// where to use it
-	public MainUi() {
+	public LoginPage() {
 
 		// Initializing all variables
 		mainFrame = new JFrame();

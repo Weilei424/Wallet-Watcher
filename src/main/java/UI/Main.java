@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		FlatLightLaf.setup();
-		MainUi login = new MainUi();	
+		LoginPage login = new LoginPage();	
 	}
 
 }

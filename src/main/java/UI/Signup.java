@@ -62,7 +62,7 @@ public class Signup{
 	JPanel centerRadio; 
 	
 	//UI's that are initialized onclick
-	MainUi redirect;
+	LoginPage redirect;
 	NavigatorPage nav;
 
 	//action listeners for going to the menu
@@ -70,7 +70,7 @@ public class Signup{
 
 		public void actionPerformed(ActionEvent e)
 		{
-			redirect=new MainUi();
+			redirect=new LoginPage();
 			redirect.mainFrame.setVisible(true);
 			page.dispose();	
 		}

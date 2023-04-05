@@ -26,7 +26,7 @@ import persistence.User;
 public class Settings { 
 	JFrame settingsFrame; 
 	NavigatorPage redirect;
-	MainUi main;
+	LoginPage main;
 	//Different main titles for user
 	JLabel titleMain; 
 	JLabel titleAcc;
@@ -453,7 +453,7 @@ public class Settings {
 			}
 			else
 			{ 
-				main=new MainUi();
+				main=new LoginPage();
 				settingsFrame.dispose();
 				JOptionPane.showMessageDialog(main.mainFrame, "Account \'"+User.getLoginAs()+"\' Deleted");
 				User.setLoginAs(null);
