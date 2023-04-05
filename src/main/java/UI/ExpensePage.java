@@ -70,7 +70,7 @@ public class ExpensePage implements ActionListener {
 	private JPanel dialogPanel;
 	private ButtonGroup buttonGroup;
 	private JButton addana;
-	private Analypage ana;
+	private GraphPage ana;
 	private TableColumnModel colMod;
 	private TableColumn tabCol;
 	private TableColumn tabCol1;
@@ -134,7 +134,7 @@ public class ExpensePage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(2);
+				ana = new GraphPage(2);
 				ana.anaPageFrame.setVisible(true);
 				mainEpFrame.dispose();
 			}

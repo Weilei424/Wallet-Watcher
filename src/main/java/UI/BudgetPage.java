@@ -35,7 +35,7 @@ public class BudgetPage implements ActionListener {
 	private JButton removeExpense;
 	private JButton toMenu;
 	
-	private Analypage anapage;
+	private GraphPage anapage;
 	private JLabel title;
 	//private JTextArea ledgerInfo;
 	private BudgetPageForm bpForm;
@@ -48,9 +48,9 @@ public class BudgetPage implements ActionListener {
 	public static volatile int numberOfBudgets = 0;
 	private JButton addana;
 	private JButton changeBudget;
-	private setBudget page;
+	private SetBudgetPage page;
 	
-	private Analypage ana;
+	private GraphPage ana;
 
 	
 	
@@ -73,7 +73,7 @@ public class BudgetPage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(3);
+				ana = new GraphPage(3);
 				ana.anaPageFrame.setVisible(true);
 				mainEpFrame.dispose();
 			}
@@ -129,7 +129,7 @@ public class BudgetPage implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				DBUtil.deleteBudget(User.currBudget.ref);
 				User.currBudget=null;
-				page=new setBudget();
+				page=new SetBudgetPage();
 				mainEpFrame.dispose();
 				JOptionPane.showMessageDialog(page.popup, "Add your new budget here");
 			}

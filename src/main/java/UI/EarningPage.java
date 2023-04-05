@@ -52,7 +52,7 @@ public class EarningPage implements ActionListener {
 	private JLabel title;
 	// private JTextArea ledgerInfo;
 	private EarningPageForm epForm;
-	private Analypage ana;
+	private GraphPage ana;
 	private JButton addana;
 	private LedgerItem tempLedgerItem;
 	public JTable earningTable;
@@ -134,7 +134,7 @@ public class EarningPage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(1);
+				ana = new GraphPage(1);
 				ana.anaPageFrame.setVisible(true);
 				mainEpFrame.dispose();
 			}

@@ -49,7 +49,7 @@ public class NavigatorPage {
 
 	JButton settings;
 	JButton logOut;
-	Analypage ana;
+	GraphPage ana;
 	JButton addana;
 
 	// buttons for account management page
@@ -70,7 +70,7 @@ public class NavigatorPage {
 	MiscPage misc;
 	Settings settingsPage;
 	LoginPage logIn;
-	setBudget redirectPage;
+	SetBudgetPage redirectPage;
 	InfoSheet infoSheet;
 	// static initializations
 	ActionListener allDirect = new ActionListener() {
@@ -191,7 +191,7 @@ public class NavigatorPage {
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					redirectPage = new setBudget();
+					redirectPage = new SetBudgetPage();
 					navigator.dispose();
 					JOptionPane.showMessageDialog(redirectPage.popup,
 							"You don't have a current budget, please enter a budget");

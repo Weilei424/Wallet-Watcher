@@ -72,7 +72,7 @@ public class CardPursePage implements ActionListener {
 	private TableColumn tabCol4;
 	private TableColumn tabCol5;
 	private TableColumn tabCol6;
-	Analypage ana;
+	GraphPage ana;
 	JButton addana;
 
 	public CardPursePage() {
@@ -135,7 +135,7 @@ public class CardPursePage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(6);
+				ana = new GraphPage(6);
 				ana.anaPageFrame.setVisible(true);
 				mainCpPage.dispose();
 			}

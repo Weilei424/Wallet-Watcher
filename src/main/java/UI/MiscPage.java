@@ -72,7 +72,7 @@ public class MiscPage implements ActionListener {
 	private TableColumn tabCol4;
 	private TableColumn tabCol5;
 	private TableColumn tabCol6;
-	Analypage ana;
+	GraphPage ana;
 	JButton addana;
 
 	public MiscPage() {

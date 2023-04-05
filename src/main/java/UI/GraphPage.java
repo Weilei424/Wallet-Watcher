@@ -66,7 +66,7 @@ import persistence.LedgerItem;
 import persistence.LedgerList;
 import persistence.User;
 
-public class Analypage implements ActionListener {
+public class GraphPage implements ActionListener {
 
 	public JFrame anaPageFrame;
 	public int source;
@@ -116,7 +116,7 @@ public class Analypage implements ActionListener {
 
 	 
 
-	public Analypage(int source) {
+	public GraphPage(int source) {
 		this.source=source;
 
 		this.framesCreated = 0;
@@ -433,7 +433,7 @@ public class Analypage implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new Analypage(4);
+		new GraphPage(4);
 	}
 
 }

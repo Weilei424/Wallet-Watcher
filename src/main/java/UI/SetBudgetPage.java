@@ -29,7 +29,7 @@ import persistence.User;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 
-public class setBudget {
+public class SetBudgetPage {
 	public JFrame popup;  
 	
 	public NavigatorPage nav;
@@ -104,7 +104,7 @@ public class setBudget {
 	
 	
 	
-	public setBudget()
+	public SetBudgetPage()
 	{ 
 		popup=new JFrame();
 		popup.setSize(new Dimension(800,622));
@@ -227,6 +227,6 @@ public class setBudget {
 	}
 	
 	public static void main(String[] args) {
-		new setBudget();
+		new SetBudgetPage();
 	}
 }

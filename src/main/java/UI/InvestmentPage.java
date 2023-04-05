@@ -75,7 +75,7 @@ public class InvestmentPage implements ActionListener {
 	private TableColumn tabCol4;
 	private TableColumn tabCol5;
 	private TableColumn tabCol6;
-	Analypage ana;
+	GraphPage ana;
 	JButton addana;
 
 	public InvestmentPage() {
@@ -142,7 +142,7 @@ public class InvestmentPage implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ana = new Analypage(7);
+				ana = new GraphPage(7);
 				ana.anaPageFrame.setVisible(true);
 				mainIvFrame.dispose();
 			}
