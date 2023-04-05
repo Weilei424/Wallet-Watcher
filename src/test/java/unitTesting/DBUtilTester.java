@@ -115,6 +115,9 @@ class DBUtilTester {
 		String s2 = "testnote ";
 		Random r = new Random();
 		
+		/**
+		 * Important: this test case is disabled to prevent random inputs entering DB
+		 */
 		try {
 //			assertTrue(DBUtil.insert("ceojeff", new LedgerItem(LocalDate.now().toString(), 300.00 * r.nextDouble(), s1 + (int) (300.00 * r.nextDouble()),  s2 + (int) (300.00 * r.nextDouble())), tagArr[(int) Math.floor(Math.random() * 6)]));
 			/**
@@ -219,12 +222,12 @@ class DBUtilTester {
 	@Test
 	void testMonth() {
 		try {
-			JTable table = DBUtil.queryMonth(demo.getUserName(), "expense", "3");
+			JTable table = DBUtil.queryMonth(demo.getUserName(), "earning", "3");
 			String result = table.getValueAt(3, 3) + "";
-			assertEquals(229.86 + "", result);
+			assertEquals(1162.35 + "", result);
 
 			result = table.getValueAt(5, 2) + "";
-			assertEquals("testnote 55", result);
+			assertEquals("From work", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
