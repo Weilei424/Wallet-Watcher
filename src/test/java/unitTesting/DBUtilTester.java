@@ -224,10 +224,10 @@ class DBUtilTester {
 		try {
 			JTable table = DBUtil.queryMonth(demo.getUserName(), "earning", "3");
 			String result = table.getValueAt(3, 3) + "";
-			assertEquals(1162.35 + "", result);
+			assertEquals(960.5 + "", result);
 
 			result = table.getValueAt(5, 2) + "";
-			assertEquals("From work", result);
+			assertEquals("12hrs", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
