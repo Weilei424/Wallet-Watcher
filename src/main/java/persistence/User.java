@@ -11,7 +11,7 @@ public final class User {
 	public static LedgerList expenses=new LedgerList(); 
 	public static LedgerList cards=new LedgerList(); 
 	public static LedgerList investments=new LedgerList();
-	
+	public static boolean notification=true;
 	
 	
 	private String firstName;

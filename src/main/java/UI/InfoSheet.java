@@ -44,6 +44,7 @@ public class InfoSheet implements ActionListener {
 	JLabel averageFood;
 	JLabel averageCommute;
 	JLabel averageEntertainment;
+	JLabel budgetSurplus;
 	JButton returnToMenu;
 	double avgExpenses;
 	double avgFood;
@@ -69,7 +70,7 @@ public class InfoSheet implements ActionListener {
 		avgFood = averageExpenses(User.expenses, "expense", "Food");
 		avgCommute = averageExpenses(User.expenses, "expense", "Commute");
 		avgEntertain = averageExpenses(User.expenses, "expense", "Entertainment");
-
+		double surplus=User.expenses.surplusCalculator(User.currBudget);
 		infoFrame = new JFrame();
 		infoTitlePanel = new JPanel();
 		infoPanel = new JPanel();
@@ -104,12 +105,18 @@ public class InfoSheet implements ActionListener {
 		averageEntertainment.setLocation(100, 300);
 		averageEntertainment.setForeground(Color.black);
 		;
-
+		budgetSurplus = new JLabel(
+				"How much budget you have remaining: " + String.format("%.2f", surplus));
+		averageEntertainment.setSize(100, 20);
+		averageEntertainment.setLocation(100, 300);
+		averageEntertainment.setForeground(Color.black);
+		;
 		infoPanel.add(averageExpenses);
 		infoPanel.add(averageFood);
 		infoPanel.add(averageCommute);
 		infoPanel.add(averageEntertainment);
-
+		infoPanel.add(budgetSurplus);
+		
 		returnMenu = new JPanel();
 		returnMenu.setBackground(new Color(137, 208, 240));
 		returnMenu.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 50));
@@ -148,6 +155,7 @@ public class InfoSheet implements ActionListener {
 			}
 		}
 
+		
 		return average;
 
 	}

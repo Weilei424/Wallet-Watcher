@@ -175,4 +175,16 @@ public class LedgerList {
 		return map;
 	}	
 	
+	public double surplusCalculator(BudgetData data)
+	{
+		double total=data.budget;
+		for(int x=0; x< items.size(); x++ )
+		{ 
+	        if(items.get(x).date.compareTo(data.endDate) <= 0 && items.get(x).date.compareTo(data.startDate) >= 0)
+			{
+				total-=items.get(x).amount;
+			}
+		}
+		return total;
+	}
 }
