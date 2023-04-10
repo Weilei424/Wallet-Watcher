@@ -46,3 +46,44 @@ doing wiki
 March 10th 10:26:00 AM
 Centered nav page and made it so form closes on submission. About to complete wiki i wrote 
 earlier dates wrong so i modify. Done itr2
+
+===============================================
+March 18th 12:26:00 AM
+Started settings, attempting to create components for each part of the settings menu
+
+===============================================
+March 19th 12:26:00 AM
+Fully done settings except for password change. Added everything to the nav 
+
+===============================================
+March 25th 2:26:00 AM
+Added static variable current budget so that we can determine whether user has inputted a budget 
+
+===============================================
+March 26th 10:00:00 AM
+Added static variable current budget and added popup menu to prompt user to enter current budget 
+
+===============================================
+March 28th 10:00:00 PM
+Added static class ledgerList so that we can parse db data with consistent storage of the data. 
+
+===============================================
+March 31st 11:37:00 PM
+Added static class budgetList so that we have access to all the budgets user has entered 
+
+===============================================
+April 1st 12:12:00 PM
+Finsihed the database such that the new budget class that was created could be stored and added some budget db methods. Created some all graphs. 
+
+===============================================
+April 2st 10:32:00 AM
+Cenetered pages, created budget graph and changed the budget page such that it is not the same as ledgeritems style classes. 
+
+===============================================
+April 10th 7:27:00 PM 
+Added comparative graphs in and made minor UI changes. 
+
+
+
+
+
