@@ -48,7 +48,7 @@ public class EarningPage implements ActionListener {
 	private JButton addEarning;
 	private JButton export;
 	private JButton toMenu;
-	
+
 	private JLabel title;
 	// private JTextArea ledgerInfo;
 	private EarningPageForm epForm;
@@ -85,32 +85,32 @@ public class EarningPage implements ActionListener {
 		} catch (SQLException er) {
 		}
 		earningScroller = new JScrollPane(earningTable);
-		
+
 		colMod = earningTable.getColumnModel();
 		tabCol = colMod.getColumn(0);
 		tabCol.setPreferredWidth(150);
-		
-		//colMod1 = cardPurseTable.getColumnModel();
+
+		// colMod1 = cardPurseTable.getColumnModel();
 		tabCol1 = colMod.getColumn(1);
 		tabCol1.setPreferredWidth(150);
-		
-		//colMod2 = cardPurseTable.getColumnModel();
+
+		// colMod2 = cardPurseTable.getColumnModel();
 		tabCol2 = colMod.getColumn(2);
 		tabCol2.setPreferredWidth(150);
-		
-		//colMod3 = cardPurseTable.getColumnModel();
+
+		// colMod3 = cardPurseTable.getColumnModel();
 		tabCol3 = colMod.getColumn(3);
 		tabCol3.setPreferredWidth(150);
-		
-		//colMod4 = cardPurseTable.getColumnModel();
+
+		// colMod4 = cardPurseTable.getColumnModel();
 		tabCol4 = colMod.getColumn(4);
 		tabCol4.setPreferredWidth(150);
-		
-		//colMod5 = cardPurseTable.getColumnModel();
+
+		// colMod5 = cardPurseTable.getColumnModel();
 		tabCol5 = colMod.getColumn(5);
 		tabCol5.setPreferredWidth(130);
-		
-		//colMod6 = cardPurseTable.getColumnModel();
+
+		// colMod6 = cardPurseTable.getColumnModel();
 		tabCol6 = colMod.getColumn(6);
 		tabCol6.setPreferredWidth(90);
 
@@ -126,10 +126,7 @@ public class EarningPage implements ActionListener {
 		addEarning = new JButton("Add New Earnings");
 		addEarning.setSize(40, 40);
 		addEarning.addActionListener(this);
-		
-		
-		
-		
+
 		addana = new JButton(new AbstractAction("Generate Graph") {
 
 			@Override
@@ -139,8 +136,6 @@ public class EarningPage implements ActionListener {
 				mainEpFrame.dispose();
 			}
 		});
-		
-		
 
 		toMenu = new JButton(new AbstractAction("Main Menu") {
 
@@ -300,15 +295,20 @@ public class EarningPage implements ActionListener {
 				int ref = (int) earningTable.getModel().getValueAt(row, 0);
 				DBUtil.delete(User.getLoginAs(), ref);
 				try {
-					earningTable = DBUtil.query(User.getLoginAs(), "tag", "earning");
+					EarningPage ep = new EarningPage();
+					ep.earningTable = DBUtil.query(User.getLoginAs(), "tag", "earning");
+					mainEpFrame.dispose();
+					mainEpFrame.setVisible(false);
+					ep = new EarningPage();
+					ep.mainEpFrame.setVisible(false);
 				} catch (SQLException er) {
 				}
-				JScrollPane newScroller = new JScrollPane(earningTable);
-				mainEpFrame.remove(earningScroller);
-				earningScroller = newScroller;
-				mainEpFrame.add(earningScroller, BorderLayout.CENTER);
-				mainEpFrame.revalidate();
-				mainEpFrame.repaint();
+//				JScrollPane newScroller = new JScrollPane(earningTable);
+//				mainEpFrame.remove(earningScroller);
+//				earningScroller = newScroller;
+//				mainEpFrame.add(earningScroller, BorderLayout.CENTER);
+//				mainEpFrame.revalidate();
+//				mainEpFrame.repaint();
 			}
 		});
 
@@ -359,11 +359,6 @@ public class EarningPage implements ActionListener {
 //	public static void main(String[] args) {
 //		new EarningPage();
 //	}
-	
-	
-	
-	
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

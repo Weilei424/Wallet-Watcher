@@ -251,15 +251,15 @@ public class CardPursePage implements ActionListener {
 				int ref = (int) cardPurseTable.getModel().getValueAt(row, 0);
 				DBUtil.delete(User.getLoginAs(), ref);
 				try {
-					cardPurseTable = DBUtil.query(User.getLoginAs(), "tag", "card");
+					CardPursePage cp = new CardPursePage();
+					cp.cardPurseTable = DBUtil.query(User.getLoginAs(), "tag", "expense");
+					mainCpPage.dispose();
+					mainCpPage.setVisible(false);
+					cp = new CardPursePage();
+					cp.mainCpPage.setVisible(false);
 				} catch (SQLException er) {
 				}
-				JScrollPane newScroller = new JScrollPane(cardPurseTable);
-				mainCpPage.remove(cardScroller);
-				cardScroller = newScroller;
-				mainCpPage.add(cardScroller, BorderLayout.CENTER);
-				mainCpPage.revalidate();
-				mainCpPage.repaint();
+
 			}
 		});
 
