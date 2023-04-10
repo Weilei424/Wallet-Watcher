@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -95,6 +97,7 @@ public class GraphPage implements ActionListener {
 	private InvestmentPage ip;
 	private CardPursePage cp;
 	private BillPlannerPage bpp;
+	private InfoSheet sht;
 	private int framesCreated;
 	private JButton resume;
 	
@@ -113,7 +116,7 @@ public class GraphPage implements ActionListener {
 	private ChartPanel piechart;
 	private ChartPanel histogram;
 	private ChartPanel linegraph;
-
+	private ChartPanel threeGraph;
 	 
 
 	public GraphPage(int source) {
@@ -144,7 +147,7 @@ public class GraphPage implements ActionListener {
 		}
 		//String choice = source==1?"earning":source==2?"expense":"budget";
 		head+=choice;
-		returns+=source!=4?choice:"Navigator";
+		returns+=source!=4?choice:"Analytics";
 		title = new JLabel(head);
 		title.setSize(5, 6);
 		title.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -162,8 +165,8 @@ public class GraphPage implements ActionListener {
 					ep = new ExpensePage();
 				else if(source==budget)
 					bp = new BudgetPage();
-				else if(source==nav)
-					np = new NavigatorPage();
+				else if(source==4)
+					sht = new InfoSheet();
 				else if(source==8)
 					mp = new MiscPage();
 				else if(source==7)
@@ -248,6 +251,15 @@ public class GraphPage implements ActionListener {
 					User.allbudgets.budgets = BudgetList.getEntries(DBUtil.getBudgetTable(User.getLoginAs()));
 					histogramBudget(User.allbudgets);
 					panel.add(histogram);
+				}
+				if(source==4)
+				{ 
+					budgetSurplusHistogram(User.allbudgets,User.expenses);
+					multiPanel(User.allbudgets,User.expenses,User.earnings);
+					panel.add(histogram);
+					panel.add(threeGraph);
+					
+
 				}
 				if(source==6)
 				{ 
@@ -341,6 +353,41 @@ public class GraphPage implements ActionListener {
 	        histogram = new ChartPanel(chart);
 	}
 
+	public void budgetSurplusHistogram(BudgetList budget, LedgerList expense)
+	{ 
+		 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		 Map<String,Double> map=budget.mapSurplus(expense);
+	        // Add the data to the dataset
+	        for (String xValue : map.keySet()) {
+	            Double yValue = map.get(xValue);
+	            dataset.addValue(yValue, "Values", xValue);
+	        }
+	        
+
+	        // Create a JFreeChart object
+	        JFreeChart chart = ChartFactory.createBarChart(
+	               "Amount of budget remaining in each budget period",
+	                "Budget Periods",
+	                "Amount",
+	                dataset,
+	                PlotOrientation.VERTICAL,
+	                false,
+	                true,
+	                false);
+
+		    CategoryPlot plot = chart.getCategoryPlot();
+		    CategoryAxis axis = plot.getDomainAxis();
+		    axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+		    axis.setMaximumCategoryLabelLines(2);
+		    
+	        // Set chart properties
+	        chart.setBackgroundPaint(Color.WHITE);
+
+	        // Create a ChartPanel object and add it to a JFrame
+	        histogram = new ChartPanel(chart);
+	}
+
+	
 	public void histogramCard(LedgerList list)
 	{ 
 	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -431,7 +478,52 @@ public class GraphPage implements ActionListener {
 	        // Create a ChartPanel object
 	        linegraph = new ChartPanel(chart);
 	}
+	public void multiPanel(BudgetList budgets, LedgerList expenses, LedgerList earnings) {
+	    Map<String, Double[]> map = budgets.mapExpensesAndEarningsWithBudget(expenses, earnings);
 
+	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+	    // Add data to the dataset
+	    for (Map.Entry<String, Double[]> entry : map.entrySet()) {
+	        String label = entry.getKey();
+	        Double[] values = entry.getValue();
+	        dataset.addValue(values[0], "Budget", label);
+	        dataset.addValue(values[1], "Expenses", label);
+	        dataset.addValue(values[2], "Earnings", label);
+	    }
+
+	    // Create the chart
+	    JFreeChart chart = ChartFactory.createBarChart(
+	            "Budget vs Expenses vs Earnings", // chart title
+	            "Budget Period", // domain axis label
+	            "Amount", // range axis label
+	            dataset, // data
+	            org.jfree.chart.plot.PlotOrientation.VERTICAL, // orientation
+	            true, // include legend
+	            true, // tooltips
+	            false // urls
+	    );
+
+	    // Customize the chart
+	    CategoryPlot plot = chart.getCategoryPlot();
+	    BarRenderer renderer = new BarRenderer();
+	    renderer.setSeriesPaint(0, Color.RED);
+	    renderer.setSeriesPaint(1, Color.GREEN);
+	    renderer.setSeriesPaint(2, Color.BLUE);
+	    plot.setRenderer(renderer);
+
+	    // Set the range axis to display only positive values
+	    NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+	    rangeAxis.setRange(0, rangeAxis.getUpperBound());
+
+	    // Set the domain axis to use vertical labels
+	    CategoryAxis domainAxis = plot.getDomainAxis();
+	    domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+
+	    // Display the chart in a frame
+
+	    threeGraph= new ChartPanel(chart);
+	}
 	
 
 	public JTextField getExpenseNameInput() {
@@ -460,8 +552,6 @@ public class GraphPage implements ActionListener {
 		return ledgerItem;
 	}
 
-	public static void main(String[] args) {
-		new GraphPage(4);
-	}
+
 
 }
