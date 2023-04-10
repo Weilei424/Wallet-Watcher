@@ -32,7 +32,7 @@ ceojeff  | UseAmazon!
   
   New features added and UI update! (see [User Manual](https://github.com/Weilei424/Wallet-Watcher/blob/main/Wallet%20Watcher%20User%20Manual.pdf) for details)
   
-  For project development log, please download [Processing_Document(group log)](https://github.com/Weilei424/Wallet-Watcher/blob/main/logs/Processing_Document_itr3.pdf) or visit [logs](https://github.com/Weilei424/Wallet-Watcher/tree/main/logs) to view individual development logs.
+  For project development log, please download [Processing_Document(group log)](https://github.com/Weilei424/Wallet-Watcher/blob/main/logs/Processing%20Document%20itr3.pdf) or visit [logs](https://github.com/Weilei424/Wallet-Watcher/tree/main/logs) to view individual development logs.
   
 ========================================================================  
   
