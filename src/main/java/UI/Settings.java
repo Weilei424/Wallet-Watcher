@@ -127,6 +127,11 @@ public class Settings {
 			accountSettings=new JLabel("Account Settings");
 			accountSettings.setFont(new Font("Arial",Font.BOLD,32));
 			accountSettings.setBorder(new EmptyBorder(0,500,0,0));
+			
+			toNav=new JButton("Back to Nav Page");
+			toNav.setPreferredSize(new Dimension(500,100));
+			toNav.addActionListener(NavDirect);
+			
 	        deleteAcc=new JButton("Delete account");
 	        deleteAcc.addActionListener(deleteAccountStateChange);
 	        merge=new JButton("Merge two accounts");
@@ -140,6 +145,7 @@ public class Settings {
 	        holder.add(merge);
 	        holder.add(changePassword);	    
 	        holder.add(toSettings);
+	        holder.add(toNav);
 	        topMost.add(holder);
 	        settingsFrame.add(topMost);
 
@@ -397,6 +403,7 @@ public class Settings {
 			deleteAccount=new JPanel();
 			deleteAccount.setLayout(new GridLayout(4,1));
 			JPanel header=new JPanel();
+
 			
 			JButton goBack=new JButton("Go back");
 			goBack.addActionListener(AccDirect);

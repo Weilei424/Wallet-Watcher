@@ -185,7 +185,15 @@ public class NavigatorPage {
 
 		if (User.currBudget != null && User.currBudget.endDate.compareTo(LocalDate.now()) >= 0) {
 			createPage();
-		} else {
+			if(User.notification && User.expenses.surplusCalculator(User.currBudget)<0)
+			{ 
+				JOptionPane.showMessageDialog(navigator, String.format("You are over budget for %s to %s by %.2f dollars",
+						User.currBudget.startDate.toString(),User.currBudget.endDate.toString(),
+						User.expenses.surplusCalculator(User.currBudget)*-1));
+				User.notification=false;
+			}
+		} 
+		else {
 			createPage();
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {
@@ -265,17 +273,18 @@ public class NavigatorPage {
 		settings.addActionListener(settingsDirect);
 		logOut.addActionListener(logOutDirect);
 
-		buttons.add(allPage);
+		//buttons.add(allPage);
 		buttons.add(budgetPage);
-		buttons.add(cardPage);
 		buttons.add(expensePage);
 		buttons.add(earningsPage);
+		buttons.add(cardPage);
 		buttons.add(investmentPage);
 		buttons.add(billPage);
 		buttons.add(miscPage);
+		buttons.add(addana);
 		buttons.add(settings);
 		buttons.add(logOut);
-		buttons.add(addana);
+
 
 		buttons.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 
@@ -285,5 +294,7 @@ public class NavigatorPage {
 		navigator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigator.setVisible(true);
 	}
-
+	public static void main(String[] args) {
+		new NavigatorPage();
+	}
 }

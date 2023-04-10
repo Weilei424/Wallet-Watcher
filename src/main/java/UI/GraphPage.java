@@ -213,6 +213,13 @@ public class GraphPage implements ActionListener {
 				panel.setLayout(new GridLayout(1,3));
 				if(source==1)
 				{ 
+				try
+				{
+					User.earnings.items = LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "earning"));				
+				}
+				catch (SQLException e) {
+				}
+					
 					pieChartCategory(User.earnings, choice);
 					histogramMonthlyExpense(User.earnings, choice);
 					lineGraphDaily(User.earnings, choice);
@@ -222,6 +229,13 @@ public class GraphPage implements ActionListener {
 				}
 				if(source==2)
 				{ 
+					try
+					{ 
+						User.expenses.items = LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "expense"));
+						
+					}
+				 catch (SQLException e) {
+				}
 					pieChartCategory(User.expenses, choice);
 					histogramMonthlyExpense(User.expenses, choice);
 					lineGraphDaily(User.expenses, choice);
@@ -231,11 +245,18 @@ public class GraphPage implements ActionListener {
 				}
 				if(source==3)
 				{ 
+					User.allbudgets.budgets = BudgetList.getEntries(DBUtil.getBudgetTable(User.getLoginAs()));
 					histogramBudget(User.allbudgets);
 					panel.add(histogram);
 				}
 				if(source==6)
 				{ 
+					try
+					{
+						User.cards.items = LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "card"));						
+					}
+					catch (SQLException e) {
+					}
 					pieChartCategory(User.cards, choice);
 					histogramCard(User.cards);
 					panel.add(piechart);
@@ -247,6 +268,13 @@ public class GraphPage implements ActionListener {
 				}
 				if(source==7)
 				{ 
+					try
+					{ 
+						User.investments.items = LedgerList.getEntries(DBUtil.query(User.getLoginAs(), "tag", "investment"));
+
+					}
+					catch (SQLException e) {
+					}
 					pieChartCategory(User.investments, choice);
 					histogramMonthlyExpense(User.investments, choice);
 					lineGraphDaily(User.investments, choice);

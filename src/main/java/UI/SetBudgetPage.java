@@ -43,6 +43,7 @@ public class SetBudgetPage {
 	private JLabel budgetAmount;
 	private JTextField budgetAmountInput;
 	
+	private JLabel date;
 	public JComboBox <Integer> year;
 	public JComboBox <Integer>  month; 
 	public JComboBox <Integer> day;
@@ -205,11 +206,20 @@ public class SetBudgetPage {
 	    month.setBackground(Color.white);
 	    day.setBackground(Color.white);
 
+	    JPanel panel=new JPanel();
+	    panel.setLayout(new BorderLayout());
+	    date=new JLabel("Please enter the end date for your budget:");
+	    date.setFont(new Font("Comic Sans",Font.BOLD,24));
+	    
+	    panel.add(date,BorderLayout.CENTER);
+	    panel.setBorder(BorderFactory.createEmptyBorder(0,150,0,0));
+	    
 	    budgetDate.add(yearInput);
 	    budgetDate.add(monthInput);
 	    budgetDate.add(dayInput);
 
 	    page.add(budgetInput);
+	    page.add(panel);
 	    page.add(budgetDate);	    		
 		popup.add(page);
 		
