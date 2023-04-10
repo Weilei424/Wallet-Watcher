@@ -43,6 +43,7 @@ public class BillPlannerPageForm implements ActionListener {
 	private JRadioButton loan;
 	private JRadioButton other;
 	private JTextField othertext;
+	private JLabel isOther;
 	private String category;
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
@@ -108,6 +109,17 @@ public class BillPlannerPageForm implements ActionListener {
 			}
 		});
 
+		other.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
+
 		this.framesCreated = 0;
 
 		billPlannerPageFrame = new JFrame();
@@ -115,7 +127,7 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerPageForm = new JPanel();
 
 		billPlannerPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		billPlannerPageForm.setLayout(new GridLayout(7, 2));
+		billPlannerPageForm.setLayout(new GridLayout(8, 2));
 		billPlannerPageForm.setBackground(new Color(137, 208, 240));
 
 		billPlannerName = new JLabel("Name of Bill:");
@@ -153,6 +165,9 @@ public class BillPlannerPageForm implements ActionListener {
 		dateSelector.setLocation(100, 400);
 		billPlannerPageForm.add(dateSelector);
 
+		isOther = new JLabel("If Bill is Other:");
+		othertext = new JTextField();
+
 		dateChooser = new JDateChooser();
 
 		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -167,6 +182,9 @@ public class BillPlannerPageForm implements ActionListener {
 		});
 
 		billPlannerPageForm.add(dateChooser);
+
+		billPlannerPageForm.add(isOther);
+		billPlannerPageForm.add(othertext);
 
 		billType = new JLabel("Type of Bill:");
 
@@ -194,8 +212,6 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerPageFrame.setSize(800, 400);
 		// billPlannerPageFrame.pack(); // when setSize on, then remove pack
 		billPlannerPageFrame.setVisible(true);
-
-
 
 	}
 

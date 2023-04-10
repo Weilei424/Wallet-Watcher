@@ -257,6 +257,7 @@ public class CardPursePageForm implements ActionListener {
 			cpp.mainCpPage.dispose();
 			cpp = new CardPursePage();
 			cpp.mainCpPage.setVisible(true);
+			cardPurseFrame.dispose();
 		} catch (SQLException er) {
 
 		}
