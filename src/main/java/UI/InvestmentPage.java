@@ -50,7 +50,7 @@ public class InvestmentPage implements ActionListener {
 	private JButton export;
 	private JButton toMenu;
 	private JLabel title;
-	//private JTextArea ledgerInfo;
+	// private JTextArea ledgerInfo;
 	private InvestmentPageForm ivForm;
 	private LedgerItem tempLedgerItem;
 	public JTable investmentTable;
@@ -79,44 +79,41 @@ public class InvestmentPage implements ActionListener {
 	JButton addana;
 
 	public InvestmentPage() {
-		
-		try
-		{ 
-	       	investmentTable = DBUtil.query(User.getLoginAs(),"tag","investment");
-		}
-		catch(SQLException er)
-		{ 
+
+		try {
+			investmentTable = DBUtil.query(User.getLoginAs(), "tag", "investment");
+		} catch (SQLException er) {
 		}
 		investmentScroller = new JScrollPane(investmentTable);
-		
+
 		colMod = investmentTable.getColumnModel();
 		tabCol = colMod.getColumn(0);
 		tabCol.setPreferredWidth(150);
-		
-		//colMod1 = cardPurseTable.getColumnModel();
+
+		// colMod1 = cardPurseTable.getColumnModel();
 		tabCol1 = colMod.getColumn(1);
 		tabCol1.setPreferredWidth(150);
-		
-		//colMod2 = cardPurseTable.getColumnModel();
+
+		// colMod2 = cardPurseTable.getColumnModel();
 		tabCol2 = colMod.getColumn(2);
 		tabCol2.setPreferredWidth(150);
-		
-		//colMod3 = cardPurseTable.getColumnModel();
+
+		// colMod3 = cardPurseTable.getColumnModel();
 		tabCol3 = colMod.getColumn(3);
 		tabCol3.setPreferredWidth(150);
-		
-		//colMod4 = cardPurseTable.getColumnModel();
+
+		// colMod4 = cardPurseTable.getColumnModel();
 		tabCol4 = colMod.getColumn(4);
 		tabCol4.setPreferredWidth(150);
-		
-		//colMod5 = cardPurseTable.getColumnModel();
+
+		// colMod5 = cardPurseTable.getColumnModel();
 		tabCol5 = colMod.getColumn(5);
 		tabCol5.setPreferredWidth(130);
-		
-		//colMod6 = cardPurseTable.getColumnModel();
+
+		// colMod6 = cardPurseTable.getColumnModel();
 		tabCol6 = colMod.getColumn(6);
 		tabCol6.setPreferredWidth(90);
-		
+
 		mainIvFrame = new JFrame();
 		mainIvPanel = new JPanel();
 		this.isRemoved = false;
@@ -129,9 +126,9 @@ public class InvestmentPage implements ActionListener {
 		addInvestment = new JButton("Add New Investments");
 		addInvestment.setSize(40, 40);
 		addInvestment.addActionListener(this);
-		
+
 		toMenu = new JButton(new AbstractAction("Main Menu") {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				navigation = new NavigatorPage();
@@ -147,7 +144,6 @@ public class InvestmentPage implements ActionListener {
 				mainIvFrame.dispose();
 			}
 		});
-		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
@@ -156,7 +152,7 @@ public class InvestmentPage implements ActionListener {
 		mainIvPanel.add(addInvestment);
 		mainIvPanel.add(addana);
 		mainIvPanel.add(toMenu);
-		
+
 		mainIvPanel.setBackground(new Color(144, 238, 144));
 
 		// pop up menu, on click for update and delete
@@ -165,115 +161,118 @@ public class InvestmentPage implements ActionListener {
 		this.deleteMenuItem = new JMenuItem("Delete");
 		popupMenu.add(updateMenuItem);
 		popupMenu.add(deleteMenuItem);
-		
+
 		investmentTable.addMouseListener(new MouseAdapter() {
-		    public void mousePressed(MouseEvent e) {
-		        // check if the mouse button pressed is the right button
-		        if (SwingUtilities.isRightMouseButton(e)) {
-		            // get the row index of the clicked cell
-		            int row = investmentTable.rowAtPoint(e.getPoint());
-		            
-		            // if the row index is valid, select the row
-		            if (row >= 0 && row < investmentTable.getRowCount()) {
-		            	investmentTable.setRowSelectionInterval(row, row);
-		            }
-		            
-		            // show the popup menu
-		            popupMenu.show(e.getComponent(), e.getX(), e.getY());
-		        }
-		    }
+			public void mousePressed(MouseEvent e) {
+				// check if the mouse button pressed is the right button
+				if (SwingUtilities.isRightMouseButton(e)) {
+					// get the row index of the clicked cell
+					int row = investmentTable.rowAtPoint(e.getPoint());
+
+					// if the row index is valid, select the row
+					if (row >= 0 && row < investmentTable.getRowCount()) {
+						investmentTable.setRowSelectionInterval(row, row);
+					}
+
+					// show the popup menu
+					popupMenu.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
 		});
 
 		updateMenuItem.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        int row = investmentTable.getSelectedRow();
-		        int ref = (int) investmentTable.getModel().getValueAt(row, 0);
-		        
-		        if (row != -1) {
-		            // Get the value of the selected row's ID column
-		            int id = (int) investmentTable.getValueAt(row, 0);
-		            
-		            // Create a new dialog box to prompt the user for input
-		            dialog = new JDialog(mainIvFrame, "Update Item", Dialog.ModalityType.APPLICATION_MODAL);
-		            dialog.setPreferredSize(new Dimension(500, 400));
-		            dialogPanel = new JPanel(new GridLayout(0, 1));
-		            JLabel label = new JLabel("Enter new value:");
-		            JTextField textField = new JTextField();
-		            item = new JRadioButton("Item name");
-		            note = new JRadioButton("Note");
-		            amount = new JRadioButton("Amount");
+			public void actionPerformed(ActionEvent e) {
+				int row = investmentTable.getSelectedRow();
+				int ref = (int) investmentTable.getModel().getValueAt(row, 0);
+
+				if (row != -1) {
+					// Get the value of the selected row's ID column
+					int id = (int) investmentTable.getValueAt(row, 0);
+
+					// Create a new dialog box to prompt the user for input
+					dialog = new JDialog(mainIvFrame, "Update Item", Dialog.ModalityType.APPLICATION_MODAL);
+					dialog.setPreferredSize(new Dimension(500, 400));
+					dialogPanel = new JPanel(new GridLayout(0, 1));
+					JLabel label = new JLabel("Enter new value:");
+					JTextField textField = new JTextField();
+					item = new JRadioButton("Item name");
+					note = new JRadioButton("Note");
+					amount = new JRadioButton("Amount");
 					amount.setSelected(true);
 
-		            buttonGroup = new ButtonGroup();
-		            buttonGroup.add(item);
-		            buttonGroup.add(note);
-		            buttonGroup.add(amount);
-		            dialogPanel.add(label);
-		            dialogPanel.add(textField);
-		            dialogPanel.add(item);
-		            dialogPanel.add(note);
-		            dialogPanel.add(amount);
-		            
-		            // Create a "Submit" button to close the dialog box
-		            JButton submitButton = new JButton("Submit");
-		            submitButton.addActionListener(new ActionListener() {
-		                public void actionPerformed(ActionEvent e) {
-		                    // Get the value entered by the user
-		                	String selection = "";
-		                    String newValue = textField.getText();
-		                    boolean option1Selected = item.isSelected();
-		                    boolean option2Selected = note.isSelected();
-		                    boolean option3Selected = amount.isSelected();
-		                    
-		                    if (option1Selected) {
-		                        selection = "item";
-		                        investmentTable.setValueAt(newValue, row, 1);
-		                    } else if (option2Selected) {
-		                        selection = "note";
-		                        investmentTable.setValueAt(newValue, row, 2);
-		                    } else if (option3Selected) {
-		                        selection = "amount";
-		                        BigDecimal bd = new BigDecimal(newValue);
-		            			bd = bd.setScale(2, RoundingMode.HALF_UP);
-		            			newValue = bd.doubleValue() + "";
-		                        investmentTable.setValueAt(newValue, row, 3);
-		                    }
-		                    DBUtil.update(User.getLoginAs(), ref, selection, newValue);
-		                    // Close the dialog box
-		                    dialog.dispose();
-		                }
-		            });
-		            dialogPanel.add(submitButton);
-		            
-		            dialog.add(dialogPanel);
-		            dialog.pack();
-		            dialog.setLocationRelativeTo(null);
-		            dialog.setVisible(true);
-		        }
-		    }
+					buttonGroup = new ButtonGroup();
+					buttonGroup.add(item);
+					buttonGroup.add(note);
+					buttonGroup.add(amount);
+					dialogPanel.add(label);
+					dialogPanel.add(textField);
+					dialogPanel.add(item);
+					dialogPanel.add(note);
+					dialogPanel.add(amount);
+
+					// Create a "Submit" button to close the dialog box
+					JButton submitButton = new JButton("Submit");
+					submitButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							// Get the value entered by the user
+							String selection = "";
+							String newValue = textField.getText();
+							boolean option1Selected = item.isSelected();
+							boolean option2Selected = note.isSelected();
+							boolean option3Selected = amount.isSelected();
+
+							if (option1Selected) {
+								selection = "item";
+								investmentTable.setValueAt(newValue, row, 1);
+							} else if (option2Selected) {
+								selection = "note";
+								investmentTable.setValueAt(newValue, row, 2);
+							} else if (option3Selected) {
+								selection = "amount";
+								BigDecimal bd = new BigDecimal(newValue);
+								bd = bd.setScale(2, RoundingMode.HALF_UP);
+								newValue = bd.doubleValue() + "";
+								investmentTable.setValueAt(newValue, row, 3);
+							}
+							DBUtil.update(User.getLoginAs(), ref, selection, newValue);
+							// Close the dialog box
+							dialog.dispose();
+						}
+					});
+					dialogPanel.add(submitButton);
+
+					dialog.add(dialogPanel);
+					dialog.pack();
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				}
+			}
 		});
 
 		deleteMenuItem.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        int row = investmentTable.getSelectedRow();
-		        int ref = (int) investmentTable.getModel().getValueAt(row, 0);
-		        DBUtil.delete(User.getLoginAs(), ref);
-		        try
-				{ 
-			       	investmentTable = DBUtil.query(User.getLoginAs(),"tag","investment");
+			public void actionPerformed(ActionEvent e) {
+				int row = investmentTable.getSelectedRow();
+				int ref = (int) investmentTable.getModel().getValueAt(row, 0);
+				DBUtil.delete(User.getLoginAs(), ref);
+				try {
+					InvestmentPage ip = new InvestmentPage();
+					ip.investmentTable = DBUtil.query(User.getLoginAs(), "tag", "expense");
+					mainIvFrame.dispose();
+					mainIvFrame.setVisible(false);
+					ip = new InvestmentPage();
+					ip.mainIvFrame.setVisible(false);
+
+				} catch (SQLException er) {
 				}
-				catch(SQLException er)
-				{ 
-				}
-		        JScrollPane newScroller = new JScrollPane(investmentTable);
-		        mainIvFrame.remove(investmentScroller);
-		        investmentScroller = newScroller;
-		        mainIvFrame.add(investmentScroller, BorderLayout.CENTER);
-		        mainIvFrame.revalidate();
-		        mainIvFrame.repaint();
-		    }
+//		        JScrollPane newScroller = new JScrollPane(investmentTable);
+//		        mainIvFrame.remove(investmentScroller);
+//		        investmentScroller = newScroller;
+//		        mainIvFrame.add(investmentScroller, BorderLayout.CENTER);
+//		        mainIvFrame.revalidate();
+//		        mainIvFrame.repaint();
+			}
 		});
-		
+
 		// export file
 		export = new JButton(new AbstractAction("Export current page as Excel file") {
 
@@ -308,7 +307,7 @@ public class InvestmentPage implements ActionListener {
 		});
 		export.setForeground(Color.green);
 		export.setPreferredSize(new Dimension(150, 50));
-		
+
 		// This panel holds all other elements in the frame
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
