@@ -27,3 +27,29 @@ Mar 8 11:31
 	Implemented FlatLaf UI design
 	Fixed bug with lowercase months in DateParser
 ===============================================
+Mar 9 23:21
+	Added itr2 processing document
+	Re-added FlatLaf
+===============================================
+Mar 29 13:25
+	Implemented ErrorPage
+===============================================
+Mar 30 07:48
+	Maximized ErrorPage on expand
+	Added ErrorPage to more errors
+	Added headless check for tests
+	Disposed navigator frame for all sub-pages
+	Added exit Java to pages without exit events
+	Fixed issues with SuppressWarning
+	Fixed unsafe code
+	Fixed duplicate code
+	Fixed typo
+	Fixed Javadoc
+===============================================
+Apr 1 18:31
+	Added empty field checks to forms
+	Added input validity checks to forms
+	Re-added FlatLaf
+	Added theme changer
+	Replaced background colours with nicer ones
+===============================================
