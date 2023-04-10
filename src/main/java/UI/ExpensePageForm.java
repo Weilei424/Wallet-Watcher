@@ -40,6 +40,7 @@ public class ExpensePageForm implements ActionListener {
 	public JTextField expenseCostInput;
 	private JLabel expenseDescription;
 	public JTextField expenseDescriptionInput;
+	private JLabel ifOther;
 	private JLabel expenseDate;
 	// public JTextField expenseDateInput;
 	private JLabel expenseType;
@@ -67,7 +68,7 @@ public class ExpensePageForm implements ActionListener {
 		commute = new JRadioButton("Commute");
 		entertainment = new JRadioButton("Entertainment");
 		other = new JRadioButton("Other");
-		
+
 		radioGroup = new ButtonGroup();
 		radioGroup.add(food);
 		radioGroup.add(commute);
@@ -118,6 +119,17 @@ public class ExpensePageForm implements ActionListener {
 			}
 		});
 
+		other.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
+
 		this.framesCreated = 0;
 
 		expensePageFrame = new JFrame();
@@ -125,7 +137,7 @@ public class ExpensePageForm implements ActionListener {
 		expensePageForm = new JPanel();
 
 		expensePageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		expensePageForm.setLayout(new GridLayout(7, 2));
+		expensePageForm.setLayout(new GridLayout(8, 2));
 		expensePageForm.setBackground(new Color(137, 208, 240));
 
 		expenseName = new JLabel("Name of Expense:");
@@ -142,6 +154,11 @@ public class ExpensePageForm implements ActionListener {
 		expenseCost.setSize(100, 20);
 		expenseCost.setLocation(100, 200);
 		expensePageForm.add(expenseCost);
+
+		ifOther = new JLabel("If Expense Type is Other:");
+		ifOther.setSize(100, 20);
+
+		othertext = new JTextField();
 
 		expenseCostInput = new JTextField();
 		expenseCostInput.setSize(100, 20);
@@ -178,9 +195,13 @@ public class ExpensePageForm implements ActionListener {
 
 		expensePageForm.add(date);
 
+		expensePageForm.add(ifOther);
+		expensePageForm.add(othertext);
+
 		expenseType = new JLabel("Type of Expense:");
 
 		expensePageForm.add(expenseType);
+
 		expensePageForm.add(buttonBox);
 
 		JLabel recurring = new JLabel("Is this a recurring expense?");

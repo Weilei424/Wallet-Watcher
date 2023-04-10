@@ -42,6 +42,7 @@ public class InvestmentPageForm implements ActionListener {
 	private JRadioButton saving;
 	private JRadioButton other;
 	private JTextField othertext;
+	private JLabel isOther;
 	private String category;
 	private JLabel dateSelector;
 	private JDateChooser dateChooser;
@@ -106,6 +107,17 @@ public class InvestmentPageForm implements ActionListener {
 					category = "Saving account";
 			}
 		});
+		
+		other.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
 
 		this.framesCreated = 0;
 
@@ -146,6 +158,9 @@ public class InvestmentPageForm implements ActionListener {
 		investmentDescriptionInput.setSize(100, 20);
 		investmentDescriptionInput.setLocation(200, 300);
 		investmentPageForm.add(investmentDescriptionInput);
+		
+		isOther = new JLabel("If Investment is Other:");
+		othertext = new JTextField();
 
 		dateSelector = new JLabel("Date:");
 		dateSelector.setSize(100, 20);
@@ -166,6 +181,9 @@ public class InvestmentPageForm implements ActionListener {
 		});
 
 		investmentPageForm.add(dateChooser);
+		
+		investmentPageForm.add(isOther);
+		investmentPageForm.add(othertext);
 
 		investType = new JLabel("Type of Investment:");
 
