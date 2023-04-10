@@ -82,32 +82,32 @@ public class MiscPage implements ActionListener {
 		} catch (SQLException er) {
 		}
 		miscScroller = new JScrollPane(miscTable);
-		
+
 		colMod = miscTable.getColumnModel();
 		tabCol = colMod.getColumn(0);
 		tabCol.setPreferredWidth(150);
-		
-		//colMod1 = cardPurseTable.getColumnModel();
+
+		// colMod1 = cardPurseTable.getColumnModel();
 		tabCol1 = colMod.getColumn(1);
 		tabCol1.setPreferredWidth(150);
-		
-		//colMod2 = cardPurseTable.getColumnModel();
+
+		// colMod2 = cardPurseTable.getColumnModel();
 		tabCol2 = colMod.getColumn(2);
 		tabCol2.setPreferredWidth(150);
-		
-		//colMod3 = cardPurseTable.getColumnModel();
+
+		// colMod3 = cardPurseTable.getColumnModel();
 		tabCol3 = colMod.getColumn(3);
 		tabCol3.setPreferredWidth(150);
-		
-		//colMod4 = cardPurseTable.getColumnModel();
+
+		// colMod4 = cardPurseTable.getColumnModel();
 		tabCol4 = colMod.getColumn(4);
 		tabCol4.setPreferredWidth(150);
-		
-		//colMod5 = cardPurseTable.getColumnModel();
+
+		// colMod5 = cardPurseTable.getColumnModel();
 		tabCol5 = colMod.getColumn(5);
 		tabCol5.setPreferredWidth(130);
-		
-		//colMod6 = cardPurseTable.getColumnModel();
+
+		// colMod6 = cardPurseTable.getColumnModel();
 		tabCol6 = colMod.getColumn(6);
 		tabCol6.setPreferredWidth(90);
 
@@ -131,18 +131,15 @@ public class MiscPage implements ActionListener {
 				mainMiPage.dispose();
 			}
 		});
-		
-		
-		
 
 		// This panel holds the top elements including the title and the ability to add
 		// another button
 		mainCpPanel.setLayout(new GridLayout(1, 3));
 		mainCpPanel.add(title);
 		mainCpPanel.add(addNewMisc);
-		
+
 		mainCpPanel.add(toMenu);
-		
+
 		mainCpPanel.add(miscScroller);
 		mainCpPanel.setBackground(new Color(144, 238, 144));
 
@@ -245,15 +242,21 @@ public class MiscPage implements ActionListener {
 				int ref = (int) miscTable.getModel().getValueAt(row, 0);
 				DBUtil.delete(User.getLoginAs(), ref);
 				try {
-					miscTable = DBUtil.query(User.getLoginAs(), "tag", "misc");
+					MiscPage mp = new MiscPage();
+					mp.miscTable = DBUtil.query(User.getLoginAs(), "tag", "misc");
+					mainMiPage.dispose();
+					mainMiPage.setVisible(false);
+					mp = new MiscPage();
+					mp.mainMiPage.setVisible(false);
+
 				} catch (SQLException er) {
 				}
-				JScrollPane newScroller = new JScrollPane(miscTable);
-				mainMiPage.remove(miscScroller);
-				miscScroller = newScroller;
-				mainMiPage.add(miscScroller, BorderLayout.CENTER);
-				mainMiPage.revalidate();
-				mainMiPage.repaint();
+//				JScrollPane newScroller = new JScrollPane(miscTable);
+//				mainMiPage.remove(miscScroller);
+//				miscScroller = newScroller;
+//				mainMiPage.add(miscScroller, BorderLayout.CENTER);
+//				mainMiPage.revalidate();
+//				mainMiPage.repaint();
 			}
 		});
 

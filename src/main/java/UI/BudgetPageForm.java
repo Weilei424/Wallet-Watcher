@@ -41,6 +41,8 @@ public class BudgetPageForm implements ActionListener {
 	private JRadioButton entertainment;
 	private JRadioButton other;
 	private JDateChooser date;
+	private JTextField othertext;
+	private JLabel isOther;
 	private Box buttonBox;
 	private ButtonGroup radioGroup;
 	private String category;
@@ -84,6 +86,17 @@ public class BudgetPageForm implements ActionListener {
 					category = "Entertainment";
 			}
 		});
+		
+		other.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
 
 		this.framesCreated = 0;
 
@@ -92,7 +105,7 @@ public class BudgetPageForm implements ActionListener {
 		budgetPageForm = new JPanel();
 
 		budgetPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-		budgetPageForm.setLayout(new GridLayout(6, 2));
+		budgetPageForm.setLayout(new GridLayout(7, 2));
 		budgetPageForm.setBackground(new Color(137, 208, 240));
 
 		budgetName = new JLabel("Name of Budget:");
@@ -124,6 +137,10 @@ public class BudgetPageForm implements ActionListener {
 		budgetDescriptionInput.setSize(100, 20);
 		budgetDescriptionInput.setLocation(200, 300);
 		budgetPageForm.add(budgetDescriptionInput);
+		
+		isOther = new JLabel("If Budget is Other:");
+		
+		othertext = new JTextField();
 
 		budgetDate = new JLabel("Date:");
 		budgetDate.setSize(100, 20);
@@ -144,6 +161,9 @@ public class BudgetPageForm implements ActionListener {
 		});
 
 		budgetPageForm.add(date);
+		
+		budgetPageForm.add(isOther);
+		budgetPageForm.add(othertext);
 		
 		expenseType = new JLabel("Type of Expense:");
 		

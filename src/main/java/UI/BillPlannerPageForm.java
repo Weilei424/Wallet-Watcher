@@ -52,18 +52,18 @@ public class BillPlannerPageForm implements ActionListener {
 	private boolean recur;
 
 	public BillPlannerPageForm() {
-		
+
 		utility = new JRadioButton("Utility");
 		creditCard = new JRadioButton("Credit Card");
 		loan = new JRadioButton("Loan");
 		other = new JRadioButton("Other");
-		
+
 		radioGroup = new ButtonGroup();
 		radioGroup.add(utility);
 		radioGroup.add(creditCard);
 		radioGroup.add(loan);
 		radioGroup.add(other);
-		
+
 		checkBox = new JCheckBox("Recurring");
 
 		checkBox.addActionListener(new ActionListener() {
@@ -194,152 +194,8 @@ public class BillPlannerPageForm implements ActionListener {
 		billPlannerPageFrame.setSize(800, 400);
 		// billPlannerPageFrame.pack(); // when setSize on, then remove pack
 		billPlannerPageFrame.setVisible(true);
-		
-		
-		
-//		this.framesCreated = 0;
-//
-//		billPlannerPageFrame = new JFrame();
-//		billPlannerPageFrame.setLocationRelativeTo(null);
-//		billPlannerPageForm = new JPanel();
-//		radioGroup = new ButtonGroup();
-//		othertext = new JTextField(20);
-//		othertext.setPreferredSize(null);
-//		
-//		checkBox = new JCheckBox("Recurring");
-//
-//		checkBox.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (checkBox.isSelected()) {
-//		            recur = true;
-//		        } else {
-//		            recur = false;
-//		        }
-//			}
-//		});
-//		
-//		utility = new JRadioButton("Utility");
-//		utility.setBorderPainted(true);
-//		creditCard = new JRadioButton("Credit Card");
-//		creditCard.setBorderPainted(true);
-//		loan = new JRadioButton("Loan");
-//		loan.setBorderPainted(true);
-//		other = new JRadioButton("Other:");
-//
-//		radioGroup.add(utility);
-//		radioGroup.add(creditCard);
-//		radioGroup.add(loan);
-//		radioGroup.add(other);
-//		category = "default";
-//
-//		utility.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (utility.isSelected())
-//					category = "Utility";
-//			}
-//		});
-//
-//		creditCard.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (creditCard.isSelected())
-//					category = "Credit Card";
-//			}
-//		});
-//
-//		loan.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (loan.isSelected())
-//					category = "Loan";
-//			}
-//		});
-//
-//		other.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (other.isSelected()) {
-//					othertext.setEnabled(true);
-//					othertext.requestFocus();
-//					category = othertext.getText();
-//				} else {
-//					othertext.setEnabled(false);
-//				}
-//			}
-//		});
-//
-//		billPlannerPageForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-//		billPlannerPageForm.setLayout(new GridLayout(5, 1));
-//		billPlannerPageForm.setBackground(new Color(137, 208, 240));
-//
-//		billPlannerName = new JLabel("Name of Bill:");
-//		billPlannerName.setSize(100, 20);
-//		billPlannerName.setLocation(100, 100);
-//		billPlannerPageForm.add(billPlannerName);
-//
-//		billPlannerNameInput = new JTextField();
-//		billPlannerNameInput.setSize(100, 20);
-//		billPlannerNameInput.setLocation(300, 100);
-//		billPlannerPageForm.add(billPlannerNameInput);
-//
-//		billPlannerCost = new JLabel("Amount of Bill:");
-//		billPlannerCost.setSize(100, 20);
-//		billPlannerCost.setLocation(100, 200);
-//		billPlannerPageForm.add(billPlannerCost);
-//
-//		billPlannerCostInput = new JTextField();
-//		billPlannerCostInput.setSize(100, 20);
-//		billPlannerCostInput.setLocation(200, 200);
-//		billPlannerPageForm.add(billPlannerCostInput);
-//
-//		billPlannerDescription = new JLabel("Description of Bill:");
-//		billPlannerDescription.setSize(100, 20);
-//		billPlannerDescription.setLocation(100, 300);
-//		billPlannerPageForm.add(billPlannerDescription);
-//
-//		billPlannerDescriptionInput = new JTextField();
-//		billPlannerDescriptionInput.setSize(100, 20);
-//		billPlannerDescriptionInput.setLocation(200, 300);
-//		billPlannerPageForm.add(billPlannerDescriptionInput);
-//		
-//		billPlannerPageForm.add(checkBox);
-//
-//		dateSelector = new JLabel("Selected date: ");
-//		dateChooser = new JDateChooser();
-//
-//		dateChooser.addPropertyChangeListener("date", new PropertyChangeListener() {
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				if ("date".equals(evt.getPropertyName())) {
-//					Date selectedDate = (Date) evt.getNewValue();
-//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//					formattedDate = dateFormat.format(selectedDate);
-//					dateSelector.setText("Selected date: " + formattedDate);
-//				}
-//			}
-//		});
-//		billPlannerPageForm.add(dateSelector);
-//		billPlannerPageForm.add(dateChooser);
-//
-//		billPlannerPageForm.add(utility);
-//		billPlannerPageForm.add(creditCard);
-//		billPlannerPageForm.add(loan);
-//		billPlannerPageForm.add(other);
-//		billPlannerPageForm.add(othertext);
-//
-//		submit = new JButton("Submit");
-//		submit.setBounds(20, 10, 100, 50);
-//		submit.addActionListener(this);
-//		billPlannerPageForm.add(submit);
-//
-//		// Adding the expense form panel into the main frame
-//		billPlannerPageFrame.add(billPlannerPageForm, BorderLayout.CENTER);
-//		billPlannerPageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		billPlannerPageFrame.setTitle("Add Bill");
-//		billPlannerPageFrame.setSize(600, 400);
-//		// billPlannerPageFrame.pack(); // when setSize on, then remove pack
-//		billPlannerPageFrame.setVisible(true);
+
+
 
 	}
 
@@ -362,7 +218,8 @@ public class BillPlannerPageForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty() || dateChooser.getDate() == null) {
+		if (billPlannerNameInput.getText().isEmpty() || billPlannerCostInput.getText().isEmpty()
+				|| dateChooser.getDate() == null) {
 			JOptionPane.showMessageDialog(billPlannerPageFrame, "Please enter the name, cost, and date.");
 			return;
 		}
@@ -397,8 +254,7 @@ public class BillPlannerPageForm implements ActionListener {
 			ep.mainBpPage.dispose();
 			ep = new BillPlannerPage();
 			ep.mainBpPage.setVisible(true);
-			ep.getAddNewBill().setVisible(false);
-			// billPlannerPageFrame.dispose();
+			billPlannerPageFrame.dispose();
 		} catch (SQLException er) {
 
 		}

@@ -75,8 +75,11 @@ public class BillPlannerPage implements ActionListener {
 	private TableColumn tabCol6;
 	GraphPage ana;
 	JButton addana;
+	private int delete = 0;
 
 	public BillPlannerPage() {
+
+		this.delete = 0;
 
 		try {
 			billTable = DBUtil.query(User.getLoginAs(), "tag", "bill");
@@ -253,12 +256,7 @@ public class BillPlannerPage implements ActionListener {
 
 				} catch (SQLException er) {
 				}
-//				        JScrollPane newScroller = new JScrollPane(billTable);
-//				        mainBpPage.remove(billScroller);
-//				        billScroller = newScroller;
-//				        mainBpPage.add(billScroller, BorderLayout.CENTER);
-//				        mainBpPage.revalidate();
-//				        mainBpPage.repaint();
+
 			}
 		});
 

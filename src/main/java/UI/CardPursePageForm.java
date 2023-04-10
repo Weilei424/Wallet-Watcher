@@ -41,6 +41,7 @@ public class CardPursePageForm implements ActionListener {
 	private JRadioButton pointsCard;
 	private JRadioButton other;
 	private JTextField othertext;
+	private JLabel isOther;
 	private JLabel cardType;
 	private String category;
 	private JLabel dateChoice;
@@ -53,7 +54,7 @@ public class CardPursePageForm implements ActionListener {
 		creditCard = new JRadioButton("Credit Card");
 		pointsCard = new JRadioButton("Points Card");
 		other = new JRadioButton("Other");
-		
+
 		radioGroup = new ButtonGroup();
 		radioGroup.add(debitCard);
 		radioGroup.add(creditCard);
@@ -103,6 +104,17 @@ public class CardPursePageForm implements ActionListener {
 					category = "Points Card";
 			}
 		});
+		
+		other.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (other.isSelected()) {
+					category = othertext.getText();
+				} else {
+					othertext.setEnabled(false);
+				}
+			}
+		});
 
 		this.framesCreated = 0;
 
@@ -149,6 +161,9 @@ public class CardPursePageForm implements ActionListener {
 		dateChoice.setLocation(100, 400);
 		cardPurseForm.add(dateChoice);
 
+		isOther = new JLabel("If Card is Other:");
+		othertext = new JTextField();
+
 		dateSelector = new JDateChooser();
 
 		dateSelector.addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -163,6 +178,9 @@ public class CardPursePageForm implements ActionListener {
 		});
 
 		cardPurseForm.add(dateSelector);
+
+		cardPurseForm.add(isOther);
+		cardPurseForm.add(othertext);
 
 		cardType = new JLabel("Type of Card:");
 
@@ -185,134 +203,6 @@ public class CardPursePageForm implements ActionListener {
 		cardPurseFrame.setSize(800, 400);
 		// cardPurseFrame.pack(); // when setSize on, then remove pack
 		cardPurseFrame.setVisible(true);
-
-//			this.framesCreated = 0;
-//
-//			cardPurseFrame = new JFrame();
-//			cardPurseFrame.setLocationRelativeTo(null);
-//			cardPurseForm = new JPanel();
-//			radioGroup = new ButtonGroup();
-//			othertext = new JTextField(20);
-//			othertext.setPreferredSize(null);
-//			
-//			debitCard = new JRadioButton("Debit Card");
-//			debitCard.setBorderPainted(true);
-//			creditCard = new JRadioButton("Credit Card");
-//			creditCard.setBorderPainted(true);
-//			pointsCard = new JRadioButton("Points Card");
-//			pointsCard.setBorderPainted(true);
-//			other = new JRadioButton("Other:");
-//
-//			radioGroup.add(debitCard);
-//			radioGroup.add(creditCard);
-//			radioGroup.add(pointsCard);
-//			radioGroup.add(other);
-//			category = "default";
-//
-//			debitCard.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					if (debitCard.isSelected())
-//						category = "Debit Card";
-//				}
-//			});
-//
-//			creditCard.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					if (creditCard.isSelected())
-//						category = "Credit Card";
-//				}
-//			});
-//
-//			pointsCard.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					if (pointsCard.isSelected())
-//						category = "Points Card";
-//				}
-//			});
-//
-//			other.addActionListener(new ActionListener() {
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					if (other.isSelected()) {
-//						othertext.setEnabled(true);
-//						othertext.requestFocus();
-//						category = othertext.getText();
-//					} else {
-//						othertext.setEnabled(false);
-//					}
-//				}
-//			});
-//			
-//			cardPurseForm.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-//			cardPurseForm.setLayout(new GridLayout(5, 1));
-//			cardPurseForm.setBackground(new Color(137, 208, 240));
-//
-//			cardName = new JLabel("Name of Card:");
-//			cardName.setSize(100, 20);
-//			cardName.setLocation(100, 100);
-//			cardPurseForm.add(cardName);
-//
-//			cardNameInput = new JTextField();
-//			cardNameInput.setSize(100, 20);
-//			cardNameInput.setLocation(300, 100);
-//			cardPurseForm.add(cardNameInput);
-//
-//			cardCost = new JLabel("Card Balance:");
-//			cardCost.setSize(100, 20);
-//			cardCost.setLocation(100, 200);
-//			cardPurseForm.add(cardCost);
-//
-//			cardCostInput = new JTextField();
-//			cardCostInput.setSize(100, 20);
-//			cardCostInput.setLocation(200, 200);
-//			cardPurseForm.add(cardCostInput);
-//
-//			cardDescription = new JLabel("Description of Card:");
-//			cardDescription.setSize(100, 20);
-//			cardDescription.setLocation(100, 300);
-//			cardPurseForm.add(cardDescription);
-//
-//			cardDescriptionInput = new JTextField();
-//			cardDescriptionInput.setSize(100, 20);
-//			cardDescriptionInput.setLocation(200, 300);
-//			cardPurseForm.add(cardDescriptionInput);
-//
-//			dateSelector = new JLabel("Selected date: ");
-//			dateSelector = new JDateChooser();
-//
-//			dateSelector.addPropertyChangeListener("date", new PropertyChangeListener() {
-//				public void propertyChange(PropertyChangeEvent evt) {
-//					if ("date".equals(evt.getPropertyName())) {
-//						Date selectedDate = (Date) evt.getNewValue();
-//						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//						formattedDate = dateFormat.format(selectedDate);
-//						dateSelector.setText("Selected date: " + formattedDate);
-//					}
-//				}
-//			});
-//			cardPurseForm.add(dateSelector);
-//			cardPurseForm.add(dateSelector);
-//			
-//			cardPurseForm.add(debitCard);
-//			cardPurseForm.add(creditCard);
-//			cardPurseForm.add(pointsCard);
-//			cardPurseForm.add(other);
-//			cardPurseForm.add(othertext);
-//
-//			submit = new JButton("Submit");
-//			submit.setBounds(20, 10, 100, 50);
-//			submit.addActionListener(this);
-//			cardPurseForm.add(submit);
-//
-//			// Adding the expense form panel into the main frame
-//			cardPurseFrame.add(cardPurseForm, BorderLayout.CENTER);
-//			cardPurseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			cardPurseFrame.setTitle("Add Cards");
-//			cardPurseFrame.setSize(600, 400);
-//			cardPurseFrame.setVisible(true);
 
 	}
 
