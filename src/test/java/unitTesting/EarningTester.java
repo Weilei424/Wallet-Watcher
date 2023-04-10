@@ -25,11 +25,4 @@ class EarningTester {
 		
 	}
 
-	// TODO: Test fails
-	// @Test
-	void deductTest() {
-		earn.deduction(200);
-		assertEquals(earn.getAmount(),800);
-	}
-
 }

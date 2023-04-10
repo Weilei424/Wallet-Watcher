@@ -36,16 +36,4 @@ class RecurrenceTester {
 		Recurrence r5 = new Recurrence(d1, d2, "every second");
 		assertTrue(r5.getStartDate().equals(d1) && r5.getEndDate().equals(d2) && r5.getFrequency() == null);
 	}
-
-	/* uncomment this when UI can handle exceptions */
-//	@SuppressWarnings("deprecation")
-//	@Test
-//	void testException() {
-//		Date d1 = new Date();
-//		Date d2 = new Date();
-//		d2.setMonth(0);
-//		String s1 = "weekly";
-//		assertThrows(InvalidDateException.class, ()-> new Recurrence(d1, d2, s1));
-//	}
-
 }

@@ -22,7 +22,7 @@ class LedgerItemTester {
 	}
 
 
-	// TODO: Test fails
+
 	@Test
 	void testSetterGetter() {
 		assertEquals("xxxxxx", obj.getNote());
