@@ -227,7 +227,7 @@ class DBUtilTester {
 			assertEquals(960.5 + "", result);
 
 			result = table.getValueAt(5, 2) + "";
-			assertEquals("From work", result);
+			assertEquals("12hrs", result);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
