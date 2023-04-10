@@ -46,6 +46,7 @@ public class InfoSheet implements ActionListener {
 	JLabel averageEntertainment;
 	JLabel budgetSurplus;
 	JButton returnToMenu;
+	JButton seeGraphs;
 	double avgExpenses;
 	double avgFood;
 	double avgCommute;
@@ -56,6 +57,15 @@ public class InfoSheet implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			nav = new NavigatorPage();
 			infoFrame.dispose();
+		}
+	};
+	
+	ActionListener graph=new ActionListener()
+	{
+		public void actionPerformed(ActionEvent e) {
+			new GraphPage(4);
+			infoFrame.dispose();
+		
 		}
 	};
 
@@ -122,11 +132,14 @@ public class InfoSheet implements ActionListener {
 		returnMenu.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 50));
 
 		returnToMenu = new JButton("Return to menu");
-
+		seeGraphs=new JButton("View Graphs");
+		seeGraphs.addActionListener(graph);
 		returnToMenu.addActionListener(menu);
 
+		
 		returnMenu.add(returnToMenu);
-
+		returnMenu.add(seeGraphs);
+		
 		infoFrame.add(infoTitlePanel, BorderLayout.NORTH);
 		infoFrame.add(infoPanel);
 		infoFrame.add(returnMenu, BorderLayout.SOUTH);

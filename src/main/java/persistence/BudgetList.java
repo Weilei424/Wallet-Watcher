@@ -65,6 +65,58 @@ public class BudgetList {
 		}
 		return map;	
 	}
+	public Map<String,Double> mapSurplus(LedgerList entries)
+	{
+		Map<String,Double> map=new LinkedHashMap<>();
+		this.sortByLocalDate();
+		double ret=0;
+		for(int x=0; x< this.budgets.size(); x++)
+		{ 
+			ret+=this.budgets.get(x).budget;
+			for(int y=0; y< entries.items.size(); y++)
+			{
+		        if(entries.items.get(y).date.compareTo(this.budgets.get(x).endDate) <= 0 && entries.items.get(y).date.compareTo(this.budgets.get(x).startDate) >= 0)
+		        { 
+		        	ret-=entries.items.get(y).amount;
+		        }
+			}
+			map.put(this.budgets.get(x).startDate +" to "+ this.budgets.get(x).endDate, ret);
+		}
+		return map;
+	}
+	
+	public Map<String,Double[]> mapExpensesAndEarningsWithBudget(LedgerList expenseList, LedgerList earningsList)
+	{
+		Map<String,Double[]> map=new LinkedHashMap<>();
+		this.sortByLocalDate();
+		double ret=0;
+		for(int x=0; x< this.budgets.size(); x++)
+		{ 
+			Double []arr = new Double[3]; 
+			arr[0]=this.budgets.get(x).budget;
+			Double expenses=0.0;
+			for(int y=0; y< expenseList.items.size(); y++)
+			{
+		        if(expenseList.items.get(y).date.compareTo(this.budgets.get(x).endDate) <= 0 && expenseList.items.get(y).date.compareTo(this.budgets.get(x).startDate) >= 0)
+		        { 
+		        	expenses+=expenseList.items.get(y).amount;
+		        }
+
+			}
+	        Double earnings=0.0;
+			for(int y=0; y< earningsList.items.size(); y++)
+			{
+		        if(earningsList.items.get(y).date.compareTo(this.budgets.get(x).endDate) <= 0 && earningsList.items.get(y).date.compareTo(this.budgets.get(x).startDate) >= 0)
+		        { 
+		        	earnings+=earningsList.items.get(y).amount;
+		        }
+			}
+			arr[1]=expenses;
+			arr[2]=earnings;
+			map.put(this.budgets.get(x).startDate +" to "+ this.budgets.get(x).endDate, arr);
+		}
+		return map;
+	}
 
 	
 }
