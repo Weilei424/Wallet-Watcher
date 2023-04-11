@@ -19,11 +19,14 @@ Team 7
 ========================================================================
 
 ## Iteration 3:
-  Please see [Planning_Document_itr3.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr2.pdf) (itr3 details start at page#13) and [Our GitHub Wiki](https://github.com/Weilei424/Wallet-Watcher/wiki) for details.
+  Please see: 
+  [Planning_Document_itr3.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr3.pdf) (itr3 details start at page#20)<br>
+  [Our GitHub Wiki](https://github.com/Weilei424/Wallet-Watcher/wiki)<br>
+  [Refactoring_File](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Refactoring%20File.pdf)<br>
   
-  [Project Presentation Video](https://www.youtube.com/watch?v=Pd8wnNzHTgQ): includes a short APP demo, 2 customer meetings and an informal postmortem analysis.
+  [Project Presentation Video](https://www.youtube.com/watch?v=Pd8wnNzHTgQ): includes a short APP demo, 2 customer meetings and an informal postmortem analysis.<br>
   
-  [Jira Board](https://tahas02.atlassian.net/jira/software/projects/WALI/boards/1) for planning and workload splitting.
+  [Jira Board](https://tahas02.atlassian.net/jira/software/projects/WALI/boards/1) for planning and workload splitting.<br>
   
   **To login to the app, please use: (case sensitive)**
 Username  | Password
