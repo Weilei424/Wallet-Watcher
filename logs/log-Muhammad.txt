@@ -49,3 +49,38 @@ Itr2:
 * Integrated expense page form with the DB
 * Added dynamic table on expense page form to refresh every time user added another expense
 * Added forms for card purse page, and made the JTable dynamic with the DB
+
+Itr3:
+
+03/26/2023:
+* Found bugs in program and reported it
+* Did code review on peer code
+* Managed and set outer layers for code including code management
+
+03/31/2023:
+* Debugged program
+* Fixed the chart fittings on the pages
+* Worked on finding
+
+04/01/2023:
+* Fixed the forms for all pages
+* Added conditions to forms to allow for less issues
+
+04/02/2023:
+* Created User Information Page
+* Created methods for backend to show user average of all expenses, food, commute, and entertainment
+* Fixed program bugs for other pages
+* Fixed UI experience (colour, placement)
+
+04/04/2023:
+* Fixed all form pages for all pages
+* Worked on debugging pages and fixing delete methods on all pages
+
+09/04/2023:
+* Fixed all delete button bugs on the pages
+* Worked on features to make delete method update the pages in real time
+
+10/04/2023:
+* Made delete pages update in real time
+* Worked on planning document
+
