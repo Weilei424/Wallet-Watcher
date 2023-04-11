@@ -3,6 +3,7 @@ package UI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -137,7 +138,9 @@ public class BudgetPage implements ActionListener {
 		
 		
 		JPanel panel=new JPanel();
-		panel.setLayout(new GridLayout(5,1));
+		panel.setLayout(new FlowLayout());
+		changeBudget.setPreferredSize(new Dimension(250,100));
+		panel.setBorder(BorderFactory.createEmptyBorder(200,0,0,0));
 		panel.add(changeBudget);
 
 		
@@ -193,6 +196,9 @@ public class BudgetPage implements ActionListener {
 		bpForm = new BudgetPageForm();
 		bpForm.budgetPageFrame.setVisible(true);
 		mainEpFrame.dispose();
+	}
+	public static void main(String[] args) {
+		new BudgetPage();
 	}
 	
 	
