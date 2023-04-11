@@ -23,6 +23,7 @@ Team 7
   [Planning_Document_itr3.pdf](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Planning_Document_itr3.pdf) (itr3 details start at page#20)<br>
   [Our GitHub Wiki](https://github.com/Weilei424/Wallet-Watcher/wiki)<br>
   [Refactoring_File](https://github.com/Weilei424/Wallet-Watcher/blob/main/Planning_Documents/Refactoring%20File.pdf)<br>
+  [Revised UML diagram](https://github.com/Weilei424/Wallet-Watcher/blob/main/uml.png)<br>
   
   [Project Presentation Video](https://www.youtube.com/watch?v=Pd8wnNzHTgQ): includes a short APP demo, 2 customer meetings and an informal postmortem analysis.<br>
   
